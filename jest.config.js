@@ -8,5 +8,5 @@ module.exports = {
     coveragePathIgnorePatterns: ['node_modules'],
     clearMocks: true,
     snapshotSerializers: ['enzyme-to-json/serializer'],
-    setupFiles: ['<rootDir>/src/setupTests.ts'],
+    setupFilesAfterEnv: ['<rootDir>/src/setupTests.ts'],
   };
