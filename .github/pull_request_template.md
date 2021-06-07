@@ -10,7 +10,7 @@
 
 ### JIRA link(s):
 
-- [AHOYAPPS-0000](https://issues.corp.twilio.com/browse/AHOYAPPS-0000)
+- [VIDEO-0000](https://issues.corp.twilio.com/browse/VIDEO-0000)
 
 ### Description
 
