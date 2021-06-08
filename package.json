@@ -6,19 +6,27 @@
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
+    "@twilio-labs/serverless-api": "5.0.0",
     "@types/node": "^12.0.0",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
+    "cli-ux": "5.5.1",
+    "dotenv": "10.0.0",
+    "nanoid": "3.1.23",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "4.0.3",
+    "twilio": "3.63.1",
     "web-vitals": "^1.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "jest",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "serverless:deploy": "npm run build && node serverless/scripts/deploy.js",
+    "serverless:remove": "node serverless/scripts/remove.js",
+    "serverless:list": "node serverless/scripts/list.js"
   },
   "eslintConfig": {
     "extends": [
