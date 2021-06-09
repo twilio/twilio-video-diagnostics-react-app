@@ -47,6 +47,7 @@ async function deployFunctions() {
     env: {
       API_KEY: api_key.sid,
       API_SECRET: api_key.secret,
+      VIDEO_IDENTITY: constants.VIDEO_IDENTITY,
       APP_EXPIRY: Date.now() + 1000 * 60 * 60 * 24 * 7, // One week
     },
     pkgJson: {},

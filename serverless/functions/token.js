@@ -5,9 +5,7 @@ exports.handler = function (context, event, callback) {
   const AccessToken = Twilio.jwt.AccessToken;
   const VideoGrant = AccessToken.VideoGrant;
 
-  const videoGrant = new VideoGrant({
-    room: event.room_name
-  });
+  const videoGrant = new VideoGrant();
 
   const token = new AccessToken(context.ACCOUNT_SID, context.API_KEY, context.API_SECRET, {
     ttl: 60,
