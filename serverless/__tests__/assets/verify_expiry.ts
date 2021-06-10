@@ -28,8 +28,8 @@ describe('the verify_expiry asset', () => {
       body: {
         error: {
           explanation:
-            'The passcode used to validate application users has expired. Re-deploy the application to refresh the passcode.',
-          message: 'passcode expired',
+            'The token server has expired. Re-deploy the application to refresh the token server.',
+          message: 'token server expired',
         },
       },
       headers: { 'Content-Type': 'application/json' },
