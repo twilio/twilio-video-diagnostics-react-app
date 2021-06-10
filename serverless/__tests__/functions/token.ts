@@ -5,7 +5,6 @@ const mockContext = {
   API_KEY: 'mockkey',
   API_SECRET: 'mocksecret',
   ACCOUNT_SID: 'mocksid',
-  TWIML_APP_SID: 'mockappsid',
   VIDEO_IDENTITY: 'test-identity',
 };
 
