@@ -5,9 +5,9 @@ exports.handler = function (context, event, callback) {
       response.setStatusCode(401);
       response.setBody({
         error: {
-          message: 'passcode expired',
+          message: 'token server expired',
           explanation:
-            'The passcode used to validate application users has expired. Re-deploy the application to refresh the passcode.',
+            'The token server has expired. Re-deploy the application to refresh the token server.',
         },
       });
       return callback(null, response);
