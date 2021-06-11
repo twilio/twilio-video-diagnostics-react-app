@@ -1,7 +1,13 @@
 import React from 'react';
+import { AppStateProvider } from './components/AppStateProvider';
+import Header from './components/Header';
 
 function App() {
-  return <div>Twilio Video Diagnostics App</div>;
+  return (
+    <AppStateProvider>
+      <Header />
+    </AppStateProvider>
+  );
 }
 
 export default App;
