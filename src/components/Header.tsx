@@ -11,11 +11,11 @@ const useStyles = makeStyles((theme: Theme) =>
       left: 0,
       right: 0,
       top: 0,
-      bottom: 'calc(100% - 100px)',
+      bottom: `calc(100% - ${theme.navHeight}px)`,
       background: '#E5E5E5',
-      borderBottom: '2px solid #CACDD8',
       display: 'flex',
       justifyContent: 'center',
+      zIndex: 100,
     },
     innerContainer: {
       display: 'flex',
@@ -31,12 +31,28 @@ const useStyles = makeStyles((theme: Theme) =>
     breadcrumb: {
       cursor: 'pointer',
     },
+    progressBar: {
+      position: 'absolute',
+      left: 0,
+      right: 0,
+      bottom: 0,
+      top: 'calc(100% - 2px)',
+      background: 'grey',
+    },
+    progressBarForeground: {
+      background: '#0263E0',
+      width: '0',
+      height: '100%',
+      transition: 'width 1s ease',
+    },
   })
 );
 
 export default function Header() {
   const classes = useStyles();
   const { activePane, setActivePane } = useAppStateContext();
+
+  const numberOfPanes = Object.keys(ActivePane).length / 2;
 
   return (
     <div className={classes.header}>
@@ -65,6 +81,13 @@ export default function Header() {
         >
           <Typography>Results</Typography>
         </div>
+      </div>
+
+      <div className={classes.progressBar}>
+        <div
+          className={classes.progressBarForeground}
+          style={{ width: `${(activePane / (numberOfPanes - 1)) * 100}%` }}
+        />
       </div>
     </div>
   );
