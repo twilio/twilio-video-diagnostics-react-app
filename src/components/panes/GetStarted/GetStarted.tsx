@@ -7,7 +7,7 @@ export function GetStarted() {
 
   return (
     <Container>
-      <Grid container justify="space-between">
+      <Grid container alignItems="center" justify="space-between">
         <Grid item lg={5}>
           <Typography variant="h1" gutterBottom>
             Let's get started.
@@ -23,7 +23,15 @@ export function GetStarted() {
         </Grid>
 
         <Grid item lg={5}>
-          <img src={Hello} alt="Hello" />
+          {/* 
+          The size of the image is explicitly stated here so that this content can properly be centered vertically
+          before the image is loaded.
+          */}
+          <img src={Hello} alt="Hello" style={{ width: '284px', height: '284px' }} />
+          <Typography variant="body1" color="textSecondary">
+            <strong>Not sure about something?</strong> Skip that section for now, and your support administrator can
+            help later.
+          </Typography>
         </Grid>
       </Grid>
     </Container>

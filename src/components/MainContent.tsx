@@ -46,6 +46,9 @@ const useStyles = makeStyles((theme: Theme) =>
         '&:first-child': {
           marginBottom: '1.5em',
         },
+        '&[disabled]': {
+          visibility: 'hidden',
+        },
       },
     },
     brandSidebar: {
@@ -67,6 +70,7 @@ function Item({ children, isActive, onClick }) {
   useEffect(() => {
     if (isActive) {
       const el = ref.current;
+      console.log(el.offsetTop, el.offsetHeight);
       const offset = el.offsetTop + el.offsetHeight * 0.5;
       el.parentElement.style.transform = `translateY(calc(50vh - ${offset}px + ${theme.navHeight / 2}px))`;
     }
@@ -95,7 +99,8 @@ const content = [
 export function MainContent() {
   const classes = useStyles();
   const { activePane, setActivePane } = useAppStateContext();
-
+  const a = ActivePane[activePane];
+  console.log(a);
   return (
     <>
       <div className={classes.contentContainer}>
@@ -112,10 +117,18 @@ export function MainContent() {
         </div>
       </div>
       <div className={classes.buttonContainer}>
-        <Button variant="outlined" onClick={() => setActivePane((pane: ActivePane) => pane - 1)}>
+        <Button
+          variant="outlined"
+          onClick={() => setActivePane((pane: ActivePane) => pane - 1)}
+          disabled={!ActivePane[activePane - 1]}
+        >
           <ArrowUp />
         </Button>
-        <Button variant="outlined" onClick={() => setActivePane((pane: ActivePane) => pane + 1)}>
+        <Button
+          variant="outlined"
+          onClick={() => setActivePane((pane: ActivePane) => pane + 1)}
+          disabled={!ActivePane[activePane + 1]}
+        >
           <ArrowDown />
         </Button>
       </div>

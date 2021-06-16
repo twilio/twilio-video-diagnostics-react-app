@@ -116,6 +116,9 @@ export default createMuiTheme({
     primary: {
       main: '#0263E0',
     },
+    text: {
+      secondary: '#606B85',
+    },
   },
   navHeight: 100,
   brandSidebarWidth: 250,
