@@ -7,7 +7,7 @@ import { useAppStateContext, ActivePane } from './AppStateProvider';
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     header: {
-      position: 'fixed',
+      position: 'absolute',
       left: 0,
       right: 0,
       top: 0,

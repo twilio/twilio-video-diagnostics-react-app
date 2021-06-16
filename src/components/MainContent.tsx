@@ -6,8 +6,8 @@ import { GetStarted } from './panes/GetStarted/GetStarted';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    container: {
-      position: 'fixed',
+    contentContainer: {
+      position: 'absolute',
       top: '0',
       left: '50%',
       transform: 'translateX(-50%)',
@@ -31,6 +31,15 @@ const useStyles = makeStyles((theme: Theme) =>
     item: {
       transition: 'all 1s ease',
       padding: '3em 0',
+    },
+    buttonContainer: {},
+    brandSidebar: {
+      background: '#06033A',
+      position: 'fixed',
+      top: 0,
+      bottom: 0,
+      right: 0,
+      left: 'calc(100% - 250px)',
     },
   })
 );
@@ -73,18 +82,21 @@ export function MainContent() {
   const { activePane, setActivePane } = useAppStateContext();
 
   return (
-    <div className={classes.container}>
-      <div
-        className={clsx(classes.scrollContainer, {
-          [classes.hideAll]: activePane === 0,
-        })}
-      >
-        {content.map((pane, i) => (
-          <Item key={i} isActive={activePane === pane.pane} onClick={() => setActivePane(pane.pane)}>
-            {pane.component}
-          </Item>
-        ))}
+    <>
+      <div className={classes.contentContainer}>
+        <div
+          className={clsx(classes.scrollContainer, {
+            [classes.hideAll]: activePane === 0,
+          })}
+        >
+          {content.map((pane, i) => (
+            <Item key={i} isActive={activePane === pane.pane} onClick={() => setActivePane(pane.pane)}>
+              {pane.component}
+            </Item>
+          ))}
+        </div>
       </div>
-    </div>
+      <div className={classes.buttonContainer}></div>
+    </>
   );
 }

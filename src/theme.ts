@@ -3,11 +3,15 @@ import { createMuiTheme } from '@material-ui/core';
 declare module '@material-ui/core/styles/createMuiTheme' {
   interface Theme {
     navHeight: number;
+    brandSidebarWidth: number;
+    backgroundColor: string;
   }
 
   // allow configuration using `createMuiTheme`
   interface ThemeOptions {
     navHeight: number;
+    brandSidebarWidth: number;
+    backgroundColor: string;
   }
 }
 
@@ -19,7 +23,6 @@ export default createMuiTheme({
       '@global': {
         'html, body, #root': {
           height: '100%',
-          background: '#f4f4f6',
         },
       },
     },
@@ -115,4 +118,6 @@ export default createMuiTheme({
     },
   },
   navHeight: 100,
+  brandSidebarWidth: 250,
+  backgroundColor: '#f4f4f6',
 });
