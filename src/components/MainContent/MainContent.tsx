@@ -1,10 +1,10 @@
 import { useEffect, useRef } from 'react';
 import clsx from 'clsx';
-import { ArrowUp } from '../icons/ArrowUp';
-import { ArrowDown } from '../icons/ArrowDown';
+import { ArrowUp } from '../../icons/ArrowUp';
+import { ArrowDown } from '../../icons/ArrowDown';
 import { Button, createStyles, makeStyles, Theme, useTheme } from '@material-ui/core';
-import { ActivePane, useAppStateContext } from './AppStateProvider';
-import { GetStarted } from './panes/GetStarted/GetStarted';
+import { ActivePane, useAppStateContext } from '../AppStateProvider/AppStateProvider';
+import { GetStarted } from '../panes/GetStarted/GetStarted';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

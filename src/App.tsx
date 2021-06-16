@@ -1,8 +1,8 @@
 import { createStyles, makeStyles, Theme } from '@material-ui/core';
 import React from 'react';
-import { AppStateProvider } from './components/AppStateProvider';
-import Header from './components/Header';
-import { MainContent } from './components/MainContent';
+import { AppStateProvider } from './components/AppStateProvider/AppStateProvider';
+import Header from './components/Header/Header';
+import { MainContent } from './components/MainContent/MainContent';
 import { Logo } from './icons/Logo';
 
 const useStyles = makeStyles((theme: Theme) =>

@@ -1,4 +1,4 @@
-import { ActivePane, useAppStateContext } from '../../AppStateProvider';
+import { ActivePane, useAppStateContext } from '../../AppStateProvider/AppStateProvider';
 import { Button, Container, Grid, Typography } from '@material-ui/core';
 import Hello from './Hello.png';
 

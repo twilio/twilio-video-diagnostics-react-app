@@ -1,8 +1,8 @@
-import { ChevronRight } from '../icons/ChevronRight';
+import { ChevronRight } from '../../icons/ChevronRight';
 import clsx from 'clsx';
 import { Container, Grid, Typography } from '@material-ui/core';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
-import { useAppStateContext, ActivePane } from './AppStateProvider';
+import { useAppStateContext, ActivePane } from '../AppStateProvider/AppStateProvider';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
