@@ -40,7 +40,10 @@
       "react-app/jest"
     ],
     "rules": {
-      "no-shadow": "warn"
+      "no-shadow": "off",
+      "@typescript-eslint/no-shadow": [
+        "warn"
+      ]
     }
   },
   "browserslist": {
