@@ -3,6 +3,7 @@ import React from 'react';
 import { AppStateProvider } from './components/AppStateProvider';
 import Header from './components/Header';
 import { MainContent } from './components/MainContent';
+import { Logo } from './icons/Logo';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -20,6 +21,11 @@ const useStyles = makeStyles((theme: Theme) =>
       bottom: 0,
       right: 0,
       left: `calc(100% - ${theme.brandSidebarWidth}px)`,
+      '& svg': {
+        position: 'absolute',
+        right: 0,
+        bottom: 40,
+      },
     },
   })
 );
@@ -32,7 +38,9 @@ function App() {
       <div className={classes.appContainer}>
         <Header />
         <MainContent />
-        <div className={classes.brandSidebar}></div>
+        <div className={classes.brandSidebar}>
+          <Logo />
+        </div>
       </div>
     </AppStateProvider>
   );
