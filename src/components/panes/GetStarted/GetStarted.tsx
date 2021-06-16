@@ -12,21 +12,16 @@ export function GetStarted() {
           <Typography variant="h1" gutterBottom>
             Let's get started.
           </Typography>
+
           <Typography variant="body1" gutterBottom>
             We'll help you solve any video troubles you're experiencing but first, let's check your setup.
           </Typography>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() => {
-              console.log(setActivePane);
-              console.log(ActivePane.Connectivity);
-              setActivePane(ActivePane.Connectivity);
-            }}
-          >
+
+          <Button variant="contained" color="primary" onClick={() => setActivePane(ActivePane.DeviceSetup)}>
             Get started
           </Button>
         </Grid>
+
         <Grid item lg={5}>
           <img src={Hello} alt="Hello" />
         </Grid>

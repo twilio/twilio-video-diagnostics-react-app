@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import clsx from 'clsx';
 import { createStyles, makeStyles, Theme, useTheme } from '@material-ui/core';
 import { ActivePane, useAppStateContext } from './AppStateProvider';
+import { GetStarted } from './panes/GetStarted/GetStarted';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -18,6 +19,7 @@ const useStyles = makeStyles((theme: Theme) =>
       '& .inactive': {
         opacity: 0.2,
         userSelect: 'none',
+        cursor: 'pointer',
       },
     },
     hideAll: {
@@ -28,7 +30,6 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     item: {
       transition: 'all 1s ease',
-      cursor: 'pointer',
       padding: '3em 0',
     },
   })
@@ -48,18 +49,23 @@ function Item({ children, isActive, onClick }) {
   }, [isActive, theme.navHeight]);
 
   return (
-    <div ref={ref} className={clsx(classes.item, { inactive: !isActive })} onClick={onClick} aria-hidden={!isActive}>
+    <div
+      ref={ref}
+      className={clsx(classes.item, { inactive: !isActive })}
+      onClick={!isActive && onClick}
+      aria-hidden={!isActive}
+    >
       {children}
     </div>
   );
 }
 
 const content = [
-  { pane: ActivePane.GetStarted, component: <h1>Get Started!</h1> },
-  { pane: ActivePane.DeviceSetup, component: <h1>Hello!</h1> },
-  { pane: ActivePane.Connectivity, component: <h1>Hello! 2</h1> },
-  { pane: ActivePane.Quality, component: <h1>Hello! 3</h1> },
-  { pane: ActivePane.Results, component: <h1>Hello! 4</h1> },
+  { pane: ActivePane.GetStarted, component: <GetStarted /> },
+  { pane: ActivePane.DeviceSetup, component: <GetStarted /> },
+  { pane: ActivePane.Connectivity, component: <GetStarted /> },
+  { pane: ActivePane.Quality, component: <GetStarted /> },
+  { pane: ActivePane.Results, component: <GetStarted /> },
 ];
 
 export function MainContent() {
