@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import clsx from 'clsx';
 import { createStyles, makeStyles, Theme, useTheme } from '@material-ui/core';
 import { ActivePane, useAppStateContext } from './AppStateProvider';
@@ -45,7 +45,7 @@ function Item({ children, isActive, onClick }) {
       const offset = el.offsetTop + el.offsetHeight * 0.5;
       el.parentElement.style.transform = `translateY(calc(50vh - ${offset}px + ${theme.navHeight / 2}px))`;
     }
-  }, [isActive]);
+  }, [isActive, theme.navHeight]);
 
   return (
     <div ref={ref} className={clsx(classes.item, { inactive: !isActive })} onClick={onClick} aria-hidden={!isActive}>

@@ -19,7 +19,13 @@ export default createMuiTheme({
       '@global': {
         'html, body, #root': {
           height: '100%',
+          background: '#f4f4f6',
         },
+      },
+    },
+    MuiContainer: {
+      root: {
+        width: '900px',
       },
     },
     MuiButton: {
@@ -53,7 +59,7 @@ export default createMuiTheme({
     },
     MuiTypography: {
       body1: {
-        color: 'rgb(40, 42, 43)',
+        color: '#121C2D',
         fontSize: '0.9rem',
       },
     },

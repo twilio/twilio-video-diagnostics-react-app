@@ -1,7 +1,8 @@
 import React from 'react';
+import { ChevronRight } from '../icons/ChevronRight';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import { useAppStateContext, ActivePane } from './AppStateProvider';
-import { Typography } from '@material-ui/core';
+import { Container, Grid, Typography } from '@material-ui/core';
 import clsx from 'clsx';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -12,24 +13,25 @@ const useStyles = makeStyles((theme: Theme) =>
       right: 0,
       top: 0,
       bottom: `calc(100% - ${theme.navHeight}px)`,
-      background: '#E5E5E5',
       display: 'flex',
       justifyContent: 'center',
       zIndex: 100,
     },
-    innerContainer: {
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-      width: '750px',
+    breadcrumb: {
+      cursor: 'pointer',
+      '& p': {
+        fontWeight: 'bold',
+        color: '#AEB2C1',
+        paddingRight: '2em',
+      },
+      '&:last-child svg': {
+        display: 'none',
+      },
     },
     active: {
       '& p': {
-        fontWeight: 'bold',
+        color: theme.overrides.MuiTypography.body1.color,
       },
-    },
-    breadcrumb: {
-      cursor: 'pointer',
     },
     progressBar: {
       position: 'absolute',
@@ -37,7 +39,7 @@ const useStyles = makeStyles((theme: Theme) =>
       right: 0,
       bottom: 0,
       top: 'calc(100% - 2px)',
-      background: 'grey',
+      background: '#CACDD8',
     },
     progressBarForeground: {
       background: '#0263E0',
@@ -48,40 +50,39 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export default function Header() {
+function HeaderItem({ label, pane }: { label: string; pane: ActivePane }) {
   const classes = useStyles();
   const { activePane, setActivePane } = useAppStateContext();
+
+  return (
+    <div
+      className={clsx(classes.breadcrumb, { [classes.active]: activePane >= pane })}
+      onClick={() => setActivePane(pane)}
+    >
+      <Grid container alignItems="center">
+        <Typography variant="body1">{label}</Typography>
+        <ChevronRight />
+      </Grid>
+    </div>
+  );
+}
+
+export default function Header() {
+  const classes = useStyles();
+  const { activePane } = useAppStateContext();
 
   const numberOfPanes = Object.keys(ActivePane).length / 2;
 
   return (
     <div className={classes.header}>
-      <div className={classes.innerContainer}>
-        <div
-          className={clsx(classes.breadcrumb, { [classes.active]: activePane >= ActivePane.DeviceSetup })}
-          onClick={() => setActivePane(ActivePane.DeviceSetup)}
-        >
-          <Typography>Device & Network Setup</Typography>
-        </div>
-        <div
-          className={clsx(classes.breadcrumb, { [classes.active]: activePane >= ActivePane.Connectivity })}
-          onClick={() => setActivePane(ActivePane.Connectivity)}
-        >
-          <Typography>Connectivity</Typography>
-        </div>
-        <div
-          className={clsx(classes.breadcrumb, { [classes.active]: activePane >= ActivePane.Quality })}
-          onClick={() => setActivePane(ActivePane.Quality)}
-        >
-          <Typography>Quality & Performance</Typography>
-        </div>
-        <div
-          className={clsx(classes.breadcrumb, { [classes.active]: activePane >= ActivePane.Results })}
-          onClick={() => setActivePane(ActivePane.Results)}
-        >
-          <Typography>Results</Typography>
-        </div>
-      </div>
+      <Container>
+        <Grid container alignItems="center" justify="space-between" style={{ height: '100%' }}>
+          <HeaderItem pane={ActivePane.DeviceSetup} label="Device & Network Setup" />
+          <HeaderItem pane={ActivePane.Connectivity} label="Connectivity" />
+          <HeaderItem pane={ActivePane.Quality} label="Quality and Performance" />
+          <HeaderItem pane={ActivePane.Results} label="Results" />
+        </Grid>
+      </Container>
 
       <div className={classes.progressBar}>
         <div
