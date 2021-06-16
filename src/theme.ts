@@ -25,7 +25,7 @@ export default createMuiTheme({
     },
     MuiContainer: {
       root: {
-        width: '900px',
+        width: '800px',
       },
     },
     MuiButton: {
@@ -55,12 +55,6 @@ export default createMuiTheme({
       },
       startIcon: {
         marginRight: '6px',
-      },
-    },
-    MuiTypography: {
-      body1: {
-        color: '#121C2D',
-        fontSize: '0.9rem',
       },
     },
     MuiInputBase: {
@@ -96,13 +90,28 @@ export default createMuiTheme({
         borderColor: 'rgb(136, 140, 142)',
       },
     },
+    MuiTypography: {
+      gutterBottom: {
+        marginBottom: '36px',
+      },
+    },
   },
   typography: {
     fontFamily: 'Inter, sans-serif',
+    h1: {
+      color: '#121C2D',
+      fontSize: '2rem',
+      fontWeight: 700,
+    },
+    body1: {
+      color: '#121C2D',
+      fontSize: '0.9rem',
+      lineHeight: '1.5rem',
+    },
   },
   palette: {
     primary: {
-      main: '#027AC5',
+      main: '#0263E0',
     },
   },
   navHeight: 100,

@@ -24,7 +24,7 @@ export function useAppStateContext() {
 }
 
 export const AppStateProvider: React.FC = ({ children }) => {
-  const [activePane, setActivePane] = useState(ActivePane.DeviceSetup);
+  const [activePane, setActivePane] = useState(ActivePane.GetStarted);
 
   return <AppStateContext.Provider value={{ activePane, setActivePane }}>{children}</AppStateContext.Provider>;
 };

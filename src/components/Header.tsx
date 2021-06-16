@@ -1,9 +1,8 @@
-import React from 'react';
 import { ChevronRight } from '../icons/ChevronRight';
+import clsx from 'clsx';
+import { Container, Grid, Typography } from '@material-ui/core';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import { useAppStateContext, ActivePane } from './AppStateProvider';
-import { Container, Grid, Typography } from '@material-ui/core';
-import clsx from 'clsx';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -16,6 +15,7 @@ const useStyles = makeStyles((theme: Theme) =>
       display: 'flex',
       justifyContent: 'center',
       zIndex: 100,
+      background: 'inherit',
     },
     breadcrumb: {
       cursor: 'pointer',
@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     active: {
       '& p': {
-        color: theme.overrides.MuiTypography.body1.color,
+        color: theme.typography.body1.color,
       },
     },
     progressBar: {
@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme: Theme) =>
       background: '#CACDD8',
     },
     progressBarForeground: {
-      background: '#0263E0',
+      background: theme.palette.primary.main,
       width: '0',
       height: '100%',
       transition: 'width 1s ease',
