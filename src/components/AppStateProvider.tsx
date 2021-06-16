@@ -10,7 +10,7 @@ export enum ActivePane {
 
 type AppStateContextType = {
   activePane: ActivePane;
-  setActivePane: (pane: ActivePane) => void;
+  setActivePane: React.Dispatch<React.SetStateAction<ActivePane>>;
 };
 
 export const AppStateContext = createContext<AppStateContextType>(null!);

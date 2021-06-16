@@ -1,6 +1,8 @@
 import { useEffect, useRef } from 'react';
 import clsx from 'clsx';
-import { createStyles, makeStyles, Theme, useTheme } from '@material-ui/core';
+import { ArrowUp } from '../icons/ArrowUp';
+import { ArrowDown } from '../icons/ArrowDown';
+import { Button, createStyles, makeStyles, Theme, useTheme } from '@material-ui/core';
 import { ActivePane, useAppStateContext } from './AppStateProvider';
 import { GetStarted } from './panes/GetStarted/GetStarted';
 
@@ -32,7 +34,20 @@ const useStyles = makeStyles((theme: Theme) =>
       transition: 'all 1s ease',
       padding: '3em 0',
     },
-    buttonContainer: {},
+    buttonContainer: {
+      position: 'absolute',
+      bottom: 30,
+      right: 30,
+      display: 'flex',
+      flexDirection: 'column',
+      '& button': {
+        minWidth: 0,
+        padding: '0.6em 0.9em',
+        '&:first-child': {
+          marginBottom: '1.5em',
+        },
+      },
+    },
     brandSidebar: {
       background: '#06033A',
       position: 'fixed',
@@ -96,7 +111,14 @@ export function MainContent() {
           ))}
         </div>
       </div>
-      <div className={classes.buttonContainer}></div>
+      <div className={classes.buttonContainer}>
+        <Button variant="outlined" onClick={() => setActivePane((pane: ActivePane) => pane - 1)}>
+          <ArrowUp />
+        </Button>
+        <Button variant="outlined" onClick={() => setActivePane((pane: ActivePane) => pane + 1)}>
+          <ArrowDown />
+        </Button>
+      </div>
     </>
   );
 }
