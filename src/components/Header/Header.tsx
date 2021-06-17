@@ -79,8 +79,8 @@ export default function Header() {
         <Grid container alignItems="center" justify="space-between" style={{ height: '100%' }}>
           <HeaderItem pane={ActivePane.DeviceSetup} label="Device & Network Setup" />
           <HeaderItem pane={ActivePane.Connectivity} label="Connectivity" />
-          <HeaderItem pane={ActivePane.Quality} label="Quality and Performance" />
-          <HeaderItem pane={ActivePane.Results} label="Results" />
+          <HeaderItem pane={ActivePane.Quality} label="Quality & Performance" />
+          <HeaderItem pane={ActivePane.Results} label="Get Results" />
         </Grid>
       </Container>
 
