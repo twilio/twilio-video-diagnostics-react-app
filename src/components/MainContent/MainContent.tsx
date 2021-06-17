@@ -1,10 +1,10 @@
-import { useEffect, useRef } from 'react';
-import clsx from 'clsx';
-import { ArrowUp } from '../../icons/ArrowUp';
-import { ArrowDown } from '../../icons/ArrowDown';
-import { Button, createStyles, makeStyles, Theme, useTheme } from '@material-ui/core';
 import { ActivePane, useAppStateContext } from '../AppStateProvider/AppStateProvider';
+import { ArrowDown } from '../../icons/ArrowDown';
+import { ArrowUp } from '../../icons/ArrowUp';
+import { Button, createStyles, makeStyles, Theme, useTheme } from '@material-ui/core';
+import clsx from 'clsx';
 import { GetStarted } from '../panes/GetStarted/GetStarted';
+import { useEffect, useRef } from 'react';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -62,17 +62,24 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-function Item({ children, isActive, onClick }) {
+export function Item({
+  children,
+  isActive,
+  onClick,
+}: {
+  children: React.ReactNode;
+  isActive: boolean;
+  onClick: () => void;
+}) {
   const theme = useTheme();
   const classes = useStyles();
-  const ref = useRef<HTMLDivElement>();
+  const ref = useRef<HTMLDivElement>(null!);
 
   useEffect(() => {
     if (isActive) {
       const el = ref.current;
-      console.log(el.offsetTop, el.offsetHeight);
       const offset = el.offsetTop + el.offsetHeight * 0.5;
-      el.parentElement.style.transform = `translateY(calc(50vh - ${offset}px + ${theme.navHeight / 2}px))`;
+      el.parentElement!.style.transform = `translateY(calc(50vh - ${offset}px + ${theme.navHeight / 2}px))`;
     }
   }, [isActive, theme.navHeight]);
 
@@ -80,8 +87,9 @@ function Item({ children, isActive, onClick }) {
     <div
       ref={ref}
       className={clsx(classes.item, { inactive: !isActive })}
-      onClick={!isActive && onClick}
+      onClick={!isActive ? onClick : undefined}
       aria-hidden={!isActive}
+      data-testid={`item-container`}
     >
       {children}
     </div>
@@ -99,8 +107,7 @@ const content = [
 export function MainContent() {
   const classes = useStyles();
   const { activePane, setActivePane } = useAppStateContext();
-  const a = ActivePane[activePane];
-  console.log(a);
+
   return (
     <>
       <div className={classes.contentContainer}>
