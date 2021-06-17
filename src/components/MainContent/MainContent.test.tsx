@@ -20,7 +20,7 @@ describe('the MainContent component', () => {
     expect(wrapper.find(Item).find({ isActive: true }).length).toBe(1);
   });
 
-  it('should set the correct props on active items', () => {
+  it('should set the correct props on inactive items', () => {
     mockUseAppStateContext.mockImplementation(() => ({ activePane: 1, setActivePane: jest.fn() }));
     const wrapper = shallow(<MainContent />);
     const item = wrapper.find(Item).at(0).dive();
@@ -29,7 +29,7 @@ describe('the MainContent component', () => {
     expect(item.prop('onClick')).toEqual(expect.any(Function));
   });
 
-  it('should set the correct props on inactive items', () => {
+  it('should set the correct props on active items', () => {
     mockUseAppStateContext.mockImplementation(() => ({ activePane: 1, setActivePane: jest.fn() }));
     const wrapper = shallow(<MainContent />);
     const item = wrapper.find(Item).at(1).dive();
