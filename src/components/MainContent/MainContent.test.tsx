@@ -1,26 +1,26 @@
-import { shallow, mount } from 'enzyme';
-import { ActivePane, useAppStateContext } from '../AppStateProvider/AppStateProvider';
-import { Item, MainContent } from './MainContent';
-import { render } from '@testing-library/react';
 import { act } from 'react-dom/test-utils';
-import { Button, MuiThemeProvider } from '@material-ui/core';
-import theme from '../../theme';
-import { ArrowUp } from '../../icons/ArrowUp';
+import { ActivePane, useAppStateContext } from '../AppStateProvider/AppStateProvider';
 import { ArrowDown } from '../../icons/ArrowDown';
+import { ArrowUp } from '../../icons/ArrowUp';
+import { Button, MuiThemeProvider } from '@material-ui/core';
+import { Item, MainContent } from './MainContent';
+import { shallow, mount } from 'enzyme';
+import { render } from '@testing-library/react';
+import theme from '../../theme';
 
 jest.mock('../AppStateProvider/AppStateProvider');
 
 const mockUseAppStateContext = useAppStateContext as jest.Mock<any>;
 
 describe('the MainContent component', () => {
-  it('should', () => {
+  it('should set the isActive prop on the active pant', () => {
     mockUseAppStateContext.mockImplementation(() => ({ activePane: 1, setActivePane: jest.fn() }));
     const wrapper = shallow(<MainContent />);
     expect(wrapper.find(Item).at(1).prop('isActive')).toBe(true);
     expect(wrapper.find(Item).find({ isActive: true }).length).toBe(1);
   });
 
-  it('should', () => {
+  it('should set a new pane as the activePane when it is clicked', () => {
     const mockSetActivePane = jest.fn();
     mockUseAppStateContext.mockImplementation(() => ({ activePane: 1, setActivePane: mockSetActivePane }));
     const wrapper = mount(<MainContent />);
@@ -28,15 +28,17 @@ describe('the MainContent component', () => {
     expect(mockSetActivePane).toHaveBeenCalledWith(2);
   });
 
-  it('should', () => {
+  it('should correctly center the list of Items based on the active pane', () => {
     mockUseAppStateContext.mockImplementation(() => ({ activePane: 0 }));
     const { getAllByTestId, rerender } = render(
       <MuiThemeProvider theme={theme}>
         <MainContent />
       </MuiThemeProvider>
     );
+
     const div = getAllByTestId('item-container')[1];
 
+    // js-dom doesn't compute heights, so here we must set the properties ourselves
     Object.defineProperties(div, {
       offsetTop: {
         value: 100,
@@ -45,7 +47,9 @@ describe('the MainContent component', () => {
         value: 119,
       },
     });
+
     act(() => {
+      // Sets a new active pane an rerenders
       mockUseAppStateContext.mockImplementation(() => ({ activePane: 1 }));
       rerender(
         <MuiThemeProvider theme={theme}>
@@ -53,32 +57,33 @@ describe('the MainContent component', () => {
         </MuiThemeProvider>
       );
     });
+
     expect(div.parentElement!.style.transform).toEqual(`translateY(calc(50vh - 159.5px + 50px))`);
   });
 
-  it('should', () => {
+  it('should disable the Up button when the first pane is active', () => {
     mockUseAppStateContext.mockImplementation(() => ({ activePane: 0 }));
     const wrapper = shallow(<MainContent />);
-    expect(wrapper.find(Button).at(0).prop('disabled')).toBe(true);
-    expect(wrapper.find(Button).at(1).prop('disabled')).toBe(false);
+    expect(wrapper.find(ArrowUp).parent().prop('disabled')).toBe(true);
+    expect(wrapper.find(ArrowDown).parent().prop('disabled')).toBe(false);
   });
 
-  it('should', () => {
+  it('should disable the Down button when the last pane is active', () => {
     const numberOfPanes = Object.keys(ActivePane).length / 2;
     mockUseAppStateContext.mockImplementation(() => ({ activePane: numberOfPanes }));
     const wrapper = shallow(<MainContent />);
-    expect(wrapper.find(Button).at(0).prop('disabled')).toBe(false);
-    expect(wrapper.find(Button).at(1).prop('disabled')).toBe(true);
+    expect(wrapper.find(ArrowUp).parent().at(0).prop('disabled')).toBe(false);
+    expect(wrapper.find(ArrowDown).parent().prop('disabled')).toBe(true);
   });
 
-  it('should', () => {
+  it('should not disable any buttons when the active pane is not the first or last', () => {
     mockUseAppStateContext.mockImplementation(() => ({ activePane: 1 }));
     const wrapper = shallow(<MainContent />);
-    expect(wrapper.find(Button).at(0).prop('disabled')).toBe(false);
-    expect(wrapper.find(Button).at(1).prop('disabled')).toBe(false);
+    expect(wrapper.find(ArrowUp).parent().prop('disabled')).toBe(false);
+    expect(wrapper.find(ArrowDown).parent().prop('disabled')).toBe(false);
   });
 
-  it('should', () => {
+  it('should decrement the active pane when the Up button is clicked', () => {
     const mockSetActivePane = jest.fn();
     mockUseAppStateContext.mockImplementation(() => ({
       activePane: 1,
@@ -89,7 +94,7 @@ describe('the MainContent component', () => {
     expect(mockSetActivePane).toHaveBeenCalledWith(0);
   });
 
-  it('should', () => {
+  it('should increment the active pane when the Down button is clicked', () => {
     const mockSetActivePane = jest.fn();
     mockUseAppStateContext.mockImplementation(() => ({
       activePane: 1,
