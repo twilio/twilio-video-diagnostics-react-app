@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme: Theme) =>
     breadcrumb: {
       cursor: 'pointer',
       '& p': {
-        fontWeight: 'bold',
+        fontWeight: 600,
         color: '#AEB2C1',
         paddingRight: '2em',
       },

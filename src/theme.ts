@@ -37,6 +37,7 @@ export default createMuiTheme({
         textTransform: 'none',
         color: 'rgb(40, 42, 43)',
         fontSize: '0.9rem',
+        fontWeight: 600,
         transition: defaultTheme.transitions.create(['background-color', 'box-shadow', 'border', 'color'], {
           duration: defaultTheme.transitions.duration.short,
         }),
