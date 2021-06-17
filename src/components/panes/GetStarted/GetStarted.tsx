@@ -8,7 +8,7 @@ export function GetStarted() {
   return (
     <Container>
       <Grid container alignItems="center" justify="space-between">
-        <Grid item lg={5}>
+        <Grid item md={5}>
           <Typography variant="h1" gutterBottom>
             Let's get started.
           </Typography>
@@ -22,7 +22,7 @@ export function GetStarted() {
           </Button>
         </Grid>
 
-        <Grid item lg={5}>
+        <Grid item md={5}>
           {/* 
           The size of the image is explicitly stated here so that this content can properly be centered vertically
           before the image is loaded.
