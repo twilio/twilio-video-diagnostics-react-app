@@ -2,8 +2,8 @@ import { act } from 'react-dom/test-utils';
 import { ActivePane, useAppStateContext } from '../AppStateProvider/AppStateProvider';
 import { ArrowDown } from '../../icons/ArrowDown';
 import { ArrowUp } from '../../icons/ArrowUp';
-import { Button, MuiThemeProvider } from '@material-ui/core';
 import { Item, MainContent } from './MainContent';
+import { MuiThemeProvider } from '@material-ui/core';
 import { shallow, mount } from 'enzyme';
 import { render } from '@testing-library/react';
 import theme from '../../theme';
@@ -13,11 +13,29 @@ jest.mock('../AppStateProvider/AppStateProvider');
 const mockUseAppStateContext = useAppStateContext as jest.Mock<any>;
 
 describe('the MainContent component', () => {
-  it('should set the isActive prop on the active pant', () => {
+  it('should set the isActive prop on the active pane', () => {
     mockUseAppStateContext.mockImplementation(() => ({ activePane: 1, setActivePane: jest.fn() }));
     const wrapper = shallow(<MainContent />);
     expect(wrapper.find(Item).at(1).prop('isActive')).toBe(true);
     expect(wrapper.find(Item).find({ isActive: true }).length).toBe(1);
+  });
+
+  it('should set the correct props on active items', () => {
+    mockUseAppStateContext.mockImplementation(() => ({ activePane: 1, setActivePane: jest.fn() }));
+    const wrapper = shallow(<MainContent />);
+    const item = wrapper.find(Item).at(0).dive();
+    expect(item.prop('className')).toContain('inactive');
+    expect(item.prop('aria-hidden')).toBe(true);
+    expect(item.prop('onClick')).toEqual(expect.any(Function));
+  });
+
+  it('should set the correct props on inactive items', () => {
+    mockUseAppStateContext.mockImplementation(() => ({ activePane: 1, setActivePane: jest.fn() }));
+    const wrapper = shallow(<MainContent />);
+    const item = wrapper.find(Item).at(1).dive();
+    expect(item.prop('className')).not.toContain('inactive');
+    expect(item.prop('aria-hidden')).toBe(false);
+    expect(item.prop('onClick')).toBe(undefined);
   });
 
   it('should set a new pane as the activePane when it is clicked', () => {
