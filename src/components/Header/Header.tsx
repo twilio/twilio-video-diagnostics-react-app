@@ -77,7 +77,7 @@ export default function Header() {
     <div className={classes.header}>
       <Container>
         <Grid container alignItems="center" justify="space-between" style={{ height: '100%' }}>
-          <HeaderItem pane={ActivePane.DeviceSetup} label="Device & Network Setup" />
+          <HeaderItem pane={ActivePane.DeviceCheck} label="Device & Network Setup" />
           <HeaderItem pane={ActivePane.Connectivity} label="Connectivity" />
           <HeaderItem pane={ActivePane.Quality} label="Quality & Performance" />
           <HeaderItem pane={ActivePane.Results} label="Get Results" />

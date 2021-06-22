@@ -4,6 +4,9 @@ import { ArrowUp } from '../../icons/ArrowUp';
 import { Button, makeStyles, useTheme } from '@material-ui/core';
 import clsx from 'clsx';
 import { GetStarted } from '../panes/GetStarted/GetStarted';
+import { CheckPermissions } from '../panes/DeviceSetup/CheckPermissions';
+import { PermissionError } from '../panes/DeviceSetup/PermissionError';
+
 import { useEffect, useRef } from 'react';
 
 const useStyles = makeStyles({
@@ -97,7 +100,8 @@ export function Item({
 
 const content = [
   { pane: ActivePane.GetStarted, component: <GetStarted /> },
-  { pane: ActivePane.DeviceSetup, component: <GetStarted /> },
+  { pane: ActivePane.DeviceCheck, component: <CheckPermissions /> },
+  { pane: ActivePane.DeviceError, component: <PermissionError /> },
   { pane: ActivePane.Connectivity, component: <GetStarted /> },
   { pane: ActivePane.Quality, component: <GetStarted /> },
   { pane: ActivePane.Results, component: <GetStarted /> },
