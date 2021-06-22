@@ -5,6 +5,13 @@ import Hello from './Hello.png';
 export function GetStarted() {
   const { setActivePane } = useAppStateContext();
 
+  const checkDevicePermissions = async () => {
+    await navigator.mediaDevices.enumerateDevices().then((devices) => {
+      let devicesPermitted = devices.every((d) => d.label);
+      devicesPermitted ? setActivePane(ActivePane.Connectivity) : setActivePane(ActivePane.DeviceCheck);
+    });
+  };
+
   return (
     <Container>
       <Grid container alignItems="center" justify="space-between">
@@ -17,7 +24,7 @@ export function GetStarted() {
             We'll help you solve any video troubles you're experiencing but first, let's check your setup.
           </Typography>
 
-          <Button variant="contained" color="primary" onClick={() => setActivePane(ActivePane.DeviceSetup)}>
+          <Button variant="contained" color="primary" onClick={checkDevicePermissions}>
             Get started
           </Button>
         </Grid>
