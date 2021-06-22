@@ -2,7 +2,8 @@ import React, { createContext, useState, useContext } from 'react';
 
 export enum ActivePane {
   GetStarted,
-  DeviceSetup,
+  DeviceCheck,
+  DeviceError,
   Connectivity,
   Quality,
   Results,
@@ -11,6 +12,8 @@ export enum ActivePane {
 type AppStateContextType = {
   activePane: ActivePane;
   setActivePane: React.Dispatch<React.SetStateAction<ActivePane>>;
+  deviceError: Error;
+  setDeviceError: React.Dispatch<React.SetStateAction<Error>>;
 };
 
 export const AppStateContext = createContext<AppStateContextType>(null!);
@@ -25,6 +28,11 @@ export function useAppStateContext() {
 
 export const AppStateProvider: React.FC = ({ children }) => {
   const [activePane, setActivePane] = useState(ActivePane.GetStarted);
+  const [deviceError, setDeviceError] = useState<Error>();
 
-  return <AppStateContext.Provider value={{ activePane, setActivePane }}>{children}</AppStateContext.Provider>;
+  return (
+    <AppStateContext.Provider value={{ activePane, setActivePane, deviceError, setDeviceError }}>
+      {children}
+    </AppStateContext.Provider>
+  );
 };
