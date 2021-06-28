@@ -8,7 +8,9 @@ const mockUseAppStateContext = useAppStateContext as jest.Mock<any>;
 
 describe('the Header component', () => {
   it('should correctly show two active HeaderItems when the activePane is 2', () => {
-    mockUseAppStateContext.mockImplementation(() => ({ activePane: 2 }));
+    mockUseAppStateContext.mockImplementation(() => ({
+      state: { activePane: 3 },
+    }));
     const wrapper = mount(<Header />);
 
     expect(wrapper.find({ label: 'Device & Network Setup' }).find('div').at(0).prop('className')).toContain('active');
@@ -20,7 +22,7 @@ describe('the Header component', () => {
   });
 
   it('should correctly show four active HeaderItems when the activePane is 4', () => {
-    mockUseAppStateContext.mockImplementation(() => ({ activePane: 4 }));
+    mockUseAppStateContext.mockImplementation(() => ({ state: { activePane: 5 } }));
     const wrapper = mount(<Header />);
 
     expect(wrapper.find({ label: 'Device & Network Setup' }).find('div').at(0).prop('className')).toContain('active');
@@ -29,15 +31,15 @@ describe('the Header component', () => {
     expect(wrapper.find({ label: 'Get Results' }).find('div').at(0).prop('className')).toContain('active');
   });
 
-  it('should display the progress bar at 25% when the activePane is 1', () => {
-    mockUseAppStateContext.mockImplementation(() => ({ activePane: 1 }));
+  it('should display the progress bar at 20% when the activePane is 1', () => {
+    mockUseAppStateContext.mockImplementation(() => ({ state: { activePane: 1 } }));
     const wrapper = shallow(<Header />);
-    expect(wrapper.find('div').at(2).prop('style')).toEqual({ width: '25%' });
+    expect(wrapper.find('div').at(2).prop('style')).toEqual({ width: '20%' });
   });
 
-  it('should display the progress bar at 75% when the activePane is 3', () => {
-    mockUseAppStateContext.mockImplementation(() => ({ activePane: 3 }));
+  it('should display the progress bar at 60% when the activePane is 3', () => {
+    mockUseAppStateContext.mockImplementation(() => ({ state: { activePane: 3 } }));
     const wrapper = shallow(<Header />);
-    expect(wrapper.find('div').at(2).prop('style')).toEqual({ width: '75%' });
+    expect(wrapper.find('div').at(2).prop('style')).toEqual({ width: '60%' });
   });
 });

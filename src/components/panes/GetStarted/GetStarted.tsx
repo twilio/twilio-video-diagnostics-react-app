@@ -1,16 +1,9 @@
-import { ActivePane, useAppStateContext } from '../../AppStateProvider/AppStateProvider';
+import { useAppStateContext } from '../../AppStateProvider/AppStateProvider';
 import { Button, Container, Grid, Typography } from '@material-ui/core';
 import Hello from './Hello.png';
 
 export function GetStarted() {
-  const { setActivePane } = useAppStateContext();
-
-  const checkDevicePermissions = async () => {
-    await navigator.mediaDevices.enumerateDevices().then((devices) => {
-      let devicesPermitted = devices.every((d) => d.label);
-      devicesPermitted ? setActivePane(ActivePane.Connectivity) : setActivePane(ActivePane.DeviceCheck);
-    });
-  };
+  const { nextPane } = useAppStateContext();
 
   return (
     <Container>
@@ -24,7 +17,7 @@ export function GetStarted() {
             We'll help you solve any video troubles you're experiencing but first, let's check your setup.
           </Typography>
 
-          <Button variant="contained" color="primary" onClick={checkDevicePermissions}>
+          <Button variant="contained" color="primary" onClick={nextPane}>
             Get started
           </Button>
         </Grid>
