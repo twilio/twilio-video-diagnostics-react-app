@@ -32,9 +32,21 @@ const useStyles = makeStyles({
       visibility: 'hidden',
     },
   },
+  hideAfter: {
+    '& .active ~ $item': {
+      opacity: 0,
+      visibility: 'hidden',
+    },
+  },
   item: {
     transition: 'all 1s ease',
     padding: '3em 0',
+  },
+  hideItem: {
+    visibility: 'hidden',
+    maxHeight: 0,
+    transition: 'all 2s ease',
+    position: 'fixed',
   },
   buttonContainer: {
     position: 'absolute',
@@ -68,10 +80,12 @@ export function Item({
   children,
   isActive,
   onClick,
+  isHidden,
 }: {
   children: React.ReactNode;
   isActive: boolean;
   onClick: () => void;
+  isHidden: boolean;
 }) {
   const theme = useTheme();
   const classes = useStyles();
@@ -88,7 +102,7 @@ export function Item({
   return (
     <div
       ref={ref}
-      className={clsx(classes.item, { inactive: !isActive })}
+      className={clsx(classes.item, { inactive: !isActive, active: isActive, [classes.hideItem]: isHidden })}
       onClick={!isActive ? onClick : undefined}
       aria-hidden={!isActive}
       data-testid={`item-container`}
@@ -109,35 +123,48 @@ const content = [
 
 export function MainContent() {
   const classes = useStyles();
-  const { activePane, setActivePane } = useAppStateContext();
+  const { state, dispatch, nextPane } = useAppStateContext();
 
   return (
     <>
       <div className={classes.contentContainer}>
         <div
           className={clsx(classes.scrollContainer, {
-            [classes.hideAll]: activePane === 0,
+            [classes.hideAll]: state.activePane === 0,
+            [classes.hideAfter]:
+              state.activePane === ActivePane.DeviceCheck || state.activePane === ActivePane.DeviceError,
           })}
         >
-          {content.map((pane, i) => (
-            <Item key={i} isActive={activePane === pane.pane} onClick={() => setActivePane(pane.pane)}>
-              {pane.component}
-            </Item>
-          ))}
+          {content.map((pane, i) => {
+            return (
+              <Item
+                key={i}
+                isActive={state.activePane === pane.pane}
+                onClick={() => dispatch({ type: 'set-active-pane', newActivePane: pane.pane })}
+                isHidden={pane.pane === ActivePane.DeviceError && !state.deviceError}
+              >
+                {pane.component}
+              </Item>
+            );
+          })}
         </div>
       </div>
       <div className={classes.buttonContainer}>
         <Button
           variant="outlined"
-          onClick={() => setActivePane((pane: ActivePane) => pane - 1)}
-          disabled={!ActivePane[activePane - 1]}
+          onClick={() => dispatch({ type: 'previous-pane' })}
+          disabled={!ActivePane[state.activePane - 1]}
         >
           <ArrowUp />
         </Button>
         <Button
           variant="outlined"
-          onClick={() => setActivePane((pane: ActivePane) => pane + 1)}
-          disabled={!ActivePane[activePane + 1]}
+          onClick={nextPane}
+          disabled={
+            !ActivePane[state.activePane + 1] ||
+            state.activePane === ActivePane.DeviceCheck ||
+            state.activePane === ActivePane.DeviceError
+          }
         >
           <ArrowDown />
         </Button>
