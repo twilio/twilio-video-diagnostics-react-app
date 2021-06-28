@@ -18,7 +18,6 @@ const useStyles = makeStyles((theme: Theme) =>
       background: 'inherit',
     },
     breadcrumb: {
-      cursor: 'pointer',
       '& p': {
         fontWeight: 600,
         color: '#AEB2C1',
@@ -52,13 +51,10 @@ const useStyles = makeStyles((theme: Theme) =>
 
 function HeaderItem({ label, pane }: { label: string; pane: ActivePane }) {
   const classes = useStyles();
-  const { activePane, setActivePane } = useAppStateContext();
+  const { state } = useAppStateContext();
 
   return (
-    <div
-      className={clsx(classes.breadcrumb, { [classes.active]: activePane >= pane })}
-      onClick={() => setActivePane(pane)}
-    >
+    <div className={clsx(classes.breadcrumb, { [classes.active]: state.activePane >= pane })}>
       <Grid container alignItems="center">
         <Typography variant="body1">{label}</Typography>
         <ChevronRight />
@@ -69,7 +65,7 @@ function HeaderItem({ label, pane }: { label: string; pane: ActivePane }) {
 
 export default function Header() {
   const classes = useStyles();
-  const { activePane } = useAppStateContext();
+  const { state } = useAppStateContext();
 
   const numberOfPanes = Object.keys(ActivePane).length / 2;
 
@@ -87,7 +83,7 @@ export default function Header() {
       <div className={classes.progressBar}>
         <div
           className={classes.progressBarForeground}
-          style={{ width: `${(activePane / (numberOfPanes - 1)) * 100}%` }}
+          style={{ width: `${(state.activePane / (numberOfPanes - 1)) * 100}%` }}
         />
       </div>
     </div>
