@@ -4,8 +4,8 @@ import { ArrowUp } from '../../icons/ArrowUp';
 import { Button, makeStyles, useTheme } from '@material-ui/core';
 import clsx from 'clsx';
 import { GetStarted } from '../panes/GetStarted/GetStarted';
-import { CheckPermissions } from '../panes/DeviceSetup/CheckPermissions';
-import { PermissionError } from '../panes/DeviceSetup/PermissionError';
+import { CheckPermissions } from '../panes/DeviceSetup/CheckPermissions/CheckPermissions';
+import { PermissionError } from '../panes/DeviceSetup/PermissionError/PermissionError';
 
 import { useEffect, useRef } from 'react';
 

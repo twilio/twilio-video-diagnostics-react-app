@@ -114,7 +114,7 @@ describe('the MainContent component', () => {
     expect(wrapper.find(ArrowDown).parent().prop('disabled')).toBe(false);
   });
 
-  it.only('should make the previous pane the active pane when the Up button is clicked', () => {
+  it('should make the previous pane the active pane when the Up button is clicked', () => {
     mockUseAppStateContext.mockImplementation(() => ({
       state: { activePane: 3 },
       dispatch: mockDispatch,
