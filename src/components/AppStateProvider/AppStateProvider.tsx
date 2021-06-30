@@ -17,13 +17,6 @@ interface stateType {
   deviceError: null | Error;
 }
 
-const initialState = {
-  activePane: ActivePane.GetStarted,
-  videoGranted: false,
-  audioGranted: false,
-  deviceError: null,
-};
-
 type ACTIONTYPE =
   | { type: 'set-active-pane'; newActivePane: ActivePane }
   | { type: 'next-pane' }
@@ -37,6 +30,13 @@ type AppStateContextType = {
   nextPane: () => void;
 };
 
+const initialState = {
+  activePane: ActivePane.GetStarted,
+  videoGranted: false,
+  audioGranted: false,
+  deviceError: null,
+};
+
 export const AppStateContext = createContext<AppStateContextType>(null!);
 
 export function useAppStateContext() {
@@ -46,6 +46,11 @@ export function useAppStateContext() {
   }
   return context;
 }
+
+/**
+ * This reducer function helps with the logic used to decide the activePane,
+ * as well as which panes are to be shown to the user, and when.
+ */
 
 export const immerReducer = produce((draft: stateType, action: ACTIONTYPE) => {
   switch (action.type) {
