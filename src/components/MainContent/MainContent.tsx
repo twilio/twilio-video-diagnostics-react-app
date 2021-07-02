@@ -44,8 +44,6 @@ const useStyles = makeStyles({
   },
   hideItem: {
     visibility: 'hidden',
-    maxHeight: 0,
-    transition: 'all 2s ease',
     position: 'fixed',
   },
   buttonContainer: {
@@ -123,7 +121,9 @@ const content = [
 
 export function MainContent() {
   const classes = useStyles();
-  const { state, dispatch, nextPane } = useAppStateContext();
+  const { state, dispatch } = useAppStateContext();
+
+  const devicesPermitted = state.audioGranted && state.videoGranted;
 
   return (
     <>
@@ -141,7 +141,10 @@ export function MainContent() {
                 key={i}
                 isActive={state.activePane === pane.pane}
                 onClick={() => dispatch({ type: 'set-active-pane', newActivePane: pane.pane })}
-                isHidden={pane.pane === ActivePane.DeviceError && !state.deviceError}
+                isHidden={
+                  (pane.pane === ActivePane.DeviceError && !state.deviceError) ||
+                  (pane.pane === ActivePane.DeviceCheck && devicesPermitted)
+                }
               >
                 {pane.component}
               </Item>
@@ -159,7 +162,7 @@ export function MainContent() {
         </Button>
         <Button
           variant="outlined"
-          onClick={nextPane}
+          onClick={() => dispatch({ type: 'next-pane' })}
           disabled={
             !ActivePane[state.activePane + 1] ||
             state.activePane === ActivePane.DeviceCheck ||

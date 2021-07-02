@@ -52,7 +52,7 @@ describe('the MainContent component', () => {
     expect(mockDispatch).toHaveBeenCalledWith({ type: 'set-active-pane', newActivePane: 2 });
   });
 
-  it('should correctly center the list of Items based on the active pane', () => {
+  it('should center the list of Items based on the active pane', () => {
     mockUseAppStateContext.mockImplementation(() => ({ state: { activePane: 0 } }));
     const { getAllByTestId, rerender } = render(
       <MuiThemeProvider theme={theme}>
@@ -125,13 +125,12 @@ describe('the MainContent component', () => {
   });
 
   it('should make the next pane the active pane when the Down button is clicked', () => {
-    const mockNextPane = jest.fn();
     mockUseAppStateContext.mockImplementation(() => ({
       state: { activePane: 3 },
-      nextPane: mockNextPane,
+      dispatch: mockDispatch,
     }));
     const wrapper = mount(<MainContent />);
     wrapper.find(ArrowDown).simulate('click');
-    expect(mockNextPane).toHaveBeenCalled();
+    expect(mockDispatch).toHaveBeenCalled();
   });
 });

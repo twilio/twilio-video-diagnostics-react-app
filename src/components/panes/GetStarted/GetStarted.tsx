@@ -3,7 +3,7 @@ import { Button, Container, Grid, Typography } from '@material-ui/core';
 import Hello from './Hello.png';
 
 export function GetStarted() {
-  const { nextPane } = useAppStateContext();
+  const { dispatch } = useAppStateContext();
 
   return (
     <Container>
@@ -17,7 +17,7 @@ export function GetStarted() {
             We'll help you solve any video troubles you're experiencing but first, let's check your setup.
           </Typography>
 
-          <Button variant="contained" color="primary" onClick={nextPane}>
+          <Button variant="contained" color="primary" onClick={() => dispatch({ type: 'next-pane' })}>
             Get started
           </Button>
         </Grid>
