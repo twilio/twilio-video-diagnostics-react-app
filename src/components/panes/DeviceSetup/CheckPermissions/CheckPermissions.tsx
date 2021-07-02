@@ -4,9 +4,6 @@ import SettingsIllustration from './SettingsIllustration.png';
 import { useAppStateContext } from '../../../AppStateProvider/AppStateProvider';
 
 const useStyles = makeStyles({
-  heading: {
-    marginTop: '12px',
-  },
   paper: {
     display: 'inline-block',
     padding: '23px',
@@ -28,7 +25,7 @@ const useStyles = makeStyles({
 
 export function CheckPermissions() {
   const classes = useStyles();
-  const { dispatch, nextPane } = useAppStateContext();
+  const { dispatch } = useAppStateContext();
 
   const handleClick = async () => {
     try {
@@ -38,7 +35,7 @@ export function CheckPermissions() {
           track.stop();
         });
       });
-      nextPane();
+      dispatch({ type: 'next-pane' });
     } catch (error) {
       dispatch({ type: 'set-device-error', error });
     }
@@ -48,18 +45,16 @@ export function CheckPermissions() {
     <Container>
       <Grid container alignItems="center" justify="space-between">
         <Grid item md={6}>
-          <Typography variant="h1" gutterBottom className={classes.heading}>
+          <Typography variant="h1" gutterBottom>
             Check permissions
           </Typography>
 
           <Typography variant="body1" gutterBottom>
             If you haven't already, you'll see a pop-up to grant Twilio permissions to access your camera and
             microphone.
-            <strong>
-              <span style={{ marginTop: '20px', display: 'inline-block' }}>
-                Allow all permissions and re-fresh this page.
-              </span>
-            </strong>
+          </Typography>
+          <Typography variant="body1" gutterBottom>
+            <strong>Allow all permissions and re-fresh this page.</strong>
           </Typography>
 
           <Button variant="contained" color="primary" onClick={handleClick}>

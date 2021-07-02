@@ -6,8 +6,8 @@ import { ErrorIcon } from '../../../../icons/ErrorIcon';
 
 const useStyles = makeStyles({
   heading: {
-    marginTop: '12px',
     position: 'relative',
+    marginTop: '20px',
   },
   paper: {
     display: 'inline-block',
@@ -88,11 +88,9 @@ export function PermissionError() {
 
           <Typography variant="body1" gutterBottom>
             {message}
-            <strong>
-              <span style={{ marginTop: '20px', display: 'inline-block' }}>
-                Update your settings to allow your browser permissions and refresh this page.
-              </span>
-            </strong>
+          </Typography>
+          <Typography variant="body1" gutterBottom>
+            <strong>Update your settings to allow your browser permissions and refresh this page.</strong>
           </Typography>
 
           <Button variant="contained" color="primary" onClick={() => window.location.reload()}>
