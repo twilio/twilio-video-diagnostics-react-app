@@ -7,7 +7,7 @@ jest.mock('../AppStateProvider/AppStateProvider');
 const mockUseAppStateContext = useAppStateContext as jest.Mock<any>;
 
 describe('the Header component', () => {
-  it('should correctly show two active HeaderItems when the activePane is 2', () => {
+  it('should show two active HeaderItems when the activePane is 2', () => {
     mockUseAppStateContext.mockImplementation(() => ({
       state: { activePane: 3 },
     }));
@@ -21,7 +21,7 @@ describe('the Header component', () => {
     expect(wrapper.find({ label: 'Get Results' }).find('div').at(0).prop('className')).not.toContain('active');
   });
 
-  it('should correctly show four active HeaderItems when the activePane is 4', () => {
+  it('should show four active HeaderItems when the activePane is 4', () => {
     mockUseAppStateContext.mockImplementation(() => ({ state: { activePane: 5 } }));
     const wrapper = mount(<Header />);
 

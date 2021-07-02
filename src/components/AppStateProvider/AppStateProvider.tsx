@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useReducer } from 'react';
+import React, { createContext, useContext, useReducer, useEffect } from 'react';
 import produce from 'immer';
 
 export enum ActivePane {
@@ -27,10 +27,9 @@ type ACTIONTYPE =
 type AppStateContextType = {
   state: stateType;
   dispatch: React.Dispatch<ACTIONTYPE>;
-  nextPane: () => void;
 };
 
-const initialState = {
+export const initialState = {
   activePane: ActivePane.GetStarted,
   videoGranted: false,
   audioGranted: false,
@@ -52,7 +51,7 @@ export function useAppStateContext() {
  * as well as which panes are to be shown to the user, and when.
  */
 
-export const immerReducer = produce((draft: stateType, action: ACTIONTYPE) => {
+export const appStateReducer = produce((draft: stateType, action: ACTIONTYPE) => {
   switch (action.type) {
     case 'set-active-pane':
       draft.activePane = action.newActivePane;
@@ -60,6 +59,13 @@ export const immerReducer = produce((draft: stateType, action: ACTIONTYPE) => {
 
     case 'next-pane':
       switch (draft.activePane) {
+        case ActivePane.GetStarted:
+          if (draft.audioGranted && draft.videoGranted) {
+            draft.activePane = ActivePane.Connectivity;
+          } else {
+            draft.activePane = ActivePane.DeviceCheck;
+          }
+          break;
         case ActivePane.DeviceCheck:
           if (draft.deviceError) {
             draft.activePane = ActivePane.DeviceError;
@@ -76,7 +82,11 @@ export const immerReducer = produce((draft: stateType, action: ACTIONTYPE) => {
     case 'previous-pane':
       switch (draft.activePane) {
         case ActivePane.Connectivity:
-          draft.activePane = ActivePane.DeviceCheck;
+          if (draft.audioGranted && draft.videoGranted) {
+            draft.activePane = ActivePane.GetStarted;
+          } else {
+            draft.activePane = ActivePane.DeviceCheck;
+          }
           break;
         default:
           draft.activePane--;
@@ -85,16 +95,8 @@ export const immerReducer = produce((draft: stateType, action: ACTIONTYPE) => {
       break;
 
     case 'set-devices':
-      if (action.devices.filter((d: any) => d.kind === 'audioinput').every((d: any) => d.label)) {
-        draft.audioGranted = true;
-      } else {
-        draft.audioGranted = false;
-      }
-      if (action.devices.filter((d: any) => d.kind === 'videoinput').every((d: any) => d.label)) {
-        draft.videoGranted = true;
-      } else {
-        draft.videoGranted = false;
-      }
+      draft.audioGranted = action.devices.filter((d) => d.kind === 'audioinput').every((d) => d.label);
+      draft.videoGranted = action.devices.filter((d) => d.kind === 'videoinput').every((d) => d.label);
       break;
 
     case 'set-device-error':
@@ -104,26 +106,11 @@ export const immerReducer = produce((draft: stateType, action: ACTIONTYPE) => {
 });
 
 export const AppStateProvider: React.FC = ({ children }) => {
-  const [state, dispatch] = useReducer(immerReducer, initialState);
+  const [state, dispatch] = useReducer(appStateReducer, initialState);
 
-  const nextPane = () => {
-    switch (state.activePane) {
-      case ActivePane.GetStarted:
-        navigator.mediaDevices.enumerateDevices().then((devices) => {
-          dispatch({ type: 'set-devices', devices });
-          dispatch({ type: 'next-pane' });
-        });
-        break;
-      case ActivePane.DeviceCheck:
-        navigator.mediaDevices.enumerateDevices().then((devices) => {
-          dispatch({ type: 'set-devices', devices });
-          dispatch({ type: 'next-pane' });
-        });
-        break;
-      default:
-        dispatch({ type: 'next-pane' });
-    }
-  };
+  useEffect(() => {
+    navigator.mediaDevices.enumerateDevices().then((devices) => dispatch({ type: 'set-devices', devices }));
+  }, []);
 
-  return <AppStateContext.Provider value={{ state, dispatch, nextPane }}>{children}</AppStateContext.Provider>;
+  return <AppStateContext.Provider value={{ state, dispatch }}>{children}</AppStateContext.Provider>;
 };
