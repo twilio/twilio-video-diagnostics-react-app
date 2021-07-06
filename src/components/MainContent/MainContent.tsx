@@ -121,7 +121,7 @@ const content = [
 
 export function MainContent() {
   const classes = useStyles();
-  const { state, dispatch } = useAppStateContext();
+  const { state, dispatch, nextPane } = useAppStateContext();
 
   const devicesPermitted = state.audioGranted && state.videoGranted;
 
@@ -162,7 +162,7 @@ export function MainContent() {
         </Button>
         <Button
           variant="outlined"
-          onClick={() => dispatch({ type: 'next-pane' })}
+          onClick={nextPane}
           disabled={
             !ActivePane[state.activePane + 1] ||
             state.activePane === ActivePane.DeviceCheck ||

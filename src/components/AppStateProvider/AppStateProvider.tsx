@@ -1,5 +1,7 @@
-import React, { createContext, useContext, useReducer, useEffect } from 'react';
+import React, { createContext, useContext, useReducer, useEffect, useCallback } from 'react';
 import produce from 'immer';
+import { PreflightTestReport } from 'twilio-video';
+import usePreflightTest from './usePreflightTest/usePreflightTest';
 
 export enum ActivePane {
   GetStarted,
@@ -15,18 +17,29 @@ interface stateType {
   videoGranted: boolean;
   audioGranted: boolean;
   deviceError: null | Error;
+  preflightTest: {
+    progress: string;
+    error: null | Error;
+    report: null | PreflightTestReport;
+    tokenError: null | Error;
+  };
 }
 
-type ACTIONTYPE =
+export type ACTIONTYPE =
   | { type: 'set-active-pane'; newActivePane: ActivePane }
   | { type: 'next-pane' }
   | { type: 'previous-pane' }
   | { type: 'set-devices'; devices: MediaDeviceInfo[] }
-  | { type: 'set-device-error'; error: Error };
+  | { type: 'set-device-error'; error: Error }
+  | { type: 'preflight-progress'; progress: string }
+  | { type: 'preflight-completed'; report: PreflightTestReport }
+  | { type: 'preflight-failed'; error: Error }
+  | { type: 'preflight-token-failed'; error: Error };
 
 type AppStateContextType = {
   state: stateType;
   dispatch: React.Dispatch<ACTIONTYPE>;
+  nextPane: () => void;
 };
 
 export const initialState = {
@@ -34,6 +47,12 @@ export const initialState = {
   videoGranted: false,
   audioGranted: false,
   deviceError: null,
+  preflightTest: {
+    progress: '',
+    report: null,
+    error: null,
+    tokenError: null,
+  },
 };
 
 export const AppStateContext = createContext<AppStateContextType>(null!);
@@ -102,15 +121,44 @@ export const appStateReducer = produce((draft: stateType, action: ACTIONTYPE) =>
     case 'set-device-error':
       draft.deviceError = action.error;
       draft.activePane = ActivePane.DeviceError;
+      break;
+
+    case 'preflight-progress':
+      draft.preflightTest.progress = action.progress;
+      break;
+
+    case 'preflight-completed':
+      draft.preflightTest.report = action.report;
+      break;
+
+    case 'preflight-failed':
+      draft.preflightTest.error = action.error;
+      break;
+
+    case 'preflight-token-failed':
+      draft.preflightTest.tokenError = action.error;
+      break;
   }
 });
 
 export const AppStateProvider: React.FC = ({ children }) => {
   const [state, dispatch] = useReducer(appStateReducer, initialState);
+  const { startPreflightTest } = usePreflightTest(dispatch);
+
+  const nextPane = useCallback(() => {
+    switch (state.activePane) {
+      case ActivePane.GetStarted:
+        startPreflightTest();
+        dispatch({ type: 'next-pane' });
+        break;
+      default:
+        dispatch({ type: 'next-pane' });
+    }
+  }, [startPreflightTest, state, dispatch]);
 
   useEffect(() => {
     navigator.mediaDevices.enumerateDevices().then((devices) => dispatch({ type: 'set-devices', devices }));
   }, []);
 
-  return <AppStateContext.Provider value={{ state, dispatch }}>{children}</AppStateContext.Provider>;
+  return <AppStateContext.Provider value={{ state, dispatch, nextPane }}>{children}</AppStateContext.Provider>;
 };
