@@ -18,7 +18,7 @@ interface stateType {
   audioGranted: boolean;
   deviceError: null | Error;
   preflightTest: {
-    progress: string;
+    progress: string | null;
     error: null | Error;
     report: null | PreflightTestReport;
     tokenError: null | Error;
@@ -48,7 +48,7 @@ export const initialState = {
   audioGranted: false,
   deviceError: null,
   preflightTest: {
-    progress: '',
+    progress: null,
     report: null,
     error: null,
     tokenError: null,
@@ -129,10 +129,12 @@ export const appStateReducer = produce((draft: stateType, action: ACTIONTYPE) =>
 
     case 'preflight-completed':
       draft.preflightTest.report = action.report;
+      draft.preflightTest.progress = null;
       break;
 
     case 'preflight-failed':
       draft.preflightTest.error = action.error;
+      draft.preflightTest.progress = null;
       break;
 
     case 'preflight-token-failed':
@@ -144,6 +146,8 @@ export const appStateReducer = produce((draft: stateType, action: ACTIONTYPE) =>
 export const AppStateProvider: React.FC = ({ children }) => {
   const [state, dispatch] = useReducer(appStateReducer, initialState);
   const { startPreflightTest } = usePreflightTest(dispatch);
+
+  console.log(state);
 
   const nextPane = useCallback(() => {
     switch (state.activePane) {
