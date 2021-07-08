@@ -6,6 +6,7 @@ import clsx from 'clsx';
 import { GetStarted } from '../panes/GetStarted/GetStarted';
 import { CheckPermissions } from '../panes/DeviceSetup/CheckPermissions/CheckPermissions';
 import { PermissionError } from '../panes/DeviceSetup/PermissionError/PermissionError';
+import { Connectivity } from '../panes/Connectivity/Connectivity';
 
 import { useEffect, useRef } from 'react';
 
@@ -114,7 +115,7 @@ const content = [
   { pane: ActivePane.GetStarted, component: <GetStarted /> },
   { pane: ActivePane.DeviceCheck, component: <CheckPermissions /> },
   { pane: ActivePane.DeviceError, component: <PermissionError /> },
-  { pane: ActivePane.Connectivity, component: <GetStarted /> },
+  { pane: ActivePane.Connectivity, component: <Connectivity /> },
   { pane: ActivePane.Quality, component: <GetStarted /> },
   { pane: ActivePane.Results, component: <GetStarted /> },
 ];

@@ -28,7 +28,7 @@ export default createMuiTheme({
     },
     MuiContainer: {
       root: {
-        width: '800px',
+        width: '830px',
       },
     },
     MuiButton: {
@@ -99,6 +99,11 @@ export default createMuiTheme({
         marginBottom: '36px',
       },
     },
+    MuiTableCell: {
+      head: {
+        background: '#F4F4F6',
+      },
+    },
   },
   typography: {
     fontFamily: 'Inter, sans-serif',
@@ -106,6 +111,12 @@ export default createMuiTheme({
       color: '#121C2D',
       fontSize: '2rem',
       fontWeight: 700,
+    },
+    h3: {
+      color: '#121C2D',
+      fontSize: '1.25rem',
+      fontWeight: 700,
+      lineHeight: '1.75rem',
     },
     body1: {
       color: '#121C2D',
