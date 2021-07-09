@@ -10,7 +10,7 @@ import {
   Select,
   Typography,
 } from '@material-ui/core';
-import { useCameraTest } from './useCameraTest';
+import { useCameraTest } from './useCameraTest/useCameraTest';
 import useDevices from '../../../hooks/useDevices/useDevices';
 import { useState, useEffect } from 'react';
 
