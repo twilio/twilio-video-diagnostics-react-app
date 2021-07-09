@@ -5,6 +5,7 @@ export enum ActivePane {
   GetStarted,
   DeviceCheck,
   DeviceError,
+  CameraTest,
   Connectivity,
   Quality,
   Results,
@@ -61,7 +62,7 @@ export const appStateReducer = produce((draft: stateType, action: ACTIONTYPE) =>
       switch (draft.activePane) {
         case ActivePane.GetStarted:
           if (draft.audioGranted && draft.videoGranted) {
-            draft.activePane = ActivePane.Connectivity;
+            draft.activePane = ActivePane.CameraTest;
           } else {
             draft.activePane = ActivePane.DeviceCheck;
           }
@@ -70,7 +71,7 @@ export const appStateReducer = produce((draft: stateType, action: ACTIONTYPE) =>
           if (draft.deviceError) {
             draft.activePane = ActivePane.DeviceError;
           } else {
-            draft.activePane = ActivePane.Connectivity;
+            draft.activePane = ActivePane.CameraTest;
           }
           break;
         default:
@@ -81,7 +82,7 @@ export const appStateReducer = produce((draft: stateType, action: ACTIONTYPE) =>
 
     case 'previous-pane':
       switch (draft.activePane) {
-        case ActivePane.Connectivity:
+        case ActivePane.CameraTest:
           if (draft.audioGranted && draft.videoGranted) {
             draft.activePane = ActivePane.GetStarted;
           } else {
