@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useReducer, useEffect } from 'react';
 import produce from 'immer';
+import { VideoInputTest } from '@twilio/rtc-diagnostics';
 
 export enum ActivePane {
   GetStarted,
@@ -16,6 +17,7 @@ interface stateType {
   videoGranted: boolean;
   audioGranted: boolean;
   deviceError: null | Error;
+  videoInputTestReport: null | VideoInputTest.Report;
 }
 
 type ACTIONTYPE =
@@ -23,7 +25,8 @@ type ACTIONTYPE =
   | { type: 'next-pane' }
   | { type: 'previous-pane' }
   | { type: 'set-devices'; devices: MediaDeviceInfo[] }
-  | { type: 'set-device-error'; error: Error };
+  | { type: 'set-device-error'; error: Error }
+  | { type: 'set-video-test-report'; report: VideoInputTest.Report };
 
 type AppStateContextType = {
   state: stateType;
@@ -35,6 +38,7 @@ export const initialState = {
   videoGranted: false,
   audioGranted: false,
   deviceError: null,
+  videoInputTestReport: null,
 };
 
 export const AppStateContext = createContext<AppStateContextType>(null!);
@@ -103,6 +107,10 @@ export const appStateReducer = produce((draft: stateType, action: ACTIONTYPE) =>
     case 'set-device-error':
       draft.deviceError = action.error;
       draft.activePane = ActivePane.DeviceError;
+      break;
+
+    case 'set-video-test-report':
+      draft.videoInputTestReport = action.report;
   }
 });
 

@@ -12,7 +12,7 @@ import {
 } from '@material-ui/core';
 import { useCameraTest } from './useCameraTest/useCameraTest';
 import useDevices from '../../../hooks/useDevices/useDevices';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 const useStyles = makeStyles({
   paper: {
@@ -25,10 +25,14 @@ const useStyles = makeStyles({
   },
   aspectRatioContainer: {
     position: 'relative',
+    display: 'flex',
+    width: '80%',
     padding: '1em',
-    width: '100%',
-    paddingTop: '56.25%',
     margin: '1em 0',
+    '&::after': {
+      content: '""',
+      paddingTop: '56.25%',
+    },
     '& video': {
       position: 'absolute',
       height: '100%',
@@ -46,8 +50,9 @@ export function CameraTest() {
   const classes = useStyles();
   const { videoInputDevices } = useDevices();
   const { state, dispatch } = useAppStateContext();
-  const { videoElementRef, startVideoTest, stopVideoTest, videoTest } = useCameraTest();
+  const { videoElementRef, startVideoTest, stopVideoTest, videoTest, videoTestError } = useCameraTest();
 
+  const prevVideoDeviceID = useRef('');
   const [videoInputDeviceID, setVideoInputDeviceID] = useState('');
 
   const setDevice = (deviceID: string) => {
@@ -58,15 +63,21 @@ export function CameraTest() {
     // Stop the test when we are not on the CameraTest pane and there is an active test
     if (state.activePane !== ActivePane.CameraTest && videoTest) {
       stopVideoTest();
+      prevVideoDeviceID.current = '';
     }
   }, [state.activePane, stopVideoTest, videoTest]);
 
   useEffect(() => {
     // Start the test when we are on the CameraTest pane and when the videoInputDeviceID changes
-    if (state.activePane === ActivePane.CameraTest && videoInputDeviceID) {
-      startVideoTest(videoInputDeviceID);
+    if (state.activePane === ActivePane.CameraTest) {
+      const newDeviceSelected = prevVideoDeviceID.current !== videoInputDeviceID;
+      prevVideoDeviceID.current = videoInputDeviceID;
+
+      if (videoInputDeviceID && newDeviceSelected) {
+        startVideoTest(videoInputDeviceID);
+      }
     }
-  }, [state.activePane, videoInputDeviceID, startVideoTest]);
+  }, [state.activePane, videoInputDeviceID, startVideoTest, stopVideoTest]);
 
   useEffect(() => {
     // If no device is select, set the first available deivce as the active device.
@@ -112,7 +123,7 @@ export function CameraTest() {
                 <strong>Video Preview</strong>
               </Typography>
               <div className={classes.aspectRatioContainer}>
-                <video ref={videoElementRef} muted autoPlay />
+                <video ref={videoElementRef} />
               </div>
             </Grid>
             <FormControl fullWidth>

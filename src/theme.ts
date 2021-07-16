@@ -28,7 +28,7 @@ export default createMuiTheme({
     },
     MuiContainer: {
       root: {
-        width: '900px',
+        width: '950px',
       },
     },
     MuiButton: {
