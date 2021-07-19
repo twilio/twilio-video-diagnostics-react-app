@@ -6,9 +6,9 @@ import clsx from 'clsx';
 import { GetStarted } from '../panes/GetStarted/GetStarted';
 import { CheckPermissions } from '../panes/DeviceSetup/CheckPermissions/CheckPermissions';
 import { PermissionError } from '../panes/DeviceSetup/PermissionError/PermissionError';
-import AudioTest from '../panes/AudioTest/AudioTest';
 
 import { useEffect, useRef } from 'react';
+import { CameraTest } from '../panes/CameraTest/CameraTest';
 
 const useStyles = makeStyles({
   contentContainer: {
@@ -115,7 +115,8 @@ const content = [
   { pane: ActivePane.GetStarted, component: <GetStarted /> },
   { pane: ActivePane.DeviceCheck, component: <CheckPermissions /> },
   { pane: ActivePane.DeviceError, component: <PermissionError /> },
-  { pane: ActivePane.Connectivity, component: <AudioTest /> },
+  { pane: ActivePane.CameraTest, component: <CameraTest /> },
+  { pane: ActivePane.Connectivity, component: <GetStarted /> },
   { pane: ActivePane.Quality, component: <GetStarted /> },
   { pane: ActivePane.Results, component: <GetStarted /> },
 ];

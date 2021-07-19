@@ -41,14 +41,14 @@ describe('the appState reducer', () => {
       expect(newState.activePane).toEqual(ActivePane.DeviceError);
     });
 
-    it('should set the active pane to Connectivity when no error is thrown after checking device permissions', () => {
+    it('should set the active pane to CameraTest when no error is thrown after checking device permissions', () => {
       const draftStateFromDeviceCheckPane = {
         ...initialState,
         activePane: ActivePane.DeviceCheck,
       };
       const newState = appStateReducer(draftStateFromDeviceCheckPane, { type: 'next-pane' });
 
-      expect(newState.activePane).toEqual(ActivePane.Connectivity);
+      expect(newState.activePane).toEqual(ActivePane.CameraTest);
     });
   });
 
@@ -63,10 +63,10 @@ describe('the appState reducer', () => {
       expect(newState.activePane).toEqual(ActivePane.GetStarted);
     });
 
-    it('should set the active pane to DeviceCheck when current active pane is Connectivity', () => {
+    it('should set the active pane to DeviceCheck when current active pane is CameraTest', () => {
       const draftState = {
         ...initialState,
-        activePane: ActivePane.Connectivity,
+        activePane: ActivePane.CameraTest,
       };
 
       const newState = appStateReducer(draftState, { type: 'previous-pane' });

@@ -35,7 +35,7 @@ export function CheckPermissions() {
           track.stop();
         });
       });
-      // the devicechange event is not fired after permissions are granted, so we fire it
+      // The devicechange event is not fired after permissions are granted, so we fire it
       // ourselves to update the useDevices hook. The 100 ms delay is needed so that device labels are available
       // when the useDevices hook updates.
       setTimeout(() => navigator.mediaDevices.dispatchEvent(new Event('devicechange')), 100);
