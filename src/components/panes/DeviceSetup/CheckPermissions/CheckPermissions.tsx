@@ -35,6 +35,10 @@ export function CheckPermissions() {
           track.stop();
         });
       });
+      // the devicechange event is not fired after permissions are granted, so we fire it
+      // ourselves to update the useDevices hook. The 100 ms delay is needed so that device labels are available
+      // when the useDevices hook updates.
+      setTimeout(() => navigator.mediaDevices.dispatchEvent(new Event('devicechange')), 100);
       dispatch({ type: 'next-pane' });
     } catch (error) {
       dispatch({ type: 'set-device-error', error });
@@ -43,7 +47,7 @@ export function CheckPermissions() {
 
   return (
     <Container>
-      <Grid container alignItems="center" justify="space-between">
+      <Grid container alignItems="center" justifyContent="space-between">
         <Grid item md={6}>
           <Typography variant="h1" gutterBottom>
             Check permissions

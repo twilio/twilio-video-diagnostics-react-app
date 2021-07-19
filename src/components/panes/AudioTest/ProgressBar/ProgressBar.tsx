@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from 'react';
-import { fade } from '@material-ui/core/styles/colorManipulator';
+import { alpha } from '@material-ui/core/styles/colorManipulator';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   background: {
     right: 0,
-    background: fade('#E1E3EA', 0.2),
+    background: alpha('#E1E3EA', 0.2),
   },
 }));
 

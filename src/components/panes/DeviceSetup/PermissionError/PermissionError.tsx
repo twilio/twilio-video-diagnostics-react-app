@@ -77,7 +77,7 @@ export function PermissionError() {
 
   return (
     <Container>
-      <Grid container alignItems="center" justify="space-between">
+      <Grid container alignItems="center" justifyContent="space-between">
         <Grid item md={6}>
           <Typography variant="h1" gutterBottom className={classes.heading}>
             <div className={classes.errorIcon}>
