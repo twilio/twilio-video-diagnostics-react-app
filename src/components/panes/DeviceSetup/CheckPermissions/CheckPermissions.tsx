@@ -19,7 +19,7 @@ const useStyles = makeStyles({
   */
   illustration: {
     height: '181px',
-    width: '342px',
+    width: '337px',
   },
 });
 
