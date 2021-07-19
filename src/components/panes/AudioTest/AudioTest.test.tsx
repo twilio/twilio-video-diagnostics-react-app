@@ -143,44 +143,10 @@ describe('the AudioTest component', () => {
   });
 
   describe('audio levels', () => {
-    it('should pass input levels to AudioDevice', () => {
+    it('should pass input levels to ProgressBar', () => {
       hookProps = { ...hookProps, inputLevel: 64 };
       const wrapper = shallow(<AudioTest />);
       expect(wrapper.find(ProgressBar).props().position).toEqual(64);
-    });
-  });
-
-  describe('alerts', () => {
-    it('should disable all controls if there is an error', () => {
-      hookProps = { ...hookProps, error: 'foo', testEnded: true };
-      const wrapper = shallow(<AudioTest />);
-      expect(wrapper.find(AudioDevice).length).toEqual(2);
-
-      const outputDevice = wrapper.find(AudioDevice).at(0);
-      const inputDevice = wrapper.find(AudioDevice).at(1);
-      const recordBtn = wrapper.find(Button).at(2);
-      const playBtn = wrapper.find(Button).at(3);
-
-      expect(outputDevice.prop('disabled')).toBeTruthy();
-      expect(inputDevice.prop('disabled')).toBeTruthy();
-      expect(recordBtn.prop('disabled')).toBeTruthy();
-      expect(playBtn.prop('disabled')).toBeTruthy();
-    });
-
-    it('should not disable all controls if there is a warning', () => {
-      hookProps = { ...hookProps, warning: 'foo', testEnded: true, playbackURI: 'bar' };
-      const wrapper = shallow(<AudioTest />);
-      expect(wrapper.find(AudioDevice).length).toEqual(2);
-
-      const outputDevice = wrapper.find(AudioDevice).at(0);
-      const inputDevice = wrapper.find(AudioDevice).at(1);
-      const recordBtn = wrapper.find(Button).at(2);
-      const playBtn = wrapper.find(Button).at(3);
-
-      expect(outputDevice.prop('disabled')).toBeFalsy();
-      expect(inputDevice.prop('disabled')).toBeFalsy();
-      expect(recordBtn.prop('disabled')).toBeFalsy();
-      expect(playBtn.prop('disabled')).toBeFalsy();
     });
   });
 });

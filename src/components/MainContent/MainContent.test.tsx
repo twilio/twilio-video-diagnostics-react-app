@@ -7,12 +7,22 @@ import { MuiThemeProvider } from '@material-ui/core';
 import { shallow, mount } from 'enzyme';
 import { render } from '@testing-library/react';
 import theme from '../../theme';
+import useDevices from '../panes/AudioTest/useDevices/useDevices';
 
+jest.mock('../panes/AudioTest/useDevices/useDevices');
 jest.mock('../AppStateProvider/AppStateProvider');
 
+const mockUseDevices = useDevices as jest.Mock<any>;
 const mockUseAppStateContext = useAppStateContext as jest.Mock<any>;
-
 const mockDispatch = jest.fn();
+
+const mockDevices = {
+  audioInputDevices: [],
+  videoInputDevices: [],
+  audioOutputDevices: [],
+};
+
+mockUseDevices.mockImplementation(() => mockDevices);
 
 describe('the MainContent component', () => {
   it('should set the isActive prop on the active pane', () => {

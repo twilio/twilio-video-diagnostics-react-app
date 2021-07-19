@@ -9,9 +9,6 @@ import { ActivePane, useAppStateContext } from '../../AppStateProvider/AppStateP
 import { Microphone } from '../../../icons/Microphone';
 
 const useStyles = makeStyles({
-  //   heading: {
-  //     marginTop: '30px',
-  //   },
   paper: {
     display: 'inline-block',
     padding: '23px',
@@ -26,6 +23,11 @@ const useStyles = makeStyles({
     display: 'flex',
     alignItems: 'center',
   },
+  topLine: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'baseline',
+  },
 });
 
 export default function AudioDeviceTestWidget() {
@@ -37,7 +39,6 @@ export default function AudioDeviceTestWidget() {
 
   const {
     error,
-    warning,
     inputLevel,
     isRecording,
     isAudioInputTestRunning,
@@ -74,7 +75,7 @@ export default function AudioDeviceTestWidget() {
 
   return (
     <Container>
-      <Grid container alignItems="center" justify="space-between">
+      <Grid container alignItems="center" justifyContent="space-between">
         <Grid item md={6}>
           <Typography variant="h1" gutterBottom>
             Test your audio
@@ -84,7 +85,7 @@ export default function AudioDeviceTestWidget() {
             Record an audio clip and play it back to check that your speakers and volume control both work. If it
             doesn’t, try a different speaker or check your Bluetooth settings.
           </Typography>
-          <Typography variant="body1">
+          <Typography variant="body1" gutterBottom>
             <strong> Does your audio sound good?</strong>
           </Typography>
           ​
@@ -106,7 +107,7 @@ export default function AudioDeviceTestWidget() {
         ​
         <Grid item md={5}>
           <Paper className={classes.paper}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
+            <div className={classes.topLine}>
               <Typography variant="body1" className={classes.audioHeading}>
                 <strong>Audio</strong>
               </Typography>
