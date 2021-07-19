@@ -1,4 +1,4 @@
-import { ActivePane, useAppStateContext } from '../../AppStateProvider/AppStateProvider';
+import { useState, useEffect, useRef } from 'react';
 import {
   Button,
   Container,
@@ -10,13 +10,15 @@ import {
   Select,
   Typography,
 } from '@material-ui/core';
+import clsx from 'clsx';
+import { ActivePane, useAppStateContext } from '../../AppStateProvider/AppStateProvider';
 import { useCameraTest } from './useCameraTest/useCameraTest';
 import useDevices from '../../../hooks/useDevices/useDevices';
-import { useState, useEffect, useRef } from 'react';
 
 const useStyles = makeStyles({
   paper: {
     padding: '2em',
+    borderRadius: '8px',
   },
   videoContainer: {
     display: 'flex',
@@ -44,13 +46,16 @@ const useStyles = makeStyles({
       left: 0,
     },
   },
+  disablePointerEvent: {
+    pointerEvents: 'none',
+  },
 });
 
 export function CameraTest() {
   const classes = useStyles();
   const { videoInputDevices } = useDevices();
   const { state, dispatch } = useAppStateContext();
-  const { videoElementRef, startVideoTest, stopVideoTest, videoTest, videoTestError } = useCameraTest();
+  const { videoElementRef, startVideoTest, stopVideoTest, videoTest } = useCameraTest();
 
   const prevVideoDeviceID = useRef('');
   const [videoInputDeviceID, setVideoInputDeviceID] = useState('');
@@ -80,7 +85,7 @@ export function CameraTest() {
   }, [state.activePane, videoInputDeviceID, startVideoTest, stopVideoTest]);
 
   useEffect(() => {
-    // If no device is select, set the first available deivce as the active device.
+    // If no device is select, set the first available device as the active device.
     const hasSelectedDevice = videoInputDevices.some((device) => device.deviceId === videoInputDeviceID);
     if (videoInputDevices.length && !hasSelectedDevice) {
       setVideoInputDeviceID(videoInputDevices[0].deviceId);
@@ -134,6 +139,8 @@ export function CameraTest() {
                 onChange={(e) => setDevice(e.target.value as string)}
                 value={videoInputDeviceID}
                 variant="outlined"
+                // disable ability to switch video devices when not actively testing camera:
+                className={clsx({ [classes.disablePointerEvent]: state.activePane !== ActivePane.CameraTest })}
               >
                 {videoInputDevices.map((device) => (
                   <MenuItem value={device.deviceId} key={device.deviceId}>
