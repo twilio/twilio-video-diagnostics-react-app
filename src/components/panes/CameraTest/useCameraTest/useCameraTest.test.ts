@@ -60,6 +60,29 @@ describe('the useCameraTest hook', () => {
     expect(result.current.videoTest).toBeUndefined();
   });
 
+  it('should stop current test if a new test starts, and proceed with running the new test', () => {
+    const { result } = renderHook(useCameraTest);
+    result.current.videoElementRef.current = document.createElement('video');
+
+    // start a video test
+    act(() => {
+      result.current.startVideoTest('mockDeviceID');
+    });
+
+    const stopVideoTestSpy = jest.spyOn(result.current.videoTest!, 'stop');
+
+    // start another video test while one is currently running
+    act(() => {
+      result.current.startVideoTest('mockDeviceID2');
+    });
+
+    expect(stopVideoTestSpy).toHaveBeenCalled();
+    expect(testVideoInputDevice).toHaveBeenLastCalledWith({
+      deviceId: 'mockDeviceID2',
+      element: expect.any(HTMLVideoElement),
+    });
+  });
+
   it('should not throw an error when stopVideoTest is called when there is no active test', () => {
     const { result } = renderHook(useCameraTest);
 
