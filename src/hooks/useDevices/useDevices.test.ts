@@ -22,6 +22,7 @@ describe('the useDevices hook', () => {
     // @ts-ignore
     navigator.mediaDevices.enumerateDevices = () => Promise.resolve(mockDevices);
     const { result, waitForNextUpdate } = renderHook(useDevices);
+
     await waitForNextUpdate();
     expect(result.current).toMatchInlineSnapshot(`
       Object {
@@ -54,15 +55,27 @@ describe('the useDevices hook', () => {
     // @ts-ignore
     navigator.mediaDevices.enumerateDevices = () => Promise.resolve(mockDevices);
     const { result, waitForNextUpdate } = renderHook(useDevices);
+
     await waitForNextUpdate();
     expect(mockAddEventListener).toHaveBeenCalledWith('devicechange', expect.any(Function));
+
     act(() => {
       navigator.mediaDevices.enumerateDevices = () =>
         // @ts-ignore
         Promise.resolve([{ deviceId: 2, label: '2', kind: 'audioinput' }]);
       mockAddEventListener.mock.calls[0][1]();
     });
+
     await waitForNextUpdate();
     expect(result.current.audioInputDevices).toEqual([{ deviceId: 2, label: '2', kind: 'audioinput' }]);
+  });
+
+  it('should remove "devicechange" listener on component unmount', async () => {
+    const { waitForNextUpdate, unmount } = renderHook(useDevices);
+
+    await waitForNextUpdate();
+    unmount();
+
+    expect(mockRemoveEventListener).toHaveBeenCalledWith('devicechange', expect.any(Function));
   });
 });
