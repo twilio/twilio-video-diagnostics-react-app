@@ -34,12 +34,12 @@ describe('the Header component', () => {
   it('should display the progress bar at 20% when the activePane is 1', () => {
     mockUseAppStateContext.mockImplementation(() => ({ state: { activePane: 1 } }));
     const wrapper = shallow(<Header />);
-    expect(wrapper.find('div').at(2).prop('style')).toEqual({ width: '16.666666666666664%' });
+    expect(wrapper.find('div').at(2).prop('style')).toEqual({ width: '20%' });
   });
 
   it('should display the progress bar at 50% when the activePane is 3', () => {
     mockUseAppStateContext.mockImplementation(() => ({ state: { activePane: 3 } }));
     const wrapper = shallow(<Header />);
-    expect(wrapper.find('div').at(2).prop('style')).toEqual({ width: '50%' });
+    expect(wrapper.find('div').at(2).prop('style')).toEqual({ width: '60%' });
   });
 });
