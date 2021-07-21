@@ -9,6 +9,9 @@ import { render } from '@testing-library/react';
 import theme from '../../theme';
 
 jest.mock('../AppStateProvider/AppStateProvider');
+jest.mock('../../hooks/useDevices/useDevices', () => () => ({
+  videoInputDevices: [],
+}));
 
 const mockUseAppStateContext = useAppStateContext as jest.Mock<any>;
 

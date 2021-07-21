@@ -7,9 +7,9 @@ jest.mock('../AppStateProvider/AppStateProvider');
 const mockUseAppStateContext = useAppStateContext as jest.Mock<any>;
 
 describe('the Header component', () => {
-  it('should show two active HeaderItems when the activePane is 2', () => {
+  it('should show two active HeaderItems when the activePane is 4', () => {
     mockUseAppStateContext.mockImplementation(() => ({
-      state: { activePane: 3 },
+      state: { activePane: 4 },
     }));
     const wrapper = mount(<Header />);
 
@@ -21,8 +21,8 @@ describe('the Header component', () => {
     expect(wrapper.find({ label: 'Get Results' }).find('div').at(0).prop('className')).not.toContain('active');
   });
 
-  it('should show four active HeaderItems when the activePane is 4', () => {
-    mockUseAppStateContext.mockImplementation(() => ({ state: { activePane: 5 } }));
+  it('should show four active HeaderItems when the activePane is 6', () => {
+    mockUseAppStateContext.mockImplementation(() => ({ state: { activePane: 6 } }));
     const wrapper = mount(<Header />);
 
     expect(wrapper.find({ label: 'Device & Network Setup' }).find('div').at(0).prop('className')).toContain('active');
@@ -37,7 +37,7 @@ describe('the Header component', () => {
     expect(wrapper.find('div').at(2).prop('style')).toEqual({ width: '20%' });
   });
 
-  it('should display the progress bar at 60% when the activePane is 3', () => {
+  it('should display the progress bar at 50% when the activePane is 3', () => {
     mockUseAppStateContext.mockImplementation(() => ({ state: { activePane: 3 } }));
     const wrapper = shallow(<Header />);
     expect(wrapper.find('div').at(2).prop('style')).toEqual({ width: '60%' });
