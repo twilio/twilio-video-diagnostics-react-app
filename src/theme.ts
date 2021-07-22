@@ -1,6 +1,6 @@
-import { createMuiTheme } from '@material-ui/core';
+import { createTheme } from '@material-ui/core';
 
-declare module '@material-ui/core/styles/createMuiTheme' {
+declare module '@material-ui/core/styles/createTheme' {
   interface Theme {
     navHeight: number;
     brandSidebarWidth: number;
@@ -15,9 +15,9 @@ declare module '@material-ui/core/styles/createMuiTheme' {
   }
 }
 
-const defaultTheme = createMuiTheme();
+const defaultTheme = createTheme();
 
-export default createMuiTheme({
+export default createTheme({
   overrides: {
     MuiCssBaseline: {
       '@global': {
@@ -28,7 +28,7 @@ export default createMuiTheme({
     },
     MuiContainer: {
       root: {
-        width: '830px',
+        width: '950px',
       },
     },
     MuiButton: {

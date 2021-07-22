@@ -9,6 +9,7 @@ import { PermissionError } from '../panes/DeviceSetup/PermissionError/Permission
 import { Connectivity } from '../panes/Connectivity/Connectivity';
 
 import { useEffect, useRef } from 'react';
+import { CameraTest } from '../panes/CameraTest/CameraTest';
 
 const useStyles = makeStyles({
   contentContainer: {
@@ -116,6 +117,7 @@ const content = [
   { pane: ActivePane.DeviceCheck, component: <CheckPermissions /> },
   { pane: ActivePane.DeviceError, component: <PermissionError /> },
   { pane: ActivePane.Connectivity, component: <Connectivity /> },
+  { pane: ActivePane.CameraTest, component: <CameraTest /> },
   { pane: ActivePane.Quality, component: <GetStarted /> },
   { pane: ActivePane.Results, component: <GetStarted /> },
 ];

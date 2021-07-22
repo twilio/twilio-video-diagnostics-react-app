@@ -3,11 +3,13 @@ import produce from 'immer';
 import { PreflightTestReport } from 'twilio-video';
 import usePreflightTest from './usePreflightTest/usePreflightTest';
 import useTwilioStatus from './useTwilioStatus/useTwilioStatus';
+import { VideoInputTest } from '@twilio/rtc-diagnostics';
 
 export enum ActivePane {
   GetStarted,
   DeviceCheck,
   DeviceError,
+  CameraTest,
   Connectivity,
   Quality,
   Results,
@@ -26,6 +28,7 @@ interface stateType {
   };
   twilioStatus: string | null;
   twilioStatusError: null | Error;
+  videoInputTestReport: null | VideoInputTest.Report;
 }
 
 export type ACTIONTYPE =
@@ -39,7 +42,8 @@ export type ACTIONTYPE =
   | { type: 'preflight-failed'; error: Error }
   | { type: 'preflight-token-failed'; error: Error }
   | { type: 'set-twilio-status'; status: string }
-  | { type: 'set-twilio-status-error'; error: Error };
+  | { type: 'set-twilio-status-error'; error: Error }
+  | { type: 'set-video-test-report'; report: VideoInputTest.Report };
 
 type AppStateContextType = {
   state: stateType;
@@ -60,6 +64,7 @@ export const initialState = {
   },
   twilioStatus: null,
   twilioStatusError: null,
+  videoInputTestReport: null,
 };
 
 export const AppStateContext = createContext<AppStateContextType>(null!);
@@ -87,7 +92,7 @@ export const appStateReducer = produce((draft: stateType, action: ACTIONTYPE) =>
       switch (draft.activePane) {
         case ActivePane.GetStarted:
           if (draft.audioGranted && draft.videoGranted) {
-            draft.activePane = ActivePane.Connectivity;
+            draft.activePane = ActivePane.CameraTest;
           } else {
             draft.activePane = ActivePane.DeviceCheck;
           }
@@ -96,7 +101,7 @@ export const appStateReducer = produce((draft: stateType, action: ACTIONTYPE) =>
           if (draft.deviceError) {
             draft.activePane = ActivePane.DeviceError;
           } else {
-            draft.activePane = ActivePane.Connectivity;
+            draft.activePane = ActivePane.CameraTest;
           }
           break;
         default:
@@ -107,7 +112,7 @@ export const appStateReducer = produce((draft: stateType, action: ACTIONTYPE) =>
 
     case 'previous-pane':
       switch (draft.activePane) {
-        case ActivePane.Connectivity:
+        case ActivePane.CameraTest:
           if (draft.audioGranted && draft.videoGranted) {
             draft.activePane = ActivePane.GetStarted;
           } else {
@@ -155,6 +160,8 @@ export const appStateReducer = produce((draft: stateType, action: ACTIONTYPE) =>
     case 'set-twilio-status-error':
       draft.twilioStatusError = action.error;
       break;
+    case 'set-video-test-report':
+      draft.videoInputTestReport = action.report;
   }
 });
 

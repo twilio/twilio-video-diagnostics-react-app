@@ -19,7 +19,7 @@ const useStyles = makeStyles({
   */
   illustration: {
     height: '181px',
-    width: '342px',
+    width: '337px',
   },
 });
 
@@ -35,6 +35,10 @@ export function CheckPermissions() {
           track.stop();
         });
       });
+      // The devicechange event is not fired after permissions are granted, so we fire it
+      // ourselves to update the useDevices hook. The 100 ms delay is needed so that device labels are available
+      // when the useDevices hook updates.
+      setTimeout(() => navigator.mediaDevices.dispatchEvent(new Event('devicechange')), 100);
       dispatch({ type: 'next-pane' });
     } catch (error) {
       dispatch({ type: 'set-device-error', error });
