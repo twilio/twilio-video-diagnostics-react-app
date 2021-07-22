@@ -125,12 +125,14 @@ describe('the MainContent component', () => {
   });
 
   it('should make the next pane the active pane when the Down button is clicked', () => {
+    const mockNextPane = jest.fn();
     mockUseAppStateContext.mockImplementation(() => ({
       state: { activePane: 3 },
-      dispatch: mockDispatch,
+      nextPane: mockNextPane,
     }));
     const wrapper = mount(<MainContent />);
+
     wrapper.find(ArrowDown).simulate('click');
-    expect(mockDispatch).toHaveBeenCalled();
+    expect(mockNextPane).toHaveBeenCalled();
   });
 });
