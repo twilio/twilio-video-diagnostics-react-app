@@ -108,6 +108,19 @@ export function Connectivity() {
                   </div>
                 </TableCell>
                 <TableCell>
+                  <Typography variant="body1">Signaling Gateway</Typography>
+                </TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>
+                  <div className={classes.iconContainer}>
+                    <SuccessStatus />
+                    <Typography variant="body1">
+                      <strong>Reachable</strong>
+                    </Typography>
+                  </div>
+                </TableCell>
+                <TableCell>
                   <Typography variant="body1">TURN Servers</Typography>
                 </TableCell>
               </TableRow>
