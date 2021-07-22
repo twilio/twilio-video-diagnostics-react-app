@@ -2,6 +2,7 @@ import React, { createContext, useContext, useReducer, useEffect, useCallback } 
 import produce from 'immer';
 import { PreflightTestReport } from 'twilio-video';
 import usePreflightTest from './usePreflightTest/usePreflightTest';
+import useTwilioStatus from './useTwilioStatus/useTwilioStatus';
 
 export enum ActivePane {
   GetStarted,
@@ -23,6 +24,8 @@ interface stateType {
     report: null | PreflightTestReport;
     tokenError: null | Error;
   };
+  twilioStatus: string | null;
+  twilioStatusError: null | Error;
 }
 
 export type ACTIONTYPE =
@@ -34,7 +37,9 @@ export type ACTIONTYPE =
   | { type: 'preflight-progress'; progress: string }
   | { type: 'preflight-completed'; report: PreflightTestReport }
   | { type: 'preflight-failed'; error: Error }
-  | { type: 'preflight-token-failed'; error: Error };
+  | { type: 'preflight-token-failed'; error: Error }
+  | { type: 'set-twilio-status'; status: string }
+  | { type: 'set-twilio-status-error'; error: Error };
 
 type AppStateContextType = {
   state: stateType;
@@ -53,6 +58,8 @@ export const initialState = {
     error: null,
     tokenError: null,
   },
+  twilioStatus: null,
+  twilioStatusError: null,
 };
 
 export const AppStateContext = createContext<AppStateContextType>(null!);
@@ -140,12 +147,21 @@ export const appStateReducer = produce((draft: stateType, action: ACTIONTYPE) =>
     case 'preflight-token-failed':
       draft.preflightTest.tokenError = action.error;
       break;
+
+    case 'set-twilio-status':
+      draft.twilioStatus = action.status;
+      break;
+
+    case 'set-twilio-status-error':
+      draft.twilioStatusError = action.error;
+      break;
   }
 });
 
 export const AppStateProvider: React.FC = ({ children }) => {
   const [state, dispatch] = useReducer(appStateReducer, initialState);
   const { startPreflightTest } = usePreflightTest(dispatch);
+  const { getTwilioStatus } = useTwilioStatus(dispatch);
 
   console.log(state);
 
@@ -153,12 +169,13 @@ export const AppStateProvider: React.FC = ({ children }) => {
     switch (state.activePane) {
       case ActivePane.GetStarted:
         startPreflightTest();
+        getTwilioStatus();
         dispatch({ type: 'next-pane' });
         break;
       default:
         dispatch({ type: 'next-pane' });
     }
-  }, [startPreflightTest, state, dispatch]);
+  }, [startPreflightTest, getTwilioStatus, state, dispatch]);
 
   useEffect(() => {
     navigator.mediaDevices.enumerateDevices().then((devices) => dispatch({ type: 'set-devices', devices }));
