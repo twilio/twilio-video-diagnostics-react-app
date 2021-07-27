@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useReducer, useEffect, useCallback } from 'react';
-import produce from 'immer';
+import produce, { current } from 'immer';
 import { PreflightTestReport } from 'twilio-video';
 import usePreflightTest from './usePreflightTest/usePreflightTest';
 import useTwilioStatus from './useTwilioStatus/useTwilioStatus';
@@ -29,6 +29,7 @@ interface stateType {
   twilioStatus: string | null;
   twilioStatusError: null | Error;
   videoInputTestReport: null | VideoInputTest.Report;
+  downButtonDisabled: boolean;
 }
 
 export type ACTIONTYPE =
@@ -65,6 +66,7 @@ export const initialState = {
   twilioStatus: null,
   twilioStatusError: null,
   videoInputTestReport: null,
+  downButtonDisabled: false,
 };
 
 export const AppStateContext = createContext<AppStateContextType>(null!);
@@ -76,6 +78,16 @@ export function useAppStateContext() {
   }
   return context;
 }
+
+// helper function for determining whether to disable the down arrow button:
+export const isButtonDisabled = (progress: string | null, status: string | null, pane: ActivePane) => {
+  const connectionFailed = pane === ActivePane.Connectivity && (progress !== null || status !== 'operational');
+  const onDeviceCheck = pane === ActivePane.DeviceCheck || pane === ActivePane.DeviceError;
+
+  if (connectionFailed || !ActivePane[pane + 1] || onDeviceCheck) return true;
+
+  return false;
+};
 
 /**
  * This reducer function helps with the logic used to decide the activePane,
@@ -162,6 +174,16 @@ export const appStateReducer = produce((draft: stateType, action: ACTIONTYPE) =>
       break;
     case 'set-video-test-report':
       draft.videoInputTestReport = action.report;
+  }
+
+  const currentState = current(draft);
+
+  if (isButtonDisabled(currentState.preflightTest.progress, currentState.twilioStatus, currentState.activePane)) {
+    draft.downButtonDisabled = true;
+    return;
+  } else {
+    draft.downButtonDisabled = false;
+    return;
   }
 });
 
