@@ -1,0 +1,69 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`the ConnectionFailed component should render correctly 1`] = `
+<Fragment>
+  <ConnectionModal
+    isModalOpen={false}
+    serviceStatus="Up"
+    setIsModalOpen={[Function]}
+    signalingGateway="Reachable"
+    turnServers="Reachable"
+  />
+  <WithStyles(ForwardRef(Container))>
+    <WithStyles(ForwardRef(Grid))
+      alignItems="center"
+      container={true}
+      justifyContent="space-between"
+    >
+      <WithStyles(ForwardRef(Grid))
+        item={true}
+        md={5}
+      >
+        <WithStyles(ForwardRef(Typography))
+          gutterBottom={true}
+          variant="h1"
+        >
+          Connection success
+        </WithStyles(ForwardRef(Typography))>
+        <WithStyles(ForwardRef(Typography))
+          gutterBottom={true}
+          variant="body1"
+        >
+          All connections to Twilio's servers are working correctly.
+        </WithStyles(ForwardRef(Typography))>
+        <WithStyles(ForwardRef(Button))
+          color="primary"
+          onClick={[MockFunction]}
+          variant="contained"
+        >
+          Ok
+        </WithStyles(ForwardRef(Button))>
+      </WithStyles(ForwardRef(Grid))>
+      <WithStyles(ForwardRef(Grid))
+        className="makeStyles-illustrationContainer-2"
+        item={true}
+        md={5}
+      >
+        <img
+          alt="Success"
+          src="test-file-stub"
+          style={
+            Object {
+              "height": "200px",
+              "width": "245px",
+            }
+          }
+        />
+        <WithStyles(ForwardRef(Button))
+          className="makeStyles-viewButton-3"
+          onClick={[Function]}
+          variant="outlined"
+        >
+          <ViewIcon />
+          View detailed connection information
+        </WithStyles(ForwardRef(Button))>
+      </WithStyles(ForwardRef(Grid))>
+    </WithStyles(ForwardRef(Grid))>
+  </WithStyles(ForwardRef(Container))>
+</Fragment>
+`;

@@ -1,0 +1,91 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`the ConnectionFailed component should render correctly 1`] = `
+<Fragment>
+  <ConnectionModal
+    isModalOpen={false}
+    serviceStatus="Up"
+    setIsModalOpen={[Function]}
+    signalingGateway="unReachable"
+    turnServers="Reachable"
+  />
+  <WithStyles(ForwardRef(Container))>
+    <WithStyles(ForwardRef(Grid))
+      alignItems="center"
+      container={true}
+      justifyContent="space-between"
+    >
+      <WithStyles(ForwardRef(Grid))
+        item={true}
+        md={5}
+      >
+        <WithStyles(ForwardRef(Typography))
+          gutterBottom={true}
+          style={
+            Object {
+              "position": "relative",
+            }
+          }
+          variant="h1"
+        >
+          <div
+            className="makeStyles-errorIcon-4"
+          >
+            <ErrorIcon />
+          </div>
+          Connection failed
+        </WithStyles(ForwardRef(Typography))>
+        <WithStyles(ForwardRef(Typography))
+          gutterBottom={true}
+          variant="body1"
+        >
+          It's possible that you're behind a firewall that will need to be updated by your network administrator.
+        </WithStyles(ForwardRef(Typography))>
+        <WithStyles(ForwardRef(Typography))
+          variant="body1"
+        >
+          Download report results to send to your network admin, update your internet, and re-run this test.
+        </WithStyles(ForwardRef(Typography))>
+        <WithStyles(ForwardRef(Button))
+          className="makeStyles-downloadButton-5"
+          color="primary"
+          onClick={[MockFunction]}
+          variant="contained"
+        >
+          <DownloadIcon />
+          Download report results
+        </WithStyles(ForwardRef(Button))>
+      </WithStyles(ForwardRef(Grid))>
+      <WithStyles(ForwardRef(Grid))
+        className="makeStyles-paperContainer-3"
+        item={true}
+        md={5}
+      >
+        <WithStyles(ForwardRef(Paper))
+          className="makeStyles-paper-2"
+        >
+          <WithStyles(ForwardRef(Typography))
+            gutterBottom={true}
+            variant="body1"
+          >
+            To conduct a video call, your internet needs to be able to communicate with Twilio's cloud.
+          </WithStyles(ForwardRef(Typography))>
+          <WithStyles(ForwardRef(Typography))
+            variant="body1"
+          >
+            Learn how to configure your firewall correctly.
+          </WithStyles(ForwardRef(Typography))>
+        </WithStyles(ForwardRef(Paper))>
+        <WithStyles(ForwardRef(Button))
+          className="makeStyles-viewButton-6"
+          onClick={[Function]}
+          variant="outlined"
+        >
+          <ViewIcon />
+          View detailed connection information
+        </WithStyles(ForwardRef(Button))>
+      </WithStyles(ForwardRef(Grid))>
+    </WithStyles(ForwardRef(Grid))>
+  </WithStyles(ForwardRef(Container))>
+</Fragment>
+`;
