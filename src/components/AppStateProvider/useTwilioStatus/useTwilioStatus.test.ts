@@ -1,6 +1,7 @@
 import useTwilioStatus from './useTwilioStatus';
 import axios from 'axios';
 import { renderHook } from '@testing-library/react-hooks';
+
 const mockAxiosData = {
   data: {
     components: [
@@ -10,8 +11,11 @@ const mockAxiosData = {
     ],
   },
 };
+
 jest.mock('axios', () => jest.fn(() => Promise.resolve(mockAxiosData)));
+
 const mockAxios = axios as any as jest.Mock<any>;
+
 describe('the useTwilioStatus hook', () => {
   it('should dispatch "set-twilio-status" when there is no error', () => {
     const mockDispatch = jest.fn();
@@ -20,6 +24,7 @@ describe('the useTwilioStatus hook', () => {
       expect(mockDispatch).toHaveBeenCalledWith({ type: 'set-twilio-status', status: 'operational' });
     });
   });
+
   it('should dispatch "set-twilio-status-error" when there is an error', () => {
     const mockDispatch = jest.fn();
     mockAxios.mockImplementationOnce(() => Promise.reject('mock error'));
