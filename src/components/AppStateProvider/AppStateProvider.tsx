@@ -10,6 +10,7 @@ export enum ActivePane {
   DeviceCheck,
   DeviceError,
   CameraTest,
+  LoadingScreen,
   Connectivity,
   Quality,
   Results,
@@ -83,8 +84,9 @@ export function useAppStateContext() {
 export const isButtonDisabled = (progress: string | null, status: string | null, pane: ActivePane) => {
   const connectionFailed = pane === ActivePane.Connectivity && (progress !== null || status !== 'operational');
   const onDeviceCheck = pane === ActivePane.DeviceCheck || pane === ActivePane.DeviceError;
+  const onLoadingScreen = pane === ActivePane.LoadingScreen;
 
-  if (connectionFailed || !ActivePane[pane + 1] || onDeviceCheck) return true;
+  if (connectionFailed || !ActivePane[pane + 1] || onDeviceCheck || onLoadingScreen) return true;
 
   return false;
 };
@@ -116,6 +118,13 @@ export const appStateReducer = produce((draft: stateType, action: ACTIONTYPE) =>
             draft.activePane = ActivePane.CameraTest;
           }
           break;
+        case ActivePane.CameraTest:
+          if (!draft.preflightTest.report || !draft.preflightTest.error) {
+            draft.activePane = ActivePane.LoadingScreen;
+          } else {
+            draft.activePane = ActivePane.Connectivity;
+          }
+          break;
         default:
           draft.activePane++;
           break;
@@ -130,6 +139,9 @@ export const appStateReducer = produce((draft: stateType, action: ACTIONTYPE) =>
           } else {
             draft.activePane = ActivePane.DeviceCheck;
           }
+          break;
+        case ActivePane.Connectivity:
+          draft.activePane = ActivePane.CameraTest;
           break;
         default:
           draft.activePane--;
@@ -191,8 +203,6 @@ export const AppStateProvider: React.FC = ({ children }) => {
   const [state, dispatch] = useReducer(appStateReducer, initialState);
   const { startPreflightTest } = usePreflightTest(dispatch);
   const { getTwilioStatus } = useTwilioStatus(dispatch);
-
-  console.log(state);
 
   const nextPane = useCallback(() => {
     switch (state.activePane) {

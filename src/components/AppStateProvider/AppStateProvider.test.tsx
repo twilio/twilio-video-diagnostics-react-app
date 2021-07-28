@@ -9,20 +9,20 @@ import {
   initialState,
   isButtonDisabled,
 } from './AppStateProvider';
-import useTwilioStatus from './useTwilioStatus/useTwilioStatus';
-import usePreflightTest from './usePreflightTest/usePreflightTest';
-import { renderHook } from '@testing-library/react-hooks';
-import { act } from '@testing-library/react';
+import { renderHook, act } from '@testing-library/react-hooks';
+
+const mockStartPreflightTest = jest.fn();
+const mockGetTwilioStatus = jest.fn();
 
 jest.mock('./usePreflightTest/usePreflightTest', () =>
   jest.fn(() => ({
-    startPreflightTest: jest.fn(),
+    startPreflightTest: mockStartPreflightTest,
   }))
 );
 
 jest.mock('./useTwilioStatus/useTwilioStatus', () =>
   jest.fn(() => ({
-    getTwilioStatus: jest.fn(),
+    getTwilioStatus: mockGetTwilioStatus,
   }))
 );
 
@@ -69,9 +69,13 @@ describe('the appState reducer', () => {
 
   describe('the "next-pane" action type', () => {
     it('should set the active pane to the following pane by default"', () => {
-      const newState = appStateReducer(initialState, { type: 'next-pane' });
+      const draftState = {
+        ...initialState,
+        activePane: ActivePane.Connectivity,
+      };
+      const newState = appStateReducer(draftState, { type: 'next-pane' });
 
-      expect(newState.activePane).toEqual(ActivePane.DeviceCheck);
+      expect(newState.activePane).toEqual(ActivePane.Quality);
     });
 
     it('should set the active pane to DeviceError when an error is thrown after checking device permissions', () => {
@@ -107,6 +111,25 @@ describe('the appState reducer', () => {
       const newState = appStateReducer(draftStatePermissionsGranted, { type: 'next-pane' });
       expect(newState.activePane).toEqual(ActivePane.CameraTest);
     });
+
+    it('should set active pane to LoadingScreen if on CameraTest and preflightTest has not finished or thrown an error', () => {
+      const draftStateFromCameraTestPane = { ...initialState, activePane: ActivePane.CameraTest };
+
+      const newState = appStateReducer(draftStateFromCameraTestPane, { type: 'next-pane' });
+      expect(newState.activePane).toEqual(ActivePane.LoadingScreen);
+    });
+
+    it('should set active pane to Connectivity if on CameraTest and preflightTest has finished or thrown an error', () => {
+      const mockReport = {} as PreflightTestReport;
+      const draftStateFromCameraTestPane = {
+        ...initialState,
+        activePane: ActivePane.CameraTest,
+        preflightTest: { ...initialState.preflightTest, report: mockReport, error: Error() },
+      };
+
+      const newState = appStateReducer(draftStateFromCameraTestPane, { type: 'next-pane' });
+      expect(newState.activePane).toEqual(ActivePane.Connectivity);
+    });
   });
 
   describe('the "previous-pane" action type', () => {
@@ -141,6 +164,14 @@ describe('the appState reducer', () => {
       const newState = appStateReducer(draftState, { type: 'previous-pane' });
 
       expect(newState.activePane).toEqual(ActivePane.DeviceCheck);
+    });
+
+    it('should set active pane to CameraTest if current active pane is Connectivity', () => {
+      const draftState = { ...initialState, activePane: ActivePane.Connectivity };
+
+      const newState = appStateReducer(draftState, { type: 'previous-pane' });
+
+      expect(newState.activePane).toEqual(ActivePane.CameraTest);
     });
   });
 
@@ -245,66 +276,66 @@ describe('the appState reducer', () => {
 });
 
 describe('the AppStateProvider component', () => {
+  // @ts-ignore
+  navigator.mediaDevices = {};
+
+  const mockDevices = [
+    { deviceId: 1, label: '', kind: 'audioinput' },
+    { deviceId: 2, label: '', kind: 'videoinput' },
+    { deviceId: 3, label: '', kind: 'audiooutput' },
+  ];
+  //@ts-ignore
+  navigator.mediaDevices.enumerateDevices = () => Promise.resolve(mockDevices);
+
   it('should return the AppState Context object', () => {
-    // @ts-ignore
-    navigator.mediaDevices = {};
-
-    const mockDevices = [
-      { deviceId: 1, label: '', kind: 'audioinput' },
-      { deviceId: 2, label: '', kind: 'videoinput' },
-      { deviceId: 3, label: '', kind: 'audiooutput' },
-    ];
-    //@ts-ignore
-    navigator.mediaDevices.enumerateDevices = () => Promise.resolve(mockDevices);
     const wrapper: React.FC = ({ children }) => <AppStateProvider>{children}</AppStateProvider>;
-
     const { result } = renderHook(useAppStateContext, { wrapper });
 
-    expect(result.current).toMatchInlineSnapshot(`
-      Object {
-        "dispatch": [Function],
-        "nextPane": [Function],
-        "state": Object {
-          "activePane": 0,
-          "audioGranted": false,
-          "deviceError": null,
-          "downButtonDisabled": false,
-          "preflightTest": Object {
-            "error": null,
-            "progress": null,
-            "report": null,
-            "tokenError": null,
-          },
-          "twilioStatus": null,
-          "twilioStatusError": null,
-          "videoGranted": false,
-          "videoInputTestReport": null,
-        },
-      }
-    `);
+    expect(result.current).toEqual({
+      state: initialState,
+      nextPane: expect.any(Function),
+      dispatch: expect.any(Function),
+    });
   });
 
-  // describe.only('the nextPane function', () => {
-  //   it('should', () => {
-  //     // @ts-ignore
-  //     navigator.mediaDevices = {};
+  describe('the nextPane function', () => {
+    it('should start preflight test, get Twilio status, and go to the next pane when active pane is GetStarted', async () => {
+      const wrapper: React.FC = ({ children }) => <AppStateProvider>{children}</AppStateProvider>;
 
-  //     const mockDevices = [
-  //       { deviceId: 1, label: '', kind: 'audioinput' },
-  //       { deviceId: 2, label: '', kind: 'videoinput' },
-  //       { deviceId: 3, label: '', kind: 'audiooutput' },
-  //     ];
-  //     //@ts-ignore
-  //     navigator.mediaDevices.enumerateDevices = () => Promise.resolve(mockDevices);
+      const { result, waitForNextUpdate } = renderHook(useAppStateContext, { wrapper });
 
-  //     const wrapper: React.FC = ({ children }) => <AppStateProvider>{children}</AppStateProvider>;
+      await act(async () => {
+        result.current.nextPane();
+        await waitForNextUpdate();
+      });
 
-  //     const { result } = renderHook(useAppStateContext, { wrapper });
-  //     const nextPaneMock = result.current.nextPane
+      expect(mockGetTwilioStatus).toHaveBeenCalled();
+      expect(mockStartPreflightTest).toHaveBeenCalled();
+      expect(result.current.state.activePane).toBe(ActivePane.DeviceCheck);
+    });
 
-  //     act(() => {
-  //       nextPaneMock()
-  //     })
-  //   });
-  // });
+    it('should go to the next pane by default', async () => {
+      const wrapper: React.FC = ({ children }) => <AppStateProvider>{children}</AppStateProvider>;
+
+      const { result, waitForNextUpdate } = renderHook(useAppStateContext, { wrapper });
+
+      // since initialState.activePane is GetStarted, we will need to call nextPane() to get set a new activePane
+      await act(async () => {
+        result.current.nextPane();
+        await waitForNextUpdate();
+      });
+
+      expect(mockGetTwilioStatus).toHaveBeenCalled();
+      expect(mockStartPreflightTest).toHaveBeenCalled();
+
+      // call nextPane() again to test default case (go to next pane without calling getTwilioStatus and startPreflightTest)
+      act(() => {
+        result.current.nextPane();
+      });
+
+      expect(result.current.state.activePane).toBe(ActivePane.CameraTest);
+      expect(mockGetTwilioStatus).toHaveBeenCalledTimes(1);
+      expect(mockStartPreflightTest).toHaveBeenCalledTimes(1);
+    });
+  });
 });
