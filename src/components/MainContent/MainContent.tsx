@@ -7,6 +7,7 @@ import { GetStarted } from '../panes/GetStarted/GetStarted';
 import { CheckPermissions } from '../panes/DeviceSetup/CheckPermissions/CheckPermissions';
 import { PermissionError } from '../panes/DeviceSetup/PermissionError/PermissionError';
 import { Connectivity } from '../panes/Connectivity/Connectivity';
+import { LoadingScreen } from '../panes/LoadingScreen/LoadingScreen';
 
 import { useEffect, useRef } from 'react';
 import { CameraTest } from '../panes/CameraTest/CameraTest';
@@ -116,8 +117,9 @@ const content = [
   { pane: ActivePane.GetStarted, component: <GetStarted /> },
   { pane: ActivePane.DeviceCheck, component: <CheckPermissions /> },
   { pane: ActivePane.DeviceError, component: <PermissionError /> },
-  { pane: ActivePane.Connectivity, component: <Connectivity /> },
   { pane: ActivePane.CameraTest, component: <CameraTest /> },
+  { pane: ActivePane.LoadingScreen, component: <LoadingScreen /> },
+  { pane: ActivePane.Connectivity, component: <Connectivity /> },
   { pane: ActivePane.Quality, component: <GetStarted /> },
   { pane: ActivePane.Results, component: <GetStarted /> },
 ];
@@ -133,7 +135,7 @@ export function MainContent() {
       <div className={classes.contentContainer}>
         <div
           className={clsx(classes.scrollContainer, {
-            [classes.hideAll]: state.activePane === 0,
+            [classes.hideAll]: state.activePane === 0 || state.activePane === ActivePane.LoadingScreen,
             [classes.hideAfter]:
               state.activePane === ActivePane.DeviceCheck || state.activePane === ActivePane.DeviceError,
           })}
@@ -159,19 +161,11 @@ export function MainContent() {
         <Button
           variant="outlined"
           onClick={() => dispatch({ type: 'previous-pane' })}
-          disabled={!ActivePane[state.activePane - 1]}
+          disabled={!ActivePane[state.activePane - 1] || state.activePane === ActivePane.LoadingScreen}
         >
           <ArrowUp />
         </Button>
-        <Button
-          variant="outlined"
-          onClick={nextPane}
-          disabled={
-            !ActivePane[state.activePane + 1] ||
-            state.activePane === ActivePane.DeviceCheck ||
-            state.activePane === ActivePane.DeviceError
-          }
-        >
+        <Button variant="outlined" onClick={nextPane} disabled={state.downButtonDisabled}>
           <ArrowDown />
         </Button>
       </div>

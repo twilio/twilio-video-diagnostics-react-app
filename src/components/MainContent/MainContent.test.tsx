@@ -45,7 +45,12 @@ describe('the MainContent component', () => {
 
   it('should set a new pane as the activePane when it is clicked', () => {
     mockUseAppStateContext.mockImplementation(() => ({
-      state: { activePane: 1 },
+      state: {
+        activePane: 1,
+        preflightTest: {
+          progress: null,
+        },
+      },
       dispatch: mockDispatch,
     }));
 
@@ -56,7 +61,15 @@ describe('the MainContent component', () => {
   });
 
   it('should center the list of Items based on the active pane', () => {
-    mockUseAppStateContext.mockImplementation(() => ({ state: { activePane: 0 } }));
+    mockUseAppStateContext.mockImplementation(() => ({
+      state: {
+        activePane: 0,
+        preflightTest: {
+          progress: null,
+        },
+      },
+      dispatch: mockDispatch,
+    }));
     const { getAllByTestId, rerender } = render(
       <MuiThemeProvider theme={theme}>
         <MainContent />
@@ -89,7 +102,15 @@ describe('the MainContent component', () => {
   });
 
   it('should disable the Up button when the first pane is active', () => {
-    mockUseAppStateContext.mockImplementation(() => ({ state: { activePane: 0 } }));
+    mockUseAppStateContext.mockImplementation(() => ({
+      state: {
+        activePane: 0,
+        preflightTest: {
+          progress: null,
+        },
+        downButtonDisabled: false,
+      },
+    }));
     const wrapper = shallow(<MainContent />);
     expect(wrapper.find(ArrowUp).parent().prop('disabled')).toBe(true);
     expect(wrapper.find(ArrowDown).parent().prop('disabled')).toBe(false);
@@ -97,21 +118,45 @@ describe('the MainContent component', () => {
 
   it('should disable the Down button when the last pane is active', () => {
     const numberOfPanes = Object.keys(ActivePane).length / 2;
-    mockUseAppStateContext.mockImplementation(() => ({ state: { activePane: numberOfPanes } }));
+    mockUseAppStateContext.mockImplementation(() => ({
+      state: {
+        activePane: numberOfPanes,
+        preflightTest: {
+          progress: null,
+        },
+        downButtonDisabled: true,
+      },
+    }));
     const wrapper = shallow(<MainContent />);
     expect(wrapper.find(ArrowUp).parent().at(0).prop('disabled')).toBe(false);
     expect(wrapper.find(ArrowDown).parent().prop('disabled')).toBe(true);
   });
 
   it('should disable the Down button when checking for device permissions', () => {
-    mockUseAppStateContext.mockImplementation(() => ({ state: { activePane: ActivePane.DeviceCheck } }));
+    mockUseAppStateContext.mockImplementation(() => ({
+      state: {
+        activePane: ActivePane.DeviceCheck,
+        preflightTest: {
+          progress: null,
+        },
+        downButtonDisabled: true,
+      },
+    }));
     const wrapper = shallow(<MainContent />);
     expect(wrapper.find(ArrowUp).parent().at(0).prop('disabled')).toBe(false);
     expect(wrapper.find(ArrowDown).parent().prop('disabled')).toBe(true);
   });
 
-  it('should not disable any buttons when the active pane is not the first, last or checking for device permissions', () => {
-    mockUseAppStateContext.mockImplementation(() => ({ state: { activePane: 3 } }));
+  it('should not disable any buttons when the active pane is not the first, last, or checking for device permissions', () => {
+    mockUseAppStateContext.mockImplementation(() => ({
+      state: {
+        activePane: 3,
+        preflightTest: {
+          progress: null,
+        },
+        downButtonDisabled: false,
+      },
+    }));
     const wrapper = shallow(<MainContent />);
     expect(wrapper.find(ArrowUp).parent().prop('disabled')).toBe(false);
     expect(wrapper.find(ArrowDown).parent().prop('disabled')).toBe(false);
@@ -119,7 +164,12 @@ describe('the MainContent component', () => {
 
   it('should make the previous pane the active pane when the Up button is clicked', () => {
     mockUseAppStateContext.mockImplementation(() => ({
-      state: { activePane: 3 },
+      state: {
+        activePane: 3,
+        preflightTest: {
+          progress: null,
+        },
+      },
       dispatch: mockDispatch,
     }));
     const wrapper = mount(<MainContent />);
@@ -130,8 +180,15 @@ describe('the MainContent component', () => {
   it('should make the next pane the active pane when the Down button is clicked', () => {
     const mockNextPane = jest.fn();
     mockUseAppStateContext.mockImplementation(() => ({
-      state: { activePane: 3 },
+      state: {
+        activePane: 3,
+        preflightTest: {
+          progress: null,
+        },
+        downButtonDisabled: false,
+      },
       nextPane: mockNextPane,
+      dispatch: mockDispatch,
     }));
     const wrapper = mount(<MainContent />);
 
