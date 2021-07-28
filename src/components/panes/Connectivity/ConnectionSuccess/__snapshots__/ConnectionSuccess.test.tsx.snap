@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`the ConnectionFailed component should render correctly 1`] = `
+exports[`the ConnectionSuccess component should render correctly 1`] = `
 <Fragment>
   <ConnectionModal
     isModalOpen={false}
@@ -55,7 +55,7 @@ exports[`the ConnectionFailed component should render correctly 1`] = `
           }
         />
         <WithStyles(ForwardRef(Button))
-          className="makeStyles-viewButton-3"
+          className="makeStyles-viewButton-3 makeStyles-disablePointerEvents-4"
           onClick={[Function]}
           variant="outlined"
         >

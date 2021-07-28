@@ -2,13 +2,20 @@ import { Button } from '@material-ui/core';
 import { shallow } from 'enzyme';
 import { ConnectionFailed } from './ConnectionFailed';
 import { ConnectionModal } from '../ConnectionModal/ConnectionModal';
+import * as utils from '../../../../utils';
 import { useAppStateContext } from '../../../AppStateProvider/AppStateProvider';
 
 jest.mock('../../../AppStateProvider/AppStateProvider');
 
+// @ts-ignore
+utils.downloadJSONFile = jest.fn();
+
 const mockUseAppStateContext = useAppStateContext as jest.Mock<any>;
 
-mockUseAppStateContext.mockImplementation(() => ({ state: { activePane: 4 }, nextPane: jest.fn() }));
+mockUseAppStateContext.mockImplementation(() => ({
+  state: { activePane: 4, preflightTest: { report: 'mockReport' } },
+  nextPane: jest.fn(),
+}));
 
 describe('the ConnectionFailed component', () => {
   it('should render correctly', () => {
@@ -34,7 +41,10 @@ describe('the ConnectionFailed component', () => {
   });
 
   it('should prevent modal from being opened if active pane is not Connectivity', () => {
-    mockUseAppStateContext.mockImplementationOnce(() => ({ state: { activePane: 5 }, nextPane: jest.fn() }));
+    mockUseAppStateContext.mockImplementationOnce(() => ({
+      state: { activePane: 6, preflightTest: { report: 'mockReport' } },
+      nextPane: jest.fn(),
+    }));
 
     const inactivePaneWrapper = shallow(
       <ConnectionFailed serviceStatus="Up" signalingGateway="Unreachable" turnServers="Unreachable" />
@@ -42,5 +52,15 @@ describe('the ConnectionFailed component', () => {
     const modalButton = inactivePaneWrapper.find(Button).at(1);
 
     expect(modalButton.prop('className')).toContain('disablePointerEvents');
+  });
+
+  it('should download the test results file if "Download report results" is clicked on', () => {
+    const wrapper = shallow(
+      <ConnectionFailed serviceStatus="Up" signalingGateway="Unreachable" turnServers="Unreachable" />
+    );
+
+    wrapper.find(Button).at(0).simulate('click');
+
+    expect(utils.downloadJSONFile).toHaveBeenCalled();
   });
 });

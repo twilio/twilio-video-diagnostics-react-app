@@ -12,7 +12,7 @@ mockUseAppStateContext.mockImplementation(() => ({ state: { activePane: 4 }, nex
 
 const wrapper = shallow(<ConnectionSuccess serviceStatus="Up" signalingGateway="Reachable" turnServers="Reachable" />);
 
-describe('the ConnectionFailed component', () => {
+describe('the ConnectionSuccess component', () => {
   it('should render correctly', () => {
     expect(wrapper).toMatchSnapshot();
   });
@@ -28,7 +28,7 @@ describe('the ConnectionFailed component', () => {
   });
 
   it('should prevent modal from being opened if active pane is not Connectivity', () => {
-    mockUseAppStateContext.mockImplementationOnce(() => ({ state: { activePane: 5 }, nextPane: jest.fn() }));
+    mockUseAppStateContext.mockImplementationOnce(() => ({ state: { activePane: 6 }, nextPane: jest.fn() }));
 
     const inactivePaneWrapper = shallow(
       <ConnectionSuccess serviceStatus="Up" signalingGateway="Reachable" turnServers="Reachable" />

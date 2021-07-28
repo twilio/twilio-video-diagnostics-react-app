@@ -6,6 +6,7 @@ import { ConnectionModal } from '../ConnectionModal/ConnectionModal';
 import { DownloadIcon } from '../../../../icons/DownloadIcon';
 import { ErrorIcon } from '../../../../icons/ErrorIcon';
 import { ViewIcon } from '../../../../icons/ViewIcon';
+import { downloadJSONFile } from '../../../../utils';
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -54,8 +55,16 @@ interface ConnectionFailedProps {
 
 export function ConnectionFailed({ serviceStatus, signalingGateway, turnServers }: ConnectionFailedProps) {
   const classes = useStyles();
-  const { nextPane, state } = useAppStateContext();
+  const { state } = useAppStateContext();
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const reportResults = {
+    audioTestResults: {},
+    browserInformation: {},
+    connectivityResults: { twilioServices: state.twilioStatus, signalingRegion: signalingGateway, TURN: turnServers },
+    videoTestResults: state.videoInputTestReport,
+    preflightTestReport: { report: state.preflightTest.report, error: state.preflightTest.error },
+  };
 
   return (
     <>
@@ -84,7 +93,12 @@ export function ConnectionFailed({ serviceStatus, signalingGateway, turnServers 
               Download report results to send to your network admin, update your internet, and re-run this test.
             </Typography>
 
-            <Button variant="contained" color="primary" onClick={nextPane} className={classes.downloadButton}>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() => downloadJSONFile(reportResults)}
+              className={classes.downloadButton}
+            >
               <DownloadIcon />
               Download report results
             </Button>
