@@ -110,7 +110,13 @@ export function ConnectionFailed({ serviceStatus, signalingGateway, turnServers 
                 To conduct a video call, your internet needs to be able to communicate with Twilio's cloud.
               </Typography>
 
-              <Typography variant="body1">Learn how to configure your firewall correctly.</Typography>
+              <Typography variant="body1">
+                Learn{' '}
+                <a href="https://www.twilio.com/docs/video/ip-addresses" target="_blank" rel="noopener noreferrer">
+                  how to configure your firewall correctly
+                </a>
+                .
+              </Typography>
             </Paper>
             <Button
               variant="outlined"
