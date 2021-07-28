@@ -74,7 +74,7 @@ export default function Header() {
       <Container>
         <Grid container alignItems="center" justifyContent="space-between" style={{ height: '100%' }}>
           <HeaderItem pane={ActivePane.DeviceCheck} label="Device & Network Setup" />
-          <HeaderItem pane={ActivePane.Connectivity} label="Connectivity" />
+          <HeaderItem pane={ActivePane.LoadingScreen} label="Connectivity" />
           <HeaderItem pane={ActivePane.Quality} label="Quality & Performance" />
           <HeaderItem pane={ActivePane.Results} label="Get Results" />
         </Grid>
@@ -83,7 +83,7 @@ export default function Header() {
       <div className={classes.progressBar}>
         <div
           className={classes.progressBarForeground}
-          style={{ width: `${(state.activePane / (numberOfPanes - 2)) * 100}%` }}
+          style={{ width: `${(state.activePane / (numberOfPanes - 3)) * 100}%` }}
         />
       </div>
     </div>
