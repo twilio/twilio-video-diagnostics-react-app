@@ -73,7 +73,16 @@ exports[`the ConnectionFailed component should render correctly 1`] = `
           <WithStyles(ForwardRef(Typography))
             variant="body1"
           >
-            Learn how to configure your firewall correctly.
+            Learn
+             
+            <a
+              href="https://www.twilio.com/docs/video/ip-addresses"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              how to configure your firewall correctly
+            </a>
+            .
           </WithStyles(ForwardRef(Typography))>
         </WithStyles(ForwardRef(Paper))>
         <WithStyles(ForwardRef(Button))
