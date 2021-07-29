@@ -2,11 +2,14 @@ import React from 'react';
 import { Select, Typography } from '@material-ui/core';
 import { render } from '@testing-library/react';
 import { mount, shallow } from 'enzyme';
-
+import { ActivePane, useAppStateContext } from '../../../AppStateProvider/AppStateProvider';
 import { AudioDevice } from './AudioDevice';
 import useDevices from '../useDevices/useDevices';
 
+jest.mock('../../../AppStateProvider/AppStateProvider');
 jest.mock('../useDevices/useDevices');
+
+const mockUseAppStateContext = useAppStateContext as jest.Mock<any>;
 const mockUseDevices = useDevices as jest.Mock<any>;
 
 const mediaInfoProps = { groupId: 'foo', toJSON: () => {} };
@@ -30,6 +33,11 @@ const mockDevices = {
   ],
 };
 
+mockUseAppStateContext.mockImplementation(() => ({
+  state: {
+    activePane: ActivePane.AudioTest,
+  },
+}));
 mockUseDevices.mockImplementation(() => mockDevices);
 
 describe('the AudioDevice component', () => {

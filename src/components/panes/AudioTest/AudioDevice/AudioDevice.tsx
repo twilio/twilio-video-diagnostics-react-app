@@ -1,5 +1,7 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
+import clsx from 'clsx';
 import { MenuItem, Typography, FormControl, makeStyles, Select } from '@material-ui/core';
+import { ActivePane, useAppStateContext } from '../../../AppStateProvider/AppStateProvider';
 import useDevices from '../useDevices/useDevices';
 
 const labels = {
@@ -28,12 +30,19 @@ const useStyles = makeStyles({
   deviceLabelContainer: {
     margin: '0.8em 0',
   },
+  deviceList: {
+    height: '36px',
+  },
+  disablePointerEvent: {
+    pointerEvents: 'none',
+  },
 });
 
 export function AudioDevice({ disabled, kind, onDeviceChange }: AudioDeviceProps) {
   const classes = useStyles();
   const devices = useDevices();
   const audioDevices = kind === 'audiooutput' ? devices.audioOutputDevices : devices.audioInputDevices;
+  const { state } = useAppStateContext();
   const [selectedDevice, setSelectedDevice] = useState('');
   const { deviceLabelHeader, headerText } = labels[kind];
   const noAudioRedirect = !Audio.prototype.setSinkId && kind === 'audiooutput';
@@ -55,13 +64,13 @@ export function AudioDevice({ disabled, kind, onDeviceChange }: AudioDeviceProps
 
   return (
     <>
-      <Typography variant="body1">
+      <Typography variant="subtitle2">
         <strong>{headerText}</strong>
       </Typography>
 
       {noAudioRedirect && (
         <div className={classes.deviceLabelContainer}>
-          <Typography variant="caption">
+          <Typography variant="subtitle2">
             <strong>{deviceLabelHeader}</strong>
           </Typography>
           <Typography variant="body1">System Default Audio Output</Typography>
@@ -73,7 +82,9 @@ export function AudioDevice({ disabled, kind, onDeviceChange }: AudioDeviceProps
           <Select
             value={selectedDevice}
             onChange={(e) => updateSelectedDevice(e.target.value as string)}
-            style={{ height: '36px' }}
+            className={clsx(classes.deviceList, {
+              [classes.disablePointerEvent]: state.activePane !== ActivePane.AudioTest,
+            })}
           >
             {audioDevices.map((device) => (
               <MenuItem value={device.deviceId} key={device.deviceId}>

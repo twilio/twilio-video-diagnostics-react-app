@@ -8,6 +8,7 @@ import { CheckPermissions } from '../panes/DeviceSetup/CheckPermissions/CheckPer
 import { PermissionError } from '../panes/DeviceSetup/PermissionError/PermissionError';
 
 import { useEffect, useRef } from 'react';
+import AudioTest from '../panes/AudioTest/AudioTest';
 import { CameraTest } from '../panes/CameraTest/CameraTest';
 
 const useStyles = makeStyles({
@@ -116,6 +117,7 @@ const content = [
   { pane: ActivePane.DeviceCheck, component: <CheckPermissions /> },
   { pane: ActivePane.DeviceError, component: <PermissionError /> },
   { pane: ActivePane.CameraTest, component: <CameraTest /> },
+  { pane: ActivePane.AudioTest, component: <AudioTest /> },
   { pane: ActivePane.Connectivity, component: <GetStarted /> },
   { pane: ActivePane.Quality, component: <GetStarted /> },
   { pane: ActivePane.Results, component: <GetStarted /> },

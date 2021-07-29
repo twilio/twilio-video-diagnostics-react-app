@@ -16,9 +16,6 @@ const useStyles = makeStyles({
     height: '280px',
     width: '388px',
   },
-  audioHeading: {
-    fontSize: '16px',
-  },
   audioLevelContainer: {
     display: 'flex',
     alignItems: 'center',
@@ -60,7 +57,7 @@ export default function AudioDeviceTestWidget() {
   };
 
   useEffect(() => {
-    if (state.activePane === ActivePane.Connectivity) {
+    if (state.activePane === ActivePane.AudioTest) {
       const newDeviceSelected = previousInputDeviceIdRef.current !== inputDeviceId;
       previousInputDeviceIdRef.current = inputDeviceId;
 
@@ -76,39 +73,38 @@ export default function AudioDeviceTestWidget() {
   return (
     <Container>
       <Grid container alignItems="center" justifyContent="space-between">
-        <Grid item md={6}>
+        <Grid item md={5}>
           <Typography variant="h1" gutterBottom>
             Test your audio
           </Typography>
-          ​
+
           <Typography variant="body1" gutterBottom>
             Record an audio clip and play it back to check that your speakers and volume control both work. If it
             doesn’t, try a different speaker or check your Bluetooth settings.
           </Typography>
+
           <Typography variant="body1" gutterBottom>
             <strong> Does your audio sound good?</strong>
           </Typography>
-          ​
-          <div style={{ display: 'flex' }}>
-            <Button
-              variant="contained"
-              style={{ marginRight: '1.5em' }}
-              color="primary"
-              onClick={() => dispatch({ type: 'next-pane' })}
-            >
-              Yes
-            </Button>
 
-            <Button color="primary" onClick={() => dispatch({ type: 'next-pane' })}>
-              Skip for now
-            </Button>
-          </div>
+          <Button
+            variant="contained"
+            style={{ marginRight: '1.5em' }}
+            color="primary"
+            onClick={() => dispatch({ type: 'next-pane' })}
+          >
+            Yes
+          </Button>
+
+          <Button color="primary" onClick={() => dispatch({ type: 'next-pane' })}>
+            Skip for now
+          </Button>
         </Grid>
         ​
         <Grid item md={5}>
           <Paper className={classes.paper}>
             <div className={classes.topLine}>
-              <Typography variant="body1" className={classes.audioHeading}>
+              <Typography variant="subtitle2">
                 <strong>Audio</strong>
               </Typography>
               <div>

@@ -1,11 +1,10 @@
-import React from 'react';
 import { Button } from '@material-ui/core';
 import { mount, shallow } from 'enzyme';
 
 import { AudioDevice } from './AudioDevice/AudioDevice';
 import AudioTest from './AudioTest';
 import ProgressBar from './ProgressBar/ProgressBar';
-import { useAppStateContext } from '../../AppStateProvider/AppStateProvider';
+import { ActivePane, useAppStateContext } from '../../AppStateProvider/AppStateProvider';
 import useTestRunner from './useTestRunner/useTestRunner';
 
 jest.mock('./AudioDevice/AudioDevice');
@@ -18,7 +17,10 @@ const mockUseTestRunner = useTestRunner as jest.Mock<any>;
 
 const mockDispatch = jest.fn();
 
-mockUseAppStateContext.mockImplementation(() => ({ state: { activePane: 3 }, dispatch: mockDispatch }));
+mockUseAppStateContext.mockImplementation(() => ({
+  state: { activePane: ActivePane.AudioTest },
+  dispatch: mockDispatch,
+}));
 
 describe('the AudioTest component', () => {
   let hookProps: any;
@@ -35,6 +37,7 @@ describe('the AudioTest component', () => {
       playbackURI: '',
       readAudioInput: jest.fn(),
       testEnded: false,
+      stopAudioTest: jest.fn(),
     };
     mockUseTestRunner.mockImplementation(() => hookProps);
     mockAudioDevice.mockImplementation(() => null);
@@ -55,6 +58,14 @@ describe('the AudioTest component', () => {
     expect(playBtn.prop('disabled')).toBeTruthy();
     expect(recordBtn.text()).toEqual('Record');
     expect(playBtn.text()).toEqual('Play back');
+  });
+
+  it('should stop the audio test when active pane is not AudioTest', () => {
+    mockUseAppStateContext.mockImplementationOnce(() => ({ state: { activePane: ActivePane.Connectivity } }));
+
+    mount(<AudioTest />);
+
+    expect(hookProps.stopAudioTest).toHaveBeenCalled();
   });
 
   describe('passive testing', () => {

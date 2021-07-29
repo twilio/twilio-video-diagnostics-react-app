@@ -7,6 +7,7 @@ export enum ActivePane {
   DeviceCheck,
   DeviceError,
   CameraTest,
+  AudioTest,
   Connectivity,
   Quality,
   Results,
