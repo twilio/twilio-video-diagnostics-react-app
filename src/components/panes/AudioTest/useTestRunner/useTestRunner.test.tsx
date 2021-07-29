@@ -272,4 +272,15 @@ describe('the useTestRunner hook', () => {
       });
     });
   });
+
+  describe('the stopAudioTest function', () => {
+    it('should stop the audio input test and audio out put test', () => {
+      const { result } = renderHook(useTestRunner);
+
+      result.current.stopAudioTest();
+
+      expect(mockAudioInputTest.stop).toHaveBeenCalled();
+      expect(mockAudioOutputTest.stop).toHaveBeenCalled();
+    });
+  });
 });

@@ -19,6 +19,7 @@ import {
 
 const log = getLogger(APP_NAME);
 let audioInputTest: AudioInputTest;
+let audioOutputTest: AudioOutputTest;
 
 const getErrorMessage = (error: DiagnosticError) => {
   let message = 'An unknown error has occurred';
@@ -43,7 +44,7 @@ export default function useTestRunner() {
     log.debug('AudioOutputTest running');
 
     options = { doLoop: false, ...options };
-    const audioOutputTest = testAudioOutputDevice(options);
+    audioOutputTest = testAudioOutputDevice(options);
     setIAudioOutputTestRunning(true);
     setTestEnded(false);
     setWarning('');
@@ -127,6 +128,9 @@ export default function useTestRunner() {
   const stopAudioTest = useCallback(() => {
     if (audioInputTest) {
       audioInputTest.stop();
+    }
+    if (audioOutputTest) {
+      audioOutputTest.stop();
     }
   }, []);
 
