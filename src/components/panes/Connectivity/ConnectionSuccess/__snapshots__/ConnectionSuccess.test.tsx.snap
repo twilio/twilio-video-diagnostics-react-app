@@ -55,7 +55,7 @@ exports[`the ConnectionSuccess component should render correctly 1`] = `
           }
         />
         <WithStyles(ForwardRef(Button))
-          className="makeStyles-viewButton-3 makeStyles-disablePointerEvents-4"
+          className="makeStyles-viewButton-3"
           onClick={[Function]}
           variant="outlined"
         >

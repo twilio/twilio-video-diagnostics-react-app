@@ -86,7 +86,7 @@ exports[`the ConnectionFailed component should render correctly 1`] = `
           </WithStyles(ForwardRef(Typography))>
         </WithStyles(ForwardRef(Paper))>
         <WithStyles(ForwardRef(Button))
-          className="makeStyles-viewButton-6 makeStyles-disablePointerEvents-7"
+          className="makeStyles-viewButton-6"
           onClick={[Function]}
           variant="outlined"
         >
