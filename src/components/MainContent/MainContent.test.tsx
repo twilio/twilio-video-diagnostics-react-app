@@ -11,6 +11,9 @@ import useDevices from '../panes/AudioTest/useDevices/useDevices';
 
 jest.mock('../panes/AudioTest/useDevices/useDevices');
 jest.mock('../AppStateProvider/AppStateProvider');
+jest.mock('../../hooks/useDevices/useDevices', () => () => ({
+  videoInputDevices: [],
+}));
 
 const mockUseDevices = useDevices as jest.Mock<any>;
 const mockUseAppStateContext = useAppStateContext as jest.Mock<any>;

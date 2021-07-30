@@ -21,7 +21,7 @@ export function useCameraTest() {
       test.on(VideoInputTest.Events.Error, (err) => setVideoTestError(err));
       test.on(VideoInputTest.Events.End, (report) => dispatch({ type: 'set-video-test-report', report }));
     },
-    [stopVideoTest]
+    [stopVideoTest, dispatch]
   );
 
   return { startVideoTest, stopVideoTest, videoElementRef, videoTest, videoTestError } as const;
