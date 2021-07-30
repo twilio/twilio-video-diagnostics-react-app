@@ -7,7 +7,6 @@ import { GetStarted } from '../panes/GetStarted/GetStarted';
 import { CheckPermissions } from '../panes/DeviceSetup/CheckPermissions/CheckPermissions';
 import { PermissionError } from '../panes/DeviceSetup/PermissionError/PermissionError';
 import { Connectivity } from '../panes/Connectivity/Connectivity';
-import { LoadingScreen } from '../panes/LoadingScreen/LoadingScreen';
 
 import { useEffect, useRef } from 'react';
 import { CameraTest } from '../panes/CameraTest/CameraTest';
@@ -118,7 +117,6 @@ const content = [
   { pane: ActivePane.DeviceCheck, component: <CheckPermissions /> },
   { pane: ActivePane.DeviceError, component: <PermissionError /> },
   { pane: ActivePane.CameraTest, component: <CameraTest /> },
-  { pane: ActivePane.LoadingScreen, component: <LoadingScreen /> },
   { pane: ActivePane.Connectivity, component: <Connectivity /> },
   { pane: ActivePane.Quality, component: <GetStarted /> },
   { pane: ActivePane.Results, component: <GetStarted /> },
@@ -129,15 +127,20 @@ export function MainContent() {
   const { state, dispatch, nextPane } = useAppStateContext();
 
   const devicesPermitted = state.audioGranted && state.videoGranted;
+  const preflightTestRunning = state.preflightTest.progress !== null || state.preflightTest.error !== null;
+  const onLoadingScreen = state.activePane === ActivePane.Connectivity && preflightTestRunning;
 
   return (
     <>
       <div className={classes.contentContainer}>
         <div
           className={clsx(classes.scrollContainer, {
-            [classes.hideAll]: state.activePane === 0 || state.activePane === ActivePane.LoadingScreen,
+            [classes.hideAll]: state.activePane === 0,
             [classes.hideAfter]:
-              state.activePane === ActivePane.DeviceCheck || state.activePane === ActivePane.DeviceError,
+              state.activePane === ActivePane.DeviceCheck ||
+              state.activePane === ActivePane.DeviceError ||
+              onLoadingScreen ||
+              (state.activePane === ActivePane.CameraTest && preflightTestRunning),
           })}
         >
           {content.map((pane, i) => {
@@ -161,7 +164,7 @@ export function MainContent() {
         <Button
           variant="outlined"
           onClick={() => dispatch({ type: 'previous-pane' })}
-          disabled={!ActivePane[state.activePane - 1] || state.activePane === ActivePane.LoadingScreen}
+          disabled={!ActivePane[state.activePane - 1]}
         >
           <ArrowUp />
         </Button>

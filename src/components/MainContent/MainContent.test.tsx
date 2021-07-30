@@ -19,14 +19,14 @@ const mockDispatch = jest.fn();
 
 describe('the MainContent component', () => {
   it('should set the isActive prop on the active pane', () => {
-    mockUseAppStateContext.mockImplementation(() => ({ state: { activePane: 1 } }));
+    mockUseAppStateContext.mockImplementation(() => ({ state: { activePane: 1, preflightTest: { progress: null } } }));
     const wrapper = shallow(<MainContent />);
     expect(wrapper.find(Item).at(1).prop('isActive')).toBe(true);
     expect(wrapper.find(Item).find({ isActive: true }).length).toBe(1);
   });
 
   it('should set the correct props on inactive items', () => {
-    mockUseAppStateContext.mockImplementation(() => ({ state: { activePane: 1 } }));
+    mockUseAppStateContext.mockImplementation(() => ({ state: { activePane: 1, preflightTest: { progress: null } } }));
     const wrapper = shallow(<MainContent />);
     const item = wrapper.find(Item).at(0).dive();
     expect(item.prop('className')).toContain('inactive');
@@ -35,7 +35,7 @@ describe('the MainContent component', () => {
   });
 
   it('should set the correct props on active items', () => {
-    mockUseAppStateContext.mockImplementation(() => ({ state: { activePane: 1 } }));
+    mockUseAppStateContext.mockImplementation(() => ({ state: { activePane: 1, preflightTest: { progress: null } } }));
     const wrapper = shallow(<MainContent />);
     const item = wrapper.find(Item).at(1).dive();
     expect(item.prop('className')).not.toContain('inactive');
@@ -90,7 +90,14 @@ describe('the MainContent component', () => {
 
     act(() => {
       // Sets a new active pane and rerenders
-      mockUseAppStateContext.mockImplementation(() => ({ state: { activePane: 1 } }));
+      mockUseAppStateContext.mockImplementation(() => ({
+        state: {
+          activePane: 1,
+          preflightTest: {
+            progress: null,
+          },
+        },
+      }));
       rerender(
         <MuiThemeProvider theme={theme}>
           <MainContent />
