@@ -112,13 +112,6 @@ describe('the appState reducer', () => {
       expect(newState.activePane).toEqual(ActivePane.CameraTest);
     });
 
-    it('should set active pane to LoadingScreen if on CameraTest and preflightTest has not finished or thrown an error', () => {
-      const draftStateFromCameraTestPane = { ...initialState, activePane: ActivePane.CameraTest };
-
-      const newState = appStateReducer(draftStateFromCameraTestPane, { type: 'next-pane' });
-      expect(newState.activePane).toEqual(ActivePane.LoadingScreen);
-    });
-
     it('should set active pane to Connectivity if on CameraTest and preflightTest has finished or thrown an error', () => {
       const mockReport = {} as PreflightTestReport;
       const draftStateFromCameraTestPane = {

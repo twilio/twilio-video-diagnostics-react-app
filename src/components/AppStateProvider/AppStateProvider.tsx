@@ -10,7 +10,6 @@ export enum ActivePane {
   DeviceCheck,
   DeviceError,
   CameraTest,
-  LoadingScreen,
   Connectivity,
   Quality,
   Results,
@@ -82,11 +81,10 @@ export function useAppStateContext() {
 
 // helper function for determining whether to disable the down arrow button:
 export const isButtonDisabled = (progress: string | null, status: string | null, pane: ActivePane) => {
-  const connectionFailed = pane === ActivePane.Connectivity && (progress !== null || status !== 'operational');
+  const connectionFailedOrLoading = pane === ActivePane.Connectivity && (progress !== null || status !== 'operational');
   const onDeviceCheck = pane === ActivePane.DeviceCheck || pane === ActivePane.DeviceError;
-  const onLoadingScreen = pane === ActivePane.LoadingScreen;
 
-  if (connectionFailed || !ActivePane[pane + 1] || onDeviceCheck || onLoadingScreen) return true;
+  if (connectionFailedOrLoading || !ActivePane[pane + 1] || onDeviceCheck) return true;
 
   return false;
 };
@@ -116,13 +114,6 @@ export const appStateReducer = produce((draft: stateType, action: ACTIONTYPE) =>
             draft.activePane = ActivePane.DeviceError;
           } else {
             draft.activePane = ActivePane.CameraTest;
-          }
-          break;
-        case ActivePane.CameraTest:
-          if (!draft.preflightTest.report || !draft.preflightTest.error) {
-            draft.activePane = ActivePane.LoadingScreen;
-          } else {
-            draft.activePane = ActivePane.Connectivity;
           }
           break;
         default:
