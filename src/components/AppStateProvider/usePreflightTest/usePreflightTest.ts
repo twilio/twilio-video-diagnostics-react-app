@@ -11,9 +11,10 @@ export default function usePreflightTest(dispatch: React.Dispatch<ACTIONTYPE>) {
       return;
     }
 
+    dispatch({ type: 'preflight-started' });
+
     return axios('/token')
       .then((response) => {
-        dispatch({ type: 'preflight-started' });
         const preflightTest = runPreflight(response.data.token);
 
         preflightTestRef.current = preflightTest;
@@ -34,6 +35,7 @@ export default function usePreflightTest(dispatch: React.Dispatch<ACTIONTYPE>) {
       })
       .catch((error) => {
         dispatch({ type: 'preflight-token-failed', error });
+        dispatch({ type: 'preflight-finished' });
       });
   }, [dispatch]);
 

@@ -16,7 +16,8 @@ const useStyles = makeStyles({
     textAlign: 'center',
   },
   loading: {
-    animation: '$loading 1s linear infinite',
+    animation: '$loading 1.5s linear infinite',
+    display: 'flex',
   },
   '@keyframes loading': {
     '0%': { transform: 'rotate(0deg)' },

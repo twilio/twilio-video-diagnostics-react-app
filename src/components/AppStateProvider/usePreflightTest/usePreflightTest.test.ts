@@ -11,6 +11,15 @@ jest.mock('twilio-video', () => ({ runPreflight: jest.fn(() => mockPreflightTest
 const mockAxios = axios as any as jest.Mock<any>;
 
 describe('the usePreflightTest hook', () => {
+  it('should dispatch "preflight-started" when "startPreflightTest" function is called', () => {
+    const mockDispatch = jest.fn();
+    const { result } = renderHook(() => usePreflightTest(mockDispatch));
+
+    result.current.startPreflightTest();
+
+    expect(mockDispatch).toHaveBeenCalledWith({ type: 'preflight-started' });
+  });
+
   it('should dispatch "preflight-progress" when the "progress" event is emitted', () => {
     const mockDispatch = jest.fn();
     const { result } = renderHook(() => usePreflightTest(mockDispatch));
@@ -43,13 +52,14 @@ describe('the usePreflightTest hook', () => {
     });
   });
 
-  it('should dispatch "preflight-token-error" when there is an error obtaining the token', () => {
+  it('should dispatch "preflight-token-error" and preflight-finished" when there is an error obtaining the token', () => {
     const mockDispatch = jest.fn();
     mockAxios.mockImplementationOnce(() => Promise.reject('mockError'));
     const { result } = renderHook(() => usePreflightTest(mockDispatch));
 
     return result.current.startPreflightTest()!.then(() => {
       expect(mockDispatch).toHaveBeenCalledWith({ type: 'preflight-token-failed', error: 'mockError' });
+      expect(mockDispatch).toHaveBeenCalledWith({ type: 'preflight-finished' });
     });
   });
 
