@@ -25,11 +25,15 @@ interface stateType {
     error: null | Error;
     report: null | PreflightTestReport;
     tokenError: null | Error;
+    signalingGatewayReachable: boolean;
+    turnServersReachable: boolean;
   };
   twilioStatus: string | null;
   twilioStatusError: null | Error;
   videoInputTestReport: null | VideoInputTest.Report;
   downButtonDisabled: boolean;
+  preflightTestInProgress: boolean;
+  preflightTestFinished: boolean;
 }
 
 export type ACTIONTYPE =
@@ -44,7 +48,9 @@ export type ACTIONTYPE =
   | { type: 'preflight-token-failed'; error: Error }
   | { type: 'set-twilio-status'; status: string }
   | { type: 'set-twilio-status-error'; error: Error }
-  | { type: 'set-video-test-report'; report: VideoInputTest.Report };
+  | { type: 'set-video-test-report'; report: VideoInputTest.Report }
+  | { type: 'preflight-started' }
+  | { type: 'preflight-finished' };
 
 type AppStateContextType = {
   state: stateType;
@@ -62,11 +68,15 @@ export const initialState = {
     report: null,
     error: null,
     tokenError: null,
+    signalingGatewayReachable: false,
+    turnServersReachable: false,
   },
   twilioStatus: null,
   twilioStatusError: null,
   videoInputTestReport: null,
   downButtonDisabled: false,
+  preflightTestInProgress: false,
+  preflightTestFinished: false,
 };
 
 export const AppStateContext = createContext<AppStateContextType>(null!);
@@ -152,6 +162,14 @@ export const appStateReducer = produce((draft: stateType, action: ACTIONTYPE) =>
 
     case 'preflight-progress':
       draft.preflightTest.progress = action.progress;
+
+      if (action.progress === 'dtlsConnected') {
+        draft.preflightTest.signalingGatewayReachable = true;
+      }
+
+      if (action.progress === 'mediaAcquired') {
+        draft.preflightTest.turnServersReachable = true;
+      }
       break;
 
     case 'preflight-completed':
@@ -175,19 +193,28 @@ export const appStateReducer = produce((draft: stateType, action: ACTIONTYPE) =>
     case 'set-twilio-status-error':
       draft.twilioStatusError = action.error;
       break;
+
     case 'set-video-test-report':
       draft.videoInputTestReport = action.report;
+      break;
+
+    case 'preflight-started':
+      draft.preflightTestInProgress = true;
+      draft.preflightTestFinished = false;
+      break;
+
+    case 'preflight-finished':
+      draft.preflightTestFinished = true;
+      draft.preflightTestInProgress = false;
   }
 
   const currentState = current(draft);
 
-  if (isButtonDisabled(currentState.preflightTest.progress, currentState.twilioStatus, currentState.activePane)) {
-    draft.downButtonDisabled = true;
-    return;
-  } else {
-    draft.downButtonDisabled = false;
-    return;
-  }
+  draft.downButtonDisabled = isButtonDisabled(
+    currentState.preflightTest.progress,
+    currentState.twilioStatus,
+    currentState.activePane
+  );
 });
 
 export const AppStateProvider: React.FC = ({ children }) => {

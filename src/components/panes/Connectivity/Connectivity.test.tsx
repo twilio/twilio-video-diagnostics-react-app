@@ -15,9 +15,11 @@ describe('the Connectivity component', () => {
         activePane: 4,
         twilioStatus: 'operational',
         preflightTest: {
-          progress: 'connected',
-          error: null,
+          signalingGatewayReachable: false,
+          turnServersReachable: false,
         },
+        preflightTestInProgress: true,
+        preflightTestFinished: false,
       },
     }));
 
@@ -26,16 +28,17 @@ describe('the Connectivity component', () => {
     expect(wrapper.text().includes('Hang Tight!')).toBe(true);
   });
 
-  it('should hide the loading screen if preflight test has completed or thrown an error', () => {
+  it('should hide the loading screen if preflight test has completed', () => {
     mockUseAppStateContext.mockImplementationOnce(() => ({
       state: {
         activePane: 4,
         twilioStatus: 'operational',
         preflightTest: {
-          progress: null,
-          report: 'mockReport',
-          error: null,
+          signalingGatewayReachable: true,
+          turnServersReachable: true,
         },
+        preflightTestInProgress: false,
+        preflightTestFinished: true,
       },
     }));
     const wrapper = shallow(<Connectivity />);
@@ -49,9 +52,11 @@ describe('the Connectivity component', () => {
         twilioStatus: 'operational',
         preflightTest: {
           progress: 'connected',
-          report: null,
-          error: 'mockError',
+          signalingGatewayReachable: false,
+          turnServersReachable: true,
         },
+        preflightTestInProgress: false,
+        preflightTestFinished: true,
       },
     }));
     const wrapper = shallow(<Connectivity />);
@@ -66,7 +71,12 @@ describe('the Connectivity component', () => {
         preflightTest: {
           progress: null,
           report: 'mockReport',
+          signalingGatewayReachable: true,
+          turnServersReachable: true,
+          error: null,
         },
+        preflightTestInProgress: false,
+        preflightTestFinished: true,
       },
     }));
     const wrapper = shallow(<Connectivity />);

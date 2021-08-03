@@ -97,7 +97,7 @@ export function Item({
       const offset = el.offsetTop + el.offsetHeight * 0.5;
       el.parentElement!.style.transform = `translateY(calc(50vh - ${offset}px + ${theme.navHeight / 2}px))`;
     }
-  }, [isActive, theme.navHeight]);
+  });
 
   return (
     <div
@@ -127,7 +127,7 @@ export function MainContent() {
   const { state, dispatch, nextPane } = useAppStateContext();
 
   const devicesPermitted = state.audioGranted && state.videoGranted;
-  const preflightTestRunning = state.preflightTest.progress !== null || state.preflightTest.error !== null;
+  const preflightTestRunning = state.preflightTestInProgress;
   const onLoadingScreen = state.activePane === ActivePane.Connectivity && preflightTestRunning;
 
   return (

@@ -2,7 +2,7 @@ import { Container, Grid, Typography, makeStyles } from '@material-ui/core';
 import { ConnectionFailed } from './ConnectionFailed/ConnectionFailed';
 import { ConnectionSuccess } from './ConnectionSuccess/ConnectionSuccess';
 import { Loading } from '../../../icons/Loading';
-import { ActivePane, useAppStateContext } from '../../AppStateProvider/AppStateProvider';
+import { useAppStateContext } from '../../AppStateProvider/AppStateProvider';
 
 const useStyles = makeStyles({
   container: {
@@ -15,6 +15,13 @@ const useStyles = makeStyles({
     height: '48px',
     textAlign: 'center',
   },
+  loading: {
+    animation: '$loading 1s linear infinite',
+  },
+  '@keyframes loading': {
+    '0%': { transform: 'rotate(0deg)' },
+    '100%': { transform: 'rotate(360deg)' },
+  },
 });
 
 export function Connectivity() {
@@ -22,21 +29,16 @@ export function Connectivity() {
   const classes = useStyles();
 
   const twilioServicesStatus = state.twilioStatus === 'operational' ? 'Up' : 'Down';
-  const signalingGateway = state.preflightTest.progress === 'connected' ? 'Unreachable' : 'Reachable';
-  const turnServers = state.preflightTest.progress === 'mediaStarted' ? 'Unreachable' : 'Reachable';
-
-  const showLoading =
-    state.activePane === ActivePane.Connectivity &&
-    state.preflightTest.progress !== null &&
-    state.preflightTest.error === null;
+  const signalingGateway = state.preflightTest.signalingGatewayReachable ? 'Reachable' : 'Unreachable';
+  const turnServers = state.preflightTest.turnServersReachable ? 'Reachable' : 'Unreachable';
 
   const connectionFailed =
-    twilioServicesStatus !== 'Up' || (state.preflightTest.progress && state.preflightTest.error !== null);
+    twilioServicesStatus !== 'Up' || (state.preflightTestFinished && state.preflightTest.error !== null);
 
   return (
     // If preflight test hasn't completed, display loading screen otherwise, display connectivity results:
     <>
-      {showLoading ? (
+      {state.preflightTestInProgress ? (
         <Container>
           <Grid container className={classes.container}>
             <Typography variant="h1" gutterBottom>
@@ -45,7 +47,9 @@ export function Connectivity() {
             <Typography variant="body1" gutterBottom className={classes.textBox}>
               We're just finishing up your personalized results and creating your report.
             </Typography>
-            <Loading />
+            <div className={classes.loading}>
+              <Loading />
+            </div>
           </Grid>
         </Container>
       ) : connectionFailed ? (

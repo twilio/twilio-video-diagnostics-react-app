@@ -21,23 +21,25 @@ describe('the usePreflightTest hook', () => {
     });
   });
 
-  it('should dispatch "preflight-failed" when the "failed" event is emitted', () => {
+  it('should dispatch "preflight-failed" and "preflight-finished" when the "failed" event is emitted', () => {
     const mockDispatch = jest.fn();
     const { result } = renderHook(() => usePreflightTest(mockDispatch));
 
     return result.current.startPreflightTest()!.then(() => {
       mockPreflightTest.emit('failed', 'error');
       expect(mockDispatch).toHaveBeenCalledWith({ type: 'preflight-failed', error: 'error' });
+      expect(mockDispatch).toHaveBeenCalledWith({ type: 'preflight-finished' });
     });
   });
 
-  it('should dispatch "preflight-completed" when the "completed" event is emitted', () => {
+  it('should dispatch "preflight-completed" and preflight-finished" when the "completed" event is emitted', () => {
     const mockDispatch = jest.fn();
     const { result } = renderHook(() => usePreflightTest(mockDispatch));
 
     return result.current.startPreflightTest()!.then(() => {
       mockPreflightTest.emit('completed', 'report');
       expect(mockDispatch).toHaveBeenCalledWith({ type: 'preflight-completed', report: 'report' });
+      expect(mockDispatch).toHaveBeenCalledWith({ type: 'preflight-finished' });
     });
   });
 

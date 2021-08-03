@@ -210,6 +210,18 @@ describe('the appState reducer', () => {
 
       expect(newState.preflightTest.progress).toBe('connected');
     });
+
+    it('should set preflightTest.signalingGatewayReachable to true if progress is "dtlsConnected', () => {
+      const newState = appStateReducer(initialState, { type: 'preflight-progress', progress: 'dtlsConnected' });
+
+      expect(newState.preflightTest.signalingGatewayReachable).toBe(true);
+    });
+
+    it('should set preflightTest.turnServersReachable to true if progress is "mediaAcquired', () => {
+      const newState = appStateReducer(initialState, { type: 'preflight-progress', progress: 'mediaAcquired' });
+
+      expect(newState.preflightTest.turnServersReachable).toBe(true);
+    });
   });
 
   describe('the "preflight-completed" action type', () => {
@@ -264,6 +276,22 @@ describe('the appState reducer', () => {
       const newState = appStateReducer(initialState, { type: 'set-video-test-report', report: mockReport });
 
       expect(newState.videoInputTestReport).toBe(mockReport);
+    });
+  });
+
+  describe('the "preflight-started" action type', () => {
+    it('should set preflightTestInProgress to true and preflightTestFinished to false', () => {
+      const newState = appStateReducer(initialState, { type: 'preflight-started' });
+      expect(newState.preflightTestInProgress).toBe(true);
+      expect(newState.preflightTestFinished).toBe(false);
+    });
+  });
+
+  describe('the "preflight-finished" action type', () => {
+    it('should set preflightTestFinished to true and preflightTestInprogress to false', () => {
+      const newState = appStateReducer(initialState, { type: 'preflight-finished' });
+      expect(newState.preflightTestFinished).toBe(true);
+      expect(newState.preflightTestInProgress).toBe(false);
     });
   });
 });
