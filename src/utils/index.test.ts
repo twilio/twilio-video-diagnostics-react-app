@@ -21,7 +21,7 @@ describe('the downloadJSONFile function', () => {
     //@ts-ignore
     expect(link.href).toEqual('mockBlob');
     //@ts-ignore
-    expect(link.download).toEqual('test_results.txt');
+    expect(link.download).toEqual('test_results.json');
     expect(link.click).toHaveBeenCalledTimes(1);
   });
 });
