@@ -7,13 +7,10 @@ import { MuiThemeProvider } from '@material-ui/core';
 import { shallow, mount } from 'enzyme';
 import { render } from '@testing-library/react';
 import theme from '../../theme';
-import useDevices from '../panes/AudioTest/useDevices/useDevices';
+import useDevices from '../../hooks/useDevices/useDevices';
 
-jest.mock('../panes/AudioTest/useDevices/useDevices');
+jest.mock('../../hooks/useDevices/useDevices');
 jest.mock('../AppStateProvider/AppStateProvider');
-jest.mock('../../hooks/useDevices/useDevices', () => () => ({
-  videoInputDevices: [],
-}));
 
 const mockUseDevices = useDevices as jest.Mock<any>;
 const mockUseAppStateContext = useAppStateContext as jest.Mock<any>;

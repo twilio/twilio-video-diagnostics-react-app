@@ -4,10 +4,10 @@ import { render } from '@testing-library/react';
 import { mount, shallow } from 'enzyme';
 import { ActivePane, useAppStateContext } from '../../../AppStateProvider/AppStateProvider';
 import { AudioDevice } from './AudioDevice';
-import useDevices from '../useDevices/useDevices';
+import useDevices from '../../../../hooks/useDevices/useDevices';
 
 jest.mock('../../../AppStateProvider/AppStateProvider');
-jest.mock('../useDevices/useDevices');
+jest.mock('../../../../hooks/useDevices/useDevices');
 
 const mockUseAppStateContext = useAppStateContext as jest.Mock<any>;
 const mockUseDevices = useDevices as jest.Mock<any>;

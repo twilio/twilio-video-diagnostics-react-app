@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import clsx from 'clsx';
 import { MenuItem, Typography, FormControl, makeStyles, Select } from '@material-ui/core';
 import { ActivePane, useAppStateContext } from '../../../AppStateProvider/AppStateProvider';
-import useDevices from '../useDevices/useDevices';
+import useDevices from '../../../../hooks/useDevices/useDevices';
 
 const labels = {
   audioinput: {

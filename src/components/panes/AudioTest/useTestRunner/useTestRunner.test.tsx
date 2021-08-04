@@ -39,7 +39,7 @@ jest.mock('@twilio/rtc-diagnostics', () => ({
   },
 }));
 
-jest.mock('../../../../utils.ts', () => ({
+jest.mock('../../../../utils', () => ({
   getAudioLevelPercentage: (value: number) => value,
 
   // Just returns the first value for easier mocking
