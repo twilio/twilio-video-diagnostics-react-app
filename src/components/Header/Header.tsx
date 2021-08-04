@@ -83,7 +83,7 @@ export default function Header() {
       <div className={classes.progressBar}>
         <div
           className={classes.progressBarForeground}
-          style={{ width: `${(state.activePane / (numberOfPanes - 2)) * 100}%` }}
+          style={{ width: `${(state.activePane / (numberOfPanes - 3)) * 100}%` }}
         />
       </div>
     </div>

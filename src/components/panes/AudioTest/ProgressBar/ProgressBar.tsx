@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import { useRef, useEffect } from 'react';
 import { alpha } from '@material-ui/core/styles/colorManipulator';
 import { makeStyles, Theme } from '@material-ui/core/styles';
 
