@@ -94,7 +94,7 @@ export function CameraTest() {
 
   return (
     <Container>
-      <Grid container alignItems="center" justify="space-between">
+      <Grid container alignItems="center" justifyContent="space-between">
         <Grid item md={5}>
           <Typography variant="h1" gutterBottom>
             Check your video

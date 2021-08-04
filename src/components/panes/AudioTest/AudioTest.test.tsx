@@ -139,6 +139,20 @@ describe('the AudioTest component', () => {
       playBtn.simulate('click');
       expect(hookProps.playAudio).toHaveBeenCalledWith({ deviceId: '', testURI: 'foo' });
     });
+
+    it('should go the next pane when "Yes" button is clicked', () => {
+      const wrapper = mount(<AudioTest />);
+      const yesBtn = wrapper.find(Button).at(0);
+      yesBtn.simulate('click');
+      expect(mockDispatch).toHaveBeenCalledWith({ type: 'next-pane' });
+    });
+
+    it('should go the next pane when "Skip for now" button is clicked', () => {
+      const wrapper = mount(<AudioTest />);
+      const skipBtn = wrapper.find(Button).at(1);
+      skipBtn.simulate('click');
+      expect(mockDispatch).toHaveBeenCalledWith({ type: 'next-pane' });
+    });
   });
 
   describe('button labels', () => {
