@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import { AudioDevice } from './AudioDevice/AudioDevice';
 import ProgressBar from './ProgressBar/ProgressBar';
-import useTestRunner from './useTestRunner/useTestRunner';
+import useAudioTest from './useAudioTest/useAudioTest';
 import { ActivePane, useAppStateContext } from '../../AppStateProvider/AppStateProvider';
 import { Microphone } from '../../../icons/Microphone';
 
@@ -44,7 +44,7 @@ export default function AudioDeviceTestWidget() {
     playbackURI,
     readAudioInput,
     stopAudioTest,
-  } = useTestRunner();
+  } = useAudioTest();
 
   const disableAll = isRecording || isAudioOutputTestRunning || !!error;
 

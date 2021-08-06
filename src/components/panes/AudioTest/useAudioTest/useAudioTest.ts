@@ -16,6 +16,7 @@ import {
   INPUT_TEST_DURATION,
   RECORD_DURATION,
 } from '../../../../constants';
+import { useAppStateContext } from '../../../AppStateProvider/AppStateProvider';
 
 const log = getLogger(APP_NAME);
 let audioInputTest: AudioInputTest;
@@ -39,40 +40,45 @@ export default function useTestRunner() {
   const [error, setError] = useState('');
   const [warning, setWarning] = useState('');
   const [testEnded, setTestEnded] = useState(false);
+  const { dispatch } = useAppStateContext();
 
-  const playAudio = useCallback((options: AudioOutputTest.Options) => {
-    log.debug('AudioOutputTest running');
+  const playAudio = useCallback(
+    (options: AudioOutputTest.Options) => {
+      log.debug('AudioOutputTest running');
 
-    options = { doLoop: false, ...options };
-    audioOutputTest = testAudioOutputDevice(options);
-    setIAudioOutputTestRunning(true);
-    setTestEnded(false);
-    setWarning('');
+      options = { doLoop: false, ...options };
+      audioOutputTest = testAudioOutputDevice(options);
+      setIAudioOutputTestRunning(true);
+      setTestEnded(false);
+      setWarning('');
 
-    audioOutputTest.on(AudioOutputTest.Events.Volume, (value: number) => {
-      setOutputLevel(getAudioLevelPercentage(value));
-    });
+      audioOutputTest.on(AudioOutputTest.Events.Volume, (value: number) => {
+        setOutputLevel(getAudioLevelPercentage(value));
+      });
 
-    audioOutputTest.on(AudioOutputTest.Events.End, (report: AudioOutputTest.Report) => {
-      setIAudioOutputTestRunning(false);
-      setTestEnded(true);
-      setOutputLevel(0);
+      audioOutputTest.on(AudioOutputTest.Events.End, (report: AudioOutputTest.Report) => {
+        setIAudioOutputTestRunning(false);
+        setTestEnded(true);
+        setOutputLevel(0);
 
-      const stdDev = getStandardDeviation(report.values);
-      if (stdDev === 0) {
-        setError('No audio detected');
-      } else if (stdDev < AUDIO_LEVEL_STANDARD_DEVIATION_THRESHOLD) {
-        setWarning('Low audio levels detected');
-      }
+        const stdDev = getStandardDeviation(report.values);
+        if (stdDev === 0) {
+          setError('No audio detected');
+        } else if (stdDev < AUDIO_LEVEL_STANDARD_DEVIATION_THRESHOLD) {
+          setWarning('Low audio levels detected');
+        }
 
-      log.debug('AudioOutputTest ended', report);
-    });
+        log.debug('AudioOutputTest ended', report);
+        dispatch({ type: 'set-audio-output-test-report', report: report });
+      });
 
-    audioOutputTest.on(AudioOutputTest.Events.Error, (diagnosticError: DiagnosticError) => {
-      log.debug('error', diagnosticError);
-      setError(getErrorMessage(diagnosticError));
-    });
-  }, []);
+      audioOutputTest.on(AudioOutputTest.Events.Error, (diagnosticError: DiagnosticError) => {
+        log.debug('error', diagnosticError);
+        setError(getErrorMessage(diagnosticError));
+      });
+    },
+    [dispatch]
+  );
 
   const readAudioInput = useCallback(
     (options: AudioInputTest.Options) => {
@@ -109,6 +115,7 @@ export default function useTestRunner() {
         setIsRecording(false);
         setIsAudioInputTestRunning(false);
         log.debug('AudioInputTest ended', report);
+        dispatch({ type: 'set-audio-input-test-report', report: report });
       });
 
       audioInputTest.on(AudioInputTest.Events.Error, (diagnosticError: DiagnosticError) => {
@@ -122,7 +129,7 @@ export default function useTestRunner() {
         log.debug('warning-cleared', name);
       });
     },
-    [playbackURI]
+    [playbackURI, dispatch]
   );
 
   const stopAudioTest = useCallback(() => {

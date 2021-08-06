@@ -5,15 +5,15 @@ import { AudioDevice } from './AudioDevice/AudioDevice';
 import AudioTest from './AudioTest';
 import ProgressBar from './ProgressBar/ProgressBar';
 import { ActivePane, useAppStateContext } from '../../AppStateProvider/AppStateProvider';
-import useTestRunner from './useTestRunner/useTestRunner';
+import useAudioTest from './useAudioTest/useAudioTest';
 
 jest.mock('./AudioDevice/AudioDevice');
 jest.mock('../../AppStateProvider/AppStateProvider');
-jest.mock('./useTestRunner/useTestRunner');
+jest.mock('./useAudioTest/useAudioTest');
 
 const mockAudioDevice = AudioDevice as jest.Mock<any>;
 const mockUseAppStateContext = useAppStateContext as jest.Mock<any>;
-const mockUseTestRunner = useTestRunner as jest.Mock<any>;
+const mockUseAudioTest = useAudioTest as jest.Mock<any>;
 
 const mockDispatch = jest.fn();
 
@@ -39,7 +39,7 @@ describe('the AudioTest component', () => {
       testEnded: false,
       stopAudioTest: jest.fn(),
     };
-    mockUseTestRunner.mockImplementation(() => hookProps);
+    mockUseAudioTest.mockImplementation(() => hookProps);
     mockAudioDevice.mockImplementation(() => null);
   });
 

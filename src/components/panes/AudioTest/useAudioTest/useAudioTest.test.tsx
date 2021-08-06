@@ -1,7 +1,14 @@
 import { EventEmitter } from 'events';
 import { act, renderHook, RenderResult } from '@testing-library/react-hooks';
-import useTestRunner from './useTestRunner';
+import useAudioTest from './useAudioTest';
+import { useAppStateContext } from '../../../AppStateProvider/AppStateProvider';
 
+jest.mock('../../../AppStateProvider/AppStateProvider');
+
+const mockUseAppStateContext = useAppStateContext as jest.Mock<any>;
+const mockDispatch = jest.fn();
+
+mockUseAppStateContext.mockImplementation(() => ({ dispatch: mockDispatch }));
 class MockAudioInputTest extends EventEmitter {
   stop = jest.fn();
 }
@@ -46,17 +53,17 @@ jest.mock('../../../../utils', () => ({
   getStandardDeviation: (values: number[]) => values[0],
 }));
 
-describe('the useTestRunner hook', () => {
+describe('the useAudioTest hook', () => {
   describe('output test', () => {
     it('should have correct states after starting the test', () => {
-      const { result } = renderHook(useTestRunner);
+      const { result } = renderHook(useAudioTest);
       expect(result.current.isAudioOutputTestRunning).toBeFalsy();
       act(() => result.current.playAudio({}));
       expect(result.current.isAudioOutputTestRunning).toBeTruthy();
     });
 
     it('should update audio levels', () => {
-      const { result } = renderHook(useTestRunner);
+      const { result } = renderHook(useAudioTest);
       expect(result.current.outputLevel).toEqual(0);
       act(() => {
         result.current.playAudio({});
@@ -68,7 +75,7 @@ describe('the useTestRunner hook', () => {
 
     describe('when error happens', () => {
       it('should use default message', () => {
-        const { result } = renderHook(useTestRunner);
+        const { result } = renderHook(useAudioTest);
         expect(result.current.error).toEqual('');
         act(() => {
           result.current.playAudio({});
@@ -78,7 +85,7 @@ describe('the useTestRunner hook', () => {
       });
 
       it('should use domError message', () => {
-        const { result } = renderHook(useTestRunner);
+        const { result } = renderHook(useAudioTest);
         expect(result.current.error).toEqual('');
         act(() => {
           result.current.playAudio({});
@@ -92,7 +99,7 @@ describe('the useTestRunner hook', () => {
       });
 
       it('should use error message if dom error is not available', () => {
-        const { result } = renderHook(useTestRunner);
+        const { result } = renderHook(useAudioTest);
         expect(result.current.error).toEqual('');
         act(() => {
           result.current.playAudio({});
@@ -108,7 +115,7 @@ describe('the useTestRunner hook', () => {
       let result: RenderResult<any>;
 
       beforeEach(() => {
-        result = renderHook(useTestRunner).result;
+        result = renderHook(useAudioTest).result;
         act(() => result.current.playAudio({}));
       });
 
@@ -147,12 +154,23 @@ describe('the useTestRunner hook', () => {
         expect(result.current.error).toEqual('');
         expect(result.current.warning).toEqual('');
       });
+
+      it('should save the report to the AppStateProvider', () => {
+        act(() => {
+          mockAudioOutputTest.emit('end', { values: [10, 11, 11, 10] });
+        });
+
+        expect(mockDispatch).toHaveBeenCalledWith({
+          type: 'set-audio-output-test-report',
+          report: { values: [10, 11, 11, 10] },
+        });
+      });
     });
   });
 
   describe('input test', () => {
     it('should stop existing passive test', () => {
-      const { result } = renderHook(useTestRunner);
+      const { result } = renderHook(useAudioTest);
       act(() => result.current.readAudioInput({}));
       expect(mockAudioInputTest.stop).not.toHaveBeenCalled();
 
@@ -162,7 +180,7 @@ describe('the useTestRunner hook', () => {
     });
 
     it('should have correct states after starting a passive test', () => {
-      const { result } = renderHook(useTestRunner);
+      const { result } = renderHook(useAudioTest);
       expect(result.current.isRecording).toBeFalsy();
       expect(result.current.isAudioInputTestRunning).toBeFalsy();
       expect(result.current.testEnded).toBeFalsy();
@@ -175,7 +193,7 @@ describe('the useTestRunner hook', () => {
     });
 
     it('should have correct states after starting a recording test', () => {
-      const { result } = renderHook(useTestRunner);
+      const { result } = renderHook(useAudioTest);
       act(() => {
         result.current.playAudio({});
         mockAudioOutputTest.emit('end', { values: [] });
@@ -189,7 +207,7 @@ describe('the useTestRunner hook', () => {
     });
 
     it('should update audio levels', () => {
-      const { result } = renderHook(useTestRunner);
+      const { result } = renderHook(useAudioTest);
       expect(result.current.inputLevel).toEqual(0);
       act(() => {
         result.current.readAudioInput({});
@@ -201,7 +219,7 @@ describe('the useTestRunner hook', () => {
 
     describe('when error happens', () => {
       it('should use default message', () => {
-        const { result } = renderHook(useTestRunner);
+        const { result } = renderHook(useAudioTest);
         expect(result.current.error).toEqual('');
         act(() => {
           result.current.readAudioInput({});
@@ -211,7 +229,7 @@ describe('the useTestRunner hook', () => {
       });
 
       it('should use domError message', () => {
-        const { result } = renderHook(useTestRunner);
+        const { result } = renderHook(useAudioTest);
         expect(result.current.error).toEqual('');
         act(() => {
           result.current.readAudioInput({});
@@ -225,7 +243,7 @@ describe('the useTestRunner hook', () => {
       });
 
       it('should use error message if dom error is not available', () => {
-        const { result } = renderHook(useTestRunner);
+        const { result } = renderHook(useAudioTest);
         expect(result.current.error).toEqual('');
         act(() => {
           result.current.readAudioInput({});
@@ -241,7 +259,7 @@ describe('the useTestRunner hook', () => {
       let result: RenderResult<any>;
 
       beforeEach(() => {
-        result = renderHook(useTestRunner).result;
+        result = renderHook(useAudioTest).result;
         act(() => result.current.readAudioInput({ enableRecording: true }));
       });
 
@@ -270,12 +288,21 @@ describe('the useTestRunner hook', () => {
         });
         expect(result.current.playbackURI).toEqual('foo');
       });
+
+      it('should save the report to the AppStateProvider', () => {
+        const mockReport = {};
+        act(() => {
+          mockAudioInputTest.emit('end', mockReport);
+        });
+
+        expect(mockDispatch).toHaveBeenCalledWith({ type: 'set-audio-input-test-report', report: mockReport });
+      });
     });
   });
 
   describe('the stopAudioTest function', () => {
     it('should stop the audio input test and audio out put test', () => {
-      const { result } = renderHook(useTestRunner);
+      const { result } = renderHook(useAudioTest);
 
       result.current.stopAudioTest();
 
