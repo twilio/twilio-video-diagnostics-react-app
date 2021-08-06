@@ -1,6 +1,8 @@
 import React, { createContext, useContext, useReducer, useEffect } from 'react';
 import produce from 'immer';
 import { VideoInputTest } from '@twilio/rtc-diagnostics';
+import { AudioInputTest } from '@twilio/rtc-diagnostics';
+import { AudioOutputTest } from '@twilio/rtc-diagnostics';
 
 export enum ActivePane {
   GetStarted,
@@ -19,6 +21,8 @@ interface stateType {
   audioGranted: boolean;
   deviceError: null | Error;
   videoInputTestReport: null | VideoInputTest.Report;
+  audioInputTestReport: null | AudioInputTest.Report;
+  audioOutputTestReport: null | AudioOutputTest.Report;
 }
 
 type ACTIONTYPE =
@@ -27,7 +31,9 @@ type ACTIONTYPE =
   | { type: 'previous-pane' }
   | { type: 'set-devices'; devices: MediaDeviceInfo[] }
   | { type: 'set-device-error'; error: Error }
-  | { type: 'set-video-test-report'; report: VideoInputTest.Report };
+  | { type: 'set-video-test-report'; report: VideoInputTest.Report }
+  | { type: 'set-audio-input-test-report'; report: AudioInputTest.Report }
+  | { type: 'set-audio-output-test-report'; report: AudioOutputTest.Report };
 
 type AppStateContextType = {
   state: stateType;
@@ -40,6 +46,8 @@ export const initialState = {
   audioGranted: false,
   deviceError: null,
   videoInputTestReport: null,
+  audioInputTestReport: null,
+  audioOutputTestReport: null,
 };
 
 export const AppStateContext = createContext<AppStateContextType>(null!);
@@ -112,6 +120,14 @@ export const appStateReducer = produce((draft: stateType, action: ACTIONTYPE) =>
 
     case 'set-video-test-report':
       draft.videoInputTestReport = action.report;
+      break;
+
+    case 'set-audio-input-test-report':
+      draft.audioInputTestReport = action.report;
+      break;
+
+    case 'set-audio-output-test-report':
+      draft.audioOutputTestReport = action.report;
   }
 });
 
