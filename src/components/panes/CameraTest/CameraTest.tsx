@@ -10,7 +10,6 @@ import {
   Select,
   Typography,
 } from '@material-ui/core';
-import clsx from 'clsx';
 import { ActivePane, useAppStateContext } from '../../AppStateProvider/AppStateProvider';
 import { useCameraTest } from './useCameraTest/useCameraTest';
 import useDevices from '../../../hooks/useDevices/useDevices';
@@ -45,9 +44,6 @@ const useStyles = makeStyles({
       bottom: 0,
       left: 0,
     },
-  },
-  disablePointerEvent: {
-    pointerEvents: 'none',
   },
 });
 
@@ -139,8 +135,6 @@ export function CameraTest() {
                 onChange={(e) => setDevice(e.target.value as string)}
                 value={videoInputDeviceID}
                 variant="outlined"
-                // disable ability to switch video devices when not actively testing camera:
-                className={clsx({ [classes.disablePointerEvent]: state.activePane !== ActivePane.CameraTest })}
               >
                 {videoInputDevices.map((device) => (
                   <MenuItem value={device.deviceId} key={device.deviceId}>
