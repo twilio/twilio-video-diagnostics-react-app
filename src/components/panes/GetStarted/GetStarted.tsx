@@ -3,11 +3,11 @@ import { Button, Container, Grid, Typography } from '@material-ui/core';
 import Hello from './Hello.png';
 
 export function GetStarted() {
-  const { dispatch } = useAppStateContext();
+  const { nextPane } = useAppStateContext();
 
   return (
     <Container>
-      <Grid container alignItems="center" justify="space-between">
+      <Grid container alignItems="center" justifyContent="space-between">
         <Grid item md={5}>
           <Typography variant="h1" gutterBottom>
             Let's get started.
@@ -17,7 +17,7 @@ export function GetStarted() {
             We'll help you solve any video troubles you're experiencing but first, let's check your setup.
           </Typography>
 
-          <Button variant="contained" color="primary" onClick={() => dispatch({ type: 'next-pane' })}>
+          <Button variant="contained" color="primary" onClick={nextPane}>
             Get started
           </Button>
         </Grid>

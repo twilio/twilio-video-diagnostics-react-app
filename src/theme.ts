@@ -1,6 +1,6 @@
-import { createMuiTheme } from '@material-ui/core';
+import { createTheme } from '@material-ui/core';
 
-declare module '@material-ui/core/styles/createMuiTheme' {
+declare module '@material-ui/core/styles/createTheme' {
   interface Theme {
     navHeight: number;
     brandSidebarWidth: number;
@@ -15,9 +15,9 @@ declare module '@material-ui/core/styles/createMuiTheme' {
   }
 }
 
-const defaultTheme = createMuiTheme();
+const defaultTheme = createTheme();
 
-export default createMuiTheme({
+export default createTheme({
   overrides: {
     MuiCssBaseline: {
       '@global': {
@@ -99,6 +99,11 @@ export default createMuiTheme({
         marginBottom: '36px',
       },
     },
+    MuiTableCell: {
+      head: {
+        background: '#F4F4F6',
+      },
+    },
   },
   typography: {
     fontFamily: 'Inter, sans-serif',
@@ -106,6 +111,12 @@ export default createMuiTheme({
       color: '#121C2D',
       fontSize: '2rem',
       fontWeight: 700,
+    },
+    h3: {
+      color: '#121C2D',
+      fontSize: '1.25rem',
+      fontWeight: 700,
+      lineHeight: '1.75rem',
     },
     body1: {
       color: '#121C2D',

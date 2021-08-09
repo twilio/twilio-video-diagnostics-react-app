@@ -6,6 +6,7 @@ import clsx from 'clsx';
 import { GetStarted } from '../panes/GetStarted/GetStarted';
 import { CheckPermissions } from '../panes/DeviceSetup/CheckPermissions/CheckPermissions';
 import { PermissionError } from '../panes/DeviceSetup/PermissionError/PermissionError';
+import { Connectivity } from '../panes/Connectivity/Connectivity';
 
 import { useEffect, useRef } from 'react';
 import { CameraTest } from '../panes/CameraTest/CameraTest';
@@ -25,6 +26,9 @@ const useStyles = makeStyles({
       opacity: 0.2,
       userSelect: 'none',
       cursor: 'pointer',
+      '& > *': {
+        pointerEvents: 'none',
+      },
     },
   },
   hideAll: {
@@ -96,7 +100,7 @@ export function Item({
       const offset = el.offsetTop + el.offsetHeight * 0.5;
       el.parentElement!.style.transform = `translateY(calc(50vh - ${offset}px + ${theme.navHeight / 2}px))`;
     }
-  }, [isActive, theme.navHeight]);
+  });
 
   return (
     <div
@@ -116,16 +120,18 @@ const content = [
   { pane: ActivePane.DeviceCheck, component: <CheckPermissions /> },
   { pane: ActivePane.DeviceError, component: <PermissionError /> },
   { pane: ActivePane.CameraTest, component: <CameraTest /> },
-  { pane: ActivePane.Connectivity, component: <GetStarted /> },
+  { pane: ActivePane.Connectivity, component: <Connectivity /> },
   { pane: ActivePane.Quality, component: <GetStarted /> },
   { pane: ActivePane.Results, component: <GetStarted /> },
 ];
 
 export function MainContent() {
   const classes = useStyles();
-  const { state, dispatch } = useAppStateContext();
+  const { state, dispatch, nextPane } = useAppStateContext();
 
   const devicesPermitted = state.audioGranted && state.videoGranted;
+  const preflightTestRunning = state.preflightTestInProgress;
+  const onLoadingScreen = state.activePane === ActivePane.Connectivity && preflightTestRunning;
 
   return (
     <>
@@ -134,7 +140,10 @@ export function MainContent() {
           className={clsx(classes.scrollContainer, {
             [classes.hideAll]: state.activePane === 0,
             [classes.hideAfter]:
-              state.activePane === ActivePane.DeviceCheck || state.activePane === ActivePane.DeviceError,
+              state.activePane === ActivePane.DeviceCheck ||
+              state.activePane === ActivePane.DeviceError ||
+              onLoadingScreen ||
+              (state.activePane === ActivePane.CameraTest && preflightTestRunning),
           })}
         >
           {content.map((pane, i) => {
@@ -162,15 +171,7 @@ export function MainContent() {
         >
           <ArrowUp />
         </Button>
-        <Button
-          variant="outlined"
-          onClick={() => dispatch({ type: 'next-pane' })}
-          disabled={
-            !ActivePane[state.activePane + 1] ||
-            state.activePane === ActivePane.DeviceCheck ||
-            state.activePane === ActivePane.DeviceError
-          }
-        >
+        <Button variant="outlined" onClick={nextPane} disabled={state.downButtonDisabled}>
           <ArrowDown />
         </Button>
       </div>
