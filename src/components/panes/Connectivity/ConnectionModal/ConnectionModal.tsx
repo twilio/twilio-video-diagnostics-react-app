@@ -18,7 +18,7 @@ import { ErrorStatus, SuccessStatus } from '../../../../icons/StatusIcons';
 const useStyles = makeStyles((theme) =>
   createStyles({
     modal: {
-      width: '6000px',
+      width: '100%',
     },
     content: {
       padding: '3em',

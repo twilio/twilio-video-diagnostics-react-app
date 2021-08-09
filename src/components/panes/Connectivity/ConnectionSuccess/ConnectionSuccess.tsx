@@ -1,16 +1,10 @@
-import { ActivePane, useAppStateContext } from '../../../AppStateProvider/AppStateProvider';
+import { useAppStateContext } from '../../../AppStateProvider/AppStateProvider';
 import { createStyles, makeStyles, Button, Container, Grid, Typography } from '@material-ui/core';
-import clsx from 'clsx';
-import { ConnectionModal } from '../ConnectionModal/ConnectionModal';
 import Success from './Success.png';
-import { useState } from 'react';
 import { ViewIcon } from '../../../../icons/ViewIcon';
 
 const useStyles = makeStyles((theme) =>
   createStyles({
-    modal: {
-      width: '6000px',
-    },
     illustrationContainer: {
       display: 'flex',
       flexDirection: 'column',
@@ -24,32 +18,19 @@ const useStyles = makeStyles((theme) =>
         left: '-5px',
       },
     },
-    disablePointerEvents: {
-      pointerEvents: 'none',
-    },
   })
 );
 
 interface ConnectionSuccessProps {
-  serviceStatus: string;
-  signalingGateway: string;
-  turnServers: string;
+  openModal: () => void;
 }
 
-export function ConnectionSuccess({ serviceStatus, signalingGateway, turnServers }: ConnectionSuccessProps) {
+export function ConnectionSuccess({ openModal }: ConnectionSuccessProps) {
   const classes = useStyles();
-  const { nextPane, state } = useAppStateContext();
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { nextPane } = useAppStateContext();
 
   return (
     <>
-      <ConnectionModal
-        isModalOpen={isModalOpen}
-        setIsModalOpen={setIsModalOpen}
-        serviceStatus={serviceStatus}
-        signalingGateway={signalingGateway}
-        turnServers={turnServers}
-      />
       <Container>
         <Grid container alignItems="center" justifyContent="space-between">
           <Grid item md={5}>
@@ -72,13 +53,7 @@ export function ConnectionSuccess({ serviceStatus, signalingGateway, turnServers
           before the image is loaded.
           */}
             <img src={Success} alt="Success" style={{ width: '245px', height: '200px' }} />
-            <Button
-              variant="outlined"
-              onClick={() => setIsModalOpen(true)}
-              className={clsx(classes.viewButton, {
-                [classes.disablePointerEvents]: state.activePane !== ActivePane.Connectivity,
-              })}
-            >
+            <Button variant="outlined" onClick={openModal} className={classes.viewButton}>
               <ViewIcon />
               View detailed connection information
             </Button>

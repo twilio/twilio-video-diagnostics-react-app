@@ -1,5 +1,7 @@
+import { useState } from 'react';
 import { Container, Grid, Typography, makeStyles } from '@material-ui/core';
 import { ConnectionFailed } from './ConnectionFailed/ConnectionFailed';
+import { ConnectionModal } from './ConnectionModal/ConnectionModal';
 import { ConnectionSuccess } from './ConnectionSuccess/ConnectionSuccess';
 import { Loading } from '../../../icons/Loading';
 import { useAppStateContext } from '../../AppStateProvider/AppStateProvider';
@@ -27,6 +29,7 @@ const useStyles = makeStyles({
 
 export function Connectivity() {
   const { state } = useAppStateContext();
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const classes = useStyles();
 
   const twilioServicesStatus = state.twilioStatus === 'operational' ? 'Up' : 'Down';
@@ -38,30 +41,46 @@ export function Connectivity() {
 
   return (
     // If preflight test hasn't completed, display loading screen otherwise, display connectivity results:
-    <>
-      {state.preflightTestInProgress ? (
-        <Container>
-          <Grid container className={classes.container}>
-            <Typography variant="h1" gutterBottom>
-              Hang Tight!
-            </Typography>
-            <Typography variant="body1" gutterBottom className={classes.textBox}>
-              We're just finishing up your personalized results and creating your report.
-            </Typography>
-            <div className={classes.loading}>
-              <Loading />
-            </div>
-          </Grid>
-        </Container>
-      ) : connectionFailed ? (
-        <ConnectionFailed
+    state.preflightTestInProgress ? (
+      <Container>
+        <Grid container className={classes.container}>
+          <Typography variant="h1" gutterBottom>
+            Hang Tight!
+          </Typography>
+          <Typography variant="body1" gutterBottom className={classes.textBox}>
+            We're just finishing up your personalized results and creating your report.
+          </Typography>
+          <div className={classes.loading}>
+            <Loading />
+          </div>
+        </Grid>
+      </Container>
+    ) : connectionFailed ? (
+      <>
+        <ConnectionModal
+          isModalOpen={isModalOpen}
+          setIsModalOpen={setIsModalOpen}
           serviceStatus={twilioServicesStatus}
           signalingGateway={signalingGateway}
           turnServers={turnServers}
         />
-      ) : (
-        <ConnectionSuccess serviceStatus="Up" signalingGateway="Reachable" turnServers="Reachable" />
-      )}
-    </>
+        <ConnectionFailed
+          signalingGateway={signalingGateway}
+          turnServers={turnServers}
+          openModal={() => setIsModalOpen(true)}
+        />
+      </>
+    ) : (
+      <>
+        <ConnectionModal
+          isModalOpen={isModalOpen}
+          setIsModalOpen={setIsModalOpen}
+          serviceStatus="Up"
+          signalingGateway="Reachable"
+          turnServers="Reachable"
+        />
+        <ConnectionSuccess openModal={() => setIsModalOpen(true)} />
+      </>
+    )
   );
 }

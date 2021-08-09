@@ -2,13 +2,6 @@
 
 exports[`the ConnectionSuccess component should render correctly 1`] = `
 <Fragment>
-  <ConnectionModal
-    isModalOpen={false}
-    serviceStatus="Up"
-    setIsModalOpen={[Function]}
-    signalingGateway="Reachable"
-    turnServers="Reachable"
-  />
   <WithStyles(ForwardRef(Container))>
     <WithStyles(ForwardRef(Grid))
       alignItems="center"
@@ -40,7 +33,7 @@ exports[`the ConnectionSuccess component should render correctly 1`] = `
         </WithStyles(ForwardRef(Button))>
       </WithStyles(ForwardRef(Grid))>
       <WithStyles(ForwardRef(Grid))
-        className="makeStyles-illustrationContainer-2"
+        className="makeStyles-illustrationContainer-1"
         item={true}
         md={5}
       >
@@ -55,8 +48,8 @@ exports[`the ConnectionSuccess component should render correctly 1`] = `
           }
         />
         <WithStyles(ForwardRef(Button))
-          className="makeStyles-viewButton-3"
-          onClick={[Function]}
+          className="makeStyles-viewButton-2"
+          onClick={[MockFunction]}
           variant="outlined"
         >
           <ViewIcon />

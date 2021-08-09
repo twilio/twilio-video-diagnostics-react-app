@@ -2,13 +2,6 @@
 
 exports[`the ConnectionFailed component should render correctly 1`] = `
 <Fragment>
-  <ConnectionModal
-    isModalOpen={false}
-    serviceStatus="Up"
-    setIsModalOpen={[Function]}
-    signalingGateway="unReachable"
-    turnServers="Reachable"
-  />
   <WithStyles(ForwardRef(Container))>
     <WithStyles(ForwardRef(Grid))
       alignItems="center"
@@ -29,7 +22,7 @@ exports[`the ConnectionFailed component should render correctly 1`] = `
           variant="h1"
         >
           <div
-            className="makeStyles-errorIcon-4"
+            className="makeStyles-errorIcon-3"
           >
             <ErrorIcon />
           </div>
@@ -47,7 +40,7 @@ exports[`the ConnectionFailed component should render correctly 1`] = `
           Download report results to send to your network admin, update your internet, and re-run this test.
         </WithStyles(ForwardRef(Typography))>
         <WithStyles(ForwardRef(Button))
-          className="makeStyles-downloadButton-5"
+          className="makeStyles-downloadButton-4"
           color="primary"
           onClick={[Function]}
           variant="contained"
@@ -57,12 +50,12 @@ exports[`the ConnectionFailed component should render correctly 1`] = `
         </WithStyles(ForwardRef(Button))>
       </WithStyles(ForwardRef(Grid))>
       <WithStyles(ForwardRef(Grid))
-        className="makeStyles-paperContainer-3"
+        className="makeStyles-paperContainer-2"
         item={true}
         md={5}
       >
         <WithStyles(ForwardRef(Paper))
-          className="makeStyles-paper-2"
+          className="makeStyles-paper-1"
         >
           <WithStyles(ForwardRef(Typography))
             gutterBottom={true}
@@ -86,8 +79,8 @@ exports[`the ConnectionFailed component should render correctly 1`] = `
           </WithStyles(ForwardRef(Typography))>
         </WithStyles(ForwardRef(Paper))>
         <WithStyles(ForwardRef(Button))
-          className="makeStyles-viewButton-6"
-          onClick={[Function]}
+          className="makeStyles-viewButton-5"
+          onClick={[MockFunction]}
           variant="outlined"
         >
           <ViewIcon />

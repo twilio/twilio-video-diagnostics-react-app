@@ -1,6 +1,7 @@
 import { shallow } from 'enzyme';
 import { Connectivity } from './Connectivity';
 import { ConnectionFailed } from './ConnectionFailed/ConnectionFailed';
+import { ConnectionModal } from './ConnectionModal/ConnectionModal';
 import { ConnectionSuccess } from './ConnectionSuccess/ConnectionSuccess';
 import { useAppStateContext } from '../../AppStateProvider/AppStateProvider';
 
@@ -81,5 +82,24 @@ describe('the Connectivity component', () => {
     }));
     const wrapper = shallow(<Connectivity />);
     expect(wrapper.find(ConnectionSuccess).exists()).toBe(true);
+  });
+
+  it('should have the modal be closed by default', () => {
+    mockUseAppStateContext.mockImplementationOnce(() => ({
+      state: {
+        activePane: 4,
+        twilioStatus: 'operational',
+        preflightTest: {
+          progress: 'connected',
+          signalingGatewayReachable: false,
+          turnServersReachable: true,
+        },
+        preflightTestInProgress: false,
+        preflightTestFinished: true,
+      },
+    }));
+
+    const wrapper = shallow(<Connectivity />);
+    expect(wrapper.find(ConnectionModal).prop('isModalOpen')).toBe(false);
   });
 });

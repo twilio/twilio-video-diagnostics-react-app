@@ -1,8 +1,5 @@
-import { ActivePane, useAppStateContext } from '../../../AppStateProvider/AppStateProvider';
+import { useAppStateContext } from '../../../AppStateProvider/AppStateProvider';
 import { createStyles, makeStyles, Button, Container, Grid, Typography, Paper } from '@material-ui/core';
-import clsx from 'clsx';
-import { useState } from 'react';
-import { ConnectionModal } from '../ConnectionModal/ConnectionModal';
 import { DownloadIcon } from '../../../../icons/DownloadIcon';
 import { ErrorIcon } from '../../../../icons/ErrorIcon';
 import { ViewIcon } from '../../../../icons/ViewIcon';
@@ -10,9 +7,6 @@ import { downloadJSONFile } from '../../../../utils';
 
 const useStyles = makeStyles((theme) =>
   createStyles({
-    modal: {
-      width: '6000px',
-    },
     paper: {
       padding: '1.5em',
       borderRadius: '8px',
@@ -41,40 +35,30 @@ const useStyles = makeStyles((theme) =>
         left: '-5px',
       },
     },
-    disablePointerEvents: {
-      pointerEvents: 'none',
-    },
   })
 );
 
 interface ConnectionFailedProps {
-  serviceStatus: string;
   signalingGateway: string;
   turnServers: string;
+  // setIsModalOpen: (isModalOpen: boolean) => void;
+  openModal: () => void;
 }
 
-export function ConnectionFailed({ serviceStatus, signalingGateway, turnServers }: ConnectionFailedProps) {
+export function ConnectionFailed({ signalingGateway, turnServers, openModal }: ConnectionFailedProps) {
   const classes = useStyles();
   const { state } = useAppStateContext();
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const reportResults = {
     audioTestResults: {},
     browserInformation: {},
     connectivityResults: { twilioServices: state.twilioStatus, signalingRegion: signalingGateway, TURN: turnServers },
     videoTestResults: state.videoInputTestReport,
-    preflightTestReport: { report: state.preflightTest.report, error: state.preflightTest.error },
+    preflightTestReport: { report: state.preflightTest.report, error: state.preflightTest.error?.message },
   };
 
   return (
     <>
-      <ConnectionModal
-        isModalOpen={isModalOpen}
-        setIsModalOpen={setIsModalOpen}
-        serviceStatus={serviceStatus}
-        signalingGateway={signalingGateway}
-        turnServers={turnServers}
-      />
       <Container>
         <Grid container alignItems="center" justifyContent="space-between">
           <Grid item md={5}>
@@ -118,13 +102,7 @@ export function ConnectionFailed({ serviceStatus, signalingGateway, turnServers 
                 .
               </Typography>
             </Paper>
-            <Button
-              variant="outlined"
-              onClick={() => setIsModalOpen(true)}
-              className={clsx(classes.viewButton, {
-                [classes.disablePointerEvents]: state.activePane !== ActivePane.Connectivity,
-              })}
-            >
+            <Button variant="outlined" onClick={openModal} className={classes.viewButton}>
               <ViewIcon />
               View detailed connection information
             </Button>
