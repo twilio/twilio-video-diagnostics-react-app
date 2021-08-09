@@ -7,7 +7,7 @@ import {
   AppStateProvider,
   appStateReducer,
   initialState,
-  isButtonDisabled,
+  isDownButtonDisabled,
 } from './AppStateProvider';
 import { renderHook, act } from '@testing-library/react-hooks';
 
@@ -33,25 +33,30 @@ describe('the useAppStateContext hook', () => {
   });
 });
 
-describe('the isButtonDisabled function', () => {
+describe('the isDownButtonDisabled function', () => {
+  const mockError = Error();
   it('should return true if preflightTest fails or if Twilio services are down', () => {
-    expect(isButtonDisabled('mediaStarted', 'partial_outage', ActivePane.Connectivity)).toBe(true);
+    expect(isDownButtonDisabled(false, 'partial_outage', ActivePane.Connectivity, mockError)).toBe(true);
+  });
+
+  it('should return true when preflight test is in progress', () => {
+    expect(isDownButtonDisabled(true, 'operational', ActivePane.Connectivity, null)).toBe(true);
   });
 
   it('should return true if the active pane is the last pane', () => {
-    expect(isButtonDisabled(null, 'operational', ActivePane.Results)).toBe(true);
+    expect(isDownButtonDisabled(false, 'operational', ActivePane.Results, null)).toBe(true);
   });
 
   it('should return true when active pane is DeviceCheck', () => {
-    expect(isButtonDisabled(null, 'operational', ActivePane.DeviceCheck)).toBe(true);
+    expect(isDownButtonDisabled(false, 'operational', ActivePane.DeviceCheck, null)).toBe(true);
   });
 
   it('should return true when active pane is DeviceError', () => {
-    expect(isButtonDisabled(null, 'operational', ActivePane.DeviceError)).toBe(true);
+    expect(isDownButtonDisabled(false, 'operational', ActivePane.DeviceError, null)).toBe(true);
   });
 
   it('should return false if preflightTest completes and active pane is not in Device setup', () => {
-    expect(isButtonDisabled(null, 'operational', ActivePane.CameraTest)).toBe(false);
+    expect(isDownButtonDisabled(false, 'operational', ActivePane.CameraTest, null)).toBe(false);
   });
 });
 
@@ -111,18 +116,6 @@ describe('the appState reducer', () => {
       const newState = appStateReducer(draftStatePermissionsGranted, { type: 'next-pane' });
       expect(newState.activePane).toEqual(ActivePane.CameraTest);
     });
-
-    it('should set active pane to Connectivity if on CameraTest and preflightTest has finished or thrown an error', () => {
-      const mockReport = {} as PreflightTestReport;
-      const draftStateFromCameraTestPane = {
-        ...initialState,
-        activePane: ActivePane.CameraTest,
-        preflightTest: { ...initialState.preflightTest, report: mockReport, error: Error() },
-      };
-
-      const newState = appStateReducer(draftStateFromCameraTestPane, { type: 'next-pane' });
-      expect(newState.activePane).toEqual(ActivePane.Connectivity);
-    });
   });
 
   describe('the "previous-pane" action type', () => {
@@ -157,14 +150,6 @@ describe('the appState reducer', () => {
       const newState = appStateReducer(draftState, { type: 'previous-pane' });
 
       expect(newState.activePane).toEqual(ActivePane.DeviceCheck);
-    });
-
-    it('should set active pane to CameraTest if current active pane is Connectivity', () => {
-      const draftState = { ...initialState, activePane: ActivePane.Connectivity };
-
-      const newState = appStateReducer(draftState, { type: 'previous-pane' });
-
-      expect(newState.activePane).toEqual(ActivePane.CameraTest);
     });
   });
 

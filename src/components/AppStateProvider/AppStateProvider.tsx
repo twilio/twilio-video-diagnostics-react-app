@@ -90,8 +90,14 @@ export function useAppStateContext() {
 }
 
 // helper function for determining whether to disable the down arrow button:
-export const isButtonDisabled = (progress: string | null, status: string | null, pane: ActivePane) => {
-  const connectionFailedOrLoading = pane === ActivePane.Connectivity && (progress !== null || status !== 'operational');
+export const isDownButtonDisabled = (
+  inProgress: boolean,
+  status: string | null,
+  pane: ActivePane,
+  preflightError: Error | null
+) => {
+  const connectionFailedOrLoading =
+    pane === ActivePane.Connectivity && (inProgress || status !== 'operational' || preflightError !== null);
   const onDeviceCheck = pane === ActivePane.DeviceCheck || pane === ActivePane.DeviceError;
 
   if (connectionFailedOrLoading || !ActivePane[pane + 1] || onDeviceCheck) return true;
@@ -140,9 +146,6 @@ export const appStateReducer = produce((draft: stateType, action: ACTIONTYPE) =>
           } else {
             draft.activePane = ActivePane.DeviceCheck;
           }
-          break;
-        case ActivePane.Connectivity:
-          draft.activePane = ActivePane.CameraTest;
           break;
         default:
           draft.activePane--;
@@ -210,10 +213,11 @@ export const appStateReducer = produce((draft: stateType, action: ACTIONTYPE) =>
 
   const currentState = current(draft);
 
-  draft.downButtonDisabled = isButtonDisabled(
-    currentState.preflightTest.progress,
+  draft.downButtonDisabled = isDownButtonDisabled(
+    currentState.preflightTestInProgress,
     currentState.twilioStatus,
-    currentState.activePane
+    currentState.activePane,
+    currentState.preflightTest.error
   );
 });
 
