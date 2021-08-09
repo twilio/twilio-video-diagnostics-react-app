@@ -26,14 +26,6 @@ describe('the ConnectionFailed component', () => {
     expect(wrapper).toMatchSnapshot();
   });
 
-  it('should open connection info modal after "view detailed connection info" is clicked on', () => {
-    const wrapper = shallow(
-      <ConnectionFailed openModal={mockSetIsModalOpen} signalingGateway="Unreachable" turnServers="Unreachable" />
-    );
-    wrapper.find(Button).at(1).simulate('click');
-    expect(mockSetIsModalOpen).toHaveBeenCalled();
-  });
-
   it('should download the test results file if "Download report results" is clicked on', () => {
     const wrapper = shallow(
       <ConnectionFailed openModal={mockSetIsModalOpen} signalingGateway="Unreachable" turnServers="Unreachable" />

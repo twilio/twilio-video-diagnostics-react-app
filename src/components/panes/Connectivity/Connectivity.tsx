@@ -40,47 +40,40 @@ export function Connectivity() {
     twilioServicesStatus !== 'Up' || (state.preflightTestFinished && state.preflightTest.error !== null);
 
   return (
-    // If preflight test hasn't completed, display loading screen otherwise, display connectivity results:
-    state.preflightTestInProgress ? (
-      <Container>
-        <Grid container className={classes.container}>
-          <Typography variant="h1" gutterBottom>
-            Hang Tight!
-          </Typography>
-          <Typography variant="body1" gutterBottom className={classes.textBox}>
-            We're just finishing up your personalized results and creating your report.
-          </Typography>
-          <div className={classes.loading}>
-            <Loading />
-          </div>
-        </Grid>
-      </Container>
-    ) : connectionFailed ? (
-      <>
-        <ConnectionModal
-          isModalOpen={isModalOpen}
-          setIsModalOpen={setIsModalOpen}
-          serviceStatus={twilioServicesStatus}
-          signalingGateway={signalingGateway}
-          turnServers={turnServers}
-        />
-        <ConnectionFailed
-          signalingGateway={signalingGateway}
-          turnServers={turnServers}
-          openModal={() => setIsModalOpen(true)}
-        />
-      </>
-    ) : (
-      <>
-        <ConnectionModal
-          isModalOpen={isModalOpen}
-          setIsModalOpen={setIsModalOpen}
-          serviceStatus="Up"
-          signalingGateway="Reachable"
-          turnServers="Reachable"
-        />
-        <ConnectionSuccess openModal={() => setIsModalOpen(true)} />
-      </>
-    )
+    <>
+      <ConnectionModal
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+        serviceStatus={twilioServicesStatus}
+        signalingGateway={signalingGateway}
+        turnServers={turnServers}
+      />
+      {
+        /* If preflight test hasn't completed, display loading screen otherwise, display connectivity results: */
+        state.preflightTestInProgress ? (
+          <Container>
+            <Grid container className={classes.container}>
+              <Typography variant="h1" gutterBottom>
+                Hang Tight!
+              </Typography>
+              <Typography variant="body1" gutterBottom className={classes.textBox}>
+                We're just finishing up your personalized results and creating your report.
+              </Typography>
+              <div className={classes.loading}>
+                <Loading />
+              </div>
+            </Grid>
+          </Container>
+        ) : connectionFailed ? (
+          <ConnectionFailed
+            signalingGateway={signalingGateway}
+            turnServers={turnServers}
+            openModal={() => setIsModalOpen(true)}
+          />
+        ) : (
+          <ConnectionSuccess openModal={() => setIsModalOpen(true)} />
+        )
+      }
+    </>
   );
 }
