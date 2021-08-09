@@ -26,6 +26,9 @@ const useStyles = makeStyles({
       opacity: 0.2,
       userSelect: 'none',
       cursor: 'pointer',
+      '& > *': {
+        pointerEvents: 'none',
+      },
     },
   },
   hideAll: {
