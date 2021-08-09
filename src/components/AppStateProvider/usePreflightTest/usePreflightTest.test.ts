@@ -41,7 +41,7 @@ describe('the usePreflightTest hook', () => {
     });
   });
 
-  it('should dispatch "preflight-completed" and preflight-finished" when the "completed" event is emitted', () => {
+  it('should dispatch "preflight-completed" and "preflight-finished" when the "completed" event is emitted', () => {
     const mockDispatch = jest.fn();
     const { result } = renderHook(() => usePreflightTest(mockDispatch));
 
@@ -52,7 +52,7 @@ describe('the usePreflightTest hook', () => {
     });
   });
 
-  it('should dispatch "preflight-token-error" and preflight-finished" when there is an error obtaining the token', () => {
+  it('should dispatch "preflight-token-error" and "preflight-finished" when there is an error obtaining the token', () => {
     const mockDispatch = jest.fn();
     mockAxios.mockImplementationOnce(() => Promise.reject('mockError'));
     const { result } = renderHook(() => usePreflightTest(mockDispatch));
