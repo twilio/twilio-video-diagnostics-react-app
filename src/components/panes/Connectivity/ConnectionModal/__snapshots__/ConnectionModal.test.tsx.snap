@@ -1,0 +1,132 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`the ConnectionModal component should render correctly 1`] = `
+<Fragment>
+  <WithStyles(ForwardRef(Dialog))
+    classes={
+      Object {
+        "paper": "makeStyles-modal-1",
+      }
+    }
+    onClose={[Function]}
+    open={true}
+  >
+    <WithStyles(ForwardRef(DialogTitle))
+      disableTypography={true}
+    >
+      <WithStyles(ForwardRef(Typography))
+        variant="h3"
+      >
+        Detailed connection information
+      </WithStyles(ForwardRef(Typography))>
+      <WithStyles(ForwardRef(IconButton))
+        aria-label="close"
+        className="makeStyles-closeButton-3"
+        onClick={[Function]}
+      >
+        <Memo(ForwardRef(CloseIcon)) />
+      </WithStyles(ForwardRef(IconButton))>
+    </WithStyles(ForwardRef(DialogTitle))>
+    <WithStyles(ForwardRef(DialogContent))
+      className="makeStyles-content-2"
+      dividers={true}
+    >
+      <WithStyles(ForwardRef(Table))>
+        <WithStyles(ForwardRef(TableHead))>
+          <WithStyles(ForwardRef(TableRow))>
+            <WithStyles(ForwardRef(TableCell))>
+              <WithStyles(ForwardRef(Typography))
+                variant="body1"
+              >
+                <strong>
+                  Status
+                </strong>
+              </WithStyles(ForwardRef(Typography))>
+            </WithStyles(ForwardRef(TableCell))>
+            <WithStyles(ForwardRef(TableCell))>
+              <WithStyles(ForwardRef(Typography))
+                variant="body1"
+              >
+                <strong>
+                  Connection Type
+                </strong>
+              </WithStyles(ForwardRef(Typography))>
+            </WithStyles(ForwardRef(TableCell))>
+          </WithStyles(ForwardRef(TableRow))>
+        </WithStyles(ForwardRef(TableHead))>
+        <WithStyles(ForwardRef(TableBody))>
+          <WithStyles(ForwardRef(TableRow))>
+            <WithStyles(ForwardRef(TableCell))>
+              <div
+                className="makeStyles-iconContainer-4"
+              >
+                <SuccessStatus />
+                <WithStyles(ForwardRef(Typography))
+                  variant="body1"
+                >
+                  <strong>
+                    Up
+                  </strong>
+                </WithStyles(ForwardRef(Typography))>
+              </div>
+            </WithStyles(ForwardRef(TableCell))>
+            <WithStyles(ForwardRef(TableCell))>
+              <WithStyles(ForwardRef(Typography))
+                variant="body1"
+              >
+                Twilio Services
+              </WithStyles(ForwardRef(Typography))>
+            </WithStyles(ForwardRef(TableCell))>
+          </WithStyles(ForwardRef(TableRow))>
+          <WithStyles(ForwardRef(TableRow))>
+            <WithStyles(ForwardRef(TableCell))>
+              <div
+                className="makeStyles-iconContainer-4"
+              >
+                <SuccessStatus />
+                <WithStyles(ForwardRef(Typography))
+                  variant="body1"
+                >
+                  <strong>
+                    Reachable
+                  </strong>
+                </WithStyles(ForwardRef(Typography))>
+              </div>
+            </WithStyles(ForwardRef(TableCell))>
+            <WithStyles(ForwardRef(TableCell))>
+              <WithStyles(ForwardRef(Typography))
+                variant="body1"
+              >
+                Signaling Gateway
+              </WithStyles(ForwardRef(Typography))>
+            </WithStyles(ForwardRef(TableCell))>
+          </WithStyles(ForwardRef(TableRow))>
+          <WithStyles(ForwardRef(TableRow))>
+            <WithStyles(ForwardRef(TableCell))>
+              <div
+                className="makeStyles-iconContainer-4"
+              >
+                <SuccessStatus />
+                <WithStyles(ForwardRef(Typography))
+                  variant="body1"
+                >
+                  <strong>
+                    Reachable
+                  </strong>
+                </WithStyles(ForwardRef(Typography))>
+              </div>
+            </WithStyles(ForwardRef(TableCell))>
+            <WithStyles(ForwardRef(TableCell))>
+              <WithStyles(ForwardRef(Typography))
+                variant="body1"
+              >
+                TURN Servers
+              </WithStyles(ForwardRef(Typography))>
+            </WithStyles(ForwardRef(TableCell))>
+          </WithStyles(ForwardRef(TableRow))>
+        </WithStyles(ForwardRef(TableBody))>
+      </WithStyles(ForwardRef(Table))>
+    </WithStyles(ForwardRef(DialogContent))>
+  </WithStyles(ForwardRef(Dialog))>
+</Fragment>
+`;

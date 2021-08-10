@@ -1,0 +1,93 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`the ConnectionFailed component should render correctly 1`] = `
+<Fragment>
+  <WithStyles(ForwardRef(Container))>
+    <WithStyles(ForwardRef(Grid))
+      alignItems="center"
+      container={true}
+      justifyContent="space-between"
+    >
+      <WithStyles(ForwardRef(Grid))
+        item={true}
+        md={5}
+      >
+        <WithStyles(ForwardRef(Typography))
+          gutterBottom={true}
+          style={
+            Object {
+              "position": "relative",
+            }
+          }
+          variant="h1"
+        >
+          <div
+            className="makeStyles-errorIcon-3"
+          >
+            <ErrorIcon />
+          </div>
+          Connection failed
+        </WithStyles(ForwardRef(Typography))>
+        <WithStyles(ForwardRef(Typography))
+          gutterBottom={true}
+          variant="body1"
+        >
+          It's possible that you're behind a firewall that will need to be updated by your network administrator.
+        </WithStyles(ForwardRef(Typography))>
+        <WithStyles(ForwardRef(Typography))
+          variant="body1"
+        >
+          Download report results to send to your network admin, update your internet, and re-run this test.
+        </WithStyles(ForwardRef(Typography))>
+        <WithStyles(ForwardRef(Button))
+          className="makeStyles-downloadButton-4"
+          color="primary"
+          onClick={[Function]}
+          variant="contained"
+        >
+          <DownloadIcon />
+          Download report results
+        </WithStyles(ForwardRef(Button))>
+      </WithStyles(ForwardRef(Grid))>
+      <WithStyles(ForwardRef(Grid))
+        className="makeStyles-paperContainer-2"
+        item={true}
+        md={5}
+      >
+        <WithStyles(ForwardRef(Paper))
+          className="makeStyles-paper-1"
+        >
+          <WithStyles(ForwardRef(Typography))
+            gutterBottom={true}
+            variant="body1"
+          >
+            To conduct a video call, your internet needs to be able to communicate with Twilio's cloud.
+          </WithStyles(ForwardRef(Typography))>
+          <WithStyles(ForwardRef(Typography))
+            variant="body1"
+          >
+            Learn
+             
+            <a
+              href="https://www.twilio.com/docs/video/ip-addresses"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              how to configure your firewall correctly
+            </a>
+            .
+          </WithStyles(ForwardRef(Typography))>
+        </WithStyles(ForwardRef(Paper))>
+        <WithStyles(ForwardRef(Button))
+          className="makeStyles-viewButton-5"
+          onClick={[MockFunction]}
+          variant="outlined"
+        >
+          <ViewIcon />
+          View detailed connection information
+        </WithStyles(ForwardRef(Button))>
+      </WithStyles(ForwardRef(Grid))>
+    </WithStyles(ForwardRef(Grid))>
+  </WithStyles(ForwardRef(Container))>
+</Fragment>
+`;

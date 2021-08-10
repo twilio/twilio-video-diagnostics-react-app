@@ -63,7 +63,7 @@ describe('the AudioDevice component', () => {
     mockAudio.prototype.setSinkId = false;
     const wrapper = shallow(<AudioDevice disabled={false} kind="audiooutput" onDeviceChange={noop} />);
     expect(wrapper.find(Select).exists()).toBeFalsy();
-    expect(wrapper.find(Typography).at(2).text()).toEqual('System Default Audio Output');
+    expect(wrapper.find(Typography).at(1).text()).toEqual('System Default Audio Output');
   });
 
   describe('props.disabled', () => {
