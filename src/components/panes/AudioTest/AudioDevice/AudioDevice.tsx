@@ -7,12 +7,10 @@ import useDevices from '../../../../hooks/useDevices/useDevices';
 const labels = {
   audioinput: {
     audioLevelText: 'Input level',
-    deviceLabelHeader: 'Input device',
     headerText: 'Microphone',
   },
   audiooutput: {
     audioLevelText: 'Output level',
-    deviceLabelHeader: 'Output device',
     headerText: 'Speaker',
   },
 };
@@ -44,7 +42,7 @@ export function AudioDevice({ disabled, kind, onDeviceChange }: AudioDeviceProps
   const audioDevices = kind === 'audiooutput' ? devices.audioOutputDevices : devices.audioInputDevices;
   const { state } = useAppStateContext();
   const [selectedDevice, setSelectedDevice] = useState('');
-  const { deviceLabelHeader, headerText } = labels[kind];
+  const { headerText } = labels[kind];
   const noAudioRedirect = !Audio.prototype.setSinkId && kind === 'audiooutput';
 
   const updateSelectedDevice = useCallback(
@@ -70,9 +68,6 @@ export function AudioDevice({ disabled, kind, onDeviceChange }: AudioDeviceProps
 
       {noAudioRedirect && (
         <div className={classes.deviceLabelContainer}>
-          <Typography variant="subtitle2">
-            <strong>{deviceLabelHeader}</strong>
-          </Typography>
           <Typography variant="body1">System Default Audio Output</Typography>
         </div>
       )}
