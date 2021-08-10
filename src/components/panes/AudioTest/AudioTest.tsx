@@ -5,6 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { AudioDevice } from './AudioDevice/AudioDevice';
 import ProgressBar from './ProgressBar/ProgressBar';
 import useAudioTest from './useAudioTest/useAudioTest';
+import useDevices from '../../../hooks/useDevices/useDevices';
 import { ActivePane, useAppStateContext } from '../../AppStateProvider/AppStateProvider';
 import { Microphone } from '../../../icons/Microphone';
 
@@ -27,11 +28,13 @@ const useStyles = makeStyles({
   },
 });
 
-export default function AudioDeviceTestWidget() {
+export function AudioTest() {
   const classes = useStyles();
+  const { audioInputDevices, audioOutputDevices } = useDevices();
   const [inputDeviceId, setInputDeviceId] = useState('');
   const [outputDeviceId, setOutputDeviceId] = useState('');
   const previousInputDeviceIdRef = useRef('');
+  const previousOutputDeviceIdRef = useRef('');
   const { state, dispatch } = useAppStateContext();
 
   const {
@@ -44,6 +47,7 @@ export default function AudioDeviceTestWidget() {
     playbackURI,
     readAudioInput,
     stopAudioTest,
+    testEnded,
   } = useAudioTest();
 
   const disableAll = isRecording || isAudioOutputTestRunning || !!error;
@@ -56,19 +60,40 @@ export default function AudioDeviceTestWidget() {
     playAudio({ deviceId: outputDeviceId, testURI: playbackURI });
   };
 
+  // stop test when not on AudioTest and there's an active test
+  useEffect(() => {
+    if (state.activePane !== ActivePane.AudioTest && (isAudioOutputTestRunning || isAudioInputTestRunning)) {
+      stopAudioTest();
+      previousInputDeviceIdRef.current = '';
+      previousOutputDeviceIdRef.current = '';
+    }
+  }, [state.activePane, stopAudioTest, isAudioInputTestRunning, isAudioOutputTestRunning]);
+
+  // start audio test when on AudioTest and deviceId changes
   useEffect(() => {
     if (state.activePane === ActivePane.AudioTest) {
-      const newDeviceSelected = previousInputDeviceIdRef.current !== inputDeviceId;
+      const newInputDeviceSelected = previousInputDeviceIdRef.current !== inputDeviceId;
       previousInputDeviceIdRef.current = inputDeviceId;
 
       // Restarts the test to continuously capture audio input
-      if (!error && (newDeviceSelected || (!isRecording && !isAudioInputTestRunning))) {
+      if (!error && (newInputDeviceSelected || (!isRecording && !isAudioInputTestRunning))) {
         readAudioInput({ deviceId: inputDeviceId });
       }
-    } else {
-      stopAudioTest();
     }
-  }, [error, inputDeviceId, isRecording, isAudioInputTestRunning, readAudioInput, state.activePane, stopAudioTest]);
+  }, [state.activePane, error, inputDeviceId, isRecording, isAudioInputTestRunning, readAudioInput]);
+
+  useEffect(() => {
+    // If no devices are selected, set the first available device as the active device.
+    const hasSelectedInputDevice = audioInputDevices.some((device) => device.deviceId === inputDeviceId);
+    if (audioInputDevices.length && !hasSelectedInputDevice) {
+      setInputDeviceId(audioInputDevices[0].deviceId);
+    }
+
+    const hasSelectedOutputDevice = audioOutputDevices.some((device) => device.deviceId === outputDeviceId);
+    if (audioOutputDevices.length && !hasSelectedOutputDevice) {
+      setOutputDeviceId(audioOutputDevices[0].deviceId);
+    }
+  }, [audioInputDevices, inputDeviceId, audioOutputDevices, outputDeviceId]);
 
   return (
     <Container>

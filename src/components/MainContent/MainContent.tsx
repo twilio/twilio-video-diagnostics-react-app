@@ -9,7 +9,7 @@ import { PermissionError } from '../panes/DeviceSetup/PermissionError/Permission
 import { Connectivity } from '../panes/Connectivity/Connectivity';
 
 import { useEffect, useRef } from 'react';
-import AudioTest from '../panes/AudioTest/AudioTest';
+import { AudioTest } from '../panes/AudioTest/AudioTest';
 import { CameraTest } from '../panes/CameraTest/CameraTest';
 
 const useStyles = makeStyles({
@@ -145,7 +145,7 @@ export function MainContent() {
               state.activePane === ActivePane.DeviceCheck ||
               state.activePane === ActivePane.DeviceError ||
               onLoadingScreen ||
-              (state.activePane === ActivePane.CameraTest && preflightTestRunning),
+              (state.activePane === ActivePane.AudioTest && preflightTestRunning),
           })}
         >
           {content.map((pane, i) => {
