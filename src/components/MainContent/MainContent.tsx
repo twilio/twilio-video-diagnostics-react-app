@@ -45,7 +45,7 @@ const useStyles = makeStyles({
     },
   },
   item: {
-    transition: 'all 1s ease',
+    transition: 'all 0.75s ease',
     padding: '3em 0',
   },
   hideItem: {

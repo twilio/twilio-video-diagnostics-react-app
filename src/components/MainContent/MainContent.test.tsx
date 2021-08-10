@@ -257,10 +257,10 @@ describe('the MainContent component', () => {
       expect(wrapper.find('div').at(1).prop('className')).toContain('hideAfter');
     });
 
-    it('should hide the following item when preflight test is running and active pane is CameraTest', () => {
+    it('should hide the following item when preflight test is running and active pane is AudioTest', () => {
       mockUseAppStateContext.mockImplementation(() => ({
         state: {
-          activePane: ActivePane.CameraTest,
+          activePane: ActivePane.AudioTest,
           preflightTest: {
             progress: 'mediaAcquired',
           },
