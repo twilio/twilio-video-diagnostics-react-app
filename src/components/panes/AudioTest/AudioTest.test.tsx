@@ -129,9 +129,9 @@ describe('the AudioTest component', () => {
         mount(<AudioTest />);
 
         if (shouldBeCalled) {
-          expect(hookProps.readAudioInput).toHaveBeenCalledWith({ deviceId: '' });
+          expect(hookProps.readAudioInput).toHaveBeenCalledWith({ deviceId: '' }); // eslint-disable-line
         } else {
-          expect(hookProps.readAudioInput).not.toHaveBeenCalledWith({ deviceId: '' });
+          expect(hookProps.readAudioInput).not.toHaveBeenCalledWith({ deviceId: '' }); // eslint-disable-line
         }
       });
     });
