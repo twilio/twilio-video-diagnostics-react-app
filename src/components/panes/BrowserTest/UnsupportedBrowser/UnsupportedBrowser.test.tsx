@@ -1,4 +1,4 @@
-import { shallow, mount } from 'enzyme';
+import { mount } from 'enzyme';
 import { IconButton } from '@material-ui/core';
 import { UnsupportedBrowser } from './UnsupportedBrowser';
 
@@ -22,7 +22,7 @@ Object.defineProperty(navigator, 'clipboard', {
 
 describe('the UnsupportedBrowser component', () => {
   it('should render correctly', () => {
-    const wrapper = shallow(<UnsupportedBrowser />);
+    const wrapper = mount(<UnsupportedBrowser />);
 
     expect(wrapper).toMatchSnapshot();
   });

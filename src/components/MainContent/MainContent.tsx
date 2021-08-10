@@ -147,7 +147,7 @@ export function MainContent() {
               state.activePane === ActivePane.DeviceCheck ||
               state.activePane === ActivePane.DeviceError ||
               onLoadingScreen ||
-              (state.activePane === ActivePane.AudioTest && preflightTestRunning),
+              (state.activePane === ActivePane.BrowserTest && preflightTestRunning),
           })}
         >
           {content.map((pane, i) => {
