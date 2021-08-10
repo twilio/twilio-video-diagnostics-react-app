@@ -47,7 +47,6 @@ export function AudioTest() {
     playbackURI,
     readAudioInput,
     stopAudioTest,
-    testEnded,
   } = useAudioTest();
 
   const disableAll = isRecording || isAudioOutputTestRunning || !!error;

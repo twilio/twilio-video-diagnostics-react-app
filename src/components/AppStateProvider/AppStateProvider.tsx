@@ -227,6 +227,7 @@ export const appStateReducer = produce((draft: stateType, action: ACTIONTYPE) =>
     case 'preflight-finished':
       draft.preflightTestFinished = true;
       draft.preflightTestInProgress = false;
+      break;
   }
 
   const currentState = current(draft);

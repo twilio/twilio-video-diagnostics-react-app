@@ -2,24 +2,39 @@ import { Button } from '@material-ui/core';
 import { mount, shallow } from 'enzyme';
 
 import { AudioDevice } from './AudioDevice/AudioDevice';
-import AudioTest from './AudioTest';
+import { AudioTest } from './AudioTest';
 import ProgressBar from './ProgressBar/ProgressBar';
 import { ActivePane, useAppStateContext } from '../../AppStateProvider/AppStateProvider';
 import useAudioTest from './useAudioTest/useAudioTest';
+import useDevices from '../../../hooks/useDevices/useDevices';
 
 jest.mock('./AudioDevice/AudioDevice');
 jest.mock('../../AppStateProvider/AppStateProvider');
 jest.mock('./useAudioTest/useAudioTest');
+jest.mock('../../../hooks/useDevices/useDevices');
 
 const mockAudioDevice = AudioDevice as jest.Mock<any>;
 const mockUseAppStateContext = useAppStateContext as jest.Mock<any>;
 const mockUseAudioTest = useAudioTest as jest.Mock<any>;
+const mockUseDevices = useDevices as jest.Mock<any>;
 
 const mockDispatch = jest.fn();
 
 mockUseAppStateContext.mockImplementation(() => ({
   state: { activePane: ActivePane.AudioTest },
   dispatch: mockDispatch,
+}));
+
+mockUseDevices.mockImplementation(() => ({
+  audioInputDevices: [
+    { deviceId: 1, label: 'mockInput1' },
+    { deviceId: 2, label: 'mockInput2' },
+  ],
+  videoInputDevices: [],
+  audioOutputDevices: [
+    { deviceId: 3, label: 'mockOutput3' },
+    { deviceId: 4, label: 'mockOutput4' },
+  ],
 }));
 
 describe('the AudioTest component', () => {
@@ -60,7 +75,8 @@ describe('the AudioTest component', () => {
     expect(playBtn.text()).toEqual('Play back');
   });
 
-  it('should stop the audio test when active pane is not AudioTest', () => {
+  it('should stop the test when active pane is not AudioTest and there is a test in progress', () => {
+    mockUseAudioTest.mockImplementationOnce(() => ({ ...hookProps, isAudioOutputTestRunning: true }));
     mockUseAppStateContext.mockImplementationOnce(() => ({ state: { activePane: ActivePane.Connectivity } }));
 
     mount(<AudioTest />);
@@ -71,7 +87,7 @@ describe('the AudioTest component', () => {
   describe('passive testing', () => {
     it('should start passive testing by default', () => {
       mount(<AudioTest />);
-      expect(hookProps.readAudioInput).toHaveBeenCalledWith({ deviceId: '' });
+      expect(hookProps.readAudioInput).toHaveBeenCalledWith({ deviceId: 1 });
     });
 
     [
@@ -126,18 +142,18 @@ describe('the AudioTest component', () => {
       hookProps = { ...hookProps, isAudioInputTestRunning: true, playbackURI: 'foo' };
     });
 
-    it('should start recording when record is clicked', () => {
+    it('should start recording when "Record" button is clicked', () => {
       const wrapper = mount(<AudioTest />);
       const recordBtn = wrapper.find(Button).at(2);
       recordBtn.simulate('click');
-      expect(hookProps.readAudioInput).toHaveBeenCalledWith({ deviceId: '', enableRecording: true });
+      expect(hookProps.readAudioInput).toHaveBeenCalledWith({ deviceId: 1, enableRecording: true });
     });
 
-    it('should play recorded click when play is clicked', () => {
+    it('should play recorded message when "Play" button is clicked', () => {
       const wrapper = mount(<AudioTest />);
       const playBtn = wrapper.find(Button).at(3);
       playBtn.simulate('click');
-      expect(hookProps.playAudio).toHaveBeenCalledWith({ deviceId: '', testURI: 'foo' });
+      expect(hookProps.playAudio).toHaveBeenCalledWith({ deviceId: 3, testURI: 'foo' });
     });
 
     it('should go the next pane when "Yes" button is clicked', () => {
