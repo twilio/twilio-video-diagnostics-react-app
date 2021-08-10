@@ -30,7 +30,7 @@ const getErrorMessage = (error: DiagnosticError) => {
   return message;
 };
 
-export default function useTestRunner() {
+export default function useAudioTest() {
   const [isRecording, setIsRecording] = useState(false);
   const [isAudioInputTestRunning, setIsAudioInputTestRunning] = useState(false);
   const [isAudioOutputTestRunning, setIAudioOutputTestRunning] = useState(false);
