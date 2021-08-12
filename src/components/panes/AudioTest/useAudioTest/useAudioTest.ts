@@ -10,12 +10,7 @@ import {
 } from '@twilio/rtc-diagnostics';
 
 import { getAudioLevelPercentage, getStandardDeviation } from '../../../../utils';
-import {
-  APP_NAME,
-  AUDIO_LEVEL_STANDARD_DEVIATION_THRESHOLD,
-  INPUT_TEST_DURATION,
-  RECORD_DURATION,
-} from '../../../../constants';
+import { APP_NAME, INPUT_TEST_DURATION, RECORD_DURATION } from '../../../../constants';
 import { useAppStateContext } from '../../../AppStateProvider/AppStateProvider';
 
 const log = getLogger(APP_NAME);
@@ -33,13 +28,11 @@ const getErrorMessage = (error: DiagnosticError) => {
 export default function useAudioTest() {
   const [isRecording, setIsRecording] = useState(false);
   const [isAudioInputTestRunning, setIsAudioInputTestRunning] = useState(false);
-  const [isAudioOutputTestRunning, setIAudioOutputTestRunning] = useState(false);
+  const [isAudioOutputTestRunning, setIsAudioOutputTestRunning] = useState(false);
   const [inputLevel, setInputLevel] = useState(0);
   const [outputLevel, setOutputLevel] = useState(0);
   const [playbackURI, setPlaybackURI] = useState('');
   const [error, setError] = useState('');
-  const [warning, setWarning] = useState('');
-  const [testEnded, setTestEnded] = useState(false);
   const { dispatch } = useAppStateContext();
 
   const playAudio = useCallback(
@@ -48,26 +41,20 @@ export default function useAudioTest() {
 
       options = { doLoop: false, ...options };
       audioOutputTest = testAudioOutputDevice(options);
-      setIAudioOutputTestRunning(true);
-      setTestEnded(false);
-      setWarning('');
+      setIsAudioOutputTestRunning(true);
 
       audioOutputTest.on(AudioOutputTest.Events.Volume, (value: number) => {
         setOutputLevel(getAudioLevelPercentage(value));
       });
 
       audioOutputTest.on(AudioOutputTest.Events.End, (report: AudioOutputTest.Report) => {
-        setIAudioOutputTestRunning(false);
-        setTestEnded(true);
+        setIsAudioOutputTestRunning(false);
         setOutputLevel(0);
 
         const stdDev = getStandardDeviation(report.values);
         if (stdDev === 0) {
           setError('No audio detected');
-        } else if (stdDev < AUDIO_LEVEL_STANDARD_DEVIATION_THRESHOLD) {
-          setWarning('Low audio levels detected');
         }
-
         log.debug('AudioOutputTest ended', report);
         dispatch({ type: 'set-audio-output-test-report', report: report });
       });
@@ -94,9 +81,7 @@ export default function useAudioTest() {
       setIsAudioInputTestRunning(true);
       if (options.enableRecording) {
         log.debug('Recording audio');
-        setTestEnded(false);
         setIsRecording(true);
-        setWarning('');
       }
 
       audioInputTest.on(AudioInputTest.Events.Volume, (value: number) => {
@@ -135,24 +120,24 @@ export default function useAudioTest() {
   const stopAudioTest = useCallback(() => {
     if (audioInputTest) {
       audioInputTest.stop();
+      setInputLevel(0);
     }
     if (audioOutputTest) {
       audioOutputTest.stop();
+      setOutputLevel(0);
     }
   }, []);
 
   return {
     error,
-    warning,
-    inputLevel,
     isRecording,
     isAudioInputTestRunning,
     isAudioOutputTestRunning,
-    outputLevel,
     playAudio,
     playbackURI,
     readAudioInput,
     stopAudioTest,
-    testEnded,
+    inputLevel,
+    outputLevel,
   };
 }
