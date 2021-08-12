@@ -33,8 +33,6 @@ jest.mock('@twilio/rtc-diagnostics', () => ({
       End: 'end',
       Error: 'error',
       Volume: 'volume',
-      Warning: 'warning',
-      WarningCleared: 'warning-cleared',
     },
   },
   AudioOutputTest: {
@@ -121,13 +119,11 @@ describe('the useAudioTest hook', () => {
 
       it('should reset states', () => {
         expect(result.current.isAudioOutputTestRunning).toBeTruthy();
-        expect(result.current.testEnded).toBeFalsy();
         act(() => {
           mockAudioOutputTest.emit('volume', 20);
           mockAudioOutputTest.emit('end', { values: [] });
         });
         expect(result.current.isAudioOutputTestRunning).toBeFalsy();
-        expect(result.current.testEnded).toBeTruthy();
         expect(result.current.outputLevel).toEqual(0);
       });
 
@@ -136,23 +132,13 @@ describe('the useAudioTest hook', () => {
           mockAudioOutputTest.emit('end', { values: [0, 0, 0, 0] });
         });
         expect(result.current.error).toEqual('No audio detected');
-        expect(result.current.warning).toEqual('');
       });
 
-      it('should set warning when low audio levels detected', () => {
-        act(() => {
-          mockAudioOutputTest.emit('end', { values: [9, 2, 4, 4] });
-        });
-        expect(result.current.warning).toEqual('Low audio levels detected');
-        expect(result.current.error).toEqual('');
-      });
-
-      it('should not set error and warning when audio levels are normal', () => {
+      it('should not set error when audio levels are normal', () => {
         act(() => {
           mockAudioOutputTest.emit('end', { values: [10, 11, 11, 10] });
         });
         expect(result.current.error).toEqual('');
-        expect(result.current.warning).toEqual('');
       });
 
       it('should save the report to the AppStateProvider', () => {
@@ -183,13 +169,11 @@ describe('the useAudioTest hook', () => {
       const { result } = renderHook(useAudioTest);
       expect(result.current.isRecording).toBeFalsy();
       expect(result.current.isAudioInputTestRunning).toBeFalsy();
-      expect(result.current.testEnded).toBeFalsy();
 
       act(() => result.current.readAudioInput({}));
 
       expect(result.current.isRecording).toBeFalsy();
       expect(result.current.isAudioInputTestRunning).toBeTruthy();
-      expect(result.current.testEnded).toBeFalsy();
     });
 
     it('should have correct states after starting a recording test', () => {
@@ -199,11 +183,9 @@ describe('the useAudioTest hook', () => {
         mockAudioOutputTest.emit('end', { values: [] });
       });
       expect(result.current.isRecording).toBeFalsy();
-      expect(result.current.testEnded).toBeTruthy();
 
       act(() => result.current.readAudioInput({ enableRecording: true }));
       expect(result.current.isRecording).toBeTruthy();
-      expect(result.current.testEnded).toBeFalsy();
     });
 
     it('should update audio levels', () => {
@@ -307,7 +289,9 @@ describe('the useAudioTest hook', () => {
       result.current.stopAudioTest();
 
       expect(mockAudioInputTest.stop).toHaveBeenCalled();
+      expect(result.current.inputLevel).toBe(0);
       expect(mockAudioOutputTest.stop).toHaveBeenCalled();
+      expect(result.current.outputLevel).toBe(0);
     });
   });
 });
