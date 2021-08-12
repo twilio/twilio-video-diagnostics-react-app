@@ -1,7 +1,5 @@
-import { useState, useEffect, useCallback } from 'react';
-import clsx from 'clsx';
+import React, { useState, useEffect, useCallback } from 'react';
 import { MenuItem, Typography, FormControl, makeStyles, Select } from '@material-ui/core';
-import { ActivePane, useAppStateContext } from '../../../AppStateProvider/AppStateProvider';
 import useDevices from '../../../../hooks/useDevices/useDevices';
 
 const labels = {
@@ -31,16 +29,12 @@ const useStyles = makeStyles({
   deviceList: {
     height: '36px',
   },
-  disablePointerEvent: {
-    pointerEvents: 'none',
-  },
 });
 
-export function AudioDevice({ disabled, kind, onDeviceChange }: AudioDeviceProps) {
+function AudioDevice({ disabled, kind, onDeviceChange }: AudioDeviceProps) {
   const classes = useStyles();
   const devices = useDevices();
   const audioDevices = kind === 'audiooutput' ? devices.audioOutputDevices : devices.audioInputDevices;
-  const { state } = useAppStateContext();
   const [selectedDevice, setSelectedDevice] = useState('');
   const { headerText } = labels[kind];
   const noAudioRedirect = !Audio.prototype.setSinkId && kind === 'audiooutput';
@@ -77,9 +71,7 @@ export function AudioDevice({ disabled, kind, onDeviceChange }: AudioDeviceProps
           <Select
             value={selectedDevice}
             onChange={(e) => updateSelectedDevice(e.target.value as string)}
-            className={clsx(classes.deviceList, {
-              [classes.disablePointerEvent]: state.activePane !== ActivePane.AudioTest,
-            })}
+            className={classes.deviceList}
           >
             {audioDevices.map((device) => (
               <MenuItem value={device.deviceId} key={device.deviceId}>
@@ -92,3 +84,5 @@ export function AudioDevice({ disabled, kind, onDeviceChange }: AudioDeviceProps
     </>
   );
 }
+
+export default React.memo(AudioDevice);
