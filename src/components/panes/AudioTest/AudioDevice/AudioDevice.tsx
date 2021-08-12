@@ -31,7 +31,7 @@ const useStyles = makeStyles({
   },
 });
 
-function AudioDevice({ disabled, kind, onDeviceChange }: AudioDeviceProps) {
+export function AudioDevice({ disabled, kind, onDeviceChange }: AudioDeviceProps) {
   const classes = useStyles();
   const devices = useDevices();
   const audioDevices = kind === 'audiooutput' ? devices.audioOutputDevices : devices.audioInputDevices;

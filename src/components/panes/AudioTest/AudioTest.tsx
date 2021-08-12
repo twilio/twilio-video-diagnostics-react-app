@@ -1,13 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
 import { Button, Paper, Typography, Container, Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-
-import { AudioDevice } from './AudioDevice/AudioDevice';
+import AudioDevice from './AudioDevice/AudioDevice';
 import ProgressBar from './ProgressBar/ProgressBar';
 import useAudioTest from './useAudioTest/useAudioTest';
-import useDevices from '../../../hooks/useDevices/useDevices';
 import { ActivePane, useAppStateContext } from '../../AppStateProvider/AppStateProvider';
-import { Microphone } from '../../../icons/Microphone';
+import Microphone from '../../../icons/Microphone';
 
 const useStyles = makeStyles({
   paper: {
@@ -30,16 +28,13 @@ const useStyles = makeStyles({
 
 export function AudioTest() {
   const classes = useStyles();
-  const { audioInputDevices, audioOutputDevices } = useDevices();
   const [inputDeviceId, setInputDeviceId] = useState('');
   const [outputDeviceId, setOutputDeviceId] = useState('');
   const previousInputDeviceIdRef = useRef('');
-  const previousOutputDeviceIdRef = useRef('');
   const { state, dispatch } = useAppStateContext();
 
   const {
     error,
-    inputLevel,
     isRecording,
     isAudioInputTestRunning,
     isAudioOutputTestRunning,
@@ -47,7 +42,11 @@ export function AudioTest() {
     playbackURI,
     readAudioInput,
     stopAudioTest,
+    inputLevel,
+    outputLevel,
   } = useAudioTest();
+
+  const volumeLevel = outputLevel === 0 ? inputLevel : outputLevel;
 
   const disableAll = isRecording || isAudioOutputTestRunning || !!error;
 
@@ -63,8 +62,6 @@ export function AudioTest() {
   useEffect(() => {
     if (state.activePane !== ActivePane.AudioTest && (isAudioOutputTestRunning || isAudioInputTestRunning)) {
       stopAudioTest();
-      previousInputDeviceIdRef.current = '';
-      previousOutputDeviceIdRef.current = '';
     }
   }, [state.activePane, stopAudioTest, isAudioInputTestRunning, isAudioOutputTestRunning]);
 
@@ -78,21 +75,12 @@ export function AudioTest() {
       if (!error && (newInputDeviceSelected || (!isRecording && !isAudioInputTestRunning))) {
         readAudioInput({ deviceId: inputDeviceId });
       }
-    }
-  }, [state.activePane, error, inputDeviceId, isRecording, isAudioInputTestRunning, readAudioInput]);
 
-  useEffect(() => {
-    // If no devices are selected, set the first available device as the active device.
-    const hasSelectedInputDevice = audioInputDevices.some((device) => device.deviceId === inputDeviceId);
-    if (audioInputDevices.length && !hasSelectedInputDevice) {
-      setInputDeviceId(audioInputDevices[0].deviceId);
+      if (error) {
+        dispatch({ type: 'set-device-error', error: new Error(error) });
+      }
     }
-
-    const hasSelectedOutputDevice = audioOutputDevices.some((device) => device.deviceId === outputDeviceId);
-    if (audioOutputDevices.length && !hasSelectedOutputDevice) {
-      setOutputDeviceId(audioOutputDevices[0].deviceId);
-    }
-  }, [audioInputDevices, inputDeviceId, audioOutputDevices, outputDeviceId]);
+  }, [state.activePane, error, inputDeviceId, isRecording, isAudioInputTestRunning, readAudioInput, dispatch]);
 
   return (
     <Container>
@@ -153,7 +141,7 @@ export function AudioTest() {
               <div style={{ margin: '0 0.5em' }}>
                 <Microphone />
               </div>
-              <ProgressBar position={inputLevel} duration={0.1} style={{ flex: '1' }} />
+              <ProgressBar position={volumeLevel} duration={0.1} style={{ flex: '1' }} />
             </div>
           </Paper>
         </Grid>
