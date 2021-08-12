@@ -1,9 +1,8 @@
-import React from 'react';
 import { Select, Typography } from '@material-ui/core';
 import { render } from '@testing-library/react';
 import { mount, shallow } from 'enzyme';
 import { ActivePane, useAppStateContext } from '../../../AppStateProvider/AppStateProvider';
-import AudioDevice from './AudioDevice';
+import { AudioDevice } from './AudioDevice';
 import useDevices from '../../../../hooks/useDevices/useDevices';
 
 jest.mock('../../../AppStateProvider/AppStateProvider');

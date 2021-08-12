@@ -41,7 +41,7 @@ export default function ProgressBar({ duration, position, style }: ProgressBarPr
         // We set these values asynchronously so that the browser can recognize the change in the 'right' value.
         // Without this, the progress bar would instantly snap to the designated position.
         el.style.transition = `right ${duration}s linear`;
-        el.style.right = `${100 - position >= 0 ? String(100 - position) : 0}%`;
+        el.style.right = `${Math.max(0, 100 - position)}%`;
       });
     }
   }, [duration, position]);

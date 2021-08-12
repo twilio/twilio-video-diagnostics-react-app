@@ -77,7 +77,7 @@ export function AudioTest() {
       }
 
       if (error) {
-        dispatch({ type: 'set-device-error', error: new Error(error) });
+        dispatch({ type: 'set-device-error', error: Error(error) });
       }
     }
   }, [state.activePane, error, inputDeviceId, isRecording, isAudioInputTestRunning, readAudioInput, dispatch]);

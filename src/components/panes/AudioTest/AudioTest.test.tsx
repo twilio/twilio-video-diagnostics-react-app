@@ -84,10 +84,20 @@ describe('the AudioTest component', () => {
     expect(hookProps.stopAudioTest).toHaveBeenCalled();
   });
 
+  it('should send the user to DeviceError pane if there is an error during the AudioTest', () => {
+    mockUseAudioTest.mockImplementationOnce(() => ({
+      ...hookProps,
+      isAudioInputTestRunning: true,
+      error: 'mockError',
+    }));
+    mount(<AudioTest />);
+    expect(mockDispatch).toHaveBeenCalledWith({ type: 'set-device-error', error: Error('mockError') });
+  });
+
   describe('passive testing', () => {
     it('should start passive testing by default', () => {
       mount(<AudioTest />);
-      expect(hookProps.readAudioInput).toHaveBeenCalledWith({ deviceId: 1 });
+      expect(hookProps.readAudioInput).toHaveBeenCalledWith({ deviceId: '' });
     });
 
     [
@@ -146,14 +156,14 @@ describe('the AudioTest component', () => {
       const wrapper = mount(<AudioTest />);
       const recordBtn = wrapper.find(Button).at(2);
       recordBtn.simulate('click');
-      expect(hookProps.readAudioInput).toHaveBeenCalledWith({ deviceId: 1, enableRecording: true });
+      expect(hookProps.readAudioInput).toHaveBeenCalledWith({ deviceId: '', enableRecording: true });
     });
 
     it('should play recorded message when "Play" button is clicked', () => {
       const wrapper = mount(<AudioTest />);
       const playBtn = wrapper.find(Button).at(3);
       playBtn.simulate('click');
-      expect(hookProps.playAudio).toHaveBeenCalledWith({ deviceId: 3, testURI: 'foo' });
+      expect(hookProps.playAudio).toHaveBeenCalledWith({ deviceId: '', testURI: 'foo' });
     });
 
     it('should go the next pane when "Yes" button is clicked', () => {
@@ -183,11 +193,17 @@ describe('the AudioTest component', () => {
     });
   });
 
-  describe('audio levels', () => {
-    it('should pass input levels to ProgressBar', () => {
-      hookProps = { ...hookProps, inputLevel: 64 };
+  describe('volume levels', () => {
+    it('should pass inputLevel to ProgressBar when outputLevel is 0', () => {
+      hookProps = { ...hookProps, inputLevel: 64, outputLevel: 0 };
       const wrapper = shallow(<AudioTest />);
       expect(wrapper.find(ProgressBar).props().position).toEqual(64);
+    });
+
+    it('should pass outputLevel to ProgressBar when outputLevel is greater than 0', () => {
+      hookProps = { ...hookProps, inputLevel: 64, outputLevel: 93 };
+      const wrapper = shallow(<AudioTest />);
+      expect(wrapper.find(ProgressBar).props().position).toEqual(93);
     });
   });
 });
