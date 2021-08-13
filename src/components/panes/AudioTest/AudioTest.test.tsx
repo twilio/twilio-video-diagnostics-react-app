@@ -3,8 +3,10 @@ import { mount, shallow } from 'enzyme';
 
 import { AudioDevice } from './AudioDevice/AudioDevice';
 import { AudioTest } from './AudioTest';
-import ProgressBar from './ProgressBar/ProgressBar';
 import { ActivePane, useAppStateContext } from '../../AppStateProvider/AppStateProvider';
+import Microphone from '../../../icons/Microphone';
+import SpeakerIcon from '../../../icons/SpeakerIcon';
+import ProgressBar from './ProgressBar/ProgressBar';
 import useAudioTest from './useAudioTest/useAudioTest';
 import useDevices from '../../../hooks/useDevices/useDevices';
 
@@ -204,6 +206,18 @@ describe('the AudioTest component', () => {
       hookProps = { ...hookProps, inputLevel: 64, outputLevel: 93 };
       const wrapper = shallow(<AudioTest />);
       expect(wrapper.find(ProgressBar).props().position).toEqual(93);
+    });
+
+    it('should display the microphone icon when outputLevel is 0', () => {
+      hookProps = { ...hookProps, inputLevel: 64, outputLevel: 0 };
+      const wrapper = shallow(<AudioTest />);
+      expect(wrapper.find(Microphone).exists()).toBe(true);
+    });
+
+    it('should display the speaker icon when outputLevel is greater than 0', () => {
+      hookProps = { ...hookProps, inputLevel: 64, outputLevel: 93 };
+      const wrapper = shallow(<AudioTest />);
+      expect(wrapper.find(SpeakerIcon).exists()).toBe(true);
     });
   });
 });

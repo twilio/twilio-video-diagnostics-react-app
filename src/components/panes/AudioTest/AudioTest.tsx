@@ -6,6 +6,7 @@ import ProgressBar from './ProgressBar/ProgressBar';
 import useAudioTest from './useAudioTest/useAudioTest';
 import { ActivePane, useAppStateContext } from '../../AppStateProvider/AppStateProvider';
 import Microphone from '../../../icons/Microphone';
+import Speaker from '../../../icons/SpeakerIcon';
 
 const useStyles = makeStyles({
   paper: {
@@ -138,9 +139,7 @@ export function AudioTest() {
             <AudioDevice disabled={disableAll} kind="audiooutput" onDeviceChange={setOutputDeviceId} />
             <AudioDevice disabled={disableAll} kind="audioinput" onDeviceChange={setInputDeviceId} />
             <div className={classes.audioLevelContainer}>
-              <div style={{ margin: '0 0.5em' }}>
-                <Microphone />
-              </div>
+              <div style={{ margin: '0 0.5em' }}>{volumeLevel === inputLevel ? <Microphone /> : <Speaker />}</div>
               <ProgressBar position={volumeLevel} duration={0.1} style={{ flex: '1' }} />
             </div>
           </Paper>
