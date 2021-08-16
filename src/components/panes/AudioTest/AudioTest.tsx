@@ -19,6 +19,7 @@ const useStyles = makeStyles({
   audioLevelContainer: {
     display: 'flex',
     alignItems: 'center',
+    height: '2.5em',
   },
   topLine: {
     display: 'flex',
@@ -47,7 +48,7 @@ export function AudioTest() {
     outputLevel,
   } = useAudioTest();
 
-  const volumeLevel = outputLevel === 0 ? inputLevel : outputLevel;
+  const volumeLevel = isAudioOutputTestRunning ? outputLevel : inputLevel;
 
   const disableAll = isRecording || isAudioOutputTestRunning || !!error;
 
@@ -75,10 +76,6 @@ export function AudioTest() {
       // Restarts the test to continuously capture audio input
       if (!error && (newInputDeviceSelected || (!isRecording && !isAudioInputTestRunning))) {
         readAudioInput({ deviceId: inputDeviceId });
-      }
-
-      if (error) {
-        dispatch({ type: 'set-device-error', error: Error(error) });
       }
     }
   }, [state.activePane, error, inputDeviceId, isRecording, isAudioInputTestRunning, readAudioInput, dispatch]);
@@ -139,7 +136,9 @@ export function AudioTest() {
             <AudioDevice disabled={disableAll} kind="audiooutput" onDeviceChange={setOutputDeviceId} />
             <AudioDevice disabled={disableAll} kind="audioinput" onDeviceChange={setInputDeviceId} />
             <div className={classes.audioLevelContainer}>
-              <div style={{ margin: '0 0.5em' }}>{volumeLevel === inputLevel ? <Microphone /> : <Speaker />}</div>
+              <div style={{ width: '2em', display: 'flex', justifyContent: 'center' }}>
+                {isAudioOutputTestRunning ? <Speaker /> : <Microphone />}
+              </div>
               <ProgressBar position={volumeLevel} duration={0.1} style={{ flex: '1' }} />
             </div>
           </Paper>

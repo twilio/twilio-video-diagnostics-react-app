@@ -10,12 +10,10 @@ import ProgressBar from './ProgressBar/ProgressBar';
 import useAudioTest from './useAudioTest/useAudioTest';
 import useDevices from '../../../hooks/useDevices/useDevices';
 
-jest.mock('./AudioDevice/AudioDevice');
 jest.mock('../../AppStateProvider/AppStateProvider');
 jest.mock('./useAudioTest/useAudioTest');
 jest.mock('../../../hooks/useDevices/useDevices');
 
-const mockAudioDevice = AudioDevice as jest.Mock<any>;
 const mockUseAppStateContext = useAppStateContext as jest.Mock<any>;
 const mockUseAudioTest = useAudioTest as jest.Mock<any>;
 const mockUseDevices = useDevices as jest.Mock<any>;
@@ -57,7 +55,6 @@ describe('the AudioTest component', () => {
       stopAudioTest: jest.fn(),
     };
     mockUseAudioTest.mockImplementation(() => hookProps);
-    mockAudioDevice.mockImplementation(() => null);
   });
 
   it('should render correct components on load', () => {
@@ -84,16 +81,6 @@ describe('the AudioTest component', () => {
     mount(<AudioTest />);
 
     expect(hookProps.stopAudioTest).toHaveBeenCalled();
-  });
-
-  it('should send the user to DeviceError pane if there is an error during the AudioTest', () => {
-    mockUseAudioTest.mockImplementationOnce(() => ({
-      ...hookProps,
-      isAudioInputTestRunning: true,
-      error: 'mockError',
-    }));
-    mount(<AudioTest />);
-    expect(mockDispatch).toHaveBeenCalledWith({ type: 'set-device-error', error: Error('mockError') });
   });
 
   describe('passive testing', () => {
@@ -158,14 +145,14 @@ describe('the AudioTest component', () => {
       const wrapper = mount(<AudioTest />);
       const recordBtn = wrapper.find(Button).at(2);
       recordBtn.simulate('click');
-      expect(hookProps.readAudioInput).toHaveBeenCalledWith({ deviceId: '', enableRecording: true });
+      expect(hookProps.readAudioInput).toHaveBeenCalledWith({ deviceId: 1, enableRecording: true });
     });
 
     it('should play recorded message when "Play" button is clicked', () => {
       const wrapper = mount(<AudioTest />);
       const playBtn = wrapper.find(Button).at(3);
       playBtn.simulate('click');
-      expect(hookProps.playAudio).toHaveBeenCalledWith({ deviceId: '', testURI: 'foo' });
+      expect(hookProps.playAudio).toHaveBeenCalledWith({ deviceId: 3, testURI: 'foo' });
     });
 
     it('should go the next pane when "Yes" button is clicked', () => {
@@ -196,26 +183,26 @@ describe('the AudioTest component', () => {
   });
 
   describe('volume levels', () => {
-    it('should pass inputLevel to ProgressBar when outputLevel is 0', () => {
-      hookProps = { ...hookProps, inputLevel: 64, outputLevel: 0 };
+    it('should pass inputLevel to ProgressBar when isAudioOutputTestRunning is false', () => {
+      hookProps = { ...hookProps, inputLevel: 64, outputLevel: 0, isAudioOutputTestRunning: false };
       const wrapper = shallow(<AudioTest />);
       expect(wrapper.find(ProgressBar).props().position).toEqual(64);
     });
 
-    it('should pass outputLevel to ProgressBar when outputLevel is greater than 0', () => {
-      hookProps = { ...hookProps, inputLevel: 64, outputLevel: 93 };
+    it('should pass outputLevel to ProgressBar when isAudioOutputTestRunning is true', () => {
+      hookProps = { ...hookProps, inputLevel: 64, outputLevel: 93, isAudioOutputTestRunning: true };
       const wrapper = shallow(<AudioTest />);
       expect(wrapper.find(ProgressBar).props().position).toEqual(93);
     });
 
-    it('should display the microphone icon when outputLevel is 0', () => {
-      hookProps = { ...hookProps, inputLevel: 64, outputLevel: 0 };
+    it('should display the microphone icon when isAudioOutputTestRunning is false', () => {
+      hookProps = { ...hookProps, inputLevel: 64, outputLevel: 0, isAudioOutputTestRunning: false };
       const wrapper = shallow(<AudioTest />);
       expect(wrapper.find(Microphone).exists()).toBe(true);
     });
 
-    it('should display the speaker icon when outputLevel is greater than 0', () => {
-      hookProps = { ...hookProps, inputLevel: 64, outputLevel: 93 };
+    it('should display the speaker icon when isAudioOutputTestRunning is true', () => {
+      hookProps = { ...hookProps, inputLevel: 64, outputLevel: 93, isAudioOutputTestRunning: true };
       const wrapper = shallow(<AudioTest />);
       expect(wrapper.find(SpeakerIcon).exists()).toBe(true);
     });
