@@ -26,7 +26,6 @@ jest.mock('@twilio/rtc-diagnostics', () => ({
 const mockDispatch = jest.fn();
 
 describe('the useBitrateTestRunner hook', () => {
-  afterEach(() => jest.clearAllMocks());
   it('should dispatch "bitrate-test-started" when "startBitrateTest" function is called', async () => {
     const { result } = renderHook(() => useBitrateTestRunner(mockDispatch));
     await act(async () => await result.current.startBitrateTest());
@@ -45,6 +44,7 @@ describe('the useBitrateTestRunner hook', () => {
     renderHook(() => useBitrateTestRunner(mockDispatch));
 
     mockBitrateTest.emit('Error', 'mockError');
+
     expect(mockDispatch).toHaveBeenCalledWith({ type: 'set-bitrate-test-error', error: 'mockError' });
     expect(mockDispatch).toHaveBeenCalledWith({ type: 'bitrate-test-finished' });
   });
