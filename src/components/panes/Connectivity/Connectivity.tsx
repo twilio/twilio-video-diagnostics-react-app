@@ -54,7 +54,7 @@ export function Connectivity() {
       />
       {
         /* If preflight test hasn't completed, display loading screen otherwise, display connectivity results: */
-        state.preflightTestInProgress ? (
+        state.preflightTestInProgress || state.bitrateTestInProgress ? (
           <Container>
             <Grid container className={classes.container}>
               <Typography variant="h1" gutterBottom>

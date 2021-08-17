@@ -3,9 +3,8 @@ import produce, { current } from 'immer';
 import { PreflightTestReport } from 'twilio-video';
 import usePreflightTest from './usePreflightTest/usePreflightTest';
 import useTwilioStatus from './useTwilioStatus/useTwilioStatus';
-import { VideoInputTest } from '@twilio/rtc-diagnostics';
-import { AudioInputTest } from '@twilio/rtc-diagnostics';
-import { AudioOutputTest } from '@twilio/rtc-diagnostics';
+import useBitrateTestRunner from './useBitrateTestRunner/useBitrateTestRunner';
+import { VideoInputTest, MediaConnectionBitrateTest, AudioInputTest, AudioOutputTest } from '@twilio/rtc-diagnostics';
 
 export enum ActivePane {
   GetStarted,
@@ -39,6 +38,13 @@ interface stateType {
   downButtonDisabled: boolean;
   preflightTestInProgress: boolean;
   preflightTestFinished: boolean;
+  bitrateTest: {
+    bitrate: null | number;
+    report: null | MediaConnectionBitrateTest.Report;
+    error: null | Error;
+  };
+  bitrateTestInProgress: boolean;
+  bitrateTestFinished: boolean;
 }
 
 export type ACTIONTYPE =
@@ -57,7 +63,12 @@ export type ACTIONTYPE =
   | { type: 'set-twilio-status'; status: string }
   | { type: 'set-twilio-status-error'; error: Error }
   | { type: 'preflight-started' }
-  | { type: 'preflight-finished' };
+  | { type: 'preflight-finished' }
+  | { type: 'set-bitrate'; bitrate: number }
+  | { type: 'set-bitrate-test-error'; error: Error }
+  | { type: 'set-bitrate-test-report'; report: MediaConnectionBitrateTest.Report }
+  | { type: 'bitrate-test-started' }
+  | { type: 'bitrate-test-finished' };
 
 type AppStateContextType = {
   state: stateType;
@@ -86,6 +97,13 @@ export const initialState = {
   downButtonDisabled: false,
   preflightTestInProgress: false,
   preflightTestFinished: false,
+  bitrateTest: {
+    bitrate: null,
+    report: null,
+    error: null,
+  },
+  bitrateTestInProgress: false,
+  bitrateTestFinished: false,
 };
 
 export const AppStateContext = createContext<AppStateContextType>(null!);
@@ -227,6 +245,28 @@ export const appStateReducer = produce((draft: stateType, action: ACTIONTYPE) =>
       draft.preflightTestFinished = true;
       draft.preflightTestInProgress = false;
       break;
+
+    case 'set-bitrate':
+      draft.bitrateTest.bitrate = action.bitrate;
+      break;
+
+    case 'set-bitrate-test-report':
+      draft.bitrateTest.report = action.report;
+      break;
+
+    case 'set-bitrate-test-error':
+      draft.bitrateTest.error = action.error;
+      break;
+
+    case 'bitrate-test-started':
+      draft.bitrateTestInProgress = true;
+      draft.bitrateTestFinished = false;
+      break;
+
+    case 'bitrate-test-finished':
+      draft.bitrateTestFinished = true;
+      draft.bitrateTestInProgress = false;
+      break;
   }
 
   const currentState = current(draft);
@@ -242,11 +282,16 @@ export const appStateReducer = produce((draft: stateType, action: ACTIONTYPE) =>
 export const AppStateProvider: React.FC = ({ children }) => {
   const [state, dispatch] = useReducer(appStateReducer, initialState);
   const { startPreflightTest } = usePreflightTest(dispatch);
+  const { startBitrateTest } = useBitrateTestRunner(dispatch);
   const { getTwilioStatus } = useTwilioStatus(dispatch);
+
+  console.log(state.preflightTest);
+  console.log(state.bitrateTest);
 
   const nextPane = useCallback(() => {
     switch (state.activePane) {
       case ActivePane.GetStarted:
+        startBitrateTest();
         startPreflightTest();
         getTwilioStatus();
         dispatch({ type: 'next-pane' });
@@ -254,7 +299,7 @@ export const AppStateProvider: React.FC = ({ children }) => {
       default:
         dispatch({ type: 'next-pane' });
     }
-  }, [startPreflightTest, getTwilioStatus, state, dispatch]);
+  }, [startBitrateTest, startPreflightTest, getTwilioStatus, state, dispatch]);
 
   useEffect(() => {
     navigator.mediaDevices.enumerateDevices().then((devices) => dispatch({ type: 'set-devices', devices }));

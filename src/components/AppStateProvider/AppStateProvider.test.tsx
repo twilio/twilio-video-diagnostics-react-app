@@ -1,6 +1,6 @@
 import React from 'react';
 import { PreflightTestReport } from 'twilio-video';
-import { VideoInputTest } from '@twilio/rtc-diagnostics';
+import { MediaConnectionBitrateTest, VideoInputTest } from '@twilio/rtc-diagnostics';
 import {
   ActivePane,
   useAppStateContext,
@@ -11,8 +11,15 @@ import {
 } from './AppStateProvider';
 import { renderHook, act } from '@testing-library/react-hooks';
 
+const mockStartBitrateTest = jest.fn();
 const mockStartPreflightTest = jest.fn();
 const mockGetTwilioStatus = jest.fn();
+
+jest.mock('./useBitrateTestRunner/useBitrateTestRunner', () =>
+  jest.fn(() => ({
+    startBitrateTest: mockStartBitrateTest,
+  }))
+);
 
 jest.mock('./usePreflightTest/usePreflightTest', () =>
   jest.fn(() => ({
@@ -277,6 +284,46 @@ describe('the appState reducer', () => {
       const newState = appStateReducer(initialState, { type: 'preflight-finished' });
       expect(newState.preflightTestFinished).toBe(true);
       expect(newState.preflightTestInProgress).toBe(false);
+    });
+  });
+
+  describe('the "set-bitrate" action type', () => {
+    it('should set the bitrate for the bitrate test', () => {
+      const newState = appStateReducer(initialState, { type: 'set-bitrate', bitrate: 100 });
+      expect(newState.bitrateTest.bitrate).toBe(100);
+    });
+  });
+
+  describe('the "set-bitrate-test-error" action type', () => {
+    it('should save the error if an error is thrown during bitrate test', () => {
+      const mockError = Error();
+      const newState = appStateReducer(initialState, { type: 'set-bitrate-test-error', error: mockError });
+      expect(newState.bitrateTest.error).toBe(mockError);
+    });
+  });
+
+  describe('the "set-bitrate-test-report" action type', () => {
+    it('should save the report from the bitrate test', () => {
+      const mockReport = {} as MediaConnectionBitrateTest.Report;
+
+      const newState = appStateReducer(initialState, { type: 'set-bitrate-test-report', report: mockReport });
+      expect(newState.bitrateTest.report).toBe(mockReport);
+    });
+  });
+
+  describe('the "bitrate-test-started" action type', () => {
+    it('should set bitrateTestInProgress to true and bitrateTestFinished to false', () => {
+      const newState = appStateReducer(initialState, { type: 'bitrate-test-started' });
+      expect(newState.bitrateTestInProgress).toBe(true);
+      expect(newState.bitrateTestFinished).toBe(false);
+    });
+  });
+
+  describe('the "bitrate-test-finished" action type', () => {
+    it('should set bitrateTestInProgress to false and bitrateTestFinished to true', () => {
+      const newState = appStateReducer(initialState, { type: 'bitrate-test-finished' });
+      expect(newState.bitrateTestFinished).toBe(true);
+      expect(newState.bitrateTestInProgress).toBe(false);
     });
   });
 });
