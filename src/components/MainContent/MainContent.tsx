@@ -9,6 +9,7 @@ import { PermissionError } from '../panes/DeviceSetup/PermissionError/Permission
 import { Connectivity } from '../panes/Connectivity/Connectivity';
 
 import { useEffect, useRef } from 'react';
+import { AudioTest } from '../panes/AudioTest/AudioTest';
 import { CameraTest } from '../panes/CameraTest/CameraTest';
 
 const useStyles = makeStyles({
@@ -44,7 +45,7 @@ const useStyles = makeStyles({
     },
   },
   item: {
-    transition: 'all 1s ease',
+    transition: 'all 0.75s ease',
     padding: '3em 0',
   },
   hideItem: {
@@ -120,6 +121,7 @@ const content = [
   { pane: ActivePane.DeviceCheck, component: <CheckPermissions /> },
   { pane: ActivePane.DeviceError, component: <PermissionError /> },
   { pane: ActivePane.CameraTest, component: <CameraTest /> },
+  { pane: ActivePane.AudioTest, component: <AudioTest /> },
   { pane: ActivePane.Connectivity, component: <Connectivity /> },
   { pane: ActivePane.Quality, component: <GetStarted /> },
   { pane: ActivePane.Results, component: <GetStarted /> },
@@ -143,7 +145,7 @@ export function MainContent() {
               state.activePane === ActivePane.DeviceCheck ||
               state.activePane === ActivePane.DeviceError ||
               onLoadingScreen ||
-              (state.activePane === ActivePane.CameraTest && preflightTestRunning),
+              (state.activePane === ActivePane.AudioTest && preflightTestRunning),
           })}
         >
           {content.map((pane, i) => {

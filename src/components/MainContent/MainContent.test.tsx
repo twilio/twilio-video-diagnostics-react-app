@@ -7,15 +7,22 @@ import { MuiThemeProvider } from '@material-ui/core';
 import { shallow, mount } from 'enzyme';
 import { render } from '@testing-library/react';
 import theme from '../../theme';
+import useDevices from '../../hooks/useDevices/useDevices';
 
+jest.mock('../../hooks/useDevices/useDevices');
 jest.mock('../AppStateProvider/AppStateProvider');
-jest.mock('../../hooks/useDevices/useDevices', () => () => ({
-  videoInputDevices: [],
-}));
 
+const mockUseDevices = useDevices as jest.Mock<any>;
 const mockUseAppStateContext = useAppStateContext as jest.Mock<any>;
-
 const mockDispatch = jest.fn();
+
+const mockDevices = {
+  audioInputDevices: [],
+  videoInputDevices: [],
+  audioOutputDevices: [],
+};
+
+mockUseDevices.mockImplementation(() => mockDevices);
 
 describe('the MainContent component', () => {
   it('should set the isActive prop on the active pane', () => {
@@ -250,10 +257,10 @@ describe('the MainContent component', () => {
       expect(wrapper.find('div').at(1).prop('className')).toContain('hideAfter');
     });
 
-    it('should hide the following item when preflight test is running and active pane is CameraTest', () => {
+    it('should hide the following item when preflight test is running and active pane is AudioTest', () => {
       mockUseAppStateContext.mockImplementation(() => ({
         state: {
-          activePane: ActivePane.CameraTest,
+          activePane: ActivePane.AudioTest,
           preflightTest: {
             progress: 'mediaAcquired',
           },

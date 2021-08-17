@@ -50,15 +50,54 @@ describe('the Connectivity component', () => {
     expect(wrapper.text().includes('Hang Tight!')).toBe(false);
   });
 
-  it('should render ConnectionFailed component if connection has failed', () => {
+  it('should render ConnectionFailed component if Twilio status is not "operational"', () => {
+    mockUseAppStateContext.mockImplementationOnce(() => ({
+      state: {
+        activePane: 4,
+        twilioStatus: 'major_outage',
+        preflightTest: {
+          progress: null,
+          signalingGatewayReachable: true,
+          turnServersReachable: true,
+          error: null,
+        },
+        preflightTestInProgress: false,
+        preflightTestFinished: true,
+      },
+    }));
+    const wrapper = shallow(<Connectivity />);
+    expect(wrapper.find(ConnectionFailed).exists()).toBe(true);
+  });
+
+  it('should render ConnectionFailed component if there is a preflight test error', () => {
     mockUseAppStateContext.mockImplementationOnce(() => ({
       state: {
         activePane: 4,
         twilioStatus: 'operational',
         preflightTest: {
-          progress: 'connected',
+          progress: null,
+          signalingGatewayReachable: true,
+          turnServersReachable: true,
+          error: 'mockError',
+        },
+        preflightTestInProgress: false,
+        preflightTestFinished: true,
+      },
+    }));
+    const wrapper = shallow(<Connectivity />);
+    expect(wrapper.find(ConnectionFailed).exists()).toBe(true);
+  });
+
+  it('should render ConnectionFailed component if signaling gateway or turn servers are not reachable', () => {
+    mockUseAppStateContext.mockImplementationOnce(() => ({
+      state: {
+        activePane: 4,
+        twilioStatus: 'operational',
+        preflightTest: {
+          progress: null,
           signalingGatewayReachable: false,
           turnServersReachable: true,
+          error: null,
         },
         preflightTestInProgress: false,
         preflightTestFinished: true,

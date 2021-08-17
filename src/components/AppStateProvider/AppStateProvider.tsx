@@ -4,12 +4,15 @@ import { PreflightTestReport } from 'twilio-video';
 import usePreflightTest from './usePreflightTest/usePreflightTest';
 import useTwilioStatus from './useTwilioStatus/useTwilioStatus';
 import { VideoInputTest } from '@twilio/rtc-diagnostics';
+import { AudioInputTest } from '@twilio/rtc-diagnostics';
+import { AudioOutputTest } from '@twilio/rtc-diagnostics';
 
 export enum ActivePane {
   GetStarted,
   DeviceCheck,
   DeviceError,
   CameraTest,
+  AudioTest,
   Connectivity,
   Quality,
   Results,
@@ -31,6 +34,8 @@ interface stateType {
   twilioStatus: string | null;
   twilioStatusError: null | Error;
   videoInputTestReport: null | VideoInputTest.Report;
+  audioInputTestReport: null | AudioInputTest.Report;
+  audioOutputTestReport: null | AudioOutputTest.Report;
   downButtonDisabled: boolean;
   preflightTestInProgress: boolean;
   preflightTestFinished: boolean;
@@ -42,13 +47,15 @@ export type ACTIONTYPE =
   | { type: 'previous-pane' }
   | { type: 'set-devices'; devices: MediaDeviceInfo[] }
   | { type: 'set-device-error'; error: Error }
+  | { type: 'set-video-test-report'; report: VideoInputTest.Report }
+  | { type: 'set-audio-input-test-report'; report: AudioInputTest.Report }
+  | { type: 'set-audio-output-test-report'; report: AudioOutputTest.Report }
   | { type: 'preflight-progress'; progress: string }
   | { type: 'preflight-completed'; report: PreflightTestReport }
   | { type: 'preflight-failed'; error: Error }
   | { type: 'preflight-token-failed'; error: Error }
   | { type: 'set-twilio-status'; status: string }
   | { type: 'set-twilio-status-error'; error: Error }
-  | { type: 'set-video-test-report'; report: VideoInputTest.Report }
   | { type: 'preflight-started' }
   | { type: 'preflight-finished' };
 
@@ -74,6 +81,8 @@ export const initialState = {
   twilioStatus: null,
   twilioStatusError: null,
   videoInputTestReport: null,
+  audioInputTestReport: null,
+  audioOutputTestReport: null,
   downButtonDisabled: false,
   preflightTestInProgress: false,
   preflightTestFinished: false,
@@ -201,6 +210,14 @@ export const appStateReducer = produce((draft: stateType, action: ACTIONTYPE) =>
       draft.videoInputTestReport = action.report;
       break;
 
+    case 'set-audio-input-test-report':
+      draft.audioInputTestReport = action.report;
+      break;
+
+    case 'set-audio-output-test-report':
+      draft.audioOutputTestReport = action.report;
+      break;
+
     case 'preflight-started':
       draft.preflightTestInProgress = true;
       draft.preflightTestFinished = false;
@@ -209,6 +226,7 @@ export const appStateReducer = produce((draft: stateType, action: ACTIONTYPE) =>
     case 'preflight-finished':
       draft.preflightTestFinished = true;
       draft.preflightTestInProgress = false;
+      break;
   }
 
   const currentState = current(draft);

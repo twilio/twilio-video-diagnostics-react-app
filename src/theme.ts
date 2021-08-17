@@ -7,7 +7,7 @@ declare module '@material-ui/core/styles/createTheme' {
     backgroundColor: string;
   }
 
-  // allow configuration using `createMuiTheme`
+  // allow configuration using `createTheme`
   interface ThemeOptions {
     navHeight: number;
     brandSidebarWidth: number;

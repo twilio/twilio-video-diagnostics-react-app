@@ -1,0 +1,132 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`the AudioTest component should render correctly 1`] = `
+<WithStyles(ForwardRef(Container))>
+  <WithStyles(ForwardRef(Grid))
+    alignItems="center"
+    container={true}
+    justifyContent="space-between"
+  >
+    <WithStyles(ForwardRef(Grid))
+      item={true}
+      md={5}
+    >
+      <WithStyles(ForwardRef(Typography))
+        gutterBottom={true}
+        variant="h1"
+      >
+        Test your audio
+      </WithStyles(ForwardRef(Typography))>
+      <WithStyles(ForwardRef(Typography))
+        gutterBottom={true}
+        variant="body1"
+      >
+        Record an audio clip and play it back to check that your speakers and volume control both work. If it doesn’t, try a different speaker or check your Bluetooth settings.
+      </WithStyles(ForwardRef(Typography))>
+      <WithStyles(ForwardRef(Typography))
+        gutterBottom={true}
+        variant="body1"
+      >
+        <strong>
+           Does your audio sound good?
+        </strong>
+      </WithStyles(ForwardRef(Typography))>
+      <WithStyles(ForwardRef(Button))
+        color="primary"
+        onClick={[Function]}
+        style={
+          Object {
+            "marginRight": "1.5em",
+          }
+        }
+        variant="contained"
+      >
+        Yes
+      </WithStyles(ForwardRef(Button))>
+      <WithStyles(ForwardRef(Button))
+        color="primary"
+        onClick={[Function]}
+      >
+        Skip for now
+      </WithStyles(ForwardRef(Button))>
+    </WithStyles(ForwardRef(Grid))>
+    <WithStyles(ForwardRef(Grid))
+      item={true}
+      md={5}
+    >
+      <WithStyles(ForwardRef(Paper))
+        className="makeStyles-paper-1"
+      >
+        <div
+          className="makeStyles-topLine-3"
+        >
+          <WithStyles(ForwardRef(Typography))
+            variant="subtitle2"
+          >
+            <strong>
+              Audio
+            </strong>
+          </WithStyles(ForwardRef(Typography))>
+          <div>
+            <WithStyles(ForwardRef(Button))
+              disabled={false}
+              onClick={[Function]}
+              size="small"
+              style={
+                Object {
+                  "marginRight": "1em",
+                }
+              }
+              variant="outlined"
+            >
+              Record
+            </WithStyles(ForwardRef(Button))>
+            <WithStyles(ForwardRef(Button))
+              disabled={true}
+              onClick={[Function]}
+              size="small"
+              variant="outlined"
+            >
+              Play back
+            </WithStyles(ForwardRef(Button))>
+          </div>
+        </div>
+        <Memo(AudioDevice)
+          disabled={false}
+          kind="audiooutput"
+          onDeviceChange={[Function]}
+        />
+        <Memo(AudioDevice)
+          disabled={false}
+          kind="audioinput"
+          onDeviceChange={[Function]}
+        />
+        <div
+          className="makeStyles-audioLevelContainer-2"
+        >
+          <div
+            style={
+              Object {
+                "display": "flex",
+                "justifyContent": "center",
+                "width": "2em",
+              }
+            }
+          >
+            <Memo(Microphone) />
+          </div>
+          <ProgressBar
+            duration={0.1}
+            position={0}
+            style={
+              Object {
+                "flex": "1",
+              }
+            }
+          />
+        </div>
+      </WithStyles(ForwardRef(Paper))>
+    </WithStyles(ForwardRef(Grid))>
+  </WithStyles(ForwardRef(Grid))>
+</WithStyles(ForwardRef(Container))>
+`;
