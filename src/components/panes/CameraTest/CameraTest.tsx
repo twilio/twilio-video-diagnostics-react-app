@@ -51,7 +51,7 @@ export function CameraTest() {
   const classes = useStyles();
   const { videoInputDevices } = useDevices();
   const { state, dispatch } = useAppStateContext();
-  const { videoElementRef, startVideoTest, stopVideoTest, videoTest } = useCameraTest();
+  const { videoElementRef, startVideoTest, stopVideoTest, videoTest, videoTestError } = useCameraTest();
 
   const prevVideoDeviceID = useRef('');
   const [videoInputDeviceID, setVideoInputDeviceID] = useState('');
@@ -77,8 +77,12 @@ export function CameraTest() {
       if (videoInputDeviceID && newDeviceSelected) {
         startVideoTest(videoInputDeviceID);
       }
+
+      if (videoTestError) {
+        dispatch({ type: 'set-device-error', error: videoTestError });
+      }
     }
-  }, [state.activePane, videoInputDeviceID, startVideoTest, stopVideoTest]);
+  }, [state.activePane, videoInputDeviceID, startVideoTest, stopVideoTest, videoTestError, dispatch]);
 
   useEffect(() => {
     // If no device is select, set the first available device as the active device.

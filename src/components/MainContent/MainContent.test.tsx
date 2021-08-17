@@ -260,7 +260,7 @@ describe('the MainContent component', () => {
     it('should hide the following item when preflight test is running and active pane is AudioTest', () => {
       mockUseAppStateContext.mockImplementation(() => ({
         state: {
-          activePane: ActivePane.BrowserTest,
+          activePane: ActivePane.AudioTest,
           preflightTest: {
             progress: 'mediaAcquired',
           },

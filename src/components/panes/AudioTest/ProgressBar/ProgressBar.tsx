@@ -1,11 +1,11 @@
 import { useRef, useEffect } from 'react';
 import { alpha } from '@material-ui/core/styles/colorManipulator';
-import { makeStyles, Theme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles({
   container: {
     position: 'relative',
-    margin: '1em 0.2em 1.4em',
+    margin: '0 0.2em 0',
     height: '4px',
     '& div': {
       position: 'absolute',
@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     right: 0,
     background: alpha('#E1E3EA', 0.2),
   },
-}));
+});
 
 interface ProgressBarProps {
   duration: number;
@@ -41,14 +41,14 @@ export default function ProgressBar({ duration, position, style }: ProgressBarPr
         // We set these values asynchronously so that the browser can recognize the change in the 'right' value.
         // Without this, the progress bar would instantly snap to the designated position.
         el.style.transition = `right ${duration}s linear`;
-        el.style.right = `${String(100 - position)}%`;
+        el.style.right = `${Math.max(0, 100 - position)}%`;
       });
     }
   }, [duration, position]);
 
   return (
     <div className={classes.container} style={{ ...style }}>
-      <div className={classes.progress} ref={progressBarRef}></div>
+      <div className={classes.progress} ref={progressBarRef} data-testid="progressBar"></div>
       <div className={classes.background}></div>
     </div>
   );

@@ -13,7 +13,6 @@ export enum ActivePane {
   DeviceError,
   CameraTest,
   AudioTest,
-  BrowserTest,
   Connectivity,
   Quality,
   Results,
@@ -57,7 +56,6 @@ export type ACTIONTYPE =
   | { type: 'preflight-token-failed'; error: Error }
   | { type: 'set-twilio-status'; status: string }
   | { type: 'set-twilio-status-error'; error: Error }
-  | { type: 'set-video-test-report'; report: VideoInputTest.Report }
   | { type: 'preflight-started' }
   | { type: 'preflight-finished' };
 

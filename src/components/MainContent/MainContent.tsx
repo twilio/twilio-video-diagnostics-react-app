@@ -9,7 +9,6 @@ import { PermissionError } from '../panes/DeviceSetup/PermissionError/Permission
 import { Connectivity } from '../panes/Connectivity/Connectivity';
 
 import { useEffect, useRef } from 'react';
-import { BrowserTest } from '../panes/BrowserTest/BrowserTest';
 import { AudioTest } from '../panes/AudioTest/AudioTest';
 import { CameraTest } from '../panes/CameraTest/CameraTest';
 
@@ -123,7 +122,6 @@ const content = [
   { pane: ActivePane.DeviceError, component: <PermissionError /> },
   { pane: ActivePane.CameraTest, component: <CameraTest /> },
   { pane: ActivePane.AudioTest, component: <AudioTest /> },
-  { pane: ActivePane.BrowserTest, component: <BrowserTest /> },
   { pane: ActivePane.Connectivity, component: <Connectivity /> },
   { pane: ActivePane.Quality, component: <GetStarted /> },
   { pane: ActivePane.Results, component: <GetStarted /> },
@@ -147,7 +145,7 @@ export function MainContent() {
               state.activePane === ActivePane.DeviceCheck ||
               state.activePane === ActivePane.DeviceError ||
               onLoadingScreen ||
-              (state.activePane === ActivePane.BrowserTest && preflightTestRunning),
+              (state.activePane === ActivePane.AudioTest && preflightTestRunning),
           })}
         >
           {content.map((pane, i) => {

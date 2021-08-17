@@ -1,19 +1,18 @@
 import { Button } from '@material-ui/core';
 import { mount, shallow } from 'enzyme';
 
-import { AudioDevice } from './AudioDevice/AudioDevice';
 import { AudioTest } from './AudioTest';
-import ProgressBar from './ProgressBar/ProgressBar';
 import { ActivePane, useAppStateContext } from '../../AppStateProvider/AppStateProvider';
+import Microphone from '../../../icons/Microphone';
+import SpeakerIcon from '../../../icons/SpeakerIcon';
+import ProgressBar from './ProgressBar/ProgressBar';
 import useAudioTest from './useAudioTest/useAudioTest';
 import useDevices from '../../../hooks/useDevices/useDevices';
 
-jest.mock('./AudioDevice/AudioDevice');
 jest.mock('../../AppStateProvider/AppStateProvider');
 jest.mock('./useAudioTest/useAudioTest');
 jest.mock('../../../hooks/useDevices/useDevices');
 
-const mockAudioDevice = AudioDevice as jest.Mock<any>;
 const mockUseAppStateContext = useAppStateContext as jest.Mock<any>;
 const mockUseAudioTest = useAudioTest as jest.Mock<any>;
 const mockUseDevices = useDevices as jest.Mock<any>;
@@ -55,24 +54,11 @@ describe('the AudioTest component', () => {
       stopAudioTest: jest.fn(),
     };
     mockUseAudioTest.mockImplementation(() => hookProps);
-    mockAudioDevice.mockImplementation(() => null);
   });
 
-  it('should render correct components on load', () => {
+  it('should render correctly', () => {
     const wrapper = shallow(<AudioTest />);
-    expect(wrapper.find(AudioDevice).length).toEqual(2);
-
-    const outputDevice = wrapper.find(AudioDevice).at(0);
-    const inputDevice = wrapper.find(AudioDevice).at(1);
-    const recordBtn = wrapper.find(Button).at(2);
-    const playBtn = wrapper.find(Button).at(3);
-
-    expect(outputDevice.prop('disabled')).toBeFalsy();
-    expect(inputDevice.prop('disabled')).toBeFalsy();
-    expect(recordBtn.prop('disabled')).toBeFalsy();
-    expect(playBtn.prop('disabled')).toBeTruthy();
-    expect(recordBtn.text()).toEqual('Record');
-    expect(playBtn.text()).toEqual('Play back');
+    expect(wrapper).toMatchSnapshot();
   });
 
   it('should stop the test when active pane is not AudioTest and there is a test in progress', () => {
@@ -87,7 +73,7 @@ describe('the AudioTest component', () => {
   describe('passive testing', () => {
     it('should start passive testing by default', () => {
       mount(<AudioTest />);
-      expect(hookProps.readAudioInput).toHaveBeenCalledWith({ deviceId: 1 });
+      expect(hookProps.readAudioInput).toHaveBeenCalledWith({ deviceId: '' });
     });
 
     [
@@ -183,11 +169,29 @@ describe('the AudioTest component', () => {
     });
   });
 
-  describe('audio levels', () => {
-    it('should pass input levels to ProgressBar', () => {
-      hookProps = { ...hookProps, inputLevel: 64 };
+  describe('volume levels', () => {
+    it('should pass inputLevel to ProgressBar when isAudioOutputTestRunning is false', () => {
+      hookProps = { ...hookProps, inputLevel: 64, outputLevel: 0, isAudioOutputTestRunning: false };
       const wrapper = shallow(<AudioTest />);
       expect(wrapper.find(ProgressBar).props().position).toEqual(64);
+    });
+
+    it('should pass outputLevel to ProgressBar when isAudioOutputTestRunning is true', () => {
+      hookProps = { ...hookProps, inputLevel: 64, outputLevel: 93, isAudioOutputTestRunning: true };
+      const wrapper = shallow(<AudioTest />);
+      expect(wrapper.find(ProgressBar).props().position).toEqual(93);
+    });
+
+    it('should display the microphone icon when isAudioOutputTestRunning is false', () => {
+      hookProps = { ...hookProps, inputLevel: 64, outputLevel: 0, isAudioOutputTestRunning: false };
+      const wrapper = shallow(<AudioTest />);
+      expect(wrapper.find(Microphone).exists()).toBe(true);
+    });
+
+    it('should display the speaker icon when isAudioOutputTestRunning is true', () => {
+      hookProps = { ...hookProps, inputLevel: 64, outputLevel: 93, isAudioOutputTestRunning: true };
+      const wrapper = shallow(<AudioTest />);
+      expect(wrapper.find(SpeakerIcon).exists()).toBe(true);
     });
   });
 });
