@@ -1,11 +1,10 @@
 import React, { createContext, useContext, useReducer, useEffect, useCallback } from 'react';
 import produce, { current } from 'immer';
-import { PreflightTestReport } from 'twilio-video';
+import Video, { PreflightTestReport } from 'twilio-video';
+import UAParser from 'ua-parser-js';
 import usePreflightTest from './usePreflightTest/usePreflightTest';
 import useTwilioStatus from './useTwilioStatus/useTwilioStatus';
-import { VideoInputTest } from '@twilio/rtc-diagnostics';
-import { AudioInputTest } from '@twilio/rtc-diagnostics';
-import { AudioOutputTest } from '@twilio/rtc-diagnostics';
+import { AudioInputTest, AudioOutputTest, VideoInputTest } from '@twilio/rtc-diagnostics';
 
 export enum ActivePane {
   GetStarted,
@@ -13,6 +12,7 @@ export enum ActivePane {
   DeviceError,
   CameraTest,
   AudioTest,
+  BrowserTest,
   Connectivity,
   Quality,
   Results,
@@ -63,6 +63,7 @@ type AppStateContextType = {
   state: stateType;
   dispatch: React.Dispatch<ACTIONTYPE>;
   nextPane: () => void;
+  userAgentInfo: UAParser.IResult;
 };
 
 export const initialState = {
@@ -108,8 +109,9 @@ export const isDownButtonDisabled = (
   const connectionFailedOrLoading =
     pane === ActivePane.Connectivity && (inProgress || status !== 'operational' || preflightError !== null);
   const onDeviceCheck = pane === ActivePane.DeviceCheck || pane === ActivePane.DeviceError;
+  const unsupportedBrowser = pane === ActivePane.BrowserTest && !Video.isSupported;
 
-  if (connectionFailedOrLoading || !ActivePane[pane + 1] || onDeviceCheck) return true;
+  if (connectionFailedOrLoading || !ActivePane[pane + 1] || onDeviceCheck || unsupportedBrowser) return true;
 
   return false;
 };
@@ -244,6 +246,9 @@ export const AppStateProvider: React.FC = ({ children }) => {
   const { startPreflightTest } = usePreflightTest(dispatch);
   const { getTwilioStatus } = useTwilioStatus(dispatch);
 
+  const userAgentParser = new UAParser();
+  const userAgentInfo = userAgentParser.getResult();
+
   const nextPane = useCallback(() => {
     switch (state.activePane) {
       case ActivePane.GetStarted:
@@ -260,5 +265,7 @@ export const AppStateProvider: React.FC = ({ children }) => {
     navigator.mediaDevices.enumerateDevices().then((devices) => dispatch({ type: 'set-devices', devices }));
   }, []);
 
-  return <AppStateContext.Provider value={{ state, dispatch, nextPane }}>{children}</AppStateContext.Provider>;
+  return (
+    <AppStateContext.Provider value={{ state, dispatch, nextPane, userAgentInfo }}>{children}</AppStateContext.Provider>
+  );
 };
