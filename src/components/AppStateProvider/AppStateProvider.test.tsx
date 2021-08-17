@@ -321,6 +321,11 @@ describe('the AppStateProvider component', () => {
   navigator.mediaDevices.enumerateDevices = () => Promise.resolve(mockDevices);
 
   it('should return the AppState Context object', () => {
+    Object.defineProperty(navigator, 'userAgent', {
+      value:
+        'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36',
+    });
+
     const wrapper: React.FC = ({ children }) => <AppStateProvider>{children}</AppStateProvider>;
     const { result } = renderHook(useAppStateContext, { wrapper });
 
@@ -352,9 +357,9 @@ describe('the AppStateProvider component', () => {
         },
         "userAgentInfo": Object {
           "browser": Object {
-            "major": "537",
-            "name": "WebKit",
-            "version": "537.36",
+            "major": "92",
+            "name": "Chrome",
+            "version": "92.0.4515.131",
           },
           "cpu": Object {
             "architecture": undefined,
@@ -365,14 +370,14 @@ describe('the AppStateProvider component', () => {
             "vendor": undefined,
           },
           "engine": Object {
-            "name": "WebKit",
-            "version": "537.36",
+            "name": "Blink",
+            "version": "92.0.4515.131",
           },
           "os": Object {
-            "name": undefined,
-            "version": undefined,
+            "name": "Mac OS",
+            "version": "10.15.7",
           },
-          "ua": "Mozilla/5.0 (darwin) AppleWebKit/537.36 (KHTML, like Gecko) jsdom/16.6.0",
+          "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36",
         },
       }
     `);
