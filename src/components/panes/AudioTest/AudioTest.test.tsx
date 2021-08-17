@@ -1,7 +1,6 @@
 import { Button } from '@material-ui/core';
 import { mount, shallow } from 'enzyme';
 
-import { AudioDevice } from './AudioDevice/AudioDevice';
 import { AudioTest } from './AudioTest';
 import { ActivePane, useAppStateContext } from '../../AppStateProvider/AppStateProvider';
 import Microphone from '../../../icons/Microphone';
@@ -57,21 +56,9 @@ describe('the AudioTest component', () => {
     mockUseAudioTest.mockImplementation(() => hookProps);
   });
 
-  it('should render correct components on load', () => {
+  it('should render correctly', () => {
     const wrapper = shallow(<AudioTest />);
-    expect(wrapper.find(AudioDevice).length).toEqual(2);
-
-    const outputDevice = wrapper.find(AudioDevice).at(0);
-    const inputDevice = wrapper.find(AudioDevice).at(1);
-    const recordBtn = wrapper.find(Button).at(2);
-    const playBtn = wrapper.find(Button).at(3);
-
-    expect(outputDevice.prop('disabled')).toBeFalsy();
-    expect(inputDevice.prop('disabled')).toBeFalsy();
-    expect(recordBtn.prop('disabled')).toBeFalsy();
-    expect(playBtn.prop('disabled')).toBeTruthy();
-    expect(recordBtn.text()).toEqual('Record');
-    expect(playBtn.text()).toEqual('Play back');
+    expect(wrapper).toMatchSnapshot();
   });
 
   it('should stop the test when active pane is not AudioTest and there is a test in progress', () => {
