@@ -1,4 +1,4 @@
-import { handler } from '../../functions/token';
+import { handler } from '../../functions/app/token';
 import jwt, { VerifyCallback } from 'jsonwebtoken';
 
 const mockContext = {

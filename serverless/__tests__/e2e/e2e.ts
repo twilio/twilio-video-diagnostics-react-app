@@ -41,9 +41,29 @@ describe('the serverless endpoints', () => {
 
   describe('the token function', () => {
     it('should return a valid access token', async () => {
-      const { body } = await superagent.get(`${appURL}/token`);
+      const { body } = await superagent.get(`${appURL}/app/token`);
       const token = jwt.decode(body.token) as { [key: string]: any };
       expect(token.grants.identity).toEqual(constants.VIDEO_IDENTITY);
+    });
+  });
+
+  describe('the turn-credentials function', () => {
+    it('should return turn credentials', async () => {
+      const { body } = await superagent.get(`${appURL}/app/turn-credentials`);
+      expect(body).toEqual(
+        expect.objectContaining({
+          password: '[Redacted]',
+          ttl: '30',
+          username: expect.any(String),
+          accountSid: expect.any(String),
+          iceServers: expect.arrayContaining([
+            {
+              url: expect.any(String),
+              urls: expect.any(String),
+            },
+          ]),
+        })
+      );
     });
   });
 });
