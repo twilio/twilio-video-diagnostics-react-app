@@ -15,7 +15,7 @@ describe('the BrowserTest component', () => {
     expect(wrapper.find(SupportedBrowser).exists()).toBe(true);
   });
 
-  it('should render the UnsupportedBrowser component if browser is supported', () => {
+  it('should render the UnsupportedBrowser component if browser is unsupported', () => {
     // @ts-ignore
     Video.isSupported = false;
     const wrapper = shallow(<BrowserTest />);

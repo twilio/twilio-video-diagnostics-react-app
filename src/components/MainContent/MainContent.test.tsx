@@ -1,11 +1,12 @@
 import { act } from 'react-dom/test-utils';
+import { shallow, mount } from 'enzyme';
+import { render } from '@testing-library/react';
+import { MuiThemeProvider } from '@material-ui/core';
+import Video from 'twilio-video';
 import { ActivePane, useAppStateContext } from '../AppStateProvider/AppStateProvider';
 import { ArrowDown } from '../../icons/ArrowDown';
 import { ArrowUp } from '../../icons/ArrowUp';
 import { Item, MainContent } from './MainContent';
-import { MuiThemeProvider } from '@material-ui/core';
-import { shallow, mount } from 'enzyme';
-import { render } from '@testing-library/react';
 import theme from '../../theme';
 import useDevices from '../../hooks/useDevices/useDevices';
 
@@ -257,14 +258,31 @@ describe('the MainContent component', () => {
       expect(wrapper.find('div').at(1).prop('className')).toContain('hideAfter');
     });
 
-    it('should hide the following item when preflight test is running and active pane is AudioTest', () => {
+    it('should hide the following item when preflight test is running and active pane is BrowserTest', () => {
       mockUseAppStateContext.mockImplementation(() => ({
         state: {
-          activePane: ActivePane.AudioTest,
+          activePane: ActivePane.BrowserTest,
           preflightTest: {
             progress: 'mediaAcquired',
           },
           preflightTestInProgress: true,
+        },
+      }));
+
+      const wrapper = shallow(<MainContent />);
+
+      expect(wrapper.find('div').at(1).prop('className')).toContain('hideAfter');
+    });
+
+    it('should hide the following item when browser is unsupported and active pane is BrowserTest', () => {
+      jest.mock('twilio-video', () => ({ version: '1.2' }));
+      // @ts-ignore
+      Video.isSupported = false;
+
+      mockUseAppStateContext.mockImplementation(() => ({
+        state: {
+          activePane: ActivePane.BrowserTest,
+          preflightTestInProgress: false,
         },
       }));
 

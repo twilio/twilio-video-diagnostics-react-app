@@ -3,11 +3,6 @@ import { Button } from '@material-ui/core';
 import { SupportedBrowser } from './SupportedBrowser';
 import { useAppStateContext } from '../../../AppStateProvider/AppStateProvider';
 
-Object.defineProperty(navigator, 'userAgent', {
-  value:
-    'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36',
-});
-
 jest.mock('../../../AppStateProvider/AppStateProvider');
 
 const mockUseAppStateContext = useAppStateContext as jest.Mock<any>;
@@ -15,6 +10,10 @@ const mockDispatch = jest.fn();
 
 mockUseAppStateContext.mockImplementation(() => ({
   dispatch: mockDispatch,
+  userAgentInfo: {
+    browser: { major: '92', name: 'Chrome', version: '92.0.4515.131' },
+    os: { name: 'Mac OS', version: '10.15.7' },
+  },
 }));
 
 describe('the Supported Browser component', () => {

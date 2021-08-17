@@ -7,9 +7,9 @@ jest.mock('../AppStateProvider/AppStateProvider');
 const mockUseAppStateContext = useAppStateContext as jest.Mock<any>;
 
 describe('the Header component', () => {
-  it('should show two active HeaderItems when the activePane is 5', () => {
+  it('should show two active HeaderItems when the activePane is 6', () => {
     mockUseAppStateContext.mockImplementation(() => ({
-      state: { activePane: 5 },
+      state: { activePane: 6 },
     }));
     const wrapper = mount(<Header />);
 

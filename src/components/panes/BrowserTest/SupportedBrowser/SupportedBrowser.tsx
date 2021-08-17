@@ -1,4 +1,3 @@
-import UAParser from 'ua-parser-js';
 import { makeStyles, Button, Container, Grid, Typography, Paper } from '@material-ui/core';
 import { useAppStateContext } from '../../../AppStateProvider/AppStateProvider';
 
@@ -16,12 +15,11 @@ const useStyles = makeStyles({
 });
 
 export function SupportedBrowser() {
-  const { dispatch } = useAppStateContext();
+  const { dispatch, userAgentInfo } = useAppStateContext();
   const classes = useStyles();
 
-  const userAgentParser = new UAParser();
-  const browser = userAgentParser.getBrowser();
-  const operatingSystem = userAgentParser.getOS();
+  const browser = userAgentInfo.browser;
+  const operatingSystem = userAgentInfo.os;
 
   return (
     <>
@@ -43,7 +41,7 @@ export function SupportedBrowser() {
               Ok
             </Button>
           </Grid>
-          ​
+
           <Grid item md={5} className={classes.paperContainer}>
             <Paper className={classes.paper}>
               <Typography variant="body1">
