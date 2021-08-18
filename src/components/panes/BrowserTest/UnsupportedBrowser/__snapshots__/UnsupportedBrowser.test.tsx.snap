@@ -56,13 +56,9 @@ exports[`the UnsupportedBrowser component should render correctly 1`] = `
             }
           }
           defaultValue="https://mockurl.com"
+          fullWidth={true}
           id="read-only-app-link"
           size="small"
-          style={
-            Object {
-              "width": "100%",
-            }
-          }
           variant="outlined"
         />
       </WithStyles(ForwardRef(Grid))>
