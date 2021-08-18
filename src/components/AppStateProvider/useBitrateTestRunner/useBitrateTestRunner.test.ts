@@ -7,12 +7,10 @@ class MockBitrateTest extends EventEmitter {
   stop = jest.fn();
 }
 
-const mockAxios = axios as any as jest.Mock<any>;
 const mockBitrateTest = new MockBitrateTest();
+const mockAxios = axios as any as jest.Mock<any>;
+const mockDispatch = jest.fn();
 
-jest.mock('axios', () =>
-  jest.fn(() => Promise.resolve({ data: { iceServers: ['mockIceServers', 'mockIceServers'] } }))
-);
 jest.mock('@twilio/rtc-diagnostics', () => ({
   testMediaConnectionBitrate: jest.fn(() => mockBitrateTest),
   MediaConnectionBitrateTest: {
@@ -24,10 +22,12 @@ jest.mock('@twilio/rtc-diagnostics', () => ({
   },
 }));
 
-const mockDispatch = jest.fn();
+jest.mock('axios', () =>
+  jest.fn(() => Promise.resolve({ data: { iceServers: ['mockIceServers', 'mockIceServers'] } }))
+);
 
 describe('the useBitrateTestRunner hook', () => {
-  afterEach(() => jest.clearAllMocks());
+  afterEach(() => jest.clearAllMocks);
   it('should dispatch "bitrate-test-started" when "startBitrateTest" function is called', async () => {
     const { result } = renderHook(() => useBitrateTestRunner(mockDispatch));
 
@@ -61,7 +61,7 @@ describe('the useBitrateTestRunner hook', () => {
     expect(mockDispatch).toHaveBeenCalledWith({ type: 'bitrate-test-finished' });
   });
 
-  it('should dispatch "preflight-token-error" and "preflight-finished" when there is an error obtaining the token', () => {
+  it('should dispatch "set-bitrate-test-error" and "bitrate-test-finished" when there is an error obtaining TURN credentials', () => {
     mockAxios.mockImplementationOnce(() => Promise.reject('mockError'));
     const { result } = renderHook(() => useBitrateTestRunner(mockDispatch));
 
@@ -80,5 +80,17 @@ describe('the useBitrateTestRunner hook', () => {
     jest.runTimersToTime(15000);
 
     expect(mockBitrateTest.stop).toHaveBeenCalled();
+  });
+
+  it('should not start the bitrate test if there is already one running', (done) => {
+    const { result } = renderHook(() => useBitrateTestRunner(() => {}));
+
+    result.current.startBitrateTest();
+
+    setImmediate(() => {
+      // startBitrateTest() returns undefined if there is already a bitrate test running
+      expect(result.current.startBitrateTest()).toBe(undefined);
+      done();
+    });
   });
 });

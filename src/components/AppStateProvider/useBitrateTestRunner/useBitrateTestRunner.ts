@@ -1,15 +1,23 @@
-import { testMediaConnectionBitrate, MediaConnectionBitrateTest } from '@twilio/rtc-diagnostics';
+import { useCallback, useRef } from 'react';
 import axios from 'axios';
-import { useCallback } from 'react';
+import { testMediaConnectionBitrate, MediaConnectionBitrateTest } from '@twilio/rtc-diagnostics';
 import { ACTIONTYPE } from '../../AppStateProvider/AppStateProvider';
 
 export default function useBitrateTestRunner(dispatch: React.Dispatch<ACTIONTYPE>) {
+  const bitrateTestRef = useRef<MediaConnectionBitrateTest>();
   const startBitrateTest = useCallback(() => {
+    //Don't start a new bitrate test if one is already running:
+    if (bitrateTestRef.current) {
+      return;
+    }
+
+    dispatch({ type: 'bitrate-test-started' });
+
     return axios('app/turn-credentials')
       .then((response) => {
         const bitrateTest = testMediaConnectionBitrate({ iceServers: response.data.iceServers });
 
-        dispatch({ type: 'bitrate-test-started' });
+        bitrateTestRef.current = bitrateTest;
 
         bitrateTest.on(MediaConnectionBitrateTest.Events.Bitrate, (bitrate) => {
           dispatch({ type: 'set-bitrate', bitrate });

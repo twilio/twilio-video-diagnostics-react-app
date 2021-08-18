@@ -46,7 +46,7 @@ describe('the isDownButtonDisabled function', () => {
     expect(isDownButtonDisabled(false, 'partial_outage', ActivePane.Connectivity, mockError)).toBe(true);
   });
 
-  it('should return true when preflight test is in progress', () => {
+  it('should return true when preflight test and/or bitrate test is in progress', () => {
     expect(isDownButtonDisabled(true, 'operational', ActivePane.Connectivity, null)).toBe(true);
   });
 
@@ -383,6 +383,13 @@ describe('the AppStateProvider component', () => {
           "audioGranted": false,
           "audioInputTestReport": null,
           "audioOutputTestReport": null,
+          "bitrateTest": Object {
+            "bitrate": null,
+            "error": null,
+            "report": null,
+          },
+          "bitrateTestFinished": false,
+          "bitrateTestInProgress": false,
           "deviceError": null,
           "downButtonDisabled": false,
           "preflightTest": Object {

@@ -276,7 +276,7 @@ export const appStateReducer = produce((draft: stateType, action: ACTIONTYPE) =>
   const currentState = current(draft);
 
   draft.downButtonDisabled = isDownButtonDisabled(
-    currentState.preflightTestInProgress,
+    currentState.preflightTestInProgress || currentState.bitrateTestInProgress,
     currentState.twilioStatus,
     currentState.activePane,
     currentState.preflightTest.error
