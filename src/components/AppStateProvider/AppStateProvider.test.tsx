@@ -1,6 +1,6 @@
 import React from 'react';
-import { PreflightTestReport } from 'twilio-video';
-import { VideoInputTest } from '@twilio/rtc-diagnostics';
+import Video, { PreflightTestReport } from 'twilio-video';
+import { AudioInputTest, AudioOutputTest, VideoInputTest } from '@twilio/rtc-diagnostics';
 import {
   ActivePane,
   useAppStateContext,
@@ -53,6 +53,13 @@ describe('the isDownButtonDisabled function', () => {
 
   it('should return true when active pane is DeviceError', () => {
     expect(isDownButtonDisabled(false, 'operational', ActivePane.DeviceError, null)).toBe(true);
+  });
+
+  it('should return true when active pane is BrowserCheck and the browser is unsupported', () => {
+    // @ts-ignore
+    Video.isSupported = false;
+
+    expect(isDownButtonDisabled(false, 'operational', ActivePane.BrowserTest, null)).toBe(true);
   });
 
   it('should return false if preflightTest completes and active pane is not in Device setup', () => {
@@ -264,6 +271,24 @@ describe('the appState reducer', () => {
     });
   });
 
+  describe('the "set-audio-input-test-report" action type', () => {
+    it('should save the report from the AudioInput test', () => {
+      const mockReport = {} as AudioInputTest.Report;
+      const newState = appStateReducer(initialState, { type: 'set-audio-input-test-report', report: mockReport });
+
+      expect(newState.audioInputTestReport).toBe(mockReport);
+    });
+  });
+
+  describe('the "set-audio-output-test-report" action type', () => {
+    it('should save the report from the AudioOutput test', () => {
+      const mockReport = {} as AudioOutputTest.Report;
+      const newState = appStateReducer(initialState, { type: 'set-audio-output-test-report', report: mockReport });
+
+      expect(newState.audioOutputTestReport).toBe(mockReport);
+    });
+  });
+
   describe('the "preflight-started" action type', () => {
     it('should set preflightTestInProgress to true and preflightTestFinished to false', () => {
       const newState = appStateReducer(initialState, { type: 'preflight-started' });
@@ -294,14 +319,66 @@ describe('the AppStateProvider component', () => {
   navigator.mediaDevices.enumerateDevices = () => Promise.resolve(mockDevices);
 
   it('should return the AppState Context object', () => {
+    Object.defineProperty(navigator, 'userAgent', {
+      value:
+        'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36',
+    });
+
     const wrapper: React.FC = ({ children }) => <AppStateProvider>{children}</AppStateProvider>;
     const { result } = renderHook(useAppStateContext, { wrapper });
 
-    expect(result.current).toEqual({
-      state: initialState,
-      nextPane: expect.any(Function),
-      dispatch: expect.any(Function),
-    });
+    expect(result.current).toMatchInlineSnapshot(`
+      Object {
+        "dispatch": [Function],
+        "nextPane": [Function],
+        "state": Object {
+          "activePane": 0,
+          "audioGranted": false,
+          "audioInputTestReport": null,
+          "audioOutputTestReport": null,
+          "deviceError": null,
+          "downButtonDisabled": false,
+          "preflightTest": Object {
+            "error": null,
+            "progress": null,
+            "report": null,
+            "signalingGatewayReachable": false,
+            "tokenError": null,
+            "turnServersReachable": false,
+          },
+          "preflightTestFinished": false,
+          "preflightTestInProgress": false,
+          "twilioStatus": null,
+          "twilioStatusError": null,
+          "videoGranted": false,
+          "videoInputTestReport": null,
+        },
+        "userAgentInfo": Object {
+          "browser": Object {
+            "major": "92",
+            "name": "Chrome",
+            "version": "92.0.4515.131",
+          },
+          "cpu": Object {
+            "architecture": undefined,
+          },
+          "device": Object {
+            "model": undefined,
+            "type": undefined,
+            "vendor": undefined,
+          },
+          "engine": Object {
+            "name": "Blink",
+            "version": "92.0.4515.131",
+          },
+          "os": Object {
+            "name": "Mac OS",
+            "version": "10.15.7",
+          },
+          "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36",
+        },
+      }
+    `);
   });
 
   describe('the nextPane function', () => {

@@ -1,0 +1,73 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`the Supported Browser component should render correctly 1`] = `
+<Fragment>
+  <WithStyles(ForwardRef(Container))>
+    <WithStyles(ForwardRef(Grid))
+      alignItems="center"
+      container={true}
+      justifyContent="space-between"
+    >
+      <WithStyles(ForwardRef(Grid))
+        item={true}
+        md={5}
+      >
+        <WithStyles(ForwardRef(Typography))
+          gutterBottom={true}
+          variant="h1"
+        >
+          Browser supported
+        </WithStyles(ForwardRef(Typography))>
+        <WithStyles(ForwardRef(Typography))
+          gutterBottom={true}
+          variant="body1"
+        >
+          Looks like your browser is good to go. We're almost done!
+        </WithStyles(ForwardRef(Typography))>
+        <WithStyles(ForwardRef(Button))
+          color="primary"
+          onClick={[Function]}
+          style={
+            Object {
+              "marginRight": "1.5em",
+            }
+          }
+          variant="contained"
+        >
+          Ok
+        </WithStyles(ForwardRef(Button))>
+      </WithStyles(ForwardRef(Grid))>
+      <WithStyles(ForwardRef(Grid))
+        className="makeStyles-paperContainer-2"
+        item={true}
+        md={5}
+      >
+        <WithStyles(ForwardRef(Paper))
+          className="makeStyles-paper-1"
+        >
+          <WithStyles(ForwardRef(Typography))
+            variant="body1"
+          >
+            <strong>
+              Browser: 
+            </strong>
+            Chrome
+             
+            92.0.4515.131
+          </WithStyles(ForwardRef(Typography))>
+          <WithStyles(ForwardRef(Typography))
+            variant="body1"
+          >
+            <strong>
+              Operating System: 
+            </strong>
+            Mac OS
+             
+            10.15.7
+          </WithStyles(ForwardRef(Typography))>
+        </WithStyles(ForwardRef(Paper))>
+      </WithStyles(ForwardRef(Grid))>
+    </WithStyles(ForwardRef(Grid))>
+  </WithStyles(ForwardRef(Container))>
+</Fragment>
+`;

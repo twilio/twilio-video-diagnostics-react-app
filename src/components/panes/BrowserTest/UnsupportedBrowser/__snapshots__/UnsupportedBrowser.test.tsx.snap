@@ -1,0 +1,98 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`the UnsupportedBrowser component should render correctly 1`] = `
+<Fragment>
+  <WithStyles(ForwardRef(Container))>
+    <WithStyles(ForwardRef(Grid))
+      alignItems="center"
+      container={true}
+      justifyContent="space-between"
+    >
+      <WithStyles(ForwardRef(Grid))
+        item={true}
+        md={5}
+      >
+        <WithStyles(ForwardRef(Typography))
+          gutterBottom={true}
+          style={
+            Object {
+              "position": "relative",
+            }
+          }
+          variant="h1"
+        >
+          <div
+            className="makeStyles-errorIcon-4"
+          >
+            <ErrorIcon />
+          </div>
+           
+          New browser needed
+        </WithStyles(ForwardRef(Typography))>
+        <WithStyles(ForwardRef(Typography))
+          gutterBottom={true}
+          variant="body1"
+        >
+          Oh no, your browser isn't supported! Download and install a new one from the list, copy this url and paste it into your new browser to restart the test.
+        </WithStyles(ForwardRef(Typography))>
+        <WithStyles(ForwardRef(TextField))
+          InputProps={
+            Object {
+              "endAdornment": <WithStyles(ForwardRef(InputAdornment))
+                position="end"
+              >
+                <div
+                  className="makeStyles-copyButton-3"
+                >
+                  <WithStyles(ForwardRef(IconButton))
+                    edge="end"
+                    onClick={[Function]}
+                  >
+                    <CopyIcon />
+                  </WithStyles(ForwardRef(IconButton))>
+                </div>
+              </WithStyles(ForwardRef(InputAdornment))>,
+              "readOnly": true,
+            }
+          }
+          defaultValue="https://mockurl.com"
+          fullWidth={true}
+          id="read-only-app-link"
+          size="small"
+          variant="outlined"
+        />
+      </WithStyles(ForwardRef(Grid))>
+      <WithStyles(ForwardRef(Grid))
+        className="makeStyles-paperContainer-2"
+        item={true}
+        md={5}
+      >
+        <WithStyles(ForwardRef(Paper))
+          className="makeStyles-paper-1"
+        >
+          <SupportedList />
+        </WithStyles(ForwardRef(Paper))>
+        <WithStyles(ForwardRef(Typography))
+          align="center"
+          className="makeStyles-caption-5"
+          variant="caption"
+        >
+          We support the most recent and the two previous versions. Please
+           
+          <WithStyles(ForwardRef(Link))
+            color="inherit"
+            href="https://www.twilio.com/docs/video/javascript#supported-browsers"
+            rel="noopener"
+            target="_blank"
+            underline="always"
+          >
+            visit our docs
+          </WithStyles(ForwardRef(Link))>
+           
+          for more details.
+        </WithStyles(ForwardRef(Typography))>
+      </WithStyles(ForwardRef(Grid))>
+    </WithStyles(ForwardRef(Grid))>
+  </WithStyles(ForwardRef(Container))>
+</Fragment>
+`;
