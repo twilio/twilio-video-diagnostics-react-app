@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { AUDIO_LEVEL_THRESHOLD } from '../constants';
 
 export function getAudioLevelPercentage(level: number) {
@@ -37,17 +36,4 @@ export const downloadJSONFile = (data: any) => {
     })
   );
   link.click();
-};
-
-export const getJSON = (url: string) => {
-  return axios(url)
-    .then((res) => {
-      if (res.status === 401) {
-        throw new Error('expired');
-      }
-      return res.data;
-    })
-    .catch((error) => {
-      throw new Error(error);
-    });
 };
