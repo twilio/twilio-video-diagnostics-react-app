@@ -24,6 +24,7 @@
     "react-dom": "^17.0.2",
     "react-scripts": "4.0.3",
     "twilio": "^3.63.1",
+    "ua-parser-js": "^0.7.28",
     "twilio-video": "^2.16.0",
     "web-vitals": "^1.0.1"
   },
@@ -70,6 +71,7 @@
     "@types/enzyme": "^3.10.8",
     "@types/jest": "^26.0.23",
     "@types/jsonwebtoken": "^8.5.1",
+    "@types/ua-parser-js": "0.7.36",
     "@wojtekmaj/enzyme-adapter-react-17": "^0.6.1",
     "enzyme": "^3.11.0",
     "enzyme-to-json": "^3.6.2",

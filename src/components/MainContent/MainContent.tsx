@@ -1,16 +1,18 @@
+import { useEffect, useRef } from 'react';
+import clsx from 'clsx';
+import { Button, makeStyles, useTheme } from '@material-ui/core';
+import Video from 'twilio-video';
+
 import { ActivePane, useAppStateContext } from '../AppStateProvider/AppStateProvider';
 import { ArrowDown } from '../../icons/ArrowDown';
 import { ArrowUp } from '../../icons/ArrowUp';
-import { Button, makeStyles, useTheme } from '@material-ui/core';
-import clsx from 'clsx';
-import { GetStarted } from '../panes/GetStarted/GetStarted';
-import { CheckPermissions } from '../panes/DeviceSetup/CheckPermissions/CheckPermissions';
-import { PermissionError } from '../panes/DeviceSetup/PermissionError/PermissionError';
-import { Connectivity } from '../panes/Connectivity/Connectivity';
-
-import { useEffect, useRef } from 'react';
 import { AudioTest } from '../panes/AudioTest/AudioTest';
+import { BrowserTest } from '../panes/BrowserTest/BrowserTest';
 import { CameraTest } from '../panes/CameraTest/CameraTest';
+import { CheckPermissions } from '../panes/DeviceSetup/CheckPermissions/CheckPermissions';
+import { Connectivity } from '../panes/Connectivity/Connectivity';
+import { GetStarted } from '../panes/GetStarted/GetStarted';
+import { PermissionError } from '../panes/DeviceSetup/PermissionError/PermissionError';
 
 const useStyles = makeStyles({
   contentContainer: {
@@ -122,6 +124,7 @@ const content = [
   { pane: ActivePane.DeviceError, component: <PermissionError /> },
   { pane: ActivePane.CameraTest, component: <CameraTest /> },
   { pane: ActivePane.AudioTest, component: <AudioTest /> },
+  { pane: ActivePane.BrowserTest, component: <BrowserTest /> },
   { pane: ActivePane.Connectivity, component: <Connectivity /> },
   { pane: ActivePane.Quality, component: <GetStarted /> },
   { pane: ActivePane.Results, component: <GetStarted /> },
@@ -145,7 +148,7 @@ export function MainContent() {
               state.activePane === ActivePane.DeviceCheck ||
               state.activePane === ActivePane.DeviceError ||
               onLoadingScreen ||
-              (state.activePane === ActivePane.AudioTest && testsInProgress),
+              (state.activePane === ActivePane.BrowserTest && (testsInProgress || !Video.isSupported)),
           })}
         >
           {content.map((pane, i) => {
