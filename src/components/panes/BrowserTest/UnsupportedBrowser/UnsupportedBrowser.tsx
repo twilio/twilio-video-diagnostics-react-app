@@ -40,7 +40,8 @@ const useStyles = makeStyles({
 
 export function UnsupportedBrowser() {
   const classes = useStyles();
-  const appURL = `${window.location.href}`;
+
+  const appURL = window.location.href;
 
   const copyAppLink = () => {
     navigator.clipboard.writeText(appURL);
@@ -62,6 +63,7 @@ export function UnsupportedBrowser() {
               it into your new browser to restart the test.
             </Typography>
             <TextField
+              style={{ width: '100%' }}
               id="read-only-app-link"
               defaultValue={appURL}
               variant="outlined"

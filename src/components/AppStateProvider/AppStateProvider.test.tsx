@@ -56,8 +56,6 @@ describe('the isDownButtonDisabled function', () => {
   });
 
   it('should return true when active pane is BrowserCheck and the browser is unsupported', () => {
-    jest.mock('twilio-video', () => ({ version: '1.2' }));
-
     // @ts-ignore
     Video.isSupported = false;
 

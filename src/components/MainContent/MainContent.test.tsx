@@ -275,7 +275,6 @@ describe('the MainContent component', () => {
     });
 
     it('should hide the following item when browser is unsupported and active pane is BrowserTest', () => {
-      jest.mock('twilio-video', () => ({ version: '1.2' }));
       // @ts-ignore
       Video.isSupported = false;
 

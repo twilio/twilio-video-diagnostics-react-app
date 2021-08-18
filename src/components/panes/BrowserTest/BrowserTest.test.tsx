@@ -4,8 +4,6 @@ import { SupportedBrowser } from './SupportedBrowser/SupportedBrowser';
 import { UnsupportedBrowser } from './UnsupportedBrowser/UnsupportedBrowser';
 import Video from 'twilio-video';
 
-jest.mock('twilio-video', () => ({ version: '1.2' }));
-
 describe('the BrowserTest component', () => {
   it('should render the SupportedBrowser component if browser is supported', () => {
     // @ts-ignore
