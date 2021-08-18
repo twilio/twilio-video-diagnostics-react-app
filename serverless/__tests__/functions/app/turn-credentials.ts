@@ -1,4 +1,4 @@
-import { handler } from '../../functions/app/turn-credentials';
+import { handler } from '../../../functions/app/turn-credentials';
 
 const mockClient = {
   tokens: {
