@@ -63,7 +63,7 @@ export function UnsupportedBrowser() {
               it into your new browser to restart the test.
             </Typography>
             <TextField
-              style={{ width: '100%' }}
+              fullWidth={true}
               id="read-only-app-link"
               defaultValue={appURL}
               variant="outlined"
