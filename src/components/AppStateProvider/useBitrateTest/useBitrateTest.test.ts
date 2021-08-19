@@ -34,7 +34,7 @@ describe('the useBitrateTest hook', () => {
     expect(mockDispatch).toHaveBeenCalledWith({ type: 'bitrate-test-started' });
   });
 
-  it('should dispatch "set-bitrate" when "bitrate" event is emitted', async () => {
+  it('should dispatch "set-bitrate" when "bitrate" event is emitted', () => {
     const mockDispatch = jest.fn();
     const { result } = renderHook(() => useBitrateTest(mockDispatch));
 
@@ -44,7 +44,7 @@ describe('the useBitrateTest hook', () => {
     });
   });
 
-  it('should dispatch "set-bitrate-test-error" and "bitrate-test-finished" when "error" event is emitted', async () => {
+  it('should dispatch "set-bitrate-test-error" and "bitrate-test-finished" when "error" event is emitted', () => {
     const mockDispatch = jest.fn();
     const { result } = renderHook(() => useBitrateTest(mockDispatch));
 
@@ -55,7 +55,7 @@ describe('the useBitrateTest hook', () => {
     });
   });
 
-  it('should dispatch "set-bitrate-test-report" and "bitrate-test-finished" when "end" event is emitted', async () => {
+  it('should dispatch "set-bitrate-test-report" and "bitrate-test-finished" when "end" event is emitted', () => {
     const mockDispatch = jest.fn();
     const { result } = renderHook(() => useBitrateTest(mockDispatch));
 
