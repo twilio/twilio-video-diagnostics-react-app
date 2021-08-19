@@ -1,0 +1,251 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`the ConnectionSuccess component should render correctly when quality is "average" 1`] = `
+<WithStyles(ForwardRef(Container))>
+  <WithStyles(ForwardRef(Grid))
+    alignItems="center"
+    container={true}
+    justifyContent="space-between"
+  >
+    <WithStyles(ForwardRef(Grid))
+      item={true}
+      md={5}
+    >
+      <WithStyles(ForwardRef(Typography))
+        gutterBottom={true}
+        style={
+          Object {
+            "position": "relative",
+          }
+        }
+        variant="h1"
+      >
+        <div
+          className="makeStyles-errorIcon-4"
+        >
+          <ErrorIcon />
+        </div>
+        Quality 
+        is okay
+      </WithStyles(ForwardRef(Typography))>
+      <WithStyles(ForwardRef(Typography))
+        gutterBottom={true}
+        variant="body1"
+      >
+        This the last step! Your expected audio and video quality is 
+        okay
+         
+        and overall performance 
+        could be better
+        .
+      </WithStyles(ForwardRef(Typography))>
+      <WithStyles(ForwardRef(Typography))
+        gutterBottom={true}
+        variant="body1"
+      >
+        <strong>
+          Did you try all of the tips to improve quality?
+        </strong>
+      </WithStyles(ForwardRef(Typography))>
+      <WithStyles(ForwardRef(Button))
+        color="primary"
+        onClick={[MockFunction]}
+        style={
+          Object {
+            "marginRight": "1.5em",
+          }
+        }
+        variant="contained"
+      >
+        Yes
+      </WithStyles(ForwardRef(Button))>
+      <WithStyles(ForwardRef(Button))
+        color="primary"
+        onClick={[MockFunction]}
+      >
+        Skip for now
+      </WithStyles(ForwardRef(Button))>
+    </WithStyles(ForwardRef(Grid))>
+    <WithStyles(ForwardRef(Grid))
+      className="makeStyles-paperContainer-3"
+      item={true}
+      md={5}
+    >
+      <WithStyles(ForwardRef(Paper))
+        className="makeStyles-paper-2"
+      >
+        <WithStyles(ForwardRef(Typography))
+          variant="body1"
+        >
+          <strong>
+            Tips to improve quality and performance:
+          </strong>
+        </WithStyles(ForwardRef(Typography))>
+        <ul>
+          <li>
+            <WithStyles(ForwardRef(Typography))
+              variant="body1"
+            >
+              Close unused tabs and applications on your computer/device when using video.
+            </WithStyles(ForwardRef(Typography))>
+          </li>
+          <li>
+            <WithStyles(ForwardRef(Typography))
+              variant="body1"
+            >
+              Move closer to your router.
+            </WithStyles(ForwardRef(Typography))>
+          </li>
+          <li>
+            <WithStyles(ForwardRef(Typography))
+              variant="body1"
+            >
+              Turn off or disconnect from VPN.
+            </WithStyles(ForwardRef(Typography))>
+          </li>
+          <li>
+            <WithStyles(ForwardRef(Typography))
+              variant="body1"
+            >
+              Restart your computer or device.
+            </WithStyles(ForwardRef(Typography))>
+          </li>
+        </ul>
+      </WithStyles(ForwardRef(Paper))>
+      <WithStyles(ForwardRef(Button))
+        className="makeStyles-viewButton-5"
+        onClick={[MockFunction]}
+        variant="outlined"
+      >
+        <ViewIcon />
+        View detailed quality information
+      </WithStyles(ForwardRef(Button))>
+    </WithStyles(ForwardRef(Grid))>
+  </WithStyles(ForwardRef(Grid))>
+</WithStyles(ForwardRef(Container))>
+`;
+
+exports[`the ConnectionSuccess component should render correctly when quality is "bad" 1`] = `
+<WithStyles(ForwardRef(Container))>
+  <WithStyles(ForwardRef(Grid))
+    alignItems="center"
+    container={true}
+    justifyContent="space-between"
+  >
+    <WithStyles(ForwardRef(Grid))
+      item={true}
+      md={5}
+    >
+      <WithStyles(ForwardRef(Typography))
+        gutterBottom={true}
+        style={
+          Object {
+            "position": "relative",
+          }
+        }
+        variant="h1"
+      >
+        <div
+          className="makeStyles-errorIcon-4"
+        >
+          <ErrorIcon />
+        </div>
+        Quality 
+        issues
+      </WithStyles(ForwardRef(Typography))>
+      <WithStyles(ForwardRef(Typography))
+        gutterBottom={true}
+        variant="body1"
+      >
+        This the last step! Your expected audio and video quality is 
+        degraded
+         
+        and overall performance 
+        will be poor
+        .
+      </WithStyles(ForwardRef(Typography))>
+      <WithStyles(ForwardRef(Typography))
+        gutterBottom={true}
+        variant="body1"
+      >
+        <strong>
+          Did you try all of the tips to improve quality?
+        </strong>
+      </WithStyles(ForwardRef(Typography))>
+      <WithStyles(ForwardRef(Button))
+        color="primary"
+        onClick={[MockFunction]}
+        style={
+          Object {
+            "marginRight": "1.5em",
+          }
+        }
+        variant="contained"
+      >
+        Yes
+      </WithStyles(ForwardRef(Button))>
+      <WithStyles(ForwardRef(Button))
+        color="primary"
+        onClick={[MockFunction]}
+      >
+        Skip for now
+      </WithStyles(ForwardRef(Button))>
+    </WithStyles(ForwardRef(Grid))>
+    <WithStyles(ForwardRef(Grid))
+      className="makeStyles-paperContainer-3"
+      item={true}
+      md={5}
+    >
+      <WithStyles(ForwardRef(Paper))
+        className="makeStyles-paper-2"
+      >
+        <WithStyles(ForwardRef(Typography))
+          variant="body1"
+        >
+          <strong>
+            Tips to improve quality and performance:
+          </strong>
+        </WithStyles(ForwardRef(Typography))>
+        <ul>
+          <li>
+            <WithStyles(ForwardRef(Typography))
+              variant="body1"
+            >
+              Close unused tabs and applications on your computer/device when using video.
+            </WithStyles(ForwardRef(Typography))>
+          </li>
+          <li>
+            <WithStyles(ForwardRef(Typography))
+              variant="body1"
+            >
+              Move closer to your router.
+            </WithStyles(ForwardRef(Typography))>
+          </li>
+          <li>
+            <WithStyles(ForwardRef(Typography))
+              variant="body1"
+            >
+              Turn off or disconnect from VPN.
+            </WithStyles(ForwardRef(Typography))>
+          </li>
+          <li>
+            <WithStyles(ForwardRef(Typography))
+              variant="body1"
+            >
+              Restart your computer or device.
+            </WithStyles(ForwardRef(Typography))>
+          </li>
+        </ul>
+      </WithStyles(ForwardRef(Paper))>
+      <WithStyles(ForwardRef(Button))
+        className="makeStyles-viewButton-5"
+        onClick={[MockFunction]}
+        variant="outlined"
+      >
+        <ViewIcon />
+        View detailed quality information
+      </WithStyles(ForwardRef(Button))>
+    </WithStyles(ForwardRef(Grid))>
+  </WithStyles(ForwardRef(Grid))>
+</WithStyles(ForwardRef(Container))>
+`;
