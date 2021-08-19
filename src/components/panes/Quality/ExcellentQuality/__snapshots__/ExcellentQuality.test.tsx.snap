@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`the ConnectionSuccess component should render correctly when quality is "excellent" 1`] = `
+exports[`the Excellent Quality component should render correctly when quality is "excellent" 1`] = `
 <WithStyles(ForwardRef(Container))>
   <WithStyles(ForwardRef(Grid))
     alignItems="center"
@@ -26,8 +26,7 @@ exports[`the ConnectionSuccess component should render correctly when quality is
         <strong>
           excellent
         </strong>
-         and overall performance looks
-         
+         and overall performance looks 
         good
         .
       </WithStyles(ForwardRef(Typography))>
@@ -67,7 +66,7 @@ exports[`the ConnectionSuccess component should render correctly when quality is
 </WithStyles(ForwardRef(Container))>
 `;
 
-exports[`the ConnectionSuccess component should render correctly when quality is "good" 1`] = `
+exports[`the Excellent Quality component should render correctly when quality is "good" 1`] = `
 <WithStyles(ForwardRef(Container))>
   <WithStyles(ForwardRef(Grid))
     alignItems="center"
@@ -93,8 +92,7 @@ exports[`the ConnectionSuccess component should render correctly when quality is
         <strong>
           good
         </strong>
-         and overall performance looks
-         
+         and overall performance looks 
         ok
         .
       </WithStyles(ForwardRef(Typography))>

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`the ConnectionSuccess component should render correctly when quality is "average" 1`] = `
+exports[`the PoorQuality component should render correctly when quality is "average" 1`] = `
 <WithStyles(ForwardRef(Container))>
   <WithStyles(ForwardRef(Grid))
     alignItems="center"
@@ -32,9 +32,12 @@ exports[`the ConnectionSuccess component should render correctly when quality is
         gutterBottom={true}
         variant="body1"
       >
-        This the last step! Your expected audio and video quality is 
-        okay
+        This the last step! Your expected audio and video quality is
          
+        <strong>
+          okay
+           
+        </strong>
         and overall performance 
         could be better
         .
@@ -125,7 +128,7 @@ exports[`the ConnectionSuccess component should render correctly when quality is
 </WithStyles(ForwardRef(Container))>
 `;
 
-exports[`the ConnectionSuccess component should render correctly when quality is "bad" 1`] = `
+exports[`the PoorQuality component should render correctly when quality is "bad" 1`] = `
 <WithStyles(ForwardRef(Container))>
   <WithStyles(ForwardRef(Grid))
     alignItems="center"
@@ -157,9 +160,12 @@ exports[`the ConnectionSuccess component should render correctly when quality is
         gutterBottom={true}
         variant="body1"
       >
-        This the last step! Your expected audio and video quality is 
-        degraded
+        This the last step! Your expected audio and video quality is
          
+        <strong>
+          degraded
+           
+        </strong>
         and overall performance 
         will be poor
         .
