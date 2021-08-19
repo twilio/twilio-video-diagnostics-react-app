@@ -1,7 +1,7 @@
 import { act, renderHook } from '@testing-library/react-hooks';
 import axios from 'axios';
 import EventEmitter from 'events';
-import useBitrateTestRunner from './useBitrateTestRunner';
+import useBitrateTest from './useBitrateTest';
 
 class MockBitrateTest extends EventEmitter {
   stop = jest.fn();
@@ -9,7 +9,6 @@ class MockBitrateTest extends EventEmitter {
 
 const mockBitrateTest = new MockBitrateTest();
 const mockAxios = axios as any as jest.Mock<any>;
-const mockDispatch = jest.fn();
 
 jest.mock('@twilio/rtc-diagnostics', () => ({
   testMediaConnectionBitrate: jest.fn(() => mockBitrateTest),
@@ -26,44 +25,51 @@ jest.mock('axios', () =>
   jest.fn(() => Promise.resolve({ data: { iceServers: ['mockIceServers', 'mockIceServers'] } }))
 );
 
-describe('the useBitrateTestRunner hook', () => {
-  afterEach(() => jest.clearAllMocks);
-  it('should dispatch "bitrate-test-started" when "startBitrateTest" function is called', async () => {
-    const { result } = renderHook(() => useBitrateTestRunner(mockDispatch));
+describe('the useBitrateTest hook', () => {
+  it('should dispatch "bitrate-test-started" when "startBitrateTest" function is called', () => {
+    const mockDispatch = jest.fn();
+    const { result } = renderHook(() => useBitrateTest(mockDispatch));
 
-    await act(async () => await result.current.startBitrateTest());
+    result.current.startBitrateTest();
     expect(mockDispatch).toHaveBeenCalledWith({ type: 'bitrate-test-started' });
   });
 
   it('should dispatch "set-bitrate" when "bitrate" event is emitted', async () => {
-    renderHook(() => useBitrateTestRunner(mockDispatch));
+    const mockDispatch = jest.fn();
+    const { result } = renderHook(() => useBitrateTest(mockDispatch));
 
-    mockBitrateTest.emit('Bitrate', 'mockBitrate');
-
-    expect(mockDispatch).toHaveBeenCalledWith({ type: 'set-bitrate', bitrate: 'mockBitrate' });
+    return result.current.startBitrateTest()!.then(() => {
+      mockBitrateTest.emit('Bitrate', 'mockBitrate');
+      expect(mockDispatch).toHaveBeenCalledWith({ type: 'set-bitrate', bitrate: 'mockBitrate' });
+    });
   });
 
   it('should dispatch "set-bitrate-test-error" and "bitrate-test-finished" when "error" event is emitted', async () => {
-    renderHook(() => useBitrateTestRunner(mockDispatch));
+    const mockDispatch = jest.fn();
+    const { result } = renderHook(() => useBitrateTest(mockDispatch));
 
-    mockBitrateTest.emit('Error', 'mockError');
-
-    expect(mockDispatch).toHaveBeenCalledWith({ type: 'set-bitrate-test-error', error: 'mockError' });
-    expect(mockDispatch).toHaveBeenCalledWith({ type: 'bitrate-test-finished' });
+    return result.current.startBitrateTest()!.then(() => {
+      mockBitrateTest.emit('Error', 'mockError');
+      expect(mockDispatch).toHaveBeenCalledWith({ type: 'set-bitrate-test-error', error: 'mockError' });
+      expect(mockDispatch).toHaveBeenCalledWith({ type: 'bitrate-test-finished' });
+    });
   });
 
   it('should dispatch "set-bitrate-test-report" and "bitrate-test-finished" when "end" event is emitted', async () => {
-    renderHook(() => useBitrateTestRunner(mockDispatch));
+    const mockDispatch = jest.fn();
+    const { result } = renderHook(() => useBitrateTest(mockDispatch));
 
-    mockBitrateTest.emit('End', 'mockReport');
-
-    expect(mockDispatch).toHaveBeenCalledWith({ type: 'set-bitrate-test-report', report: 'mockReport' });
-    expect(mockDispatch).toHaveBeenCalledWith({ type: 'bitrate-test-finished' });
+    return result.current.startBitrateTest()!.then(() => {
+      mockBitrateTest.emit('End', 'mockReport');
+      expect(mockDispatch).toHaveBeenCalledWith({ type: 'set-bitrate-test-report', report: 'mockReport' });
+      expect(mockDispatch).toHaveBeenCalledWith({ type: 'bitrate-test-finished' });
+    });
   });
 
   it('should dispatch "set-bitrate-test-error" and "bitrate-test-finished" when there is an error obtaining TURN credentials', () => {
+    const mockDispatch = jest.fn();
     mockAxios.mockImplementationOnce(() => Promise.reject('mockError'));
-    const { result } = renderHook(() => useBitrateTestRunner(mockDispatch));
+    const { result } = renderHook(() => useBitrateTest(mockDispatch));
 
     return result.current.startBitrateTest()!.then(() => {
       expect(mockDispatch).toHaveBeenCalledWith({ type: 'set-bitrate-test-error', error: 'mockError' });
@@ -73,7 +79,9 @@ describe('the useBitrateTestRunner hook', () => {
 
   it('should stop the test after 15 seconds', async () => {
     jest.useFakeTimers();
-    const { result } = renderHook(() => useBitrateTestRunner(mockDispatch));
+    const mockDispatch = jest.fn();
+
+    const { result } = renderHook(() => useBitrateTest(mockDispatch));
 
     await act(async () => await result.current.startBitrateTest());
 
@@ -83,7 +91,7 @@ describe('the useBitrateTestRunner hook', () => {
   });
 
   it('should not start the bitrate test if there is already one running', (done) => {
-    const { result } = renderHook(() => useBitrateTestRunner(() => {}));
+    const { result } = renderHook(() => useBitrateTest(() => {}));
 
     result.current.startBitrateTest();
 

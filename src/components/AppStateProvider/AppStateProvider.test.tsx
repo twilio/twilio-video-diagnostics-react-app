@@ -15,7 +15,7 @@ const mockStartBitrateTest = jest.fn();
 const mockStartPreflightTest = jest.fn();
 const mockGetTwilioStatus = jest.fn();
 
-jest.mock('./useBitrateTestRunner/useBitrateTestRunner', () =>
+jest.mock('./useBitrateTest/useBitrateTest', () =>
   jest.fn(() => ({
     startBitrateTest: mockStartBitrateTest,
   }))
@@ -41,36 +41,71 @@ describe('the useAppStateContext hook', () => {
 });
 
 describe('the isDownButtonDisabled function', () => {
-  const mockError = Error();
-  it('should return true if preflightTest fails or if Twilio services are down', () => {
-    expect(isDownButtonDisabled(false, 'partial_outage', ActivePane.Connectivity, mockError)).toBe(true);
+  it('should return true if preflightTest fails', () => {
+    const mockCurrentState = {
+      ...initialState,
+      activePane: ActivePane.Connectivity,
+      preflightTestInProgress: false,
+      preflightTest: { ...initialState.preflightTest, error: Error() },
+      bitrateTestInProgress: false,
+    };
+    expect(isDownButtonDisabled(mockCurrentState)).toBe(true);
   });
 
   it('should return true when preflight test and/or bitrate test is in progress', () => {
-    expect(isDownButtonDisabled(true, 'operational', ActivePane.Connectivity, null)).toBe(true);
+    const mockCurrentState = {
+      ...initialState,
+      activePane: ActivePane.Connectivity,
+      preflightTestInProgress: true,
+      bitrateTestInProgress: false,
+    };
+
+    expect(isDownButtonDisabled(mockCurrentState)).toBe(true);
   });
 
   it('should return true if the active pane is the last pane', () => {
-    expect(isDownButtonDisabled(false, 'operational', ActivePane.Results, null)).toBe(true);
+    const mockCurrentState = {
+      ...initialState,
+      activePane: ActivePane.Results,
+    };
+    expect(isDownButtonDisabled(mockCurrentState)).toBe(true);
   });
 
   it('should return true when active pane is DeviceCheck', () => {
-    expect(isDownButtonDisabled(false, 'operational', ActivePane.DeviceCheck, null)).toBe(true);
+    const mockCurrentState = {
+      ...initialState,
+      activePane: ActivePane.DeviceCheck,
+    };
+    expect(isDownButtonDisabled(mockCurrentState)).toBe(true);
   });
 
   it('should return true when active pane is DeviceError', () => {
-    expect(isDownButtonDisabled(false, 'operational', ActivePane.DeviceError, null)).toBe(true);
+    const mockCurrentState = {
+      ...initialState,
+      activePane: ActivePane.DeviceError,
+    };
+    expect(isDownButtonDisabled(mockCurrentState)).toBe(true);
   });
 
   it('should return true when active pane is BrowserCheck and the browser is unsupported', () => {
+    const mockCurrentState = {
+      ...initialState,
+      activePane: ActivePane.BrowserTest,
+    };
     // @ts-ignore
     Video.isSupported = false;
 
-    expect(isDownButtonDisabled(false, 'operational', ActivePane.BrowserTest, null)).toBe(true);
+    expect(isDownButtonDisabled(mockCurrentState)).toBe(true);
   });
 
-  it('should return false if preflightTest completes and active pane is not in Device setup', () => {
-    expect(isDownButtonDisabled(false, 'operational', ActivePane.CameraTest, null)).toBe(false);
+  it('should return false if preflightTest and bitrateTest complete and active pane is not DeviceCheck or DeviceError', () => {
+    const mockCurrentState = {
+      ...initialState,
+      activePane: ActivePane.CameraTest,
+      preflightTestInProgress: false,
+      bitrateTestInProgress: false,
+    };
+    expect(isDownButtonDisabled(mockCurrentState)).toBe(false);
   });
 });
 

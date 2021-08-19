@@ -1,9 +1,9 @@
 import { useCallback, useRef } from 'react';
 import axios from 'axios';
 import { testMediaConnectionBitrate, MediaConnectionBitrateTest } from '@twilio/rtc-diagnostics';
-import { ACTIONTYPE } from '../../AppStateProvider/AppStateProvider';
+import { ACTIONTYPE } from '../AppStateProvider';
 
-export default function useBitrateTestRunner(dispatch: React.Dispatch<ACTIONTYPE>) {
+export default function useBitrateTest(dispatch: React.Dispatch<ACTIONTYPE>) {
   const bitrateTestRef = useRef<MediaConnectionBitrateTest>();
   const startBitrateTest = useCallback(() => {
     //Don't start a new bitrate test if one is already running:
