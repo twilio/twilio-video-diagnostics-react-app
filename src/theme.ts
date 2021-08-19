@@ -104,6 +104,11 @@ export default createTheme({
         background: '#F4F4F6',
       },
     },
+    MuiTooltip: {
+      tooltip: {
+        fontSize: '0.9rem',
+      },
+    },
   },
   typography: {
     fontFamily: 'Inter, sans-serif',

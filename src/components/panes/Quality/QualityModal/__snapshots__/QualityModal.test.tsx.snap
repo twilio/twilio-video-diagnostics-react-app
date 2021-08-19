@@ -57,13 +57,26 @@ exports[`the QualityModal component should render correctly 1`] = `
         <WithStyles(ForwardRef(TableBody))>
           <WithStyles(ForwardRef(TableRow))>
             <WithStyles(ForwardRef(TableCell))>
-              <WithStyles(ForwardRef(Typography))
-                variant="body1"
+              <div
+                className="makeStyles-iconContainer-4"
               >
-                <strong>
-                  Latency (ms) avg/max
-                </strong>
-              </WithStyles(ForwardRef(Typography))>
+                <WithStyles(ForwardRef(Tooltip))
+                  interactive={true}
+                  leaveDelay={250}
+                  title="Latency is the time data takes from sender to receiver. High latency can cause the video to lag, freeze, or slow down. This is due to slow or overloaded networks."
+                >
+                  <div>
+                    <InfoIcon />
+                  </div>
+                </WithStyles(ForwardRef(Tooltip))>
+                <WithStyles(ForwardRef(Typography))
+                  variant="body1"
+                >
+                  <strong>
+                    Latency (ms) avg/max
+                  </strong>
+                </WithStyles(ForwardRef(Typography))>
+              </div>
             </WithStyles(ForwardRef(TableCell))>
             <WithStyles(ForwardRef(TableCell))>
               <div
@@ -80,13 +93,26 @@ exports[`the QualityModal component should render correctly 1`] = `
           </WithStyles(ForwardRef(TableRow))>
           <WithStyles(ForwardRef(TableRow))>
             <WithStyles(ForwardRef(TableCell))>
-              <WithStyles(ForwardRef(Typography))
-                variant="body1"
+              <div
+                className="makeStyles-iconContainer-4"
               >
-                <strong>
-                  Jitter (s) avg/max
-                </strong>
-              </WithStyles(ForwardRef(Typography))>
+                <WithStyles(ForwardRef(Tooltip))
+                  interactive={true}
+                  leaveDelay={250}
+                  title="Jitter is the fluctuation of latency over time. Due to network congestion, data can take longer to travel. High jitter typically results in short bursts of video freezing, slow video, and choppy audio."
+                >
+                  <div>
+                    <InfoIcon />
+                  </div>
+                </WithStyles(ForwardRef(Tooltip))>
+                <WithStyles(ForwardRef(Typography))
+                  variant="body1"
+                >
+                  <strong>
+                    Jitter (s) avg/max
+                  </strong>
+                </WithStyles(ForwardRef(Typography))>
+              </div>
             </WithStyles(ForwardRef(TableCell))>
             <WithStyles(ForwardRef(TableCell))>
               <div
@@ -103,13 +129,26 @@ exports[`the QualityModal component should render correctly 1`] = `
           </WithStyles(ForwardRef(TableRow))>
           <WithStyles(ForwardRef(TableRow))>
             <WithStyles(ForwardRef(TableCell))>
-              <WithStyles(ForwardRef(Typography))
-                variant="body1"
+              <div
+                className="makeStyles-iconContainer-4"
               >
-                <strong>
-                  Packet loss avg/max
-                </strong>
-              </WithStyles(ForwardRef(Typography))>
+                <WithStyles(ForwardRef(Tooltip))
+                  interactive={true}
+                  leaveDelay={250}
+                  title="Packet loss is caused when data fails to reach its destination. High packet loss results in video freezing, slow video, and choppy audio. Packet loss is usually caused by overloaded routers or high CPU load on the machine."
+                >
+                  <div>
+                    <InfoIcon />
+                  </div>
+                </WithStyles(ForwardRef(Tooltip))>
+                <WithStyles(ForwardRef(Typography))
+                  variant="body1"
+                >
+                  <strong>
+                    Packet loss avg/max
+                  </strong>
+                </WithStyles(ForwardRef(Typography))>
+              </div>
             </WithStyles(ForwardRef(TableCell))>
             <WithStyles(ForwardRef(TableCell))>
               <div
@@ -126,13 +165,26 @@ exports[`the QualityModal component should render correctly 1`] = `
           </WithStyles(ForwardRef(TableRow))>
           <WithStyles(ForwardRef(TableRow))>
             <WithStyles(ForwardRef(TableCell))>
-              <WithStyles(ForwardRef(Typography))
-                variant="body1"
+              <div
+                className="makeStyles-iconContainer-4"
               >
-                <strong>
-                  Bitrate (kbps) max/avg/min
-                </strong>
-              </WithStyles(ForwardRef(Typography))>
+                <WithStyles(ForwardRef(Tooltip))
+                  interactive={true}
+                  leaveDelay={250}
+                  title="Bitrate is the way we measure the speed of the upload and download transfers. If a sender uploads data too quickly and exceeds the transfer speed, the network gets overwhelmed and can cause issues for everyone. Symptoms of this can be frozen video, downscaled video, frame-rate drops, choppy audio, and potentially dropped connections."
+                >
+                  <div>
+                    <InfoIcon />
+                  </div>
+                </WithStyles(ForwardRef(Tooltip))>
+                <WithStyles(ForwardRef(Typography))
+                  variant="body1"
+                >
+                  <strong>
+                    Bitrate (kbps) max/avg/min
+                  </strong>
+                </WithStyles(ForwardRef(Typography))>
+              </div>
             </WithStyles(ForwardRef(TableCell))>
             <WithStyles(ForwardRef(TableCell))>
               <div

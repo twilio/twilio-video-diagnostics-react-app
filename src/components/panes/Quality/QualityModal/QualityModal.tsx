@@ -11,15 +11,18 @@ import {
   TableBody,
   TableRow,
   TableCell,
+  Tooltip,
 } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import { ErrorStatus, SuccessStatus } from '../../../../icons/StatusIcons';
 import { QualityScore } from '../Quality';
+import { toolTipContent } from './ToolTipContent';
+import { InfoIcon } from '../../../../icons/InfoIcon';
 
 const useStyles = makeStyles((theme) =>
   createStyles({
     modal: {
-      width: '6000px',
+      width: '100%',
     },
     content: {
       padding: '3em',
@@ -80,9 +83,16 @@ export function QualityModal({ isModalOpen, setIsModalOpen, latency, jitter, pac
             <TableBody>
               <TableRow>
                 <TableCell>
-                  <Typography variant="body1">
-                    <strong>Latency (ms) avg/max</strong>
-                  </Typography>
+                  <div className={classes.iconContainer}>
+                    <Tooltip title={toolTipContent.latency} interactive leaveDelay={250}>
+                      <div>
+                        <InfoIcon />
+                      </div>
+                    </Tooltip>
+                    <Typography variant="body1">
+                      <strong>Latency (ms) avg/max</strong>
+                    </Typography>
+                  </div>
                 </TableCell>
                 <TableCell>
                   <div className={classes.iconContainer}>
@@ -97,9 +107,16 @@ export function QualityModal({ isModalOpen, setIsModalOpen, latency, jitter, pac
               </TableRow>
               <TableRow>
                 <TableCell>
-                  <Typography variant="body1">
-                    <strong>Jitter (s) avg/max</strong>
-                  </Typography>
+                  <div className={classes.iconContainer}>
+                    <Tooltip title={toolTipContent.jitter} interactive leaveDelay={250}>
+                      <div>
+                        <InfoIcon />
+                      </div>
+                    </Tooltip>
+                    <Typography variant="body1">
+                      <strong>Jitter (s) avg/max</strong>
+                    </Typography>
+                  </div>
                 </TableCell>
                 <TableCell>
                   <div className={classes.iconContainer}>
@@ -114,9 +131,16 @@ export function QualityModal({ isModalOpen, setIsModalOpen, latency, jitter, pac
               </TableRow>
               <TableRow>
                 <TableCell>
-                  <Typography variant="body1">
-                    <strong>Packet loss avg/max</strong>
-                  </Typography>
+                  <div className={classes.iconContainer}>
+                    <Tooltip title={toolTipContent.packetLoss} interactive leaveDelay={250}>
+                      <div>
+                        <InfoIcon />
+                      </div>
+                    </Tooltip>
+                    <Typography variant="body1">
+                      <strong>Packet loss avg/max</strong>
+                    </Typography>
+                  </div>
                 </TableCell>
                 <TableCell>
                   <div className={classes.iconContainer}>
@@ -132,9 +156,16 @@ export function QualityModal({ isModalOpen, setIsModalOpen, latency, jitter, pac
               </TableRow>
               <TableRow>
                 <TableCell>
-                  <Typography variant="body1">
-                    <strong>Bitrate (kbps) max/avg/min</strong>
-                  </Typography>
+                  <div className={classes.iconContainer}>
+                    <Tooltip title={toolTipContent.bitrate} interactive leaveDelay={250}>
+                      <div>
+                        <InfoIcon />
+                      </div>
+                    </Tooltip>
+                    <Typography variant="body1">
+                      <strong>Bitrate (kbps) max/avg/min</strong>
+                    </Typography>
+                  </div>
                 </TableCell>
                 <TableCell>
                   <div className={classes.iconContainer}>
