@@ -14,6 +14,7 @@ describe('the Connectivity component', () => {
   afterEach(() => {
     jest.clearAllMocks();
   });
+
   it('should show the loading screen if preflight test is running', () => {
     mockUseAppStateContext.mockImplementationOnce(() => ({
       state: {
@@ -33,7 +34,26 @@ describe('the Connectivity component', () => {
     expect(wrapper.text().includes('Hang Tight!')).toBe(true);
   });
 
-  it('should hide the loading screen if preflight test has completed', () => {
+  it('should show the loading screen if bitrate test is running', () => {
+    mockUseAppStateContext.mockImplementationOnce(() => ({
+      state: {
+        activePane: 4,
+        twilioStatus: 'operational',
+        preflightTest: {
+          signalingGatewayReachable: false,
+          turnServersReachable: false,
+        },
+        bitrateTestInProgress: true,
+        bitrateTestFinished: false,
+      },
+    }));
+
+    const wrapper = shallow(<Connectivity />);
+
+    expect(wrapper.text().includes('Hang Tight!')).toBe(true);
+  });
+
+  it('should hide the loading screen if preflight test and bitrate test have completed', () => {
     mockUseAppStateContext.mockImplementationOnce(() => ({
       state: {
         activePane: 4,
@@ -44,6 +64,8 @@ describe('the Connectivity component', () => {
         },
         preflightTestInProgress: false,
         preflightTestFinished: true,
+        bitrateTestInProgress: false,
+        bitrateTestFinished: true,
       },
     }));
     const wrapper = shallow(<Connectivity />);

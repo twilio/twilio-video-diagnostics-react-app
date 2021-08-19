@@ -4,7 +4,8 @@ import Video, { PreflightTestReport } from 'twilio-video';
 import UAParser from 'ua-parser-js';
 import usePreflightTest from './usePreflightTest/usePreflightTest';
 import useTwilioStatus from './useTwilioStatus/useTwilioStatus';
-import { AudioInputTest, AudioOutputTest, VideoInputTest } from '@twilio/rtc-diagnostics';
+import useBitrateTest from './useBitrateTest/useBitrateTest';
+import { VideoInputTest, MediaConnectionBitrateTest, AudioInputTest, AudioOutputTest } from '@twilio/rtc-diagnostics';
 
 export enum ActivePane {
   GetStarted,
@@ -39,6 +40,13 @@ interface stateType {
   downButtonDisabled: boolean;
   preflightTestInProgress: boolean;
   preflightTestFinished: boolean;
+  bitrateTest: {
+    bitrate: null | number;
+    report: null | MediaConnectionBitrateTest.Report;
+    error: null | Error;
+  };
+  bitrateTestInProgress: boolean;
+  bitrateTestFinished: boolean;
 }
 
 export type ACTIONTYPE =
@@ -57,7 +65,12 @@ export type ACTIONTYPE =
   | { type: 'set-twilio-status'; status: string }
   | { type: 'set-twilio-status-error'; error: Error }
   | { type: 'preflight-started' }
-  | { type: 'preflight-finished' };
+  | { type: 'preflight-finished' }
+  | { type: 'set-bitrate'; bitrate: number }
+  | { type: 'set-bitrate-test-error'; error: Error }
+  | { type: 'set-bitrate-test-report'; report: MediaConnectionBitrateTest.Report }
+  | { type: 'bitrate-test-started' }
+  | { type: 'bitrate-test-finished' };
 
 type AppStateContextType = {
   state: stateType;
@@ -87,6 +100,13 @@ export const initialState = {
   downButtonDisabled: false,
   preflightTestInProgress: false,
   preflightTestFinished: false,
+  bitrateTest: {
+    bitrate: null,
+    report: null,
+    error: null,
+  },
+  bitrateTestInProgress: false,
+  bitrateTestFinished: false,
 };
 
 export const AppStateContext = createContext<AppStateContextType>(null!);
@@ -100,20 +120,17 @@ export function useAppStateContext() {
 }
 
 // helper function for determining whether to disable the down arrow button:
-export const isDownButtonDisabled = (
-  inProgress: boolean,
-  status: string | null,
-  pane: ActivePane,
-  preflightError: Error | null
-) => {
+export const isDownButtonDisabled = (currentState: stateType) => {
+  const { activePane, preflightTestInProgress, preflightTest, bitrateTestInProgress } = currentState;
+
   const connectionFailedOrLoading =
-    pane === ActivePane.Connectivity && (inProgress || status !== 'operational' || preflightError !== null);
-  const onDeviceCheck = pane === ActivePane.DeviceCheck || pane === ActivePane.DeviceError;
-  const unsupportedBrowser = pane === ActivePane.BrowserTest && !Video.isSupported;
+    activePane === ActivePane.Connectivity &&
+    (preflightTestInProgress || bitrateTestInProgress || preflightTest.error !== null);
 
-  if (connectionFailedOrLoading || !ActivePane[pane + 1] || onDeviceCheck || unsupportedBrowser) return true;
+  const onDeviceCheck = activePane === ActivePane.DeviceCheck || activePane === ActivePane.DeviceError;
+  const unsupportedBrowser = activePane === ActivePane.BrowserTest && !Video.isSupported;
 
-  return false;
+  return connectionFailedOrLoading || !ActivePane[activePane + 1] || onDeviceCheck || unsupportedBrowser;
 };
 
 /**
@@ -229,21 +246,39 @@ export const appStateReducer = produce((draft: stateType, action: ACTIONTYPE) =>
       draft.preflightTestFinished = true;
       draft.preflightTestInProgress = false;
       break;
+
+    case 'set-bitrate':
+      draft.bitrateTest.bitrate = action.bitrate;
+      break;
+
+    case 'set-bitrate-test-report':
+      draft.bitrateTest.report = action.report;
+      break;
+
+    case 'set-bitrate-test-error':
+      draft.bitrateTest.error = action.error;
+      break;
+
+    case 'bitrate-test-started':
+      draft.bitrateTestInProgress = true;
+      draft.bitrateTestFinished = false;
+      break;
+
+    case 'bitrate-test-finished':
+      draft.bitrateTestFinished = true;
+      draft.bitrateTestInProgress = false;
+      break;
   }
 
   const currentState = current(draft);
 
-  draft.downButtonDisabled = isDownButtonDisabled(
-    currentState.preflightTestInProgress,
-    currentState.twilioStatus,
-    currentState.activePane,
-    currentState.preflightTest.error
-  );
+  draft.downButtonDisabled = isDownButtonDisabled(currentState);
 });
 
 export const AppStateProvider: React.FC = ({ children }) => {
   const [state, dispatch] = useReducer(appStateReducer, initialState);
   const { startPreflightTest } = usePreflightTest(dispatch);
+  const { startBitrateTest } = useBitrateTest(dispatch);
   const { getTwilioStatus } = useTwilioStatus(dispatch);
 
   const userAgentParser = new UAParser();
@@ -252,6 +287,7 @@ export const AppStateProvider: React.FC = ({ children }) => {
   const nextPane = useCallback(() => {
     switch (state.activePane) {
       case ActivePane.GetStarted:
+        startBitrateTest();
         startPreflightTest();
         getTwilioStatus();
         dispatch({ type: 'next-pane' });
@@ -259,7 +295,7 @@ export const AppStateProvider: React.FC = ({ children }) => {
       default:
         dispatch({ type: 'next-pane' });
     }
-  }, [startPreflightTest, getTwilioStatus, state, dispatch]);
+  }, [startBitrateTest, startPreflightTest, getTwilioStatus, state, dispatch]);
 
   useEffect(() => {
     navigator.mediaDevices.enumerateDevices().then((devices) => dispatch({ type: 'set-devices', devices }));

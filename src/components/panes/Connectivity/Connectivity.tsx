@@ -53,8 +53,8 @@ export function Connectivity() {
         turnServers={turnServers}
       />
       {
-        /* If preflight test hasn't completed, display loading screen otherwise, display connectivity results: */
-        state.preflightTestInProgress ? (
+        /* If preflight test or bitrate test haven't completed, display loading screen otherwise, display connectivity results: */
+        state.preflightTestInProgress || state.bitrateTestInProgress ? (
           <Container>
             <Grid container className={classes.container}>
               <Typography variant="h1" gutterBottom>

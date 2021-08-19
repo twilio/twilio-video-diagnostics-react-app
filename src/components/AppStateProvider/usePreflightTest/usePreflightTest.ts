@@ -13,7 +13,7 @@ export default function usePreflightTest(dispatch: React.Dispatch<ACTIONTYPE>) {
 
     dispatch({ type: 'preflight-started' });
 
-    return axios('/token')
+    return axios('app/token')
       .then((response) => {
         const preflightTest = runPreflight(response.data.token);
 

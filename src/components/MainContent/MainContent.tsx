@@ -135,8 +135,8 @@ export function MainContent() {
   const { state, dispatch, nextPane } = useAppStateContext();
 
   const devicesPermitted = state.audioGranted && state.videoGranted;
-  const preflightTestRunning = state.preflightTestInProgress;
-  const onLoadingScreen = state.activePane === ActivePane.Connectivity && preflightTestRunning;
+  const testsInProgress = state.preflightTestInProgress || state.bitrateTestInProgress;
+  const onLoadingScreen = state.activePane === ActivePane.Connectivity && testsInProgress;
 
   return (
     <>
@@ -148,7 +148,7 @@ export function MainContent() {
               state.activePane === ActivePane.DeviceCheck ||
               state.activePane === ActivePane.DeviceError ||
               onLoadingScreen ||
-              (state.activePane === ActivePane.BrowserTest && (preflightTestRunning || !Video.isSupported)),
+              (state.activePane === ActivePane.BrowserTest && (testsInProgress || !Video.isSupported)),
           })}
         >
           {content.map((pane, i) => {

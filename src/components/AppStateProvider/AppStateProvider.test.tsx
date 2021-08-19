@@ -1,6 +1,6 @@
 import React from 'react';
 import Video, { PreflightTestReport } from 'twilio-video';
-import { AudioInputTest, AudioOutputTest, VideoInputTest } from '@twilio/rtc-diagnostics';
+import { AudioInputTest, AudioOutputTest, VideoInputTest, MediaConnectionBitrateTest } from '@twilio/rtc-diagnostics';
 import {
   ActivePane,
   useAppStateContext,
@@ -11,8 +11,15 @@ import {
 } from './AppStateProvider';
 import { renderHook, act } from '@testing-library/react-hooks';
 
+const mockStartBitrateTest = jest.fn();
 const mockStartPreflightTest = jest.fn();
 const mockGetTwilioStatus = jest.fn();
+
+jest.mock('./useBitrateTest/useBitrateTest', () =>
+  jest.fn(() => ({
+    startBitrateTest: mockStartBitrateTest,
+  }))
+);
 
 jest.mock('./usePreflightTest/usePreflightTest', () =>
   jest.fn(() => ({
@@ -34,36 +41,71 @@ describe('the useAppStateContext hook', () => {
 });
 
 describe('the isDownButtonDisabled function', () => {
-  const mockError = Error();
-  it('should return true if preflightTest fails or if Twilio services are down', () => {
-    expect(isDownButtonDisabled(false, 'partial_outage', ActivePane.Connectivity, mockError)).toBe(true);
+  it('should return true if preflightTest fails', () => {
+    const mockCurrentState = {
+      ...initialState,
+      activePane: ActivePane.Connectivity,
+      preflightTestInProgress: false,
+      preflightTest: { ...initialState.preflightTest, error: Error() },
+      bitrateTestInProgress: false,
+    };
+    expect(isDownButtonDisabled(mockCurrentState)).toBe(true);
   });
 
-  it('should return true when preflight test is in progress', () => {
-    expect(isDownButtonDisabled(true, 'operational', ActivePane.Connectivity, null)).toBe(true);
+  it('should return true when preflight test and/or bitrate test is in progress', () => {
+    const mockCurrentState = {
+      ...initialState,
+      activePane: ActivePane.Connectivity,
+      preflightTestInProgress: true,
+      bitrateTestInProgress: false,
+    };
+
+    expect(isDownButtonDisabled(mockCurrentState)).toBe(true);
   });
 
   it('should return true if the active pane is the last pane', () => {
-    expect(isDownButtonDisabled(false, 'operational', ActivePane.Results, null)).toBe(true);
+    const mockCurrentState = {
+      ...initialState,
+      activePane: ActivePane.Results,
+    };
+    expect(isDownButtonDisabled(mockCurrentState)).toBe(true);
   });
 
   it('should return true when active pane is DeviceCheck', () => {
-    expect(isDownButtonDisabled(false, 'operational', ActivePane.DeviceCheck, null)).toBe(true);
+    const mockCurrentState = {
+      ...initialState,
+      activePane: ActivePane.DeviceCheck,
+    };
+    expect(isDownButtonDisabled(mockCurrentState)).toBe(true);
   });
 
   it('should return true when active pane is DeviceError', () => {
-    expect(isDownButtonDisabled(false, 'operational', ActivePane.DeviceError, null)).toBe(true);
+    const mockCurrentState = {
+      ...initialState,
+      activePane: ActivePane.DeviceError,
+    };
+    expect(isDownButtonDisabled(mockCurrentState)).toBe(true);
   });
 
   it('should return true when active pane is BrowserCheck and the browser is unsupported', () => {
+    const mockCurrentState = {
+      ...initialState,
+      activePane: ActivePane.BrowserTest,
+    };
     // @ts-ignore
     Video.isSupported = false;
 
-    expect(isDownButtonDisabled(false, 'operational', ActivePane.BrowserTest, null)).toBe(true);
+    expect(isDownButtonDisabled(mockCurrentState)).toBe(true);
   });
 
-  it('should return false if preflightTest completes and active pane is not in Device setup', () => {
-    expect(isDownButtonDisabled(false, 'operational', ActivePane.CameraTest, null)).toBe(false);
+  it('should return false if preflightTest and bitrateTest complete and active pane is not DeviceCheck or DeviceError', () => {
+    const mockCurrentState = {
+      ...initialState,
+      activePane: ActivePane.CameraTest,
+      preflightTestInProgress: false,
+      bitrateTestInProgress: false,
+    };
+    expect(isDownButtonDisabled(mockCurrentState)).toBe(false);
   });
 });
 
@@ -304,6 +346,46 @@ describe('the appState reducer', () => {
       expect(newState.preflightTestInProgress).toBe(false);
     });
   });
+
+  describe('the "set-bitrate" action type', () => {
+    it('should set the bitrate for the bitrate test', () => {
+      const newState = appStateReducer(initialState, { type: 'set-bitrate', bitrate: 100 });
+      expect(newState.bitrateTest.bitrate).toBe(100);
+    });
+  });
+
+  describe('the "set-bitrate-test-error" action type', () => {
+    it('should save the error if an error is thrown during bitrate test', () => {
+      const mockError = Error();
+      const newState = appStateReducer(initialState, { type: 'set-bitrate-test-error', error: mockError });
+      expect(newState.bitrateTest.error).toBe(mockError);
+    });
+  });
+
+  describe('the "set-bitrate-test-report" action type', () => {
+    it('should save the report from the bitrate test', () => {
+      const mockReport = {} as MediaConnectionBitrateTest.Report;
+
+      const newState = appStateReducer(initialState, { type: 'set-bitrate-test-report', report: mockReport });
+      expect(newState.bitrateTest.report).toBe(mockReport);
+    });
+  });
+
+  describe('the "bitrate-test-started" action type', () => {
+    it('should set bitrateTestInProgress to true and bitrateTestFinished to false', () => {
+      const newState = appStateReducer(initialState, { type: 'bitrate-test-started' });
+      expect(newState.bitrateTestInProgress).toBe(true);
+      expect(newState.bitrateTestFinished).toBe(false);
+    });
+  });
+
+  describe('the "bitrate-test-finished" action type', () => {
+    it('should set bitrateTestInProgress to false and bitrateTestFinished to true', () => {
+      const newState = appStateReducer(initialState, { type: 'bitrate-test-finished' });
+      expect(newState.bitrateTestFinished).toBe(true);
+      expect(newState.bitrateTestInProgress).toBe(false);
+    });
+  });
 });
 
 describe('the AppStateProvider component', () => {
@@ -336,6 +418,13 @@ describe('the AppStateProvider component', () => {
           "audioGranted": false,
           "audioInputTestReport": null,
           "audioOutputTestReport": null,
+          "bitrateTest": Object {
+            "bitrate": null,
+            "error": null,
+            "report": null,
+          },
+          "bitrateTestFinished": false,
+          "bitrateTestInProgress": false,
           "deviceError": null,
           "downButtonDisabled": false,
           "preflightTest": Object {
