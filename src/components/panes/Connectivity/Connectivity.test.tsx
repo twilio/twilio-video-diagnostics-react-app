@@ -72,25 +72,6 @@ describe('the Connectivity component', () => {
     expect(wrapper.text().includes('Hang Tight!')).toBe(false);
   });
 
-  it('should render ConnectionFailed component if Twilio status is not "operational"', () => {
-    mockUseAppStateContext.mockImplementationOnce(() => ({
-      state: {
-        activePane: 4,
-        twilioStatus: 'major_outage',
-        preflightTest: {
-          progress: null,
-          signalingGatewayReachable: true,
-          turnServersReachable: true,
-          error: null,
-        },
-        preflightTestInProgress: false,
-        preflightTestFinished: true,
-      },
-    }));
-    const wrapper = shallow(<Connectivity />);
-    expect(wrapper.find(ConnectionFailed).exists()).toBe(true);
-  });
-
   it('should render ConnectionFailed component if there is a preflight test error', () => {
     mockUseAppStateContext.mockImplementationOnce(() => ({
       state: {
