@@ -11,7 +11,7 @@ mockUseAppStateContext.mockImplementation(() => ({ nextPane: jest.fn() }));
 
 const mockSetIsModalOpen = jest.fn();
 
-describe('the ConnectionSuccess component', () => {
+describe('the PoorQuality component', () => {
   it('should render correctly when quality is "bad"', () => {
     const wrapper = shallow(<PoorQuality quality={QualityScore.Bad} openModal={mockSetIsModalOpen} />);
     expect(wrapper).toMatchSnapshot();
