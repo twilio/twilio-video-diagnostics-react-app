@@ -72,11 +72,21 @@ export type ACTIONTYPE =
   | { type: 'bitrate-test-started' }
   | { type: 'bitrate-test-finished' };
 
+type finalTestResultsType = {
+  audioTestResults: { inputTest: AudioInputTest.Report | null; outputTest: AudioOutputTest.Report | null };
+  bitrateTestResults: MediaConnectionBitrateTest.Report | null;
+  browserInformation: UAParser.IResult | null;
+  connectivityResults: { twilioServices: string | null; signalingRegion: string | null; TURN: string | null };
+  preflightTestReport: { report: PreflightTestReport | null; error: string | null };
+  videoTestResults: VideoInputTest.Report | null;
+};
+
 type AppStateContextType = {
   state: stateType;
   dispatch: React.Dispatch<ACTIONTYPE>;
   nextPane: () => void;
   userAgentInfo: UAParser.IResult;
+  finalTestResults: finalTestResultsType;
 };
 
 export const initialState = {
@@ -284,6 +294,18 @@ export const AppStateProvider: React.FC = ({ children }) => {
   const userAgentParser = new UAParser();
   const userAgentInfo = userAgentParser.getResult();
 
+  const signalingGateway = state.preflightTest.signalingGatewayReachable ? 'Reachable' : 'Unreachable';
+  const turnServers = state.preflightTest.turnServersReachable ? 'Reachable' : 'Unreachable';
+
+  const finalTestResults = {
+    audioTestResults: { inputTest: state.audioInputTestReport, outputTest: state.audioOutputTestReport },
+    bitrateTestResults: state.bitrateTest.report,
+    browserInformation: userAgentInfo,
+    connectivityResults: { twilioServices: state.twilioStatus, signalingRegion: signalingGateway, TURN: turnServers },
+    preflightTestReport: { report: state.preflightTest.report, error: state.preflightTest.error?.message || null },
+    videoTestResults: state.videoInputTestReport,
+  };
+
   const nextPane = useCallback(() => {
     switch (state.activePane) {
       case ActivePane.GetStarted:
@@ -302,6 +324,8 @@ export const AppStateProvider: React.FC = ({ children }) => {
   }, []);
 
   return (
-    <AppStateContext.Provider value={{ state, dispatch, nextPane, userAgentInfo }}>{children}</AppStateContext.Provider>
+    <AppStateContext.Provider value={{ state, dispatch, nextPane, userAgentInfo, finalTestResults }}>
+      {children}
+    </AppStateContext.Provider>
   );
 };

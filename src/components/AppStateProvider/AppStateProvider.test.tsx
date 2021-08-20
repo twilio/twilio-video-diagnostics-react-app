@@ -412,6 +412,47 @@ describe('the AppStateProvider component', () => {
     expect(result.current).toMatchInlineSnapshot(`
       Object {
         "dispatch": [Function],
+        "finalTestResults": Object {
+          "audioTestResults": Object {
+            "inputTest": null,
+            "outputTest": null,
+          },
+          "bitrateTestResults": null,
+          "browserInformation": Object {
+            "browser": Object {
+              "major": "92",
+              "name": "Chrome",
+              "version": "92.0.4515.131",
+            },
+            "cpu": Object {
+              "architecture": undefined,
+            },
+            "device": Object {
+              "model": undefined,
+              "type": undefined,
+              "vendor": undefined,
+            },
+            "engine": Object {
+              "name": "Blink",
+              "version": "92.0.4515.131",
+            },
+            "os": Object {
+              "name": "Mac OS",
+              "version": "10.15.7",
+            },
+            "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36",
+          },
+          "connectivityResults": Object {
+            "TURN": "Unreachable",
+            "signalingRegion": "Unreachable",
+            "twilioServices": null,
+          },
+          "preflightTestReport": Object {
+            "error": null,
+            "report": null,
+          },
+          "videoTestResults": null,
+        },
         "nextPane": [Function],
         "state": Object {
           "activePane": 0,
