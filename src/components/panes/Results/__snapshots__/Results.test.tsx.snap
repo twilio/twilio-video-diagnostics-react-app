@@ -15,13 +15,16 @@ exports[`the GetResults component should render correctly when score is "average
           gutterBottom={true}
           variant="h1"
         >
-          All tests passed!
+          Some tests failed
         </WithStyles(ForwardRef(Typography))>
         <WithStyles(ForwardRef(Typography))
           gutterBottom={true}
           variant="body1"
         >
-          As far as we can tell, your video should be working. If you're still experiencing issues, download your report results and send to your network administrator.
+          <strong>
+            One out of three 
+          </strong>
+          tests failed – use this list to solve common video issues and restart the test. If you can’t easily solve the problem(s), download report results and send to your network administrator.
         </WithStyles(ForwardRef(Typography))>
         <WithStyles(ForwardRef(Button))
           className="makeStyles-downloadButton-3"
@@ -129,7 +132,7 @@ exports[`the GetResults component should render correctly when score is "average
           <div
             className="makeStyles-iconContainer-2"
           >
-            <CheckMark />
+            <SmallError />
             <WithStyles(ForwardRef(Typography))
               gutterBottom={true}
               variant="h3"
@@ -141,12 +144,11 @@ exports[`the GetResults component should render correctly when score is "average
             gutterBottom={true}
             variant="body1"
           >
-            Awesome! Your expected call quality is 
-            excellent
-             and overall performance looks
-             
-            good
-            .
+            Your overall score is 
+            <strong>
+              average
+            </strong>
+             which means that your connection isn't good enough to run video properly. Try out these tips and rerun the test
           </WithStyles(ForwardRef(Typography))>
           <WithStyles(ForwardRef(Button))
             onClick={[Function]}
@@ -176,13 +178,16 @@ exports[`the GetResults component should render correctly when score is "bad" 1`
           gutterBottom={true}
           variant="h1"
         >
-          All tests passed!
+          Some tests failed
         </WithStyles(ForwardRef(Typography))>
         <WithStyles(ForwardRef(Typography))
           gutterBottom={true}
           variant="body1"
         >
-          As far as we can tell, your video should be working. If you're still experiencing issues, download your report results and send to your network administrator.
+          <strong>
+            One out of three 
+          </strong>
+          tests failed – use this list to solve common video issues and restart the test. If you can’t easily solve the problem(s), download report results and send to your network administrator.
         </WithStyles(ForwardRef(Typography))>
         <WithStyles(ForwardRef(Button))
           className="makeStyles-downloadButton-3"
@@ -290,7 +295,7 @@ exports[`the GetResults component should render correctly when score is "bad" 1`
           <div
             className="makeStyles-iconContainer-2"
           >
-            <CheckMark />
+            <SmallError />
             <WithStyles(ForwardRef(Typography))
               gutterBottom={true}
               variant="h3"
@@ -302,12 +307,11 @@ exports[`the GetResults component should render correctly when score is "bad" 1`
             gutterBottom={true}
             variant="body1"
           >
-            Awesome! Your expected call quality is 
-            excellent
-             and overall performance looks
-             
-            good
-            .
+            Your overall score is 
+            <strong>
+              bad
+            </strong>
+             which means that your connection isn't good enough to run video properly. Try out these tips and rerun the test
           </WithStyles(ForwardRef(Typography))>
           <WithStyles(ForwardRef(Button))
             onClick={[Function]}
@@ -464,10 +468,11 @@ exports[`the GetResults component should render correctly when score is "excelle
             variant="body1"
           >
             Awesome! Your expected call quality is 
-            excellent
+            <strong>
+              excellent
+            </strong>
              and overall performance looks
-             
-            good
+             good
             .
           </WithStyles(ForwardRef(Typography))>
           <WithStyles(ForwardRef(Button))
@@ -625,10 +630,11 @@ exports[`the GetResults component should render correctly when score is "good" 1
             variant="body1"
           >
             Awesome! Your expected call quality is 
-            excellent
+            <strong>
+              good
+            </strong>
              and overall performance looks
-             
-            good
+             ok
             .
           </WithStyles(ForwardRef(Typography))>
           <WithStyles(ForwardRef(Button))

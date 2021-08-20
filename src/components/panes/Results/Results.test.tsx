@@ -1,8 +1,10 @@
-import { shallow } from 'enzyme';
 import { Button } from '@material-ui/core';
+import { shallow } from 'enzyme';
 import * as utils from '../../../utils';
-import { Results } from './Results';
-import { useAppStateContext, ActivePane } from '../../AppStateProvider/AppStateProvider';
+import { ActivePane, useAppStateContext } from '../../AppStateProvider/AppStateProvider';
+import { getQualityScoreString, Results } from './Results';
+import { getQualityScore } from '../Quality/getQualityScore/getQualityScore';
+import { QualityScore } from '../Quality/Quality';
 
 // @ts-ignore
 utils.downloadJSONFile = jest.fn();
@@ -14,9 +16,10 @@ delete window.location;
 window.location = { reload: jest.fn() };
 
 jest.mock('../../AppStateProvider/AppStateProvider');
+jest.mock('../Quality/getQualityScore/getQualityScore');
 
 const mockUseAppStateContext = useAppStateContext as jest.Mock<any>;
-const mockUseGetQualityScore = useAppStateContext as jest.Mock<any>;
+const mockGetQualityScore = getQualityScore as jest.Mock<any>;
 
 const mockDispatch = jest.fn();
 const mockFinalTestResults = 'mockFinalTestResults';
@@ -27,33 +30,51 @@ mockUseAppStateContext.mockImplementation(() => ({
   finalTestResults: mockFinalTestResults,
 }));
 
+describe('the getQualityScoreString function', () => {
+  it('should return "Excellent" when score is QualityScore.Excellent', () => {
+    expect(getQualityScoreString(QualityScore.Excellent)).toBe('excellent');
+  });
+
+  it('should return "Good" when score is QualityScore.Good', () => {
+    expect(getQualityScoreString(QualityScore.Good)).toBe('good');
+  });
+
+  it('should return "Average" when score is QualityScore.Average', () => {
+    expect(getQualityScoreString(QualityScore.Average)).toBe('average');
+  });
+
+  it('should return "Bad" when score is QualityScore.Bad', () => {
+    expect(getQualityScoreString(QualityScore.Bad)).toBe('bad');
+  });
+});
+
 describe('the GetResults component', () => {
   it('should render correctly when score is "excellent"', () => {
-    mockUseGetQualityScore.mockImplementationOnce(() => ({
-      qualityScore: 'excellent',
+    mockGetQualityScore.mockImplementationOnce(() => ({
+      totalQualityScore: QualityScore.Excellent,
     }));
     const wrapper = shallow(<Results />);
     expect(wrapper).toMatchSnapshot();
   });
 
   it('should render correctly when score is "good"', () => {
-    mockUseGetQualityScore.mockImplementationOnce(() => ({
-      qualityScore: 'good',
+    mockGetQualityScore.mockImplementationOnce(() => ({
+      totalQualityScore: QualityScore.Good,
     }));
     const wrapper = shallow(<Results />);
     expect(wrapper).toMatchSnapshot();
   });
   it('should render correctly when score is "average"', () => {
-    mockUseGetQualityScore.mockImplementationOnce(() => ({
-      qualityScore: 'average',
+    mockGetQualityScore.mockImplementationOnce(() => ({
+      totalQualityScore: QualityScore.Average,
     }));
     const wrapper = shallow(<Results />);
     expect(wrapper).toMatchSnapshot();
   });
 
   it('should render correctly when score is "bad"', () => {
-    mockUseGetQualityScore.mockImplementationOnce(() => ({
-      qualityScore: 'bad',
+    mockGetQualityScore.mockImplementationOnce(() => ({
+      totalQualityScore: QualityScore.Bad,
     }));
     const wrapper = shallow(<Results />);
     expect(wrapper).toMatchSnapshot();
@@ -61,8 +82,8 @@ describe('the GetResults component', () => {
 
   describe('the button clicks', () => {
     beforeEach(() => {
-      mockUseGetQualityScore.mockImplementationOnce(() => ({
-        qualityScore: 'good',
+      mockGetQualityScore.mockImplementationOnce(() => ({
+        totalQualityScore: QualityScore.Good,
       }));
     });
     it('should down the final results report when "Download report results" is clicked on', () => {

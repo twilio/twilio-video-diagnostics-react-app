@@ -1,11 +1,13 @@
-import { ActivePane, useAppStateContext } from '../../AppStateProvider/AppStateProvider';
 import { makeStyles, Button, Container, Grid, Typography } from '@material-ui/core';
+import { ActivePane, useAppStateContext } from '../../AppStateProvider/AppStateProvider';
+import { CheckMark } from '../../../icons/CheckMark';
+import { DownloadIcon } from '../../../icons/DownloadIcon';
+import { downloadJSONFile } from '../../../utils';
+import { getQualityScore } from '../Quality/getQualityScore/getQualityScore';
+import { QualityScore } from '../Quality/Quality';
+import { SmallError } from '../../../icons/SmallError';
 import SomeFailed from './SomeFailed.png';
 import TestsPassed from './TestsPassed.png';
-import { DownloadIcon } from '../../../icons/DownloadIcon';
-import { SmallError } from '../../../icons/SmallError';
-import { CheckMark } from '../../../icons/CheckMark';
-import { downloadJSONFile } from '../../../utils';
 
 const useStyles = makeStyles({
   resultContainer: {
@@ -34,13 +36,33 @@ const useStyles = makeStyles({
   },
 });
 
+export const getQualityScoreString = (score: QualityScore) => {
+  let qualityScore = '';
+
+  switch (score) {
+    case QualityScore.Excellent:
+      qualityScore = 'excellent';
+      break;
+    case QualityScore.Good:
+      qualityScore = 'good';
+      break;
+    case QualityScore.Average:
+      qualityScore = 'average';
+      break;
+    case QualityScore.Bad:
+      qualityScore = 'bad';
+      break;
+  }
+  return qualityScore;
+};
+
 export function Results() {
   const { state, finalTestResults, dispatch } = useAppStateContext();
-  //   const testsPassed = qualityScore === 'good' || qualityScore === 'excellent';
-
-  const testsPassed = true;
+  const { totalQualityScore } = getQualityScore(state.preflightTest.report, state.bitrateTest.report);
   const classes = useStyles();
-  const qualityScore = 'excellent';
+
+  const testsPassed = totalQualityScore === QualityScore.Excellent || totalQualityScore === QualityScore.Good;
+  const qualityScore = getQualityScoreString(totalQualityScore);
 
   return (
     <>
@@ -138,8 +160,8 @@ export function Results() {
 
                 {testsPassed ? (
                   <Typography variant="body1" gutterBottom>
-                    Awesome! Your expected call quality is {qualityScore} and overall performance looks{' '}
-                    {qualityScore === 'excellent' ? 'good' : 'ok'}.
+                    Awesome! Your expected call quality is <strong>{qualityScore}</strong> and overall performance looks
+                    {qualityScore === 'excellent' ? ' good' : ' ok'}.
                   </Typography>
                 ) : (
                   <Typography variant="body1" gutterBottom>
