@@ -37,11 +37,10 @@ export function Connectivity() {
   const turnServers = state.preflightTest.turnServersReachable ? 'Reachable' : 'Unreachable';
 
   const connectionFailed =
-    twilioServicesStatus !== 'Up' ||
-    (state.preflightTestFinished &&
-      (state.preflightTest.error !== null ||
-        !state.preflightTest.signalingGatewayReachable ||
-        !state.preflightTest.turnServersReachable));
+    state.preflightTestFinished &&
+    (state.preflightTest.error !== null ||
+      !state.preflightTest.signalingGatewayReachable ||
+      !state.preflightTest.turnServersReachable);
 
   return (
     <>

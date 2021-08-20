@@ -1,0 +1,133 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`the Excellent Quality component should render correctly when quality is "excellent" 1`] = `
+<WithStyles(ForwardRef(Container))>
+  <WithStyles(ForwardRef(Grid))
+    alignItems="center"
+    container={true}
+    justifyContent="space-between"
+  >
+    <WithStyles(ForwardRef(Grid))
+      item={true}
+      md={5}
+    >
+      <WithStyles(ForwardRef(Typography))
+        gutterBottom={true}
+        variant="h1"
+      >
+        Quality is 
+        excellent
+      </WithStyles(ForwardRef(Typography))>
+      <WithStyles(ForwardRef(Typography))
+        gutterBottom={true}
+        variant="body1"
+      >
+        This is the last step! Your expected audio and video quality is 
+        <strong>
+          excellent
+        </strong>
+         and overall performance looks 
+        good
+        .
+      </WithStyles(ForwardRef(Typography))>
+      <WithStyles(ForwardRef(Button))
+        color="primary"
+        onClick={[MockFunction]}
+        variant="contained"
+      >
+        Finish up!
+      </WithStyles(ForwardRef(Button))>
+    </WithStyles(ForwardRef(Grid))>
+    <WithStyles(ForwardRef(Grid))
+      className="makeStyles-illustrationContainer-2"
+      item={true}
+      md={5}
+    >
+      <img
+        alt="Success"
+        src="test-file-stub"
+        style={
+          Object {
+            "height": "200px",
+            "width": "245px",
+          }
+        }
+      />
+      <WithStyles(ForwardRef(Button))
+        className="makeStyles-viewButton-3"
+        onClick={[MockFunction]}
+        variant="outlined"
+      >
+        <ViewIcon />
+        View detailed quality information
+      </WithStyles(ForwardRef(Button))>
+    </WithStyles(ForwardRef(Grid))>
+  </WithStyles(ForwardRef(Grid))>
+</WithStyles(ForwardRef(Container))>
+`;
+
+exports[`the Excellent Quality component should render correctly when quality is "good" 1`] = `
+<WithStyles(ForwardRef(Container))>
+  <WithStyles(ForwardRef(Grid))
+    alignItems="center"
+    container={true}
+    justifyContent="space-between"
+  >
+    <WithStyles(ForwardRef(Grid))
+      item={true}
+      md={5}
+    >
+      <WithStyles(ForwardRef(Typography))
+        gutterBottom={true}
+        variant="h1"
+      >
+        Quality is 
+        good
+      </WithStyles(ForwardRef(Typography))>
+      <WithStyles(ForwardRef(Typography))
+        gutterBottom={true}
+        variant="body1"
+      >
+        This is the last step! Your expected audio and video quality is 
+        <strong>
+          good
+        </strong>
+         and overall performance looks 
+        ok
+        .
+      </WithStyles(ForwardRef(Typography))>
+      <WithStyles(ForwardRef(Button))
+        color="primary"
+        onClick={[MockFunction]}
+        variant="contained"
+      >
+        Finish up!
+      </WithStyles(ForwardRef(Button))>
+    </WithStyles(ForwardRef(Grid))>
+    <WithStyles(ForwardRef(Grid))
+      className="makeStyles-illustrationContainer-2"
+      item={true}
+      md={5}
+    >
+      <img
+        alt="Success"
+        src="test-file-stub"
+        style={
+          Object {
+            "height": "200px",
+            "width": "245px",
+          }
+        }
+      />
+      <WithStyles(ForwardRef(Button))
+        className="makeStyles-viewButton-3"
+        onClick={[MockFunction]}
+        variant="outlined"
+      >
+        <ViewIcon />
+        View detailed quality information
+      </WithStyles(ForwardRef(Button))>
+    </WithStyles(ForwardRef(Grid))>
+  </WithStyles(ForwardRef(Grid))>
+</WithStyles(ForwardRef(Container))>
+`;
