@@ -58,7 +58,7 @@ export function Connectivity() {
           <Container>
             <Grid container className={classes.container}>
               <Typography variant="h1" gutterBottom>
-                Hang Tight!
+                Hang tight!
               </Typography>
               <Typography variant="body1" gutterBottom className={classes.textBox}>
                 We're just finishing up your personalized results and creating your report.

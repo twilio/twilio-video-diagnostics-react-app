@@ -41,7 +41,6 @@ const useStyles = makeStyles((theme) =>
 interface ConnectionFailedProps {
   signalingGateway: string;
   turnServers: string;
-  // setIsModalOpen: (isModalOpen: boolean) => void;
   openModal: () => void;
 }
 
