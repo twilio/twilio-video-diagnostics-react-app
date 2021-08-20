@@ -1,4 +1,4 @@
-import { getSingleQualityScore, getQualityScore } from './getQualityScore';
+import { getSingleQualityScore, getQualityScore, formatNumber } from './getQualityScore';
 import { QualityScore } from '../Quality';
 
 describe('the getSingleQualityScore function', () => {
@@ -38,6 +38,16 @@ describe('the getSingleQualityScore function', () => {
     it('should return QualityScore.Bad when the provided stat is below the Bad threshold', () => {
       expect(getSingleQualityScore(80, 1000, 500, 150, true)).toBe(QualityScore.Bad);
     });
+  });
+});
+
+describe('the formatNumber function', () => {
+  it('should format numbers to round to 2 decimal places', () => {
+    expect(formatNumber(123.6574728376)).toBe('123.66');
+  });
+
+  it('should add commas to large numbers', () => {
+    expect(formatNumber(123456789123456.6574728376)).toBe('123,456,789,123,456.66');
   });
 });
 

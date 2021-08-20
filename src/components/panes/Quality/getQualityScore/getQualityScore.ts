@@ -27,6 +27,13 @@ export function getSingleQualityScore(
   return QualityScore.Excellent;
 }
 
+export const formatNumber = (val: number | undefined) => {
+  return val?.toLocaleString(undefined, {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 2,
+  });
+};
+
 export function getQualityScore(
   preflightTestReport: PreflightTestReport | null,
   bitrateTestReport: MediaConnectionBitrateTest.Report | null
@@ -35,48 +42,27 @@ export function getQualityScore(
   const minBitrate = bitrateTestReport?.values ? Math.min(...bitrateTestReport.values) : 0;
 
   const latency = {
-    average: preflightTestReport?.stats!.rtt!.average.toLocaleString(undefined, {
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 2,
-    }),
-    max: preflightTestReport?.stats!.rtt!.max.toLocaleString(undefined, {
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 2,
-    }),
+    average: formatNumber(preflightTestReport?.stats!.rtt!.average),
+    max: formatNumber(preflightTestReport?.stats!.rtt!.max),
     qualityScore: getSingleQualityScore(preflightTestReport?.stats!.rtt!.average, 100, 250, 400),
   };
 
   const jitter = {
-    average: preflightTestReport?.stats!.jitter!.average.toLocaleString(undefined, {
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 2,
-    }),
-    max: preflightTestReport?.stats!.jitter!.max.toLocaleString(undefined, {
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 2,
-    }),
+    average: formatNumber(preflightTestReport?.stats!.jitter!.average),
+    max: formatNumber(preflightTestReport?.stats!.jitter!.max),
     qualityScore: getSingleQualityScore(preflightTestReport?.stats!.jitter!.average, 5, 10, 30),
   };
 
   const packetLoss = {
-    average: preflightTestReport?.stats!.packetLoss!.average.toLocaleString(undefined, {
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 2,
-    }),
-    max: preflightTestReport?.stats!.packetLoss!.max.toLocaleString(undefined, {
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 2,
-    }),
+    average: formatNumber(preflightTestReport?.stats!.packetLoss!.average),
+    max: formatNumber(preflightTestReport?.stats!.packetLoss!.max),
     qualityScore: getSingleQualityScore(preflightTestReport?.stats!.packetLoss!.average, 1, 3, 8),
   };
 
   const bitrate = {
-    average: bitrateTestReport?.averageBitrate!.toLocaleString(undefined, {
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 2,
-    }),
-    max: maxBitrate.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 2 }),
-    min: minBitrate.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 2 }),
+    average: formatNumber(bitrateTestReport?.averageBitrate!),
+    max: formatNumber(maxBitrate),
+    min: formatNumber(minBitrate),
     qualityScore: getSingleQualityScore(bitrateTestReport?.averageBitrate!, 1000, 500, 150, true),
   };
 
