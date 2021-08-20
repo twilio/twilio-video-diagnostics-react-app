@@ -6,9 +6,9 @@ import { QualityModal } from './QualityModal/QualityModal';
 import { useState } from 'react';
 
 export enum QualityScore {
-  Good,
   Bad,
   Average,
+  Good,
   Excellent,
 }
 
@@ -16,8 +16,8 @@ export function Quality() {
   const { state } = useAppStateContext();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { totalQualityScore, latency, jitter, packetLoss, bitrate } = getQualityScore(
-    state.preflightTest.report!,
-    state.bitrateTest.report!
+    state.preflightTest.report,
+    state.bitrateTest.report
   );
 
   return (

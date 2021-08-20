@@ -86,7 +86,7 @@ exports[`the QualityModal component should render correctly 1`] = `
                 <WithStyles(ForwardRef(Typography))
                   variant="body1"
                 >
-                  0 / 0
+                  85.2 / 192
                 </WithStyles(ForwardRef(Typography))>
               </div>
             </WithStyles(ForwardRef(TableCell))>
@@ -122,7 +122,7 @@ exports[`the QualityModal component should render correctly 1`] = `
                 <WithStyles(ForwardRef(Typography))
                   variant="body1"
                 >
-                  0 / 0
+                  0 / 3
                 </WithStyles(ForwardRef(Typography))>
               </div>
             </WithStyles(ForwardRef(TableCell))>
@@ -158,7 +158,7 @@ exports[`the QualityModal component should render correctly 1`] = `
                 <WithStyles(ForwardRef(Typography))
                   variant="body1"
                 >
-                  0% / 0%
+                  0% / 2%
                 </WithStyles(ForwardRef(Typography))>
               </div>
             </WithStyles(ForwardRef(TableCell))>
@@ -194,7 +194,7 @@ exports[`the QualityModal component should render correctly 1`] = `
                 <WithStyles(ForwardRef(Typography))
                   variant="body1"
                 >
-                  0 / 0 / 0
+                  8,333.98 / 11,608.06 / 3,612.67
                 </WithStyles(ForwardRef(Typography))>
               </div>
             </WithStyles(ForwardRef(TableCell))>

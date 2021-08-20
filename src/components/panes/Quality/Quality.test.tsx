@@ -1,10 +1,10 @@
 import { shallow, mount } from 'enzyme';
-import { Quality, QualityScore } from './Quality';
-import { PoorQuality } from './PoorQuality/PoorQuality';
 import { ExcellentQuality } from './ExcellentQuality/ExcellentQuality';
+import { getQualityScore } from './getQualityScore/getQualityScore';
+import { PoorQuality } from './PoorQuality/PoorQuality';
+import { Quality, QualityScore } from './Quality';
 import { QualityModal } from './QualityModal/QualityModal';
 import { useAppStateContext } from '../../AppStateProvider/AppStateProvider';
-import { getQualityScore } from './getQualityScore/getQualityScore';
 import { ViewIcon } from '../../../icons/ViewIcon';
 
 jest.mock('../../AppStateProvider/AppStateProvider');

@@ -36,6 +36,10 @@ const useStyles = makeStyles((theme) =>
     iconContainer: {
       display: 'flex',
       alignItems: 'center',
+      '& div': {
+        display: 'flex',
+        alignItems: 'center',
+      },
       '& svg': {
         marginRight: '0.3em',
       },
@@ -46,10 +50,10 @@ const useStyles = makeStyles((theme) =>
 interface QualityModalProps {
   isModalOpen: boolean;
   setIsModalOpen: (isModalOpen: boolean) => void;
-  jitter: { average: number; max: number; qualityScore: QualityScore };
-  latency: { average: number; max: number; qualityScore: QualityScore };
-  packetLoss: { average: number; max: number; qualityScore: QualityScore };
-  bitrate: { average: number; max: number; min: number; qualityScore: QualityScore };
+  jitter: { average?: string; max?: string; qualityScore: QualityScore };
+  latency: { average?: string; max?: string; qualityScore: QualityScore };
+  packetLoss: { average?: string; max?: string; qualityScore: QualityScore };
+  bitrate: { average?: string; max?: string; min?: string; qualityScore: QualityScore };
 }
 
 export function QualityModal({ isModalOpen, setIsModalOpen, latency, jitter, packetLoss, bitrate }: QualityModalProps) {

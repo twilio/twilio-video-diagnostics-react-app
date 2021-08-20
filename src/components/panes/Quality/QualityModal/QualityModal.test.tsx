@@ -3,10 +3,10 @@ import { QualityScore } from '../Quality';
 import { QualityModal } from './QualityModal';
 import { ErrorStatus, SuccessStatus } from '../../../../icons/StatusIcons';
 
-const mockJitter = { average: 0, max: 0, qualityScore: QualityScore.Excellent };
-const mockLatency = { average: 0, max: 0, qualityScore: QualityScore.Excellent };
-const mockPacketLoss = { average: 0, max: 0, qualityScore: QualityScore.Excellent };
-const mockBitrate = { average: 0, max: 0, min: 0, qualityScore: QualityScore.Excellent };
+const mockJitter = { average: '0', max: '3', qualityScore: QualityScore.Excellent };
+const mockLatency = { average: '85.2', max: '192', qualityScore: QualityScore.Excellent };
+const mockPacketLoss = { average: '0', max: '2', qualityScore: QualityScore.Excellent };
+const mockBitrate = { average: '11,608.06', max: '8,333.98', min: '3,612.67', qualityScore: QualityScore.Excellent };
 
 describe('the QualityModal component', () => {
   it('should render correctly', () => {
