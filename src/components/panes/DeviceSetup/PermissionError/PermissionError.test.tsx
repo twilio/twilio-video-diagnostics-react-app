@@ -18,7 +18,7 @@ describe('the getDeviceErrorPaneContent function', () => {
     expect(results).toMatchInlineSnapshot(`
       Object {
         "headline": "Permissions needed",
-        "message": "The user has denied permission to use audio and video. Please grant permission to the browser to access the microphone and camera.",
+        "message": "We can't access your microphone/camera which means we don't have permissions for audio and video. Depending on your browser or operating system, these might live in \\"Settings\\".",
       }
     `);
   });

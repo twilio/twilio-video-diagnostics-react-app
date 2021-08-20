@@ -15,7 +15,7 @@ exports[`the Excellent Quality component should render correctly when quality is
         gutterBottom={true}
         variant="h1"
       >
-        Quality is 
+        Expected quality is 
         excellent
       </WithStyles(ForwardRef(Typography))>
       <WithStyles(ForwardRef(Typography))
@@ -81,7 +81,7 @@ exports[`the Excellent Quality component should render correctly when quality is
         gutterBottom={true}
         variant="h1"
       >
-        Quality is 
+        Expected quality is 
         good
       </WithStyles(ForwardRef(Typography))>
       <WithStyles(ForwardRef(Typography))

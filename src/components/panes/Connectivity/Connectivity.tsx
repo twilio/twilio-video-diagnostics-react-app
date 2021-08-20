@@ -57,7 +57,7 @@ export function Connectivity() {
           <Container>
             <Grid container className={classes.container}>
               <Typography variant="h1" gutterBottom>
-                Hang Tight!
+                Hang tight!
               </Typography>
               <Typography variant="body1" gutterBottom className={classes.textBox}>
                 We're just finishing up your personalized results and creating your report.
@@ -68,11 +68,7 @@ export function Connectivity() {
             </Grid>
           </Container>
         ) : connectionFailed ? (
-          <ConnectionFailed
-            signalingGateway={signalingGateway}
-            turnServers={turnServers}
-            openModal={() => setIsModalOpen(true)}
-          />
+          <ConnectionFailed openModal={() => setIsModalOpen(true)} />
         ) : (
           <ConnectionSuccess openModal={() => setIsModalOpen(true)} />
         )

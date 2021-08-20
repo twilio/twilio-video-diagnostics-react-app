@@ -42,7 +42,7 @@ exports[`the ConnectionFailed component should render correctly 1`] = `
         <WithStyles(ForwardRef(Button))
           className="makeStyles-downloadButton-4"
           color="primary"
-          onClick={[Function]}
+          onClick={[MockFunction]}
           variant="contained"
         >
           <DownloadIcon />

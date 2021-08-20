@@ -31,7 +31,7 @@ describe('the Connectivity component', () => {
 
     const wrapper = shallow(<Connectivity />);
 
-    expect(wrapper.text().includes('Hang Tight!')).toBe(true);
+    expect(wrapper.text().includes('Hang tight!')).toBe(true);
   });
 
   it('should show the loading screen if bitrate test is running', () => {
@@ -50,7 +50,7 @@ describe('the Connectivity component', () => {
 
     const wrapper = shallow(<Connectivity />);
 
-    expect(wrapper.text().includes('Hang Tight!')).toBe(true);
+    expect(wrapper.text().includes('Hang tight!')).toBe(true);
   });
 
   it('should hide the loading screen if preflight test and bitrate test have completed', () => {
@@ -69,7 +69,7 @@ describe('the Connectivity component', () => {
       },
     }));
     const wrapper = shallow(<Connectivity />);
-    expect(wrapper.text().includes('Hang Tight!')).toBe(false);
+    expect(wrapper.text().includes('Hang tight!')).toBe(false);
   });
 
   it('should render ConnectionFailed component if there is a preflight test error', () => {

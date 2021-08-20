@@ -1,0 +1,62 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`the AppStateProvider component should return the AppState Context object 1`] = `
+Object {
+  "dispatch": [Function],
+  "downloadFinalTestResults": [Function],
+  "nextPane": [Function],
+  "state": Object {
+    "activePane": 0,
+    "audioGranted": false,
+    "audioInputTestReport": null,
+    "audioOutputTestReport": null,
+    "bitrateTest": Object {
+      "bitrate": null,
+      "error": null,
+      "report": null,
+    },
+    "bitrateTestFinished": false,
+    "bitrateTestInProgress": false,
+    "deviceError": null,
+    "downButtonDisabled": false,
+    "preflightTest": Object {
+      "error": null,
+      "progress": null,
+      "report": null,
+      "signalingGatewayReachable": false,
+      "tokenError": null,
+      "turnServersReachable": false,
+    },
+    "preflightTestFinished": false,
+    "preflightTestInProgress": false,
+    "twilioStatus": null,
+    "twilioStatusError": null,
+    "videoGranted": false,
+    "videoInputTestReport": null,
+  },
+  "userAgentInfo": Object {
+    "browser": Object {
+      "major": "92",
+      "name": "Chrome",
+      "version": "92.0.4515.131",
+    },
+    "cpu": Object {
+      "architecture": undefined,
+    },
+    "device": Object {
+      "model": undefined,
+      "type": undefined,
+      "vendor": undefined,
+    },
+    "engine": Object {
+      "name": "Blink",
+      "version": "92.0.4515.131",
+    },
+    "os": Object {
+      "name": "Mac OS",
+      "version": "10.15.7",
+    },
+    "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36",
+  },
+}
+`;

@@ -77,6 +77,7 @@ type AppStateContextType = {
   dispatch: React.Dispatch<ACTIONTYPE>;
   nextPane: () => void;
   userAgentInfo: UAParser.IResult;
+  downloadFinalTestResults: () => void;
 };
 
 export const initialState = {
@@ -284,6 +285,29 @@ export const AppStateProvider: React.FC = ({ children }) => {
   const userAgentParser = new UAParser();
   const userAgentInfo = userAgentParser.getResult();
 
+  const signalingGateway = state.preflightTest.signalingGatewayReachable ? 'Reachable' : 'Unreachable';
+  const turnServers = state.preflightTest.turnServersReachable ? 'Reachable' : 'Unreachable';
+
+  const downloadFinalTestResults = () => {
+    const finalTestResults = {
+      audioTestResults: { inputTest: state.audioInputTestReport, outputTest: state.audioOutputTestReport },
+      bitrateTestResults: state.bitrateTest.report,
+      browserInformation: userAgentInfo,
+      connectivityResults: { twilioServices: state.twilioStatus, signalingRegion: signalingGateway, TURN: turnServers },
+      preflightTestReport: { report: state.preflightTest.report, error: state.preflightTest.error?.message || null },
+      videoTestResults: state.videoInputTestReport,
+    };
+
+    const link = document.createElement('a');
+    link.download = 'test_results.json';
+    link.href = URL.createObjectURL(
+      new Blob([JSON.stringify(finalTestResults, null, 2)], {
+        type: 'text/plain',
+      })
+    );
+    link.click();
+  };
+
   const nextPane = useCallback(() => {
     switch (state.activePane) {
       case ActivePane.GetStarted:
@@ -302,6 +326,8 @@ export const AppStateProvider: React.FC = ({ children }) => {
   }, []);
 
   return (
-    <AppStateContext.Provider value={{ state, dispatch, nextPane, userAgentInfo }}>{children}</AppStateContext.Provider>
+    <AppStateContext.Provider value={{ state, dispatch, nextPane, userAgentInfo, downloadFinalTestResults }}>
+      {children}
+    </AppStateContext.Provider>
   );
 };
