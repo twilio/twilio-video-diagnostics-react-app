@@ -13,6 +13,7 @@ import { CheckPermissions } from '../panes/DeviceSetup/CheckPermissions/CheckPer
 import { Connectivity } from '../panes/Connectivity/Connectivity';
 import { GetStarted } from '../panes/GetStarted/GetStarted';
 import { PermissionError } from '../panes/DeviceSetup/PermissionError/PermissionError';
+import { Quality } from '../panes/Quality/Quality';
 
 const useStyles = makeStyles({
   contentContainer: {
@@ -126,7 +127,7 @@ const content = [
   { pane: ActivePane.AudioTest, component: <AudioTest /> },
   { pane: ActivePane.BrowserTest, component: <BrowserTest /> },
   { pane: ActivePane.Connectivity, component: <Connectivity /> },
-  { pane: ActivePane.Quality, component: <GetStarted /> },
+  { pane: ActivePane.Quality, component: <Quality /> },
   { pane: ActivePane.Results, component: <GetStarted /> },
 ];
 

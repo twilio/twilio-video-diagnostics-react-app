@@ -58,6 +58,9 @@ describe('the MainContent component', () => {
         preflightTest: {
           progress: null,
         },
+        bitrateTest: {
+          report: null,
+        },
       },
       dispatch: mockDispatch,
     }));
@@ -74,6 +77,9 @@ describe('the MainContent component', () => {
         activePane: 0,
         preflightTest: {
           progress: null,
+        },
+        bitrateTest: {
+          report: null,
         },
       },
       dispatch: mockDispatch,
@@ -169,6 +175,9 @@ describe('the MainContent component', () => {
         preflightTest: {
           progress: null,
         },
+        bitrateTest: {
+          report: null,
+        },
       },
       dispatch: mockDispatch,
     }));
@@ -184,6 +193,9 @@ describe('the MainContent component', () => {
         activePane: 3,
         preflightTest: {
           progress: null,
+        },
+        bitrateTest: {
+          report: null,
         },
         downButtonDisabled: false,
       },
