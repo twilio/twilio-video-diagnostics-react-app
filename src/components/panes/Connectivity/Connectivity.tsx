@@ -68,11 +68,7 @@ export function Connectivity() {
             </Grid>
           </Container>
         ) : connectionFailed ? (
-          <ConnectionFailed
-            signalingGateway={signalingGateway}
-            turnServers={turnServers}
-            openModal={() => setIsModalOpen(true)}
-          />
+          <ConnectionFailed openModal={() => setIsModalOpen(true)} />
         ) : (
           <ConnectionSuccess openModal={() => setIsModalOpen(true)} />
         )

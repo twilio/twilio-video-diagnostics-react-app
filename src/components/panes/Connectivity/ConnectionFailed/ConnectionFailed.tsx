@@ -3,7 +3,6 @@ import { createStyles, makeStyles, Button, Container, Grid, Typography, Paper } 
 import { DownloadIcon } from '../../../../icons/DownloadIcon';
 import { ErrorIcon } from '../../../../icons/ErrorIcon';
 import { ViewIcon } from '../../../../icons/ViewIcon';
-import { downloadJSONFile } from '../../../../utils';
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -39,22 +38,12 @@ const useStyles = makeStyles((theme) =>
 );
 
 interface ConnectionFailedProps {
-  signalingGateway: string;
-  turnServers: string;
   openModal: () => void;
 }
 
-export function ConnectionFailed({ signalingGateway, turnServers, openModal }: ConnectionFailedProps) {
+export function ConnectionFailed({ openModal }: ConnectionFailedProps) {
   const classes = useStyles();
-  const { state } = useAppStateContext();
-
-  const reportResults = {
-    audioTestResults: {},
-    browserInformation: {},
-    connectivityResults: { twilioServices: state.twilioStatus, signalingRegion: signalingGateway, TURN: turnServers },
-    videoTestResults: state.videoInputTestReport,
-    preflightTestReport: { report: state.preflightTest.report, error: state.preflightTest.error?.message },
-  };
+  const { downloadFinalTestResults } = useAppStateContext();
 
   return (
     <>
@@ -79,7 +68,7 @@ export function ConnectionFailed({ signalingGateway, turnServers, openModal }: C
             <Button
               variant="contained"
               color="primary"
-              onClick={() => downloadJSONFile(reportResults)}
+              onClick={downloadFinalTestResults}
               className={classes.downloadButton}
             >
               <DownloadIcon />

@@ -44,7 +44,7 @@ export function getDeviceErrorPaneContent(error?: Error) {
         message =
           'The operating system has blocked the browser from accessing the microphone or camera. Please check your operating system settings.';
       } else {
-        message = `We can't access your microphone/camera which means we don't have permissions for audio, video, and screen-sharing. Depending on your browser or operating system, these might live in "Settings".`;
+        message = `We can't access your microphone/camera which means we don't have permissions for audio and video. Depending on your browser or operating system, these might live in "Settings".`;
       }
 
       break;

@@ -39,7 +39,7 @@ export function ExcellentQuality({ quality, openModal }: ExcellentQualityProps) 
       <Grid container alignItems="center" justifyContent="space-between">
         <Grid item md={5}>
           <Typography variant="h1" gutterBottom>
-            Quality is {qualityScore}
+            Expected quality is {qualityScore}
           </Typography>
 
           <Typography variant="body1" gutterBottom>

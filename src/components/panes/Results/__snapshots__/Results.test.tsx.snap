@@ -29,7 +29,7 @@ exports[`the GetResults component should render correctly when score is "average
         <WithStyles(ForwardRef(Button))
           className="makeStyles-downloadButton-3"
           color="primary"
-          onClick={[Function]}
+          onClick={[MockFunction]}
           variant="contained"
         >
           <DownloadIcon />
@@ -40,15 +40,15 @@ exports[`the GetResults component should render correctly when score is "average
           style={
             Object {
               "backgroundColor": "#FFFFFF",
-              "border": "0.1em solid #8891AA",
+              "borderColor": "#8891AA",
             }
           }
-          variant="contained"
+          variant="outlined"
         >
           Restart test
         </WithStyles(ForwardRef(Button))>
         <img
-          alt="Success"
+          alt="Some Failed"
           src="test-file-stub"
           style={
             Object {
@@ -192,7 +192,7 @@ exports[`the GetResults component should render correctly when score is "bad" 1`
         <WithStyles(ForwardRef(Button))
           className="makeStyles-downloadButton-3"
           color="primary"
-          onClick={[Function]}
+          onClick={[MockFunction]}
           variant="contained"
         >
           <DownloadIcon />
@@ -203,15 +203,15 @@ exports[`the GetResults component should render correctly when score is "bad" 1`
           style={
             Object {
               "backgroundColor": "#FFFFFF",
-              "border": "0.1em solid #8891AA",
+              "borderColor": "#8891AA",
             }
           }
-          variant="contained"
+          variant="outlined"
         >
           Restart test
         </WithStyles(ForwardRef(Button))>
         <img
-          alt="Success"
+          alt="Some Failed"
           src="test-file-stub"
           style={
             Object {
@@ -352,7 +352,7 @@ exports[`the GetResults component should render correctly when score is "excelle
         <WithStyles(ForwardRef(Button))
           className="makeStyles-downloadButton-3"
           color="primary"
-          onClick={[Function]}
+          onClick={[MockFunction]}
           variant="contained"
         >
           <DownloadIcon />
@@ -363,10 +363,10 @@ exports[`the GetResults component should render correctly when score is "excelle
           style={
             Object {
               "backgroundColor": "#FFFFFF",
-              "border": "0.1em solid #8891AA",
+              "borderColor": "#8891AA",
             }
           }
-          variant="contained"
+          variant="outlined"
         >
           Restart test
         </WithStyles(ForwardRef(Button))>
@@ -514,7 +514,7 @@ exports[`the GetResults component should render correctly when score is "good" 1
         <WithStyles(ForwardRef(Button))
           className="makeStyles-downloadButton-3"
           color="primary"
-          onClick={[Function]}
+          onClick={[MockFunction]}
           variant="contained"
         >
           <DownloadIcon />
@@ -525,10 +525,10 @@ exports[`the GetResults component should render correctly when score is "good" 1
           style={
             Object {
               "backgroundColor": "#FFFFFF",
-              "border": "0.1em solid #8891AA",
+              "borderColor": "#8891AA",
             }
           }
-          variant="contained"
+          variant="outlined"
         >
           Restart test
         </WithStyles(ForwardRef(Button))>
