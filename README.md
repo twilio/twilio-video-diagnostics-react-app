@@ -1,26 +1,61 @@
-# video-diagnostics-react-app
-A collaboration application built with the twilio-video.js SDK
+# Twilio Video Diagnostics App
+*The Twilio Video Diagnostics App is currently in beta. If you have feedback on how we can improve this application, we would love to hear from you. Feel free to provide this feedback by opening an Issue.*
 
-## Setup
-Run `npm install` to install all dependencies.  
+## What is it
+This application demonstrates a diagnostics tool for testing a participant's ability to have a quality video call with the Twilio platform. It can be used as part of onboarding to ensure a successful first video call or for diagnosing issues that relate to the device, software, or network conditions of the end-user. It is built with [Twilio's Programmable Video JS SDK](https://github.com/twilio/rtc-diagnostics) and [Twilio's RTC Diagnostics SDK](https://github.com/twilio/rtc-diagnostics). 
 
-## Run
-### `npm start`
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+----- [Insert GIF] ------
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+## What does it test
 
-## Test
-### `npm test`
+1. Access and permissions to the camera and microphone 
+2. Local audio and video via interactive camera, microphone, and speaker tests 
+3. OS:Browser support
+4. Connectivity to the Twilio cloud
+5. Network performance and expected call quality
 
-Launches the test runner in the interactive watch mode.
+## Features 
+- Stepwise tests for device and software setup, connectivity with Twilio, and network performance 
+- Actionable user recommendations when tests fail
+- Approachable UX for non-technical users with access to network statistics for those who need it
+- Downloadable JSON report of the exhaustive test results
+- Customizable and ready for self hosting or embedding into other web applications
+- Deploy to Twilio Serverless at no cost  
 
-## Build
-### `npm run build`
 
-Builds the app for production to the `build` folder.
+## Prerequisites
 
-## Application Architecture
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+- A Twilio account. Sign up for free [here](https://www.twilio.com/try-twilio). 
+- Node.js .... TODO: Olivia
+- NPM .... TODO: Olivia
+
+## Install Dependencies
+Run `npm install` to install all the dependencies from NPM. 
+
+## Deploy the App
+Before deploying the app, add your Twilio Account SID and Auth Token to a `.env` file (see `.env.example` for an example). The app is deployed to Twilio with a single command:
+ 
+	$ npm run serverless:deploy
+
+When deployment has finished, the Twilio Serverless URL for the application will be printed to the console. This URL can be used to access the application: 
+
+	App deployed to: https://rtc-diagnostics-video-yiwwvd2q-6118-dev.twil.io
+
+To view the app URL at anmy time, you can run the following command: 
+
+	$ npm run serverless:list
+
+## Local Development
+In order to develop this app on your local machine, you will first need to deploy all needed endpoints to Twilio Serverless. To do this, complete the steps in the "Deploy the App to Twilio" section above.
+
+Once the endpoints are deployed, add the app's URL to the `.env` file. Then you can start a local development server by running the following command:
+
+	$ npm run start
+
+## Tests
+Run `npm test` to run all unit tests.
+
+Run `npm run test:serverless` to run all unit and E2E tests on the Serverless scripts. This requires that your Twilio account credentials are stored in the `.env` file.
+
+## License
+TODO
