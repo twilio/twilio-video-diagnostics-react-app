@@ -8,6 +8,7 @@ import {
   appStateReducer,
   initialState,
   isDownButtonDisabled,
+  TwilioStatus,
 } from './AppStateProvider';
 import { renderHook, act } from '@testing-library/react-hooks';
 
@@ -289,9 +290,10 @@ describe('the appState reducer', () => {
 
   describe('the "set-twilio-status" action type', () => {
     it('should save the status for Twilio Programmable Video', () => {
-      const newState = appStateReducer(initialState, { type: 'set-twilio-status', status: 'operational' });
+      const mockStatusObj = {} as TwilioStatus;
+      const newState = appStateReducer(initialState, { type: 'set-twilio-status', statusObj: mockStatusObj });
 
-      expect(newState.twilioStatus).toBe('operational');
+      expect(newState.twilioStatus).toBe(mockStatusObj);
     });
   });
 

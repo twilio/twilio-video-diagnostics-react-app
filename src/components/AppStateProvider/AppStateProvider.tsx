@@ -19,6 +19,15 @@ export enum ActivePane {
   Results,
 }
 
+export interface TwilioStatus {
+  groupRooms?: string;
+  goRooms?: string;
+  peerToPeerRooms?: string;
+  recordings?: string;
+  compositions?: string;
+  networkTraversal?: string;
+}
+
 interface stateType {
   activePane: ActivePane;
   videoGranted: boolean;
@@ -32,7 +41,7 @@ interface stateType {
     signalingGatewayReachable: boolean;
     turnServersReachable: boolean;
   };
-  twilioStatus: string | null;
+  twilioStatus: TwilioStatus | null;
   twilioStatusError: null | Error;
   videoInputTestReport: null | VideoInputTest.Report;
   audioInputTestReport: null | AudioInputTest.Report;
@@ -62,7 +71,7 @@ export type ACTIONTYPE =
   | { type: 'preflight-completed'; report: PreflightTestReport }
   | { type: 'preflight-failed'; error: Error }
   | { type: 'preflight-token-failed'; error: Error }
-  | { type: 'set-twilio-status'; status: string }
+  | { type: 'set-twilio-status'; statusObj: TwilioStatus }
   | { type: 'set-twilio-status-error'; error: Error }
   | { type: 'preflight-started' }
   | { type: 'preflight-finished' }
@@ -195,7 +204,7 @@ export const appStateReducer = produce((draft: stateType, action: ACTIONTYPE) =>
     case 'preflight-progress':
       draft.preflightTest.progress = action.progress;
 
-      if (action.progress === 'dtlsConnected') {
+      if (action.progress === 'dtlsConnected' || action.progress === 'peerConnectionConnected') {
         draft.preflightTest.signalingGatewayReachable = true;
       }
 
@@ -219,7 +228,7 @@ export const appStateReducer = produce((draft: stateType, action: ACTIONTYPE) =>
       break;
 
     case 'set-twilio-status':
-      draft.twilioStatus = action.status;
+      draft.twilioStatus = action.statusObj;
       break;
 
     case 'set-twilio-status-error':
@@ -287,13 +296,18 @@ export const AppStateProvider: React.FC = ({ children }) => {
 
   const signalingGateway = state.preflightTest.signalingGatewayReachable ? 'Reachable' : 'Unreachable';
   const turnServers = state.preflightTest.turnServersReachable ? 'Reachable' : 'Unreachable';
+  const maxBitrate = state.bitrateTest.report?.values ? Math.max(...state.bitrateTest.report.values) : 0;
 
   const downloadFinalTestResults = () => {
     const finalTestResults = {
       audioTestResults: { inputTest: state.audioInputTestReport, outputTest: state.audioOutputTestReport },
-      bitrateTestResults: state.bitrateTest.report,
+      bitrateTestResults: { maxBitrate, ...state.bitrateTest.report },
       browserInformation: userAgentInfo,
-      connectivityResults: { twilioServices: state.twilioStatus, signalingRegion: signalingGateway, TURN: turnServers },
+      connectivityResults: {
+        twilioServices: { ...state.twilioStatus },
+        signalingRegion: signalingGateway,
+        TURN: turnServers,
+      },
       preflightTestReport: { report: state.preflightTest.report, error: state.preflightTest.error?.message || null },
       videoTestResults: state.videoInputTestReport,
     };
