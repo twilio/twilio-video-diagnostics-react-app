@@ -32,7 +32,6 @@ export function Connectivity() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const classes = useStyles();
 
-  const twilioServicesStatus = state.twilioStatus === 'operational' ? 'Up' : 'Down';
   const signalingGateway = state.preflightTest.signalingGatewayReachable ? 'Reachable' : 'Unreachable';
   const turnServers = state.preflightTest.turnServersReachable ? 'Reachable' : 'Unreachable';
 
@@ -47,7 +46,7 @@ export function Connectivity() {
       <ConnectionModal
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
-        serviceStatus={twilioServicesStatus}
+        serviceStatuses={state.twilioStatus}
         signalingGateway={signalingGateway}
         turnServers={turnServers}
       />
