@@ -6,7 +6,7 @@ This application demonstrates a diagnostics tool for testing a participant's abi
 
 ----- [Insert GIF] ------
 
-## What does it test
+## What it tests
 
 1. Access and permissions to the camera and microphone 
 2. Local audio and video via interactive camera, microphone, and speaker tests 
@@ -26,8 +26,8 @@ This application demonstrates a diagnostics tool for testing a participant's abi
 ## Prerequisites
 
 - A Twilio account. Sign up for free [here](https://www.twilio.com/try-twilio). 
-- Node.js .... TODO: Olivia
-- NPM .... TODO: Olivia
+- Node.js v12+
+- NPM v6+ (comes installed with newer Node versions)
 
 ## Install Dependencies
 Run `npm install` to install all the dependencies from NPM. 
@@ -41,12 +41,12 @@ When deployment has finished, the Twilio Serverless URL for the application will
 
 	App deployed to: https://rtc-diagnostics-video-yiwwvd2q-6118-dev.twil.io
 
-To view the app URL at anmy time, you can run the following command: 
+To view the app URL at any time, you can run the following command: 
 
 	$ npm run serverless:list
 
 ## Local Development
-In order to develop this app on your local machine, you will first need to deploy all needed endpoints to Twilio Serverless. To do this, complete the steps in the "Deploy the App to Twilio" section above.
+In order to develop this app on your local machine, you will first need to deploy all needed endpoints to Twilio Serverless. To do this, complete the steps in the "Deploy the App" section above.
 
 Once the endpoints are deployed, add the app's URL to the `.env` file. Then you can start a local development server by running the following command:
 
