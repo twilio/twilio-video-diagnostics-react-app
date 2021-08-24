@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { ACTIONTYPE } from '../AppStateProvider';
+import { ACTIONTYPE, TwilioStatus } from '../AppStateProvider';
 import axios from 'axios';
 
 const BASE_URL = 'https://status.twilio.com/api/v2/components.json';
@@ -8,12 +8,29 @@ export default function useTwilioStatus(dispatch: React.Dispatch<ACTIONTYPE>) {
   const getTwilioStatus = useCallback(() => {
     return axios(BASE_URL)
       .then((response) => {
-        const twilioVideoComponent = response.data.components.filter(
-          (componentObj: any) => componentObj.name === 'PROGRAMMABLE VIDEO'
+        const statusObj: TwilioStatus = {};
+
+        const twilioVideoComponents = response.data.components.filter((componentObj: any) =>
+          [
+            'Group Rooms',
+            'Peer-to-Peer Rooms',
+            'Compositions',
+            'Recordings',
+            'Network Traversal Service',
+            'Go Rooms',
+          ].includes(componentObj.name)
         );
 
-        const status = twilioVideoComponent[0].status;
-        dispatch({ type: 'set-twilio-status', status });
+        twilioVideoComponents.forEach((componentStatus: any) => {
+          if (componentStatus.name === 'Compositions') statusObj.compositions = componentStatus.status;
+          if (componentStatus.name === 'Go Rooms') statusObj.goRooms = componentStatus.status;
+          if (componentStatus.name === 'Group Rooms') statusObj.groupRooms = componentStatus.status;
+          if (componentStatus.name === 'Network Traversal Service') statusObj.networkTraversal = componentStatus.status;
+          if (componentStatus.name === 'Peer-to-Peer Rooms') statusObj.peerToPeerRooms = componentStatus.status;
+          if (componentStatus.name === 'Recordings') statusObj.recordings = componentStatus.status;
+        });
+
+        dispatch({ type: 'set-twilio-status', statusObj });
       })
 
       .catch((error) => {
