@@ -72,7 +72,7 @@ exports[`the ConnectionModal component should render correctly 1`] = `
             status="operational"
           />
           <TwilioStatusRow
-            serviceName="Peer-to-peer Rooms"
+            serviceName="Peer-to-Peer Rooms"
             status="operational"
           />
           <TwilioStatusRow

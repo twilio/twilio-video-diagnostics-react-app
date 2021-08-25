@@ -19,13 +19,15 @@ export enum ActivePane {
   Results,
 }
 
+export type Status = 'operational' | 'major_outage' | 'partial_outage' | 'degraded_performance';
+
 export interface TwilioStatus {
-  groupRooms?: string;
-  goRooms?: string;
-  peerToPeerRooms?: string;
-  recordings?: string;
-  compositions?: string;
-  networkTraversal?: string;
+  ['Group Rooms']?: Status;
+  ['Go Rooms']?: Status;
+  ['Peer-to-Peer Rooms']?: Status;
+  ['Recordings']?: Status;
+  ['Compositions']?: Status;
+  ['Network Traversal Service']?: Status;
 }
 
 interface stateType {
@@ -203,7 +205,7 @@ export const appStateReducer = produce((draft: stateType, action: ACTIONTYPE) =>
 
     case 'preflight-progress':
       draft.preflightTest.progress = action.progress;
-
+      // Safari does not support RTCDtlsTransport, so we use 'peerConnectionConnected' to determine if Signaling Gateway is reachable
       if (action.progress === 'dtlsConnected' || action.progress === 'peerConnectionConnected') {
         draft.preflightTest.signalingGatewayReachable = true;
       }
@@ -294,11 +296,11 @@ export const AppStateProvider: React.FC = ({ children }) => {
   const userAgentParser = new UAParser();
   const userAgentInfo = userAgentParser.getResult();
 
-  const signalingGateway = state.preflightTest.signalingGatewayReachable ? 'Reachable' : 'Unreachable';
-  const turnServers = state.preflightTest.turnServersReachable ? 'Reachable' : 'Unreachable';
-  const maxBitrate = state.bitrateTest.report?.values ? Math.max(...state.bitrateTest.report.values) : 0;
-
   const downloadFinalTestResults = () => {
+    const signalingGateway = state.preflightTest.signalingGatewayReachable ? 'Reachable' : 'Unreachable';
+    const turnServers = state.preflightTest.turnServersReachable ? 'Reachable' : 'Unreachable';
+    const maxBitrate = state.bitrateTest.report?.values ? Math.max(...state.bitrateTest.report.values) : 0;
+
     const finalTestResults = {
       audioTestResults: { inputTest: state.audioInputTestReport, outputTest: state.audioOutputTestReport },
       bitrateTestResults: { maxBitrate, ...state.bitrateTest.report },

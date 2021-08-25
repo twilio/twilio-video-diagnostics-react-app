@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { ACTIONTYPE, TwilioStatus } from '../AppStateProvider';
+import { ACTIONTYPE, TwilioStatus, Status } from '../AppStateProvider';
 import axios from 'axios';
 
 const BASE_URL = 'https://status.twilio.com/api/v2/components.json';
@@ -10,24 +10,19 @@ export default function useTwilioStatus(dispatch: React.Dispatch<ACTIONTYPE>) {
       .then((response) => {
         const statusObj: TwilioStatus = {};
 
-        const twilioVideoComponents = response.data.components.filter((componentObj: any) =>
-          [
-            'Group Rooms',
-            'Peer-to-Peer Rooms',
-            'Compositions',
-            'Recordings',
-            'Network Traversal Service',
-            'Go Rooms',
-          ].includes(componentObj.name)
-        );
+        const ALLOWED_COMPONENTS = [
+          'Group Rooms',
+          'Peer-to-Peer Rooms',
+          'Compositions',
+          'Recordings',
+          'Network Traversal Service',
+          'Go Rooms',
+        ];
 
-        twilioVideoComponents.forEach((componentStatus: any) => {
-          if (componentStatus.name === 'Compositions') statusObj.compositions = componentStatus.status;
-          if (componentStatus.name === 'Go Rooms') statusObj.goRooms = componentStatus.status;
-          if (componentStatus.name === 'Group Rooms') statusObj.groupRooms = componentStatus.status;
-          if (componentStatus.name === 'Network Traversal Service') statusObj.networkTraversal = componentStatus.status;
-          if (componentStatus.name === 'Peer-to-Peer Rooms') statusObj.peerToPeerRooms = componentStatus.status;
-          if (componentStatus.name === 'Recordings') statusObj.recordings = componentStatus.status;
+        response.data.components.forEach(({ name, status }: { name: keyof TwilioStatus; status: Status }) => {
+          if (ALLOWED_COMPONENTS.includes(name)) {
+            statusObj[name] = status;
+          }
         });
 
         dispatch({ type: 'set-twilio-status', statusObj });

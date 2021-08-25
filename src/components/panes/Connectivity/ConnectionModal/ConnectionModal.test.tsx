@@ -1,36 +1,42 @@
 import { shallow } from 'enzyme';
-import { ConnectionModal, determineStatus, TwilioStatusRow } from './ConnectionModal';
+import { ConnectionModal, TwilioStatusRow } from './ConnectionModal';
 import { ErrorStatus, SuccessStatus, WarningStatus } from '../../../../icons/StatusIcons';
+import { TwilioStatus } from '../../../AppStateProvider/AppStateProvider';
 
-const mockServiceStatuses = {
-  groupRooms: 'operational',
-  goRooms: 'operational',
-  peerToPeerRooms: 'operational',
-  recordings: 'operational',
-  compositions: 'operational',
-  networkTraversal: 'operational',
+const mockServiceStatuses: TwilioStatus = {
+  'Group Rooms': 'operational',
+  'Go Rooms': 'operational',
+  'Peer-to-Peer Rooms': 'operational',
+  Recordings: 'operational',
+  Compositions: 'operational',
+  'Network Traversal Service': 'operational',
 };
-
-describe('the determineStatus function', () => {
-  it('should return an object with status "Up" and "Success" icon when status is "operational"', () => {
-    expect(determineStatus('operational')).toEqual({ status: 'Up', icon: <SuccessStatus /> });
-  });
-  it('should return an object with status "Major Outage" and "Error" icon when status is "major_outage"', () => {
-    expect(determineStatus('major_outage')).toEqual({ status: 'Major Outage', icon: <ErrorStatus /> });
-  });
-  it('should return an object with status "Partial Outage" and "Warning" icon when status is "partial_outage"', () => {
-    expect(determineStatus('partial_outage')).toEqual({ status: 'Partial Outage', icon: <WarningStatus /> });
-  });
-  it('should return an object with status "Degraded" and "Warning" icon when status is "degraded_performance"', () => {
-    expect(determineStatus('degraded_performance')).toEqual({ status: 'Degraded', icon: <WarningStatus /> });
-  });
-});
 
 describe('the TwilioStatusRow component', () => {
   it('should render correctly', () => {
     const wrapper = shallow(<TwilioStatusRow status="operational" serviceName="Compositions" />);
 
     expect(wrapper).toMatchSnapshot();
+  });
+
+  it('should use the success icons when a service status is "operational"', () => {
+    const wrapper = shallow(<TwilioStatusRow status="operational" serviceName="Compositions" />);
+    expect(wrapper.find(SuccessStatus).exists()).toBe(true);
+  });
+
+  it('should use the error icons when a service status is major_outage', () => {
+    const wrapper = shallow(<TwilioStatusRow status="major_outage" serviceName="Group Rooms" />);
+    expect(wrapper.find(ErrorStatus).exists()).toBe(true);
+  });
+
+  it('should use the warning icons when a service status is partial_outage', () => {
+    const wrapper = shallow(<TwilioStatusRow status="partial_outage" serviceName="Compositions" />);
+    expect(wrapper.find(WarningStatus).exists()).toBe(true);
+  });
+
+  it('should use the warning icons when a service status is degraded_performance', () => {
+    const wrapper = shallow(<TwilioStatusRow status="degraded_performance" serviceName="Go Rooms" />);
+    expect(wrapper.find(WarningStatus).exists()).toBe(true);
   });
 });
 

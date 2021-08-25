@@ -29,12 +29,12 @@ describe('the useTwilioStatus hook', () => {
       expect(mockDispatch).toHaveBeenCalledWith({
         type: 'set-twilio-status',
         statusObj: {
-          compositions: 'operational',
-          goRooms: 'partial_outage',
-          groupRooms: 'degraded_performance',
-          networkTraversal: 'operational',
-          recordings: 'operational',
-          peerToPeerRooms: 'operational',
+          Compositions: 'operational',
+          'Go Rooms': 'partial_outage',
+          'Group Rooms': 'degraded_performance',
+          'Network Traversal Service': 'operational',
+          Recordings: 'operational',
+          'Peer-to-Peer Rooms': 'operational',
         },
       });
     });

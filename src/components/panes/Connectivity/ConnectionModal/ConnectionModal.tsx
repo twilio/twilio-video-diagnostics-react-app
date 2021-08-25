@@ -40,16 +40,16 @@ const useStyles = makeStyles((theme) =>
   })
 );
 
-export const determineStatus = (status: string) => {
-  if (status === 'operational') return { status: 'Up', icon: <SuccessStatus /> };
-  if (status === 'major_outage') return { status: 'Major Outage', icon: <ErrorStatus /> };
-  if (status === 'partial_outage') return { status: 'Partial Outage', icon: <WarningStatus /> };
-  if (status === 'degraded_performance') return { status: 'Degraded', icon: <WarningStatus /> };
-};
+const serviceStatusObj: { [key: string]: any } = {
+  operational: { status: 'Up', icon: <SuccessStatus /> },
+  major_outage: { status: 'Major Outage', icon: <ErrorStatus /> },
+  partial_outage: { status: 'Partial Outage', icon: <WarningStatus /> },
+  degraded_performance: { status: 'Degraded', icon: <WarningStatus /> },
+} as const;
 
-export function TwilioStatusRow({ status, serviceName }: { status: string; serviceName: string }) {
+export function TwilioStatusRow({ status, serviceName }: { status?: string; serviceName: string }) {
   const classes = useStyles();
-  const serviceStatus = determineStatus(status);
+  const serviceStatus = status ? serviceStatusObj[status] : null;
 
   return (
     <TableRow>
@@ -111,12 +111,15 @@ export function ConnectionModal({
               </TableRow>
             </TableHead>
             <TableBody>
-              <TwilioStatusRow status={serviceStatuses?.compositions!} serviceName="Compositions" />
-              <TwilioStatusRow status={serviceStatuses?.goRooms!} serviceName="Go Rooms" />
-              <TwilioStatusRow status={serviceStatuses?.groupRooms!} serviceName="Group Rooms" />
-              <TwilioStatusRow status={serviceStatuses?.networkTraversal!} serviceName="Network Traversal" />
-              <TwilioStatusRow status={serviceStatuses?.peerToPeerRooms!} serviceName="Peer-to-peer Rooms" />
-              <TwilioStatusRow status={serviceStatuses?.recordings!} serviceName="Recordings" />
+              <TwilioStatusRow status={serviceStatuses?.['Compositions']} serviceName="Compositions" />
+              <TwilioStatusRow status={serviceStatuses?.['Go Rooms']} serviceName="Go Rooms" />
+              <TwilioStatusRow status={serviceStatuses?.['Group Rooms']} serviceName="Group Rooms" />
+              <TwilioStatusRow
+                status={serviceStatuses?.['Network Traversal Service']}
+                serviceName="Network Traversal"
+              />
+              <TwilioStatusRow status={serviceStatuses?.['Peer-to-Peer Rooms']} serviceName="Peer-to-Peer Rooms" />
+              <TwilioStatusRow status={serviceStatuses?.['Recordings']} serviceName="Recordings" />
               <TableRow>
                 <TableCell>
                   <div className={classes.iconContainer}>
