@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) =>
   })
 );
 
-const serviceStatusObj: { [key: string]: any } = {
+const serviceStatusObj = {
   operational: { status: 'Up', icon: <SuccessStatus /> },
   major_outage: { status: 'Major Outage', icon: <ErrorStatus /> },
   partial_outage: { status: 'Partial Outage', icon: <WarningStatus /> },
