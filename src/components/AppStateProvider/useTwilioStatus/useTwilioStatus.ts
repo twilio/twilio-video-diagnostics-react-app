@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { ACTIONTYPE, TwilioStatus, Status } from '../AppStateProvider';
+import { ACTIONTYPE, TwilioStatus, TwilioAPIStatus } from '../AppStateProvider';
 import axios from 'axios';
 
 const BASE_URL = 'https://status.twilio.com/api/v2/components.json';
@@ -19,7 +19,7 @@ export default function useTwilioStatus(dispatch: React.Dispatch<ACTIONTYPE>) {
           'Go Rooms',
         ];
 
-        response.data.components.forEach(({ name, status }: { name: keyof TwilioStatus; status: Status }) => {
+        response.data.components.forEach(({ name, status }: { name: keyof TwilioStatus; status: TwilioAPIStatus }) => {
           if (ALLOWED_COMPONENTS.includes(name)) {
             statusObj[name] = status;
           }

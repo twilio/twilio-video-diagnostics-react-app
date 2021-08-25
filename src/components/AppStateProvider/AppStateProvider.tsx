@@ -19,15 +19,15 @@ export enum ActivePane {
   Results,
 }
 
-export type Status = 'operational' | 'major_outage' | 'partial_outage' | 'degraded_performance';
+export type TwilioAPIStatus = 'operational' | 'major_outage' | 'partial_outage' | 'degraded_performance';
 
 export interface TwilioStatus {
-  ['Group Rooms']?: Status;
-  ['Go Rooms']?: Status;
-  ['Peer-to-Peer Rooms']?: Status;
-  ['Recordings']?: Status;
-  ['Compositions']?: Status;
-  ['Network Traversal Service']?: Status;
+  ['Group Rooms']?: TwilioAPIStatus;
+  ['Go Rooms']?: TwilioAPIStatus;
+  ['Peer-to-Peer Rooms']?: TwilioAPIStatus;
+  ['Recordings']?: TwilioAPIStatus;
+  ['Compositions']?: TwilioAPIStatus;
+  ['Network Traversal Service']?: TwilioAPIStatus;
 }
 
 interface stateType {

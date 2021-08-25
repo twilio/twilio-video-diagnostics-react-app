@@ -14,7 +14,7 @@ import {
 } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
 import { ErrorStatus, SuccessStatus, WarningStatus } from '../../../../icons/StatusIcons';
-import { TwilioStatus } from '../../../AppStateProvider/AppStateProvider';
+import { TwilioStatus, TwilioAPIStatus } from '../../../AppStateProvider/AppStateProvider';
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -45,9 +45,9 @@ const serviceStatusObj: { [key: string]: any } = {
   major_outage: { status: 'Major Outage', icon: <ErrorStatus /> },
   partial_outage: { status: 'Partial Outage', icon: <WarningStatus /> },
   degraded_performance: { status: 'Degraded', icon: <WarningStatus /> },
-} as const;
+};
 
-export function TwilioStatusRow({ status, serviceName }: { status?: string; serviceName: string }) {
+export function TwilioStatusRow({ status, serviceName }: { status?: TwilioAPIStatus; serviceName: string }) {
   const classes = useStyles();
   const serviceStatus = status ? serviceStatusObj[status] : null;
 
