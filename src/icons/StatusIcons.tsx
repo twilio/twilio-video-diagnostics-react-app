@@ -11,3 +11,10 @@ export const ErrorStatus = () => (
     <rect x="10.0713" y="3" width="10" height="10" transform="rotate(45 10.0713 3)" fill="#D61F1F" />
   </svg>
 );
+
+export const WarningStatus = () => (
+  <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0 0H20V20H0V0Z" fill="white" fillOpacity="0.01" />
+    <rect x="10.0713" y="3" width="10" height="10" transform="rotate(45 10.0713 3)" fill="#FFFF00" />
+  </svg>
+);

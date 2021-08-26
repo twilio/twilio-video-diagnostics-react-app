@@ -48,36 +48,37 @@ exports[`the ConnectionModal component should render correctly 1`] = `
                 variant="body1"
               >
                 <strong>
-                  Connection Type
+                  Type
                 </strong>
               </WithStyles(ForwardRef(Typography))>
             </WithStyles(ForwardRef(TableCell))>
           </WithStyles(ForwardRef(TableRow))>
         </WithStyles(ForwardRef(TableHead))>
         <WithStyles(ForwardRef(TableBody))>
-          <WithStyles(ForwardRef(TableRow))>
-            <WithStyles(ForwardRef(TableCell))>
-              <div
-                className="makeStyles-iconContainer-4"
-              >
-                <SuccessStatus />
-                <WithStyles(ForwardRef(Typography))
-                  variant="body1"
-                >
-                  <strong>
-                    Up
-                  </strong>
-                </WithStyles(ForwardRef(Typography))>
-              </div>
-            </WithStyles(ForwardRef(TableCell))>
-            <WithStyles(ForwardRef(TableCell))>
-              <WithStyles(ForwardRef(Typography))
-                variant="body1"
-              >
-                Twilio Services
-              </WithStyles(ForwardRef(Typography))>
-            </WithStyles(ForwardRef(TableCell))>
-          </WithStyles(ForwardRef(TableRow))>
+          <TwilioStatusRow
+            serviceName="Compositions"
+            status="operational"
+          />
+          <TwilioStatusRow
+            serviceName="Go Rooms"
+            status="operational"
+          />
+          <TwilioStatusRow
+            serviceName="Group Rooms"
+            status="operational"
+          />
+          <TwilioStatusRow
+            serviceName="Network Traversal"
+            status="operational"
+          />
+          <TwilioStatusRow
+            serviceName="Peer-to-Peer Rooms"
+            status="operational"
+          />
+          <TwilioStatusRow
+            serviceName="Recordings"
+            status="operational"
+          />
           <WithStyles(ForwardRef(TableRow))>
             <WithStyles(ForwardRef(TableCell))>
               <div
@@ -129,4 +130,30 @@ exports[`the ConnectionModal component should render correctly 1`] = `
     </WithStyles(ForwardRef(DialogContent))>
   </WithStyles(ForwardRef(Dialog))>
 </Fragment>
+`;
+
+exports[`the TwilioStatusRow component should render correctly 1`] = `
+<WithStyles(ForwardRef(TableRow))>
+  <WithStyles(ForwardRef(TableCell))>
+    <div
+      className="makeStyles-iconContainer-4"
+    >
+      <SuccessStatus />
+      <WithStyles(ForwardRef(Typography))
+        variant="body1"
+      >
+        <strong>
+          Up
+        </strong>
+      </WithStyles(ForwardRef(Typography))>
+    </div>
+  </WithStyles(ForwardRef(TableCell))>
+  <WithStyles(ForwardRef(TableCell))>
+    <WithStyles(ForwardRef(Typography))
+      variant="body1"
+    >
+      Compositions
+    </WithStyles(ForwardRef(Typography))>
+  </WithStyles(ForwardRef(TableCell))>
+</WithStyles(ForwardRef(TableRow))>
 `;

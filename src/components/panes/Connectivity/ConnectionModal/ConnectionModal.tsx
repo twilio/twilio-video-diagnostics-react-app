@@ -13,7 +13,8 @@ import {
   TableCell,
 } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
-import { ErrorStatus, SuccessStatus } from '../../../../icons/StatusIcons';
+import { ErrorStatus, SuccessStatus, WarningStatus } from '../../../../icons/StatusIcons';
+import { TwilioStatus, TwilioAPIStatus } from '../../../AppStateProvider/AppStateProvider';
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -39,10 +40,38 @@ const useStyles = makeStyles((theme) =>
   })
 );
 
+const serviceStatusObj = {
+  operational: { status: 'Up', icon: <SuccessStatus /> },
+  major_outage: { status: 'Major Outage', icon: <ErrorStatus /> },
+  partial_outage: { status: 'Partial Outage', icon: <WarningStatus /> },
+  degraded_performance: { status: 'Degraded', icon: <WarningStatus /> },
+};
+
+export function TwilioStatusRow({ status, serviceName }: { status?: TwilioAPIStatus; serviceName: string }) {
+  const classes = useStyles();
+  const serviceStatus = status ? serviceStatusObj[status] : null;
+
+  return (
+    <TableRow>
+      <TableCell>
+        <div className={classes.iconContainer}>
+          {serviceStatus?.icon}
+          <Typography variant="body1">
+            <strong>{serviceStatus?.status}</strong>
+          </Typography>
+        </div>
+      </TableCell>
+      <TableCell>
+        <Typography variant="body1">{serviceName}</Typography>
+      </TableCell>
+    </TableRow>
+  );
+}
+
 interface ConnectionModalProps {
   isModalOpen: boolean;
   setIsModalOpen: (isModalOpen: boolean) => void;
-  serviceStatus: string;
+  serviceStatuses: TwilioStatus | null;
   signalingGateway: string;
   turnServers: string;
 }
@@ -50,7 +79,7 @@ interface ConnectionModalProps {
 export function ConnectionModal({
   isModalOpen,
   setIsModalOpen,
-  serviceStatus,
+  serviceStatuses,
   signalingGateway,
   turnServers,
 }: ConnectionModalProps) {
@@ -76,25 +105,21 @@ export function ConnectionModal({
                 </TableCell>
                 <TableCell>
                   <Typography variant="body1">
-                    <strong>Connection Type</strong>
+                    <strong>Type</strong>
                   </Typography>
                 </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              <TableRow>
-                <TableCell>
-                  <div className={classes.iconContainer}>
-                    {serviceStatus === 'Up' ? <SuccessStatus /> : <ErrorStatus />}
-                    <Typography variant="body1">
-                      <strong>{serviceStatus}</strong>
-                    </Typography>
-                  </div>
-                </TableCell>
-                <TableCell>
-                  <Typography variant="body1">Twilio Services</Typography>
-                </TableCell>
-              </TableRow>
+              <TwilioStatusRow status={serviceStatuses?.['Compositions']} serviceName="Compositions" />
+              <TwilioStatusRow status={serviceStatuses?.['Go Rooms']} serviceName="Go Rooms" />
+              <TwilioStatusRow status={serviceStatuses?.['Group Rooms']} serviceName="Group Rooms" />
+              <TwilioStatusRow
+                status={serviceStatuses?.['Network Traversal Service']}
+                serviceName="Network Traversal"
+              />
+              <TwilioStatusRow status={serviceStatuses?.['Peer-to-Peer Rooms']} serviceName="Peer-to-Peer Rooms" />
+              <TwilioStatusRow status={serviceStatuses?.['Recordings']} serviceName="Recordings" />
               <TableRow>
                 <TableCell>
                   <div className={classes.iconContainer}>

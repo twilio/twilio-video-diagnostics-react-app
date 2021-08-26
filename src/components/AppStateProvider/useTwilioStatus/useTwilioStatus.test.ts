@@ -6,7 +6,12 @@ const mockAxiosData = {
   data: {
     components: [
       { name: 'TEST VOICE COMPONENT', status: 'major_outage' },
-      { name: 'PROGRAMMABLE VIDEO', status: 'operational' },
+      { name: 'Group Rooms', status: 'degraded_performance' },
+      { name: 'Peer-to-Peer Rooms', status: 'operational' },
+      { name: 'Compositions', status: 'operational' },
+      { name: 'Recordings', status: 'operational' },
+      { name: 'Network Traversal Service', status: 'operational' },
+      { name: 'Go Rooms', status: 'partial_outage' },
       { name: 'TEST CONSOLE COMPONENT', status: 'operational' },
     ],
   },
@@ -21,7 +26,17 @@ describe('the useTwilioStatus hook', () => {
     const mockDispatch = jest.fn();
     const { result } = renderHook(() => useTwilioStatus(mockDispatch));
     return result.current.getTwilioStatus()!.then(() => {
-      expect(mockDispatch).toHaveBeenCalledWith({ type: 'set-twilio-status', status: 'operational' });
+      expect(mockDispatch).toHaveBeenCalledWith({
+        type: 'set-twilio-status',
+        statusObj: {
+          Compositions: 'operational',
+          'Go Rooms': 'partial_outage',
+          'Group Rooms': 'degraded_performance',
+          'Network Traversal Service': 'operational',
+          Recordings: 'operational',
+          'Peer-to-Peer Rooms': 'operational',
+        },
+      });
     });
   });
 

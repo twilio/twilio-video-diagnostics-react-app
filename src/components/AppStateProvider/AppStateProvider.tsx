@@ -19,6 +19,17 @@ export enum ActivePane {
   Results,
 }
 
+export type TwilioAPIStatus = 'operational' | 'major_outage' | 'partial_outage' | 'degraded_performance';
+
+export interface TwilioStatus {
+  ['Group Rooms']?: TwilioAPIStatus;
+  ['Go Rooms']?: TwilioAPIStatus;
+  ['Peer-to-Peer Rooms']?: TwilioAPIStatus;
+  ['Recordings']?: TwilioAPIStatus;
+  ['Compositions']?: TwilioAPIStatus;
+  ['Network Traversal Service']?: TwilioAPIStatus;
+}
+
 interface stateType {
   activePane: ActivePane;
   videoGranted: boolean;
@@ -32,7 +43,7 @@ interface stateType {
     signalingGatewayReachable: boolean;
     turnServersReachable: boolean;
   };
-  twilioStatus: string | null;
+  twilioStatus: TwilioStatus | null;
   twilioStatusError: null | Error;
   videoInputTestReport: null | VideoInputTest.Report;
   audioInputTestReport: null | AudioInputTest.Report;
@@ -62,7 +73,7 @@ export type ACTIONTYPE =
   | { type: 'preflight-completed'; report: PreflightTestReport }
   | { type: 'preflight-failed'; error: Error }
   | { type: 'preflight-token-failed'; error: Error }
-  | { type: 'set-twilio-status'; status: string }
+  | { type: 'set-twilio-status'; statusObj: TwilioStatus }
   | { type: 'set-twilio-status-error'; error: Error }
   | { type: 'preflight-started' }
   | { type: 'preflight-finished' }
@@ -194,8 +205,8 @@ export const appStateReducer = produce((draft: stateType, action: ACTIONTYPE) =>
 
     case 'preflight-progress':
       draft.preflightTest.progress = action.progress;
-
-      if (action.progress === 'dtlsConnected') {
+      // Safari does not support RTCDtlsTransport, so we use 'peerConnectionConnected' to determine if Signaling Gateway is reachable
+      if (action.progress === 'dtlsConnected' || action.progress === 'peerConnectionConnected') {
         draft.preflightTest.signalingGatewayReachable = true;
       }
 
@@ -219,7 +230,7 @@ export const appStateReducer = produce((draft: stateType, action: ACTIONTYPE) =>
       break;
 
     case 'set-twilio-status':
-      draft.twilioStatus = action.status;
+      draft.twilioStatus = action.statusObj;
       break;
 
     case 'set-twilio-status-error':
@@ -285,15 +296,20 @@ export const AppStateProvider: React.FC = ({ children }) => {
   const userAgentParser = new UAParser();
   const userAgentInfo = userAgentParser.getResult();
 
-  const signalingGateway = state.preflightTest.signalingGatewayReachable ? 'Reachable' : 'Unreachable';
-  const turnServers = state.preflightTest.turnServersReachable ? 'Reachable' : 'Unreachable';
-
   const downloadFinalTestResults = () => {
+    const signalingGateway = state.preflightTest.signalingGatewayReachable ? 'Reachable' : 'Unreachable';
+    const turnServers = state.preflightTest.turnServersReachable ? 'Reachable' : 'Unreachable';
+    const maxBitrate = state.bitrateTest.report?.values ? Math.max(...state.bitrateTest.report.values) : 0;
+
     const finalTestResults = {
       audioTestResults: { inputTest: state.audioInputTestReport, outputTest: state.audioOutputTestReport },
-      bitrateTestResults: state.bitrateTest.report,
+      bitrateTestResults: { maxBitrate, ...state.bitrateTest.report },
       browserInformation: userAgentInfo,
-      connectivityResults: { twilioServices: state.twilioStatus, signalingRegion: signalingGateway, TURN: turnServers },
+      connectivityResults: {
+        twilioServices: { ...state.twilioStatus },
+        signalingRegion: signalingGateway,
+        TURN: turnServers,
+      },
       preflightTestReport: { report: state.preflightTest.report, error: state.preflightTest.error?.message || null },
       videoTestResults: state.videoInputTestReport,
     };
