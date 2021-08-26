@@ -18,7 +18,8 @@ interface AudioDeviceProps {
   disabled: boolean;
   kind: 'audioinput' | 'audiooutput';
   onDeviceChange: (value: string) => void;
-  error: string;
+  setDeviceError: (value: string) => void;
+  error?: string;
 }
 
 const useStyles = makeStyles({
@@ -41,7 +42,7 @@ const useStyles = makeStyles({
   },
 });
 
-export function AudioDevice({ disabled, kind, onDeviceChange, error }: AudioDeviceProps) {
+export function AudioDevice({ disabled, kind, onDeviceChange, setDeviceError, error }: AudioDeviceProps) {
   const classes = useStyles();
   const devices = useDevices();
   const audioDevices = kind === 'audiooutput' ? devices.audioOutputDevices : devices.audioInputDevices;
@@ -53,8 +54,9 @@ export function AudioDevice({ disabled, kind, onDeviceChange, error }: AudioDevi
     (value: string) => {
       onDeviceChange(value);
       setSelectedDevice(value);
+      setDeviceError('');
     },
-    [onDeviceChange, setSelectedDevice]
+    [onDeviceChange, setSelectedDevice, setDeviceError]
   );
 
   useEffect(() => {
@@ -96,7 +98,7 @@ export function AudioDevice({ disabled, kind, onDeviceChange, error }: AudioDevi
         <div className={classes.error}>
           <SmallError />
           <Typography variant="subtitle2" color="error">
-            Unable to connect.
+            {error === 'No audio detected' ? 'No audio detected.' : 'Unable to connect.'}
           </Typography>
         </div>
       )}

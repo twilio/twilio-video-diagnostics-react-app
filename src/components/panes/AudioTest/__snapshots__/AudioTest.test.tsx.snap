@@ -21,7 +21,7 @@ exports[`the AudioTest component should render correctly 1`] = `
         gutterBottom={true}
         variant="body1"
       >
-        Record an audio clip and play it back to check that your speakers and volume control both work. If it doesn’t, try a different speaker or check your Bluetooth settings.
+        Record an audio clip and play it back to check that your speakers and volume control both work. If it doesn’t, try a different speaker or microphone, or check your Bluetooth settings.
       </WithStyles(ForwardRef(Typography))>
       <WithStyles(ForwardRef(Typography))
         gutterBottom={true}
@@ -95,15 +95,16 @@ exports[`the AudioTest component should render correctly 1`] = `
         </div>
         <Memo(AudioDevice)
           disabled={false}
-          error=""
           kind="audiooutput"
           onDeviceChange={[Function]}
+          setDeviceError={[MockFunction]}
         />
         <Memo(AudioDevice)
           disabled={false}
           error=""
           kind="audioinput"
           onDeviceChange={[Function]}
+          setDeviceError={[MockFunction]}
         />
         <div
           className="makeStyles-audioLevelContainer-2"

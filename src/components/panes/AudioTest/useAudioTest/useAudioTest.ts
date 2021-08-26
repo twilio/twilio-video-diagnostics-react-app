@@ -130,6 +130,7 @@ export default function useAudioTest() {
 
   return {
     error,
+    setError,
     isRecording,
     isAudioInputTestRunning,
     isAudioOutputTestRunning,

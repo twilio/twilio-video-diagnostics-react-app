@@ -52,6 +52,7 @@ describe('the AudioTest component', () => {
       readAudioInput: jest.fn(),
       testEnded: false,
       stopAudioTest: jest.fn(),
+      setError: jest.fn(),
     };
     mockUseAudioTest.mockImplementation(() => hookProps);
   });
@@ -168,7 +169,7 @@ describe('the AudioTest component', () => {
       expect(mockDispatch).toHaveBeenCalledWith({ type: 'next-pane' });
     });
 
-    it('should disabled the "Yes" and "Skip for now" buttons when there is an error', () => {
+    it('should disable the "Yes" and "Skip for now" buttons when there is an error that is not "No audio detected"', () => {
       mockUseAudioTest.mockImplementation(() => ({ ...hookProps, isAudioInputTestRunning: true, error: 'mockError' }));
 
       const wrapper = mount(<AudioTest />);
@@ -177,6 +178,21 @@ describe('the AudioTest component', () => {
 
       expect(yesBtn.prop('disabled')).toBe(true);
       expect(skipBtn.prop('disabled')).toBe(true);
+    });
+
+    it('should not disable buttons when there is an error that is not "No audio detected"', () => {
+      mockUseAudioTest.mockImplementation(() => ({
+        ...hookProps,
+        isAudioInputTestRunning: true,
+        error: 'No audio detected',
+      }));
+
+      const wrapper = mount(<AudioTest />);
+      const yesBtn = wrapper.find(Button).at(0);
+      const skipBtn = wrapper.find(Button).at(1);
+
+      expect(yesBtn.prop('disabled')).toBe(false);
+      expect(skipBtn.prop('disabled')).toBe(false);
     });
   });
 
