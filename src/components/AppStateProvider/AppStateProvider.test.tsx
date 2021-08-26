@@ -1,6 +1,12 @@
 import React from 'react';
 import Video, { PreflightTestReport } from 'twilio-video';
-import { AudioInputTest, AudioOutputTest, VideoInputTest, MediaConnectionBitrateTest } from '@twilio/rtc-diagnostics';
+import {
+  AudioInputTest,
+  AudioOutputTest,
+  VideoInputTest,
+  MediaConnectionBitrateTest,
+  DiagnosticError,
+} from '@twilio/rtc-diagnostics';
 import {
   ActivePane,
   useAppStateContext,
@@ -96,6 +102,26 @@ describe('the isDownButtonDisabled function', () => {
     // @ts-ignore
     Video.isSupported = false;
 
+    expect(isDownButtonDisabled(mockCurrentState)).toBe(true);
+  });
+
+  it('should return true when there is an error during the video test', () => {
+    const mockError = Error('mockError') as DiagnosticError;
+    const mockCurrentState = {
+      ...initialState,
+      activePane: ActivePane.CameraTest,
+      videoInputTestReport: { errors: [mockError] } as VideoInputTest.Report,
+    };
+    expect(isDownButtonDisabled(mockCurrentState)).toBe(true);
+  });
+
+  it('should return true when there is an error during the audio test', () => {
+    const mockError = Error('mockError') as DiagnosticError;
+    const mockCurrentState = {
+      ...initialState,
+      activePane: ActivePane.AudioTest,
+      audioInputTestReport: { errors: [mockError] } as AudioInputTest.Report,
+    };
     expect(isDownButtonDisabled(mockCurrentState)).toBe(true);
   });
 
@@ -308,7 +334,7 @@ describe('the appState reducer', () => {
 
   describe('the "set-video-test-report" action type', () => {
     it('should save the report from the VideoInput test', () => {
-      const mockReport = {} as VideoInputTest.Report;
+      const mockReport = { errors: [Error('mockError') as DiagnosticError] } as VideoInputTest.Report;
       const newState = appStateReducer(initialState, { type: 'set-video-test-report', report: mockReport });
 
       expect(newState.videoInputTestReport).toBe(mockReport);
@@ -317,7 +343,7 @@ describe('the appState reducer', () => {
 
   describe('the "set-audio-input-test-report" action type', () => {
     it('should save the report from the AudioInput test', () => {
-      const mockReport = {} as AudioInputTest.Report;
+      const mockReport = { errors: [Error('mockError') as DiagnosticError] } as AudioInputTest.Report;
       const newState = appStateReducer(initialState, { type: 'set-audio-input-test-report', report: mockReport });
 
       expect(newState.audioInputTestReport).toBe(mockReport);
@@ -326,7 +352,7 @@ describe('the appState reducer', () => {
 
   describe('the "set-audio-output-test-report" action type', () => {
     it('should save the report from the AudioOutput test', () => {
-      const mockReport = {} as AudioOutputTest.Report;
+      const mockReport = { errors: [Error('mockError') as DiagnosticError] } as AudioOutputTest.Report;
       const newState = appStateReducer(initialState, { type: 'set-audio-output-test-report', report: mockReport });
 
       expect(newState.audioOutputTestReport).toBe(mockReport);
