@@ -33,6 +33,7 @@ exports[`the AudioTest component should render correctly 1`] = `
       </WithStyles(ForwardRef(Typography))>
       <WithStyles(ForwardRef(Button))
         color="primary"
+        disabled={false}
         onClick={[Function]}
         style={
           Object {
@@ -45,6 +46,7 @@ exports[`the AudioTest component should render correctly 1`] = `
       </WithStyles(ForwardRef(Button))>
       <WithStyles(ForwardRef(Button))
         color="primary"
+        disabled={false}
         onClick={[Function]}
       >
         Skip for now
@@ -93,11 +95,13 @@ exports[`the AudioTest component should render correctly 1`] = `
         </div>
         <Memo(AudioDevice)
           disabled={false}
+          error=""
           kind="audiooutput"
           onDeviceChange={[Function]}
         />
         <Memo(AudioDevice)
           disabled={false}
+          error=""
           kind="audioinput"
           onDeviceChange={[Function]}
         />

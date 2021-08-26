@@ -13,7 +13,7 @@ const useStyles = makeStyles({
     display: 'inline-block',
     padding: '23px',
     borderRadius: '8px',
-    height: '280px',
+    minHeight: '280px',
     width: '388px',
   },
   audioLevelContainer: {
@@ -78,7 +78,19 @@ export function AudioTest() {
         readAudioInput({ deviceId: inputDeviceId });
       }
     }
-  }, [state.activePane, error, inputDeviceId, isRecording, isAudioInputTestRunning, readAudioInput, dispatch]);
+    if (error) {
+      stopAudioTest();
+    }
+  }, [
+    state.activePane,
+    error,
+    inputDeviceId,
+    isRecording,
+    isAudioInputTestRunning,
+    readAudioInput,
+    dispatch,
+    stopAudioTest,
+  ]);
 
   return (
     <Container>
@@ -102,11 +114,12 @@ export function AudioTest() {
             style={{ marginRight: '1.5em' }}
             color="primary"
             onClick={() => dispatch({ type: 'next-pane' })}
+            disabled={disableAll}
           >
             Yes
           </Button>
 
-          <Button color="primary" onClick={() => dispatch({ type: 'next-pane' })}>
+          <Button color="primary" onClick={() => dispatch({ type: 'next-pane' })} disabled={disableAll}>
             Skip for now
           </Button>
         </Grid>
@@ -133,8 +146,8 @@ export function AudioTest() {
               </div>
             </div>
             ​
-            <AudioDevice disabled={disableAll} kind="audiooutput" onDeviceChange={setOutputDeviceId} />
-            <AudioDevice disabled={disableAll} kind="audioinput" onDeviceChange={setInputDeviceId} />
+            <AudioDevice disabled={disableAll} kind="audiooutput" onDeviceChange={setOutputDeviceId} error={error} />
+            <AudioDevice disabled={disableAll} kind="audioinput" onDeviceChange={setInputDeviceId} error={error} />
             <div className={classes.audioLevelContainer}>
               <div style={{ width: '2em', display: 'flex', justifyContent: 'center' }}>
                 {isAudioOutputTestRunning ? <Speaker /> : <Microphone />}

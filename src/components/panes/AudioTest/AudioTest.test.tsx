@@ -70,6 +70,18 @@ describe('the AudioTest component', () => {
     expect(hookProps.stopAudioTest).toHaveBeenCalled();
   });
 
+  it('should stop the test when there is an audio test error', () => {
+    mockUseAudioTest.mockImplementationOnce(() => ({
+      ...hookProps,
+      isAudioOutputTestRunning: true,
+      error: 'mockError',
+    }));
+
+    mount(<AudioTest />);
+
+    expect(hookProps.stopAudioTest).toHaveBeenCalled();
+  });
+
   describe('passive testing', () => {
     it('should start passive testing by default', () => {
       mount(<AudioTest />);
@@ -154,6 +166,17 @@ describe('the AudioTest component', () => {
       const skipBtn = wrapper.find(Button).at(1);
       skipBtn.simulate('click');
       expect(mockDispatch).toHaveBeenCalledWith({ type: 'next-pane' });
+    });
+
+    it('should disabled the "Yes" and "Skip for now" buttons when there is an error', () => {
+      mockUseAudioTest.mockImplementation(() => ({ ...hookProps, isAudioInputTestRunning: true, error: 'mockError' }));
+
+      const wrapper = mount(<AudioTest />);
+      const yesBtn = wrapper.find(Button).at(0);
+      const skipBtn = wrapper.find(Button).at(1);
+
+      expect(yesBtn.prop('disabled')).toBe(true);
+      expect(skipBtn.prop('disabled')).toBe(true);
     });
   });
 
