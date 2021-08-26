@@ -101,11 +101,12 @@ export function CameraTest() {
           </Typography>
 
           <Typography variant="body1" gutterBottom>
-            Double check that you're using the correct camera. If you don't see your video, try changing the camera or
-            restarting your device.
+            Move in front of your camera to make sure it’s working. If you don't see your video, try changing the
+            selected camera. If the camera isn’t part of your computer, check your settings to make sure your system
+            recognizes it.
           </Typography>
           <Typography variant="body1" gutterBottom>
-            <strong>Does your camera look ok?</strong>
+            <strong>Does your video look ok?</strong>
           </Typography>
 
           <Button

@@ -89,8 +89,8 @@ export function AudioTest() {
           </Typography>
 
           <Typography variant="body1" gutterBottom>
-            Record an audio clip and play it back to check that your speakers and volume control both work. If it
-            doesn’t, try a different speaker or check your Bluetooth settings.
+            Record an audio clip and play it back to check that your microphone and speaker are working. If they aren't,
+            make sure your volume is turned up, try a different speaker or microphone, or check your bluetooth settings.
           </Typography>
 
           <Typography variant="body1" gutterBottom>
