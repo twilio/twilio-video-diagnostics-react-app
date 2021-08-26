@@ -154,7 +154,7 @@ export function MainContent() {
       <div className={classes.contentContainer}>
         <div
           className={clsx(classes.scrollContainer, {
-            [classes.hideAll]: state.activePane === 0,
+            [classes.hideAll]: state.activePane === 0 || isSnackbarOpen,
             [classes.hideAfter]:
               state.activePane === ActivePane.DeviceCheck ||
               state.activePane === ActivePane.DeviceError ||
@@ -183,7 +183,7 @@ export function MainContent() {
         <Button
           variant="outlined"
           onClick={() => dispatch({ type: 'previous-pane' })}
-          disabled={!ActivePane[state.activePane - 1]}
+          disabled={!ActivePane[state.activePane - 1] || isSnackbarOpen}
         >
           <ArrowUp />
         </Button>

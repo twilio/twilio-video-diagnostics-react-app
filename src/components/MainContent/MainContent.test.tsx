@@ -7,6 +7,7 @@ import { ActivePane, useAppStateContext } from '../AppStateProvider/AppStateProv
 import { ArrowDown } from '../../icons/ArrowDown';
 import { ArrowUp } from '../../icons/ArrowUp';
 import { Item, MainContent } from './MainContent';
+import { Snackbar } from '../Snackbar/Snackbar';
 import theme from '../../theme';
 import useDevices from '../../hooks/useDevices/useDevices';
 
@@ -137,6 +138,20 @@ describe('the MainContent component', () => {
     expect(wrapper.find(ArrowDown).parent().prop('disabled')).toBe(false);
   });
 
+  it('should disable the Up button when isSnackbarOpen is true', () => {
+    mockUseAppStateContext.mockImplementation(() => ({
+      state: {
+        activePane: ActivePane.CameraTest,
+        videoInputTestReport: {
+          errors: ['mockErrors'],
+        },
+      },
+    }));
+
+    const wrapper = shallow(<MainContent />);
+    expect(wrapper.find(ArrowUp).parent().prop('disabled')).toBe(true);
+  });
+
   it('should disable the Down button when downButtonDisabled is true', () => {
     const numberOfPanes = Object.keys(ActivePane).length / 2;
     mockUseAppStateContext.mockImplementation(() => ({
@@ -224,6 +239,36 @@ describe('the MainContent component', () => {
       expect(wrapper.find('div').at(1).prop('className')).toContain('hideAll');
     });
 
+    it('should hide all other items when active pane is CameraTest and there is a video test error', () => {
+      mockUseAppStateContext.mockImplementation(() => ({
+        state: {
+          activePane: ActivePane.CameraTest,
+          videoInputTestReport: {
+            errors: ['mockErrors'],
+          },
+        },
+      }));
+
+      const wrapper = shallow(<MainContent />);
+
+      expect(wrapper.find('div').at(1).prop('className')).toContain('hideAll');
+    });
+
+    it('should hide all other items when active pane is AudioTest and there is an audio test error', () => {
+      mockUseAppStateContext.mockImplementation(() => ({
+        state: {
+          activePane: ActivePane.AudioTest,
+          audioInputTestReport: {
+            errors: ['mockErrors'],
+          },
+        },
+      }));
+
+      const wrapper = shallow(<MainContent />);
+
+      expect(wrapper.find('div').at(1).prop('className')).toContain('hideAll');
+    });
+
     it('should hide the following item when active pane is DeviceCheck', () => {
       mockUseAppStateContext.mockImplementation(() => ({
         state: {
@@ -301,5 +346,34 @@ describe('the MainContent component', () => {
 
       expect(wrapper.find('div').at(1).prop('className')).toContain('hideAfter');
     });
+  });
+  it('should open the snackbar when there is a video test error', () => {
+    mockUseAppStateContext.mockImplementation(() => ({
+      state: {
+        activePane: ActivePane.CameraTest,
+        videoInputTestReport: {
+          errors: ['mockErrors'],
+        },
+      },
+    }));
+
+    const wrapper = shallow(<MainContent />);
+
+    expect(wrapper.find(Snackbar).exists()).toBe(true);
+  });
+
+  it('should open the snackbar when there is an audio test error', () => {
+    mockUseAppStateContext.mockImplementation(() => ({
+      state: {
+        activePane: ActivePane.AudioTest,
+        audioInputTestReport: {
+          errors: ['mockErrors'],
+        },
+      },
+    }));
+
+    const wrapper = shallow(<MainContent />);
+
+    expect(wrapper.find(Snackbar).exists()).toBe(true);
   });
 });
