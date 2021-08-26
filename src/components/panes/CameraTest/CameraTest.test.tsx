@@ -122,7 +122,7 @@ describe('the CameraTest component', () => {
     expect(mockStopVideoTest).toHaveBeenCalled();
   });
 
-  it('should disabled the "Yes" and "Skip for now" buttons when there is an error', () => {
+  it('should disable the "Yes" and "Skip for now" buttons when there is an error', () => {
     mockUseCameraTest.mockImplementation(() => ({
       videoTest: {},
       startVideoTest: jest.fn(),
