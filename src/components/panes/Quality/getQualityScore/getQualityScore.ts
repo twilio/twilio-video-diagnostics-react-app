@@ -5,8 +5,8 @@ import { MediaConnectionBitrateTest } from '@twilio/rtc-diagnostics';
 export function getSingleQualityScore(
   stat: number | undefined,
   goodThreshold: number,
-  averageThreshold: number,
-  badThreshold: number,
+  suboptimalThreshold: number,
+  poorThreshold: number,
   descending: boolean = false
 ) {
   if (typeof stat === 'undefined') {
@@ -16,13 +16,13 @@ export function getSingleQualityScore(
 
   if (descending) {
     if (stat > goodThreshold) return QualityScore.Excellent;
-    if (stat > averageThreshold) return QualityScore.Good;
-    if (stat > badThreshold) return QualityScore.Average;
-    return QualityScore.Bad;
+    if (stat > suboptimalThreshold) return QualityScore.Good;
+    if (stat > poorThreshold) return QualityScore.Suboptimal;
+    return QualityScore.Poor;
   }
 
-  if (stat >= badThreshold) return QualityScore.Bad;
-  if (stat >= averageThreshold) return QualityScore.Average;
+  if (stat >= poorThreshold) return QualityScore.Poor;
+  if (stat >= suboptimalThreshold) return QualityScore.Suboptimal;
   if (stat >= goodThreshold) return QualityScore.Good;
   return QualityScore.Excellent;
 }
@@ -39,7 +39,6 @@ export function getQualityScore(
   bitrateTestReport: MediaConnectionBitrateTest.Report | null
 ) {
   const maxBitrate = bitrateTestReport?.values ? Math.max(...bitrateTestReport.values) : 0;
-  const minBitrate = bitrateTestReport?.values ? Math.min(...bitrateTestReport.values) : 0;
 
   const latency = {
     average: formatNumber(preflightTestReport?.stats!.rtt!.average),
@@ -62,7 +61,6 @@ export function getQualityScore(
   const bitrate = {
     average: formatNumber(bitrateTestReport?.averageBitrate!),
     max: formatNumber(maxBitrate),
-    min: formatNumber(minBitrate),
     qualityScore: getSingleQualityScore(bitrateTestReport?.averageBitrate!, 1000, 500, 150, true),
   };
 

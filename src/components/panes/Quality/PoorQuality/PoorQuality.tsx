@@ -1,8 +1,8 @@
 import { Container, Grid, Typography, Button, Paper, makeStyles } from '@material-ui/core';
-import { useAppStateContext } from '../../../AppStateProvider/AppStateProvider';
-import { QualityScore } from '../Quality';
-import { ViewIcon } from '../../../../icons/ViewIcon';
 import { ErrorIcon } from '../../../../icons/ErrorIcon';
+import { QualityScore } from '../Quality';
+import { useAppStateContext } from '../../../AppStateProvider/AppStateProvider';
+import { ViewIcon } from '../../../../icons/ViewIcon';
 
 const useStyles = makeStyles({
   modal: {
@@ -53,13 +53,13 @@ export function PoorQuality({ quality, openModal }: PoorQualityProps) {
             <div className={classes.errorIcon}>
               <ErrorIcon />
             </div>
-            Quality {quality === QualityScore.Average ? 'is okay' : 'issues'}
+            Quality {quality === QualityScore.Suboptimal ? 'is okay' : 'issues'}
           </Typography>
 
           <Typography variant="body1" gutterBottom>
             This the last step! Your expected audio and video quality is{' '}
-            <strong>{quality === QualityScore.Average ? 'okay' : 'degraded'} </strong>
-            and overall performance {quality === QualityScore.Average ? 'could be better' : 'will be poor'}.
+            <strong>{quality === QualityScore.Suboptimal ? 'suboptimal' : 'degraded'} </strong>
+            and overall performance {quality === QualityScore.Suboptimal ? 'could be better' : 'will be poor'}.
           </Typography>
 
           <Typography variant="body1" gutterBottom>

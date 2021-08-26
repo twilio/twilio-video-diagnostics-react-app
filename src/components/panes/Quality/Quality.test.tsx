@@ -25,18 +25,18 @@ mockUseAppStateContext.mockImplementation(() => ({
 }));
 
 describe('the Quality component', () => {
-  it('should render the PoorQuality if the quality score is bad', () => {
+  it('should render the PoorQuality if the quality score is poor', () => {
     mockGetQualityScore.mockImplementation(() => ({
-      totalQualityScore: QualityScore.Bad,
+      totalQualityScore: QualityScore.Poor,
     }));
 
     const wrapper = shallow(<Quality />);
     expect(wrapper.find(PoorQuality).exists()).toBe(true);
   });
 
-  it('should render the PoorQuality if the quality score is average', () => {
+  it('should render the PoorQuality if the quality score is suboptimal', () => {
     mockGetQualityScore.mockImplementation(() => ({
-      totalQualityScore: QualityScore.Average,
+      totalQualityScore: QualityScore.Suboptimal,
     }));
 
     const wrapper = shallow(<Quality />);
@@ -79,9 +79,9 @@ describe('the Quality component', () => {
     expect(wrapper.find(QualityModal).prop('isModalOpen')).toBe(true);
   });
 
-  it('should open the modal when quality is bad and "View detailed quality information" button is clicked on', () => {
+  it('should open the modal when quality is poor and "View detailed quality information" button is clicked on', () => {
     mockGetQualityScore.mockImplementation(() => ({
-      totalQualityScore: QualityScore.Bad,
+      totalQualityScore: QualityScore.Poor,
       jitter: {},
       latency: {},
       packetLoss: {},
