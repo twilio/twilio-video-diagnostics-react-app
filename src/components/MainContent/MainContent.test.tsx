@@ -362,12 +362,42 @@ describe('the MainContent component', () => {
     expect(wrapper.find(Snackbar).exists()).toBe(true);
   });
 
-  it('should open the snackbar when there is an audio test error', () => {
+  it('should open the snackbar when there is an audio input test error', () => {
     mockUseAppStateContext.mockImplementation(() => ({
       state: {
         activePane: ActivePane.AudioTest,
         audioInputTestReport: {
           errors: ['mockErrors'],
+        },
+      },
+    }));
+
+    const wrapper = shallow(<MainContent />);
+
+    expect(wrapper.find(Snackbar).exists()).toBe(true);
+  });
+
+  it('should open the snackbar when there is an audio output test error that is not "No audio detected"', () => {
+    mockUseAppStateContext.mockImplementation(() => ({
+      state: {
+        activePane: ActivePane.AudioTest,
+        audioOutputTestReport: {
+          errors: ['mockErrors'],
+        },
+      },
+    }));
+
+    const wrapper = shallow(<MainContent />);
+
+    expect(wrapper.find(Snackbar).exists()).toBe(true);
+  });
+
+  it('should not open the snackbar when audio output test error is "No audio detected"', () => {
+    mockUseAppStateContext.mockImplementation(() => ({
+      state: {
+        activePane: ActivePane.AudioTest,
+        audioOutputTestReport: {
+          errors: ['No audio detected'],
         },
       },
     }));

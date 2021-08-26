@@ -115,12 +115,22 @@ describe('the isDownButtonDisabled function', () => {
     expect(isDownButtonDisabled(mockCurrentState)).toBe(true);
   });
 
-  it('should return true when there is an error during the audio test', () => {
+  it('should return true when there is an error during the audio input test', () => {
     const mockError = Error('mockError') as DiagnosticError;
     const mockCurrentState = {
       ...initialState,
       activePane: ActivePane.AudioTest,
       audioInputTestReport: { errors: [mockError] } as AudioInputTest.Report,
+    };
+    expect(isDownButtonDisabled(mockCurrentState)).toBe(true);
+  });
+
+  it('should return true when there is an error during the audio output test', () => {
+    const mockError = Error('mockError') as DiagnosticError;
+    const mockCurrentState = {
+      ...initialState,
+      activePane: ActivePane.AudioTest,
+      audioOutputTestReport: { errors: [mockError] } as AudioOutputTest.Report,
     };
     expect(isDownButtonDisabled(mockCurrentState)).toBe(true);
   });
