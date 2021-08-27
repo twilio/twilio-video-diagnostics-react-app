@@ -27,7 +27,6 @@ const useStyles = makeStyles({
     right: 'calc(100% + 18px)',
   },
   viewButton: {
-    background: 'white',
     marginTop: '2em',
     '& svg': {
       position: 'relative',

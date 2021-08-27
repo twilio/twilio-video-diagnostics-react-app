@@ -11,10 +11,6 @@ import TestsPassed from './TestsPassed.png';
 const useStyles = makeStyles({
   resultContainer: {
     marginTop: '2em',
-    '& Button': {
-      backgroundColor: '#FFFFFF',
-      border: '0.1em solid #8891AA',
-    },
     '&:not(:last-child)': {
       paddingBottom: '2em',
       borderBottom: '0.1em solid #8891AA',

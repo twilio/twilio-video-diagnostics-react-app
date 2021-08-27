@@ -60,6 +60,10 @@ export default createTheme({
       startIcon: {
         marginRight: '6px',
       },
+      outlined: {
+        backgroundColor: 'white',
+        border: '1px solid #8891AA',
+      },
     },
     MuiInputBase: {
       root: {
