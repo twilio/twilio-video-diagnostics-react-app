@@ -4,7 +4,7 @@
 ## What is it
 This application demonstrates a diagnostics tool for testing a participant's ability to have a quality video call with the Twilio platform. It can be used as part of onboarding to ensure a successful first video call or for diagnosing issues that relate to the device, software, or network conditions of the end-user. It is built with [Twilio's Programmable Video JS SDK](https://github.com/twilio/rtc-diagnostics) and [Twilio's RTC Diagnostics SDK](https://github.com/twilio/rtc-diagnostics). 
 
------ [Insert GIF] ------
+![](https://user-images.githubusercontent.com/11685703/131178895-a8995c2f-1fbd-451a-8949-2bfa4040b4f2.gif)
 
 ## What it tests
 
@@ -20,14 +20,14 @@ This application demonstrates a diagnostics tool for testing a participant's abi
 - Approachable UX for non-technical users with access to network statistics for those who need it
 - Downloadable JSON report of the exhaustive test results
 - Customizable and ready for self hosting or embedding into other web applications
-- Deploy to Twilio Serverless at no cost  
+- Free to deploy to [Twilio Serverless](https://www.twilio.com/docs/labs/serverless-toolkit) and no costs associated with usage 
 
 
 ## Prerequisites
 
 - A Twilio account. Sign up for free [here](https://www.twilio.com/try-twilio). 
 - Node.js v12+
-- NPM v6+ (comes installed with newer Node versions)
+- NPM v7+ (comes installed with newer Node versions)
 
 ## Install Dependencies
 Run `npm install` to install all the dependencies from NPM. 
