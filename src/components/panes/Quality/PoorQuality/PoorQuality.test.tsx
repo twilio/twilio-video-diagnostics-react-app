@@ -13,12 +13,12 @@ const mockSetIsModalOpen = jest.fn();
 
 describe('the PoorQuality component', () => {
   it('should render correctly when quality is "bad"', () => {
-    const wrapper = shallow(<PoorQuality quality={QualityScore.Bad} openModal={mockSetIsModalOpen} />);
+    const wrapper = shallow(<PoorQuality quality={QualityScore.Poor} openModal={mockSetIsModalOpen} />);
     expect(wrapper).toMatchSnapshot();
   });
 
   it('should render correctly when quality is "average"', () => {
-    const wrapper = shallow(<PoorQuality quality={QualityScore.Average} openModal={mockSetIsModalOpen} />);
+    const wrapper = shallow(<PoorQuality quality={QualityScore.Suboptimal} openModal={mockSetIsModalOpen} />);
     expect(wrapper).toMatchSnapshot();
   });
 });
