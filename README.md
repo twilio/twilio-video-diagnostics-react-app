@@ -5,6 +5,10 @@
 This application demonstrates a diagnostics tool for testing a participant's ability to have a quality video call with the Twilio platform. It can be used as part of onboarding to ensure a successful first video call or for diagnosing issues that relate to the device, software, or network conditions of the end-user. It is built with [Twilio's Programmable Video JS SDK](https://github.com/twilio/rtc-diagnostics) and [Twilio's RTC Diagnostics SDK](https://github.com/twilio/rtc-diagnostics). 
 
 ![](https://user-images.githubusercontent.com/11685703/131178895-a8995c2f-1fbd-451a-8949-2bfa4040b4f2.gif)
+<center>*The happy path*</center>
+
+
+
 
 ## What it tests
 
@@ -44,6 +48,8 @@ When deployment has finished, the Twilio Serverless URL for the application will
 To view the app URL at any time, you can run the following command: 
 
 	$ npm run serverless:list
+	
+*NOTE: When hosting this application, we recommend you use the same domain as your video service. This will ensure the end-user's device access and permissions for the diagnostics tests align with those of your video application.*
 
 ## Local Development
 In order to develop this app on your local machine, you will first need to deploy all needed endpoints to Twilio Serverless. To do this, complete the steps in the "Deploy the App" section above.
@@ -58,4 +64,4 @@ Run `npm test` to run all unit tests.
 Run `npm run test:serverless` to run all unit and E2E tests on the Serverless scripts. This requires that your Twilio account credentials are stored in the `.env` file.
 
 ## License
-TODO
+See [LICENSE](LICENSE). 
