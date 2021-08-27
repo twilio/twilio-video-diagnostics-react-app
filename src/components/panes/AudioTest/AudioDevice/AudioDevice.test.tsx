@@ -54,7 +54,7 @@ describe('the AudioDevice component', () => {
   it('should render default audio output if audio redirect is not supported', () => {
     mockAudio.prototype.setSinkId = false;
     const wrapper = shallow(
-      <AudioDevice disabled={false} kind="audiooutput" onDeviceChange={noop} setDeviceError={jest.fn()} />
+      <AudioDevice disabled={false} kind="audiooutput" onDeviceChange={noop} setDeviceError={noop} />
     );
     expect(wrapper.find(Select).exists()).toBe(false);
     expect(wrapper.find(Typography).at(1).text()).toEqual('System Default Audio Output');
@@ -62,13 +62,7 @@ describe('the AudioDevice component', () => {
 
   it('should show the error icon and "Unable to connect" when there is an audio test error', () => {
     const wrapper = shallow(
-      <AudioDevice
-        disabled={false}
-        kind="audiooutput"
-        onDeviceChange={noop}
-        error="mockError"
-        setDeviceError={jest.fn()}
-      />
+      <AudioDevice disabled={false} kind="audiooutput" onDeviceChange={noop} error="mockError" setDeviceError={noop} />
     );
 
     expect(wrapper.find(SmallError).exists()).toBe(true);
@@ -82,7 +76,7 @@ describe('the AudioDevice component', () => {
         kind="audiooutput"
         onDeviceChange={noop}
         error="No audio detected"
-        setDeviceError={jest.fn()}
+        setDeviceError={noop}
       />
     );
 
@@ -93,14 +87,14 @@ describe('the AudioDevice component', () => {
   describe('props.disabled', () => {
     it('should disable dropdown if disabled=true', () => {
       const { container } = render(
-        <AudioDevice disabled={true} kind="audioinput" onDeviceChange={noop} setDeviceError={jest.fn()} />
+        <AudioDevice disabled={true} kind="audioinput" onDeviceChange={noop} setDeviceError={noop} />
       );
       const el = container.querySelector('.MuiInputBase-root') as HTMLDivElement;
       expect(el.className.includes('Mui-disabled')).toBe(true);
     });
     it('should not disable dropdown if disabled=false', () => {
       const { container } = render(
-        <AudioDevice disabled={false} kind="audioinput" onDeviceChange={noop} setDeviceError={jest.fn()} />
+        <AudioDevice disabled={false} kind="audioinput" onDeviceChange={noop} setDeviceError={noop} />
       );
       const el = container.querySelector('.MuiInputBase-root') as HTMLDivElement;
       expect(el.className.includes('Mui-disabled')).toBe(false);
@@ -110,13 +104,13 @@ describe('the AudioDevice component', () => {
   describe('props.kind', () => {
     it('should render input devices if kind is audioinput', () => {
       const wrapper = shallow(
-        <AudioDevice disabled={false} kind="audioinput" onDeviceChange={noop} setDeviceError={jest.fn()} />
+        <AudioDevice disabled={false} kind="audioinput" onDeviceChange={noop} setDeviceError={noop} />
       );
       expect(wrapper.find(Select).at(0).text()).toEqual('deviceinput1');
     });
     it('should render output devices if kind is audiooutput', () => {
       const wrapper = shallow(
-        <AudioDevice disabled={false} kind="audiooutput" onDeviceChange={noop} setDeviceError={jest.fn()} />
+        <AudioDevice disabled={false} kind="audiooutput" onDeviceChange={noop} setDeviceError={noop} />
       );
       expect(wrapper.find(Select).at(0).text()).toEqual('deviceoutput1');
     });
@@ -130,9 +124,7 @@ describe('the AudioDevice component', () => {
     });
 
     it('should trigger onDeviceChange when devices are present', () => {
-      mount(
-        <AudioDevice disabled={false} kind="audioinput" onDeviceChange={onDeviceChange} setDeviceError={jest.fn()} />
-      );
+      mount(<AudioDevice disabled={false} kind="audioinput" onDeviceChange={onDeviceChange} setDeviceError={noop} />);
       expect(onDeviceChange).toHaveBeenCalled();
     });
 
@@ -145,7 +137,7 @@ describe('the AudioDevice component', () => {
       });
 
       const wrapper = mount(
-        <AudioDevice disabled={false} kind="audioinput" onDeviceChange={onDeviceChange} setDeviceError={jest.fn()} />
+        <AudioDevice disabled={false} kind="audioinput" onDeviceChange={onDeviceChange} setDeviceError={noop} />
       );
       expect(onDeviceChange).toHaveBeenCalledWith('input1');
 

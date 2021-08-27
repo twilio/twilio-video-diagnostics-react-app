@@ -138,7 +138,7 @@ describe('the CameraTest component', () => {
     expect(skipBtn.prop('disabled')).toBe(true);
   });
 
-  it('should show the error icon and "Unable to connect" when there is an audio test error', () => {
+  it('should show the error icon and "Unable to connect" when there is a camera test error', () => {
     mockUseCameraTest.mockImplementation(() => ({
       videoTest: {},
       startVideoTest: jest.fn(),
