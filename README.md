@@ -6,7 +6,7 @@ This application demonstrates a diagnostics tool for testing a participant's abi
 
 ![](https://user-images.githubusercontent.com/11685703/131178895-a8995c2f-1fbd-451a-8949-2bfa4040b4f2.gif)
 <p align="center">
-    *The happy path*
+    <i>The happy path</i>
 </p>
 
 
