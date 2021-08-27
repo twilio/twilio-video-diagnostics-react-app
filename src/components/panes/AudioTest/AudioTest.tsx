@@ -13,7 +13,7 @@ const useStyles = makeStyles({
     display: 'inline-block',
     padding: '23px',
     borderRadius: '8px',
-    height: '280px',
+    minHeight: '280px',
     width: '388px',
   },
   audioLevelContainer: {
@@ -37,6 +37,7 @@ export function AudioTest() {
 
   const {
     error,
+    setError,
     isRecording,
     isAudioInputTestRunning,
     isAudioOutputTestRunning,
@@ -50,7 +51,7 @@ export function AudioTest() {
 
   const volumeLevel = isAudioOutputTestRunning ? outputLevel : inputLevel;
 
-  const disableAll = isRecording || isAudioOutputTestRunning || !!error;
+  const disableAll = isRecording || isAudioOutputTestRunning || (!!error && error !== 'No audio detected');
 
   const handleRecordClick = () => {
     readAudioInput({ deviceId: inputDeviceId, enableRecording: true });
@@ -78,7 +79,19 @@ export function AudioTest() {
         readAudioInput({ deviceId: inputDeviceId });
       }
     }
-  }, [state.activePane, error, inputDeviceId, isRecording, isAudioInputTestRunning, readAudioInput, dispatch]);
+    if (error) {
+      stopAudioTest();
+    }
+  }, [
+    error,
+    state.activePane,
+    inputDeviceId,
+    isRecording,
+    isAudioInputTestRunning,
+    readAudioInput,
+    dispatch,
+    stopAudioTest,
+  ]);
 
   return (
     <Container>
@@ -90,7 +103,7 @@ export function AudioTest() {
 
           <Typography variant="body1" gutterBottom>
             Record an audio clip and play it back to check that your speakers and volume control both work. If it
-            doesn’t, try a different speaker or check your Bluetooth settings.
+            doesn’t, try a different speaker or microphone, or check your Bluetooth settings.
           </Typography>
 
           <Typography variant="body1" gutterBottom>
@@ -102,11 +115,16 @@ export function AudioTest() {
             style={{ marginRight: '1.5em' }}
             color="primary"
             onClick={() => dispatch({ type: 'next-pane' })}
+            disabled={!!error && error !== 'No audio detected'}
           >
             Yes
           </Button>
 
-          <Button color="primary" onClick={() => dispatch({ type: 'next-pane' })}>
+          <Button
+            color="primary"
+            onClick={() => dispatch({ type: 'next-pane' })}
+            disabled={!!error && error !== 'No audio detected'}
+          >
             Skip for now
           </Button>
         </Grid>
@@ -133,8 +151,19 @@ export function AudioTest() {
               </div>
             </div>
             ​
-            <AudioDevice disabled={disableAll} kind="audiooutput" onDeviceChange={setOutputDeviceId} />
-            <AudioDevice disabled={disableAll} kind="audioinput" onDeviceChange={setInputDeviceId} />
+            <AudioDevice
+              disabled={disableAll}
+              kind="audiooutput"
+              onDeviceChange={setOutputDeviceId}
+              setDeviceError={setError}
+            />
+            <AudioDevice
+              disabled={disableAll}
+              kind="audioinput"
+              onDeviceChange={setInputDeviceId}
+              setDeviceError={setError}
+              error={error}
+            />
             <div className={classes.audioLevelContainer}>
               <div style={{ width: '2em', display: 'flex', justifyContent: 'center' }}>
                 {isAudioOutputTestRunning ? <Speaker /> : <Microphone />}

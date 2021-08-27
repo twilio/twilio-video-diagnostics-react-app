@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { MenuItem, Typography, FormControl, makeStyles, Select } from '@material-ui/core';
+import { SmallError } from '../../../../icons/SmallError';
 import useDevices from '../../../../hooks/useDevices/useDevices';
 
 const labels = {
@@ -17,6 +18,8 @@ interface AudioDeviceProps {
   disabled: boolean;
   kind: 'audioinput' | 'audiooutput';
   onDeviceChange: (value: string) => void;
+  setDeviceError: (value: string) => void;
+  error?: string;
 }
 
 const useStyles = makeStyles({
@@ -29,9 +32,17 @@ const useStyles = makeStyles({
   deviceList: {
     height: '36px',
   },
+  error: {
+    display: 'flex',
+    alignItems: 'center',
+    marginBottom: '1em',
+    '& svg': {
+      marginRight: '0.3em',
+    },
+  },
 });
 
-export function AudioDevice({ disabled, kind, onDeviceChange }: AudioDeviceProps) {
+export function AudioDevice({ disabled, kind, onDeviceChange, setDeviceError, error }: AudioDeviceProps) {
   const classes = useStyles();
   const devices = useDevices();
   const audioDevices = kind === 'audiooutput' ? devices.audioOutputDevices : devices.audioInputDevices;
@@ -43,8 +54,9 @@ export function AudioDevice({ disabled, kind, onDeviceChange }: AudioDeviceProps
     (value: string) => {
       onDeviceChange(value);
       setSelectedDevice(value);
+      setDeviceError('');
     },
-    [onDeviceChange, setSelectedDevice]
+    [onDeviceChange, setSelectedDevice, setDeviceError]
   );
 
   useEffect(() => {
@@ -80,6 +92,15 @@ export function AudioDevice({ disabled, kind, onDeviceChange }: AudioDeviceProps
             ))}
           </Select>
         </FormControl>
+      )}
+
+      {error && (
+        <div className={classes.error}>
+          <SmallError />
+          <Typography variant="subtitle2" color="error">
+            {error === 'No audio detected' ? 'No audio detected.' : 'Unable to connect.'}
+          </Typography>
+        </div>
       )}
     </>
   );

@@ -11,6 +11,7 @@ import {
   Typography,
 } from '@material-ui/core';
 import { ActivePane, useAppStateContext } from '../../AppStateProvider/AppStateProvider';
+import { SmallError } from '../../../icons/SmallError';
 import { useCameraTest } from './useCameraTest/useCameraTest';
 import useDevices from '../../../hooks/useDevices/useDevices';
 
@@ -43,6 +44,14 @@ const useStyles = makeStyles({
       right: 0,
       bottom: 0,
       left: 0,
+    },
+  },
+  error: {
+    display: 'flex',
+    alignItems: 'center',
+    margin: '0.5em 0',
+    '& svg': {
+      marginRight: '0.3em',
     },
   },
 });
@@ -79,7 +88,7 @@ export function CameraTest() {
       }
 
       if (videoTestError) {
-        dispatch({ type: 'set-device-error', error: videoTestError });
+        stopVideoTest();
       }
     }
   }, [state.activePane, videoInputDeviceID, startVideoTest, stopVideoTest, videoTestError, dispatch]);
@@ -113,10 +122,11 @@ export function CameraTest() {
             color="primary"
             onClick={() => dispatch({ type: 'next-pane' })}
             style={{ marginRight: '1.5em' }}
+            disabled={!!videoTestError}
           >
             Yes
           </Button>
-          <Button color="primary" onClick={() => dispatch({ type: 'next-pane' })}>
+          <Button color="primary" onClick={() => dispatch({ type: 'next-pane' })} disabled={!!videoTestError}>
             Skip for now
           </Button>
         </Grid>
@@ -139,6 +149,7 @@ export function CameraTest() {
                 onChange={(e) => setDevice(e.target.value as string)}
                 value={videoInputDeviceID}
                 variant="outlined"
+                disabled={!!videoTestError}
               >
                 {videoInputDevices.map((device) => (
                   <MenuItem value={device.deviceId} key={device.deviceId}>
@@ -147,6 +158,14 @@ export function CameraTest() {
                 ))}
               </Select>
             </FormControl>
+            {videoTestError && (
+              <div className={classes.error}>
+                <SmallError />
+                <Typography variant="subtitle2" color="error">
+                  Unable to connect.
+                </Typography>
+              </div>
+            )}
           </Paper>
         </Grid>
       </Grid>

@@ -13,8 +13,9 @@ import { CheckPermissions } from '../panes/DeviceSetup/CheckPermissions/CheckPer
 import { Connectivity } from '../panes/Connectivity/Connectivity';
 import { GetStarted } from '../panes/GetStarted/GetStarted';
 import { PermissionError } from '../panes/DeviceSetup/PermissionError/PermissionError';
-import { Results } from '../panes/Results/Results';
 import { Quality } from '../panes/Quality/Quality';
+import { Results } from '../panes/Results/Results';
+import { Snackbar } from '../Snackbar/Snackbar';
 
 const useStyles = makeStyles({
   contentContainer: {
@@ -140,12 +141,20 @@ export function MainContent() {
   const testsInProgress = state.preflightTestInProgress || state.bitrateTestInProgress;
   const onLoadingScreen = state.activePane === ActivePane.Connectivity && testsInProgress;
 
+  const deviceTestErrors =
+    !!state.audioInputTestReport?.errors.length ||
+    !!state.audioOutputTestReport?.errors.length ||
+    !!state.videoInputTestReport?.errors.length;
+  const isSnackbarOpen =
+    deviceTestErrors && (state.activePane === ActivePane.CameraTest || state.activePane === ActivePane.AudioTest);
+
   return (
     <>
+      <Snackbar open={isSnackbarOpen} />
       <div className={classes.contentContainer}>
         <div
           className={clsx(classes.scrollContainer, {
-            [classes.hideAll]: state.activePane === 0,
+            [classes.hideAll]: state.activePane === 0 || isSnackbarOpen,
             [classes.hideAfter]:
               state.activePane === ActivePane.DeviceCheck ||
               state.activePane === ActivePane.DeviceError ||
@@ -174,7 +183,7 @@ export function MainContent() {
         <Button
           variant="outlined"
           onClick={() => dispatch({ type: 'previous-pane' })}
-          disabled={!ActivePane[state.activePane - 1]}
+          disabled={!ActivePane[state.activePane - 1] || isSnackbarOpen}
         >
           <ArrowUp />
         </Button>
