@@ -1,7 +1,8 @@
 import { mount } from 'enzyme';
-import { Button, Select } from '@material-ui/core';
+import { Button, Select, Typography } from '@material-ui/core';
 import { ActivePane, useAppStateContext } from '../../AppStateProvider/AppStateProvider';
 import { CameraTest } from './CameraTest';
+import { SmallError } from '../../../icons/SmallError';
 import { useCameraTest } from './useCameraTest/useCameraTest';
 
 const mockVideoInputDevices = [
@@ -107,18 +108,47 @@ describe('the CameraTest component', () => {
     expect(mockStartVideoTest).toHaveBeenCalledTimes(2);
   });
 
-  it('should send the user to DeviceError pane if there is an error during the VideoTest', () => {
-    mockUseAppStateContext.mockImplementation(() => ({
-      state: { activePane: ActivePane.CameraTest },
-      dispatch: mockDispatch,
-    }));
+  it('should stop the test when there is an error during the VideoTest', () => {
+    const mockStopVideoTest = jest.fn();
+
     mockUseCameraTest.mockImplementation(() => ({
       videoTest: {},
       startVideoTest: jest.fn(),
+      stopVideoTest: mockStopVideoTest,
       videoTestError: Error('mockError'),
     }));
 
     mount(<CameraTest />);
-    expect(mockDispatch).toHaveBeenCalledWith({ type: 'set-device-error', error: Error('mockError') });
+    expect(mockStopVideoTest).toHaveBeenCalled();
+  });
+
+  it('should disable the "Yes" and "Skip for now" buttons when there is an error', () => {
+    mockUseCameraTest.mockImplementation(() => ({
+      videoTest: {},
+      startVideoTest: jest.fn(),
+      stopVideoTest: jest.fn(),
+      videoTestError: Error('mockError'),
+    }));
+
+    const wrapper = mount(<CameraTest />);
+    const yesBtn = wrapper.find(Button).at(0);
+    const skipBtn = wrapper.find(Button).at(1);
+
+    expect(yesBtn.prop('disabled')).toBe(true);
+    expect(skipBtn.prop('disabled')).toBe(true);
+  });
+
+  it('should show the error icon and "Unable to connect" when there is a camera test error', () => {
+    mockUseCameraTest.mockImplementation(() => ({
+      videoTest: {},
+      startVideoTest: jest.fn(),
+      stopVideoTest: jest.fn(),
+      videoTestError: Error('mockError'),
+    }));
+
+    const wrapper = mount(<CameraTest />);
+
+    expect(wrapper.find(SmallError).exists()).toBe(true);
+    expect(wrapper.find(Typography).find({ children: 'Unable to connect.' }).exists()).toBe(true);
   });
 });

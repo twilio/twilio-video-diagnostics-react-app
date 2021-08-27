@@ -133,16 +133,31 @@ export function useAppStateContext() {
 
 // helper function for determining whether to disable the down arrow button:
 export const isDownButtonDisabled = (currentState: stateType) => {
-  const { activePane, preflightTestInProgress, preflightTest, bitrateTestInProgress } = currentState;
+  const {
+    activePane,
+    preflightTestInProgress,
+    preflightTest,
+    bitrateTestInProgress,
+    audioInputTestReport,
+    audioOutputTestReport,
+    videoInputTestReport,
+  } = currentState;
 
   const connectionFailedOrLoading =
     activePane === ActivePane.Connectivity &&
     (preflightTestInProgress || bitrateTestInProgress || preflightTest.error !== null);
 
+  const deviceTestErrors =
+    !!audioInputTestReport?.errors.length ||
+    !!audioOutputTestReport?.errors.length ||
+    !!videoInputTestReport?.errors.length;
+
   const onDeviceCheck = activePane === ActivePane.DeviceCheck || activePane === ActivePane.DeviceError;
   const unsupportedBrowser = activePane === ActivePane.BrowserTest && !Video.isSupported;
 
-  return connectionFailedOrLoading || !ActivePane[activePane + 1] || onDeviceCheck || unsupportedBrowser;
+  return (
+    connectionFailedOrLoading || !ActivePane[activePane + 1] || deviceTestErrors || onDeviceCheck || unsupportedBrowser
+  );
 };
 
 /**

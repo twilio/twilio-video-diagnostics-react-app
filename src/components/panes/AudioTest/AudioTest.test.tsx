@@ -52,6 +52,7 @@ describe('the AudioTest component', () => {
       readAudioInput: jest.fn(),
       testEnded: false,
       stopAudioTest: jest.fn(),
+      setError: jest.fn(),
     };
     mockUseAudioTest.mockImplementation(() => hookProps);
   });
@@ -64,6 +65,18 @@ describe('the AudioTest component', () => {
   it('should stop the test when active pane is not AudioTest and there is a test in progress', () => {
     mockUseAudioTest.mockImplementationOnce(() => ({ ...hookProps, isAudioOutputTestRunning: true }));
     mockUseAppStateContext.mockImplementationOnce(() => ({ state: { activePane: ActivePane.Connectivity } }));
+
+    mount(<AudioTest />);
+
+    expect(hookProps.stopAudioTest).toHaveBeenCalled();
+  });
+
+  it('should stop the test when there is an audio test error', () => {
+    mockUseAudioTest.mockImplementationOnce(() => ({
+      ...hookProps,
+      isAudioOutputTestRunning: true,
+      error: 'mockError',
+    }));
 
     mount(<AudioTest />);
 
@@ -154,6 +167,32 @@ describe('the AudioTest component', () => {
       const skipBtn = wrapper.find(Button).at(1);
       skipBtn.simulate('click');
       expect(mockDispatch).toHaveBeenCalledWith({ type: 'next-pane' });
+    });
+
+    it('should disable the "Yes" and "Skip for now" buttons when there is an error that is not "No audio detected"', () => {
+      mockUseAudioTest.mockImplementation(() => ({ ...hookProps, isAudioInputTestRunning: true, error: 'mockError' }));
+
+      const wrapper = mount(<AudioTest />);
+      const yesBtn = wrapper.find(Button).at(0);
+      const skipBtn = wrapper.find(Button).at(1);
+
+      expect(yesBtn.prop('disabled')).toBe(true);
+      expect(skipBtn.prop('disabled')).toBe(true);
+    });
+
+    it('should not disable buttons when there is an error that is not "No audio detected"', () => {
+      mockUseAudioTest.mockImplementation(() => ({
+        ...hookProps,
+        isAudioInputTestRunning: true,
+        error: 'No audio detected',
+      }));
+
+      const wrapper = mount(<AudioTest />);
+      const yesBtn = wrapper.find(Button).at(0);
+      const skipBtn = wrapper.find(Button).at(1);
+
+      expect(yesBtn.prop('disabled')).toBe(false);
+      expect(skipBtn.prop('disabled')).toBe(false);
     });
   });
 
