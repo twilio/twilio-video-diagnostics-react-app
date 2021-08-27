@@ -26,7 +26,7 @@ exports[`the PoorQuality component should render correctly when quality is "aver
           <ErrorIcon />
         </div>
         Quality 
-        issues
+        is okay
       </WithStyles(ForwardRef(Typography))>
       <WithStyles(ForwardRef(Typography))
         gutterBottom={true}
@@ -35,11 +35,11 @@ exports[`the PoorQuality component should render correctly when quality is "aver
         This the last step! Your expected audio and video quality is
          
         <strong>
-          degraded
+          suboptimal
            
         </strong>
         and overall performance 
-        will be poor
+        could be better
         .
       </WithStyles(ForwardRef(Typography))>
       <WithStyles(ForwardRef(Typography))
