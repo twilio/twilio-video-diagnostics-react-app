@@ -13,7 +13,7 @@ describe('the Header component', () => {
     }));
     const wrapper = mount(<Header />);
 
-    expect(wrapper.find({ label: 'Device & Network Setup' }).find('div').at(0).prop('className')).toContain('active');
+    expect(wrapper.find({ label: 'Device & Software Setup' }).find('div').at(0).prop('className')).toContain('active');
     expect(wrapper.find({ label: 'Connectivity' }).find('div').at(0).prop('className')).toContain('active');
     expect(wrapper.find({ label: 'Quality & Performance' }).find('div').at(0).prop('className')).not.toContain(
       'active'
@@ -25,7 +25,7 @@ describe('the Header component', () => {
     mockUseAppStateContext.mockImplementation(() => ({ state: { activePane: 8 } }));
     const wrapper = mount(<Header />);
 
-    expect(wrapper.find({ label: 'Device & Network Setup' }).find('div').at(0).prop('className')).toContain('active');
+    expect(wrapper.find({ label: 'Device & Software Setup' }).find('div').at(0).prop('className')).toContain('active');
     expect(wrapper.find({ label: 'Connectivity' }).find('div').at(0).prop('className')).toContain('active');
     expect(wrapper.find({ label: 'Quality & Performance' }).find('div').at(0).prop('className')).toContain('active');
     expect(wrapper.find({ label: 'Get Results' }).find('div').at(0).prop('className')).toContain('active');

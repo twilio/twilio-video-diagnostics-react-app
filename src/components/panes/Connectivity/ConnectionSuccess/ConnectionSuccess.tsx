@@ -11,7 +11,6 @@ const useStyles = makeStyles((theme) =>
       alignItems: 'center',
     },
     viewButton: {
-      background: 'white',
       marginTop: '2em',
       '& svg': {
         position: 'relative',

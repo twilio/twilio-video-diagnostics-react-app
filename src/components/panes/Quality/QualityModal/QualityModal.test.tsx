@@ -39,15 +39,15 @@ describe('the QualityModal component', () => {
     expect(wrapper.find(ErrorStatus).exists()).toBe(false);
   });
 
-  it('should use the error icons for "bad" and "average" quality scores', () => {
+  it('should use the error icons for "poor" and "suboptimal" quality scores', () => {
     const wrapper = shallow(
       <QualityModal
         isModalOpen={true}
         setIsModalOpen={jest.fn()}
         jitter={mockJitter}
-        latency={{ ...mockLatency, qualityScore: QualityScore.Bad }}
+        latency={{ ...mockLatency, qualityScore: QualityScore.Poor }}
         packetLoss={mockPacketLoss}
-        bitrate={{ ...mockBitrate, qualityScore: QualityScore.Average }}
+        bitrate={{ ...mockBitrate, qualityScore: QualityScore.Suboptimal }}
       />
     );
     expect(wrapper.find(ErrorStatus).exists()).toBe(true);

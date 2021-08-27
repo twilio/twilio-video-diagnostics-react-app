@@ -6,8 +6,8 @@ import { QualityModal } from './QualityModal/QualityModal';
 import { useState } from 'react';
 
 export enum QualityScore {
-  Bad,
-  Average,
+  Poor,
+  Suboptimal,
   Good,
   Excellent,
 }

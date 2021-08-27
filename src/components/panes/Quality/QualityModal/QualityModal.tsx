@@ -14,7 +14,7 @@ import {
   Tooltip,
 } from '@material-ui/core';
 import CloseIcon from '@material-ui/icons/Close';
-import { ErrorStatus, SuccessStatus } from '../../../../icons/StatusIcons';
+import { ErrorStatus, SuccessStatus, WarningStatus } from '../../../../icons/StatusIcons';
 import { QualityScore } from '../Quality';
 import { toolTipContent } from './ToolTipContent';
 import { InfoIcon } from '../../../../icons/InfoIcon';
@@ -57,6 +57,12 @@ interface QualityModalProps {
 }
 
 export function QualityModal({ isModalOpen, setIsModalOpen, latency, jitter, packetLoss, bitrate }: QualityModalProps) {
+  const statusIcons = {
+    [QualityScore.Excellent]: <SuccessStatus />,
+    [QualityScore.Good]: <SuccessStatus />,
+    [QualityScore.Suboptimal]: <WarningStatus />,
+    [QualityScore.Poor]: <ErrorStatus />,
+  };
   const classes = useStyles();
 
   return (
@@ -100,12 +106,10 @@ export function QualityModal({ isModalOpen, setIsModalOpen, latency, jitter, pac
                 </TableCell>
                 <TableCell>
                   <div className={classes.iconContainer}>
-                    {latency.qualityScore === QualityScore.Good || latency.qualityScore === QualityScore.Excellent ? (
-                      <SuccessStatus />
-                    ) : (
-                      <ErrorStatus />
-                    )}
-                    <Typography variant="body1">{`${latency.average} / ${latency.max}`}</Typography>
+                    {statusIcons[latency.qualityScore]}
+                    <Typography variant="body1">{`${latency.average} / ${latency.max} (${
+                      QualityScore[latency.qualityScore]
+                    })`}</Typography>
                   </div>
                 </TableCell>
               </TableRow>
@@ -124,12 +128,10 @@ export function QualityModal({ isModalOpen, setIsModalOpen, latency, jitter, pac
                 </TableCell>
                 <TableCell>
                   <div className={classes.iconContainer}>
-                    {jitter.qualityScore === QualityScore.Good || jitter.qualityScore === QualityScore.Excellent ? (
-                      <SuccessStatus />
-                    ) : (
-                      <ErrorStatus />
-                    )}
-                    <Typography variant="body1">{`${jitter.average} / ${jitter.max}`}</Typography>
+                    {statusIcons[jitter.qualityScore]}
+                    <Typography variant="body1">{`${jitter.average} / ${jitter.max} (${
+                      QualityScore[jitter.qualityScore]
+                    })`}</Typography>
                   </div>
                 </TableCell>
               </TableRow>
@@ -148,13 +150,10 @@ export function QualityModal({ isModalOpen, setIsModalOpen, latency, jitter, pac
                 </TableCell>
                 <TableCell>
                   <div className={classes.iconContainer}>
-                    {packetLoss.qualityScore === QualityScore.Good ||
-                    packetLoss.qualityScore === QualityScore.Excellent ? (
-                      <SuccessStatus />
-                    ) : (
-                      <ErrorStatus />
-                    )}
-                    <Typography variant="body1">{`${packetLoss.average}% / ${packetLoss.max}%`}</Typography>
+                    {statusIcons[packetLoss.qualityScore]}
+                    <Typography variant="body1">{`${packetLoss.average}% / ${packetLoss.max}% (${
+                      QualityScore[packetLoss.qualityScore]
+                    })`}</Typography>
                   </div>
                 </TableCell>
               </TableRow>
@@ -167,18 +166,16 @@ export function QualityModal({ isModalOpen, setIsModalOpen, latency, jitter, pac
                       </div>
                     </Tooltip>
                     <Typography variant="body1">
-                      <strong>Bitrate (kbps) max/avg/min</strong>
+                      <strong>Bitrate (kbps) avg/max</strong>
                     </Typography>
                   </div>
                 </TableCell>
                 <TableCell>
                   <div className={classes.iconContainer}>
-                    {bitrate.qualityScore === QualityScore.Good || bitrate.qualityScore === QualityScore.Excellent ? (
-                      <SuccessStatus />
-                    ) : (
-                      <ErrorStatus />
-                    )}
-                    <Typography variant="body1">{`${bitrate.max} / ${bitrate.average} / ${bitrate.min}`}</Typography>
+                    {statusIcons[bitrate.qualityScore]}
+                    <Typography variant="body1">{`${bitrate.max} / ${bitrate.average} (${
+                      QualityScore[bitrate.qualityScore]
+                    })`}</Typography>
                   </div>
                 </TableCell>
               </TableRow>

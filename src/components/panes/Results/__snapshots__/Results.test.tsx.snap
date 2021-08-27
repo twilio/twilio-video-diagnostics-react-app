@@ -1,331 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`the GetResults component should render correctly when score is "average" 1`] = `
-<Fragment>
-  <WithStyles(ForwardRef(Container))>
-    <WithStyles(ForwardRef(Grid))
-      container={true}
-      justifyContent="space-between"
-    >
-      <WithStyles(ForwardRef(Grid))
-        item={true}
-        md={5}
-      >
-        <WithStyles(ForwardRef(Typography))
-          gutterBottom={true}
-          variant="h1"
-        >
-          Some tests failed
-        </WithStyles(ForwardRef(Typography))>
-        <WithStyles(ForwardRef(Typography))
-          gutterBottom={true}
-          variant="body1"
-        >
-          <strong>
-            One out of three 
-          </strong>
-          tests failed – use this list to solve common video issues and restart the test. If you can’t easily solve the problem(s), download report results and send to your network administrator.
-        </WithStyles(ForwardRef(Typography))>
-        <WithStyles(ForwardRef(Button))
-          className="makeStyles-downloadButton-3"
-          color="primary"
-          onClick={[MockFunction]}
-          variant="contained"
-        >
-          <DownloadIcon />
-          Download report results
-        </WithStyles(ForwardRef(Button))>
-        <WithStyles(ForwardRef(Button))
-          onClick={[Function]}
-          style={
-            Object {
-              "backgroundColor": "#FFFFFF",
-              "borderColor": "#8891AA",
-            }
-          }
-          variant="outlined"
-        >
-          Restart test
-        </WithStyles(ForwardRef(Button))>
-        <img
-          alt="Some Failed"
-          src="test-file-stub"
-          style={
-            Object {
-              "marginTop": "7em",
-            }
-          }
-        />
-      </WithStyles(ForwardRef(Grid))>
-      <WithStyles(ForwardRef(Grid))
-        item={true}
-        md={5}
-      >
-        <div
-          className="makeStyles-resultContainer-1"
-        >
-          <div
-            className="makeStyles-iconContainer-2"
-          >
-            <CheckMark />
-            <WithStyles(ForwardRef(Typography))
-              gutterBottom={true}
-              variant="h3"
-            >
-              Device & Network Setup
-            </WithStyles(ForwardRef(Typography))>
-          </div>
-          <WithStyles(ForwardRef(Typography))
-            gutterBottom={true}
-            variant="body1"
-          >
-            Audio and video successfully received from your hardware and browser.
-          </WithStyles(ForwardRef(Typography))>
-          <WithStyles(ForwardRef(Button))
-            onClick={[Function]}
-            style={
-              Object {
-                "marginRight": "1.5em",
-              }
-            }
-            variant="outlined"
-          >
-            Review hardware
-          </WithStyles(ForwardRef(Button))>
-          <WithStyles(ForwardRef(Button))
-            onClick={[Function]}
-            variant="outlined"
-          >
-            Review browser
-          </WithStyles(ForwardRef(Button))>
-        </div>
-        <div
-          className="makeStyles-resultContainer-1"
-        >
-          <div
-            className="makeStyles-iconContainer-2"
-          >
-            <CheckMark />
-            <WithStyles(ForwardRef(Typography))
-              gutterBottom={true}
-              variant="h3"
-            >
-              Connectivity
-            </WithStyles(ForwardRef(Typography))>
-          </div>
-          <WithStyles(ForwardRef(Typography))
-            gutterBottom={true}
-            variant="body1"
-          >
-            All connections are working successfully.
-          </WithStyles(ForwardRef(Typography))>
-          <WithStyles(ForwardRef(Button))
-            onClick={[Function]}
-            variant="outlined"
-          >
-            Review connectivity
-          </WithStyles(ForwardRef(Button))>
-        </div>
-        <div
-          className="makeStyles-resultContainer-1"
-        >
-          <div
-            className="makeStyles-iconContainer-2"
-          >
-            <SmallError />
-            <WithStyles(ForwardRef(Typography))
-              gutterBottom={true}
-              variant="h3"
-            >
-              Quality & Performance
-            </WithStyles(ForwardRef(Typography))>
-          </div>
-          <WithStyles(ForwardRef(Typography))
-            gutterBottom={true}
-            variant="body1"
-          >
-            Your overall score is 
-            <strong>
-              average
-            </strong>
-             which means that your connection isn't good enough to run video properly. Try out these tips and rerun the test
-          </WithStyles(ForwardRef(Typography))>
-          <WithStyles(ForwardRef(Button))
-            onClick={[Function]}
-            variant="outlined"
-          >
-            Review performance
-          </WithStyles(ForwardRef(Button))>
-        </div>
-      </WithStyles(ForwardRef(Grid))>
-    </WithStyles(ForwardRef(Grid))>
-  </WithStyles(ForwardRef(Container))>
-</Fragment>
-`;
-
-exports[`the GetResults component should render correctly when score is "bad" 1`] = `
-<Fragment>
-  <WithStyles(ForwardRef(Container))>
-    <WithStyles(ForwardRef(Grid))
-      container={true}
-      justifyContent="space-between"
-    >
-      <WithStyles(ForwardRef(Grid))
-        item={true}
-        md={5}
-      >
-        <WithStyles(ForwardRef(Typography))
-          gutterBottom={true}
-          variant="h1"
-        >
-          Some tests failed
-        </WithStyles(ForwardRef(Typography))>
-        <WithStyles(ForwardRef(Typography))
-          gutterBottom={true}
-          variant="body1"
-        >
-          <strong>
-            One out of three 
-          </strong>
-          tests failed – use this list to solve common video issues and restart the test. If you can’t easily solve the problem(s), download report results and send to your network administrator.
-        </WithStyles(ForwardRef(Typography))>
-        <WithStyles(ForwardRef(Button))
-          className="makeStyles-downloadButton-3"
-          color="primary"
-          onClick={[MockFunction]}
-          variant="contained"
-        >
-          <DownloadIcon />
-          Download report results
-        </WithStyles(ForwardRef(Button))>
-        <WithStyles(ForwardRef(Button))
-          onClick={[Function]}
-          style={
-            Object {
-              "backgroundColor": "#FFFFFF",
-              "borderColor": "#8891AA",
-            }
-          }
-          variant="outlined"
-        >
-          Restart test
-        </WithStyles(ForwardRef(Button))>
-        <img
-          alt="Some Failed"
-          src="test-file-stub"
-          style={
-            Object {
-              "marginTop": "7em",
-            }
-          }
-        />
-      </WithStyles(ForwardRef(Grid))>
-      <WithStyles(ForwardRef(Grid))
-        item={true}
-        md={5}
-      >
-        <div
-          className="makeStyles-resultContainer-1"
-        >
-          <div
-            className="makeStyles-iconContainer-2"
-          >
-            <CheckMark />
-            <WithStyles(ForwardRef(Typography))
-              gutterBottom={true}
-              variant="h3"
-            >
-              Device & Network Setup
-            </WithStyles(ForwardRef(Typography))>
-          </div>
-          <WithStyles(ForwardRef(Typography))
-            gutterBottom={true}
-            variant="body1"
-          >
-            Audio and video successfully received from your hardware and browser.
-          </WithStyles(ForwardRef(Typography))>
-          <WithStyles(ForwardRef(Button))
-            onClick={[Function]}
-            style={
-              Object {
-                "marginRight": "1.5em",
-              }
-            }
-            variant="outlined"
-          >
-            Review hardware
-          </WithStyles(ForwardRef(Button))>
-          <WithStyles(ForwardRef(Button))
-            onClick={[Function]}
-            variant="outlined"
-          >
-            Review browser
-          </WithStyles(ForwardRef(Button))>
-        </div>
-        <div
-          className="makeStyles-resultContainer-1"
-        >
-          <div
-            className="makeStyles-iconContainer-2"
-          >
-            <CheckMark />
-            <WithStyles(ForwardRef(Typography))
-              gutterBottom={true}
-              variant="h3"
-            >
-              Connectivity
-            </WithStyles(ForwardRef(Typography))>
-          </div>
-          <WithStyles(ForwardRef(Typography))
-            gutterBottom={true}
-            variant="body1"
-          >
-            All connections are working successfully.
-          </WithStyles(ForwardRef(Typography))>
-          <WithStyles(ForwardRef(Button))
-            onClick={[Function]}
-            variant="outlined"
-          >
-            Review connectivity
-          </WithStyles(ForwardRef(Button))>
-        </div>
-        <div
-          className="makeStyles-resultContainer-1"
-        >
-          <div
-            className="makeStyles-iconContainer-2"
-          >
-            <SmallError />
-            <WithStyles(ForwardRef(Typography))
-              gutterBottom={true}
-              variant="h3"
-            >
-              Quality & Performance
-            </WithStyles(ForwardRef(Typography))>
-          </div>
-          <WithStyles(ForwardRef(Typography))
-            gutterBottom={true}
-            variant="body1"
-          >
-            Your overall score is 
-            <strong>
-              bad
-            </strong>
-             which means that your connection isn't good enough to run video properly. Try out these tips and rerun the test
-          </WithStyles(ForwardRef(Typography))>
-          <WithStyles(ForwardRef(Button))
-            onClick={[Function]}
-            variant="outlined"
-          >
-            Review performance
-          </WithStyles(ForwardRef(Button))>
-        </div>
-      </WithStyles(ForwardRef(Grid))>
-    </WithStyles(ForwardRef(Grid))>
-  </WithStyles(ForwardRef(Container))>
-</Fragment>
-`;
-
 exports[`the GetResults component should render correctly when score is "excellent" 1`] = `
 <Fragment>
   <WithStyles(ForwardRef(Container))>
@@ -636,6 +310,332 @@ exports[`the GetResults component should render correctly when score is "good" 1
              and overall performance looks
              ok
             .
+          </WithStyles(ForwardRef(Typography))>
+          <WithStyles(ForwardRef(Button))
+            onClick={[Function]}
+            variant="outlined"
+          >
+            Review performance
+          </WithStyles(ForwardRef(Button))>
+        </div>
+      </WithStyles(ForwardRef(Grid))>
+    </WithStyles(ForwardRef(Grid))>
+  </WithStyles(ForwardRef(Container))>
+</Fragment>
+`;
+
+exports[`the GetResults component should render correctly when score is "poor" 1`] = `
+<Fragment>
+  <WithStyles(ForwardRef(Container))>
+    <WithStyles(ForwardRef(Grid))
+      container={true}
+      justifyContent="space-between"
+    >
+      <WithStyles(ForwardRef(Grid))
+        item={true}
+        md={5}
+      >
+        <WithStyles(ForwardRef(Typography))
+          gutterBottom={true}
+          variant="h1"
+        >
+          Some tests failed
+        </WithStyles(ForwardRef(Typography))>
+        <WithStyles(ForwardRef(Typography))
+          gutterBottom={true}
+          variant="body1"
+        >
+          <strong>
+            One out of three 
+          </strong>
+          tests failed – use this list to solve common video issues and restart the test. If you can’t easily solve the problem(s), download report results and send to your network administrator.
+        </WithStyles(ForwardRef(Typography))>
+        <WithStyles(ForwardRef(Button))
+          className="makeStyles-downloadButton-3"
+          color="primary"
+          onClick={[MockFunction]}
+          variant="contained"
+        >
+          <DownloadIcon />
+          Download report results
+        </WithStyles(ForwardRef(Button))>
+        <WithStyles(ForwardRef(Button))
+          onClick={[Function]}
+          style={
+            Object {
+              "backgroundColor": "#FFFFFF",
+              "borderColor": "#8891AA",
+            }
+          }
+          variant="outlined"
+        >
+          Restart test
+        </WithStyles(ForwardRef(Button))>
+        <img
+          alt="Some Failed"
+          src="test-file-stub"
+          style={
+            Object {
+              "marginTop": "7em",
+            }
+          }
+        />
+      </WithStyles(ForwardRef(Grid))>
+      <WithStyles(ForwardRef(Grid))
+        item={true}
+        md={5}
+      >
+        <div
+          className="makeStyles-resultContainer-1"
+        >
+          <div
+            className="makeStyles-iconContainer-2"
+          >
+            <CheckMark />
+            <WithStyles(ForwardRef(Typography))
+              gutterBottom={true}
+              variant="h3"
+            >
+              Device & Network Setup
+            </WithStyles(ForwardRef(Typography))>
+          </div>
+          <WithStyles(ForwardRef(Typography))
+            gutterBottom={true}
+            variant="body1"
+          >
+            Audio and video successfully received from your hardware and browser.
+          </WithStyles(ForwardRef(Typography))>
+          <WithStyles(ForwardRef(Button))
+            onClick={[Function]}
+            style={
+              Object {
+                "marginRight": "1.5em",
+              }
+            }
+            variant="outlined"
+          >
+            Review hardware
+          </WithStyles(ForwardRef(Button))>
+          <WithStyles(ForwardRef(Button))
+            onClick={[Function]}
+            variant="outlined"
+          >
+            Review browser
+          </WithStyles(ForwardRef(Button))>
+        </div>
+        <div
+          className="makeStyles-resultContainer-1"
+        >
+          <div
+            className="makeStyles-iconContainer-2"
+          >
+            <CheckMark />
+            <WithStyles(ForwardRef(Typography))
+              gutterBottom={true}
+              variant="h3"
+            >
+              Connectivity
+            </WithStyles(ForwardRef(Typography))>
+          </div>
+          <WithStyles(ForwardRef(Typography))
+            gutterBottom={true}
+            variant="body1"
+          >
+            All connections are working successfully.
+          </WithStyles(ForwardRef(Typography))>
+          <WithStyles(ForwardRef(Button))
+            onClick={[Function]}
+            variant="outlined"
+          >
+            Review connectivity
+          </WithStyles(ForwardRef(Button))>
+        </div>
+        <div
+          className="makeStyles-resultContainer-1"
+        >
+          <div
+            className="makeStyles-iconContainer-2"
+          >
+            <SmallError />
+            <WithStyles(ForwardRef(Typography))
+              gutterBottom={true}
+              variant="h3"
+            >
+              Quality & Performance
+            </WithStyles(ForwardRef(Typography))>
+          </div>
+          <WithStyles(ForwardRef(Typography))
+            gutterBottom={true}
+            variant="body1"
+          >
+            Your overall score is 
+            <strong>
+              poor
+            </strong>
+             which means that your connection isn't good enough to run video properly. Try out these tips and rerun the test
+          </WithStyles(ForwardRef(Typography))>
+          <WithStyles(ForwardRef(Button))
+            onClick={[Function]}
+            variant="outlined"
+          >
+            Review performance
+          </WithStyles(ForwardRef(Button))>
+        </div>
+      </WithStyles(ForwardRef(Grid))>
+    </WithStyles(ForwardRef(Grid))>
+  </WithStyles(ForwardRef(Container))>
+</Fragment>
+`;
+
+exports[`the GetResults component should render correctly when score is "suboptimal" 1`] = `
+<Fragment>
+  <WithStyles(ForwardRef(Container))>
+    <WithStyles(ForwardRef(Grid))
+      container={true}
+      justifyContent="space-between"
+    >
+      <WithStyles(ForwardRef(Grid))
+        item={true}
+        md={5}
+      >
+        <WithStyles(ForwardRef(Typography))
+          gutterBottom={true}
+          variant="h1"
+        >
+          Some tests failed
+        </WithStyles(ForwardRef(Typography))>
+        <WithStyles(ForwardRef(Typography))
+          gutterBottom={true}
+          variant="body1"
+        >
+          <strong>
+            One out of three 
+          </strong>
+          tests failed – use this list to solve common video issues and restart the test. If you can’t easily solve the problem(s), download report results and send to your network administrator.
+        </WithStyles(ForwardRef(Typography))>
+        <WithStyles(ForwardRef(Button))
+          className="makeStyles-downloadButton-3"
+          color="primary"
+          onClick={[MockFunction]}
+          variant="contained"
+        >
+          <DownloadIcon />
+          Download report results
+        </WithStyles(ForwardRef(Button))>
+        <WithStyles(ForwardRef(Button))
+          onClick={[Function]}
+          style={
+            Object {
+              "backgroundColor": "#FFFFFF",
+              "borderColor": "#8891AA",
+            }
+          }
+          variant="outlined"
+        >
+          Restart test
+        </WithStyles(ForwardRef(Button))>
+        <img
+          alt="Some Failed"
+          src="test-file-stub"
+          style={
+            Object {
+              "marginTop": "7em",
+            }
+          }
+        />
+      </WithStyles(ForwardRef(Grid))>
+      <WithStyles(ForwardRef(Grid))
+        item={true}
+        md={5}
+      >
+        <div
+          className="makeStyles-resultContainer-1"
+        >
+          <div
+            className="makeStyles-iconContainer-2"
+          >
+            <CheckMark />
+            <WithStyles(ForwardRef(Typography))
+              gutterBottom={true}
+              variant="h3"
+            >
+              Device & Network Setup
+            </WithStyles(ForwardRef(Typography))>
+          </div>
+          <WithStyles(ForwardRef(Typography))
+            gutterBottom={true}
+            variant="body1"
+          >
+            Audio and video successfully received from your hardware and browser.
+          </WithStyles(ForwardRef(Typography))>
+          <WithStyles(ForwardRef(Button))
+            onClick={[Function]}
+            style={
+              Object {
+                "marginRight": "1.5em",
+              }
+            }
+            variant="outlined"
+          >
+            Review hardware
+          </WithStyles(ForwardRef(Button))>
+          <WithStyles(ForwardRef(Button))
+            onClick={[Function]}
+            variant="outlined"
+          >
+            Review browser
+          </WithStyles(ForwardRef(Button))>
+        </div>
+        <div
+          className="makeStyles-resultContainer-1"
+        >
+          <div
+            className="makeStyles-iconContainer-2"
+          >
+            <CheckMark />
+            <WithStyles(ForwardRef(Typography))
+              gutterBottom={true}
+              variant="h3"
+            >
+              Connectivity
+            </WithStyles(ForwardRef(Typography))>
+          </div>
+          <WithStyles(ForwardRef(Typography))
+            gutterBottom={true}
+            variant="body1"
+          >
+            All connections are working successfully.
+          </WithStyles(ForwardRef(Typography))>
+          <WithStyles(ForwardRef(Button))
+            onClick={[Function]}
+            variant="outlined"
+          >
+            Review connectivity
+          </WithStyles(ForwardRef(Button))>
+        </div>
+        <div
+          className="makeStyles-resultContainer-1"
+        >
+          <div
+            className="makeStyles-iconContainer-2"
+          >
+            <SmallError />
+            <WithStyles(ForwardRef(Typography))
+              gutterBottom={true}
+              variant="h3"
+            >
+              Quality & Performance
+            </WithStyles(ForwardRef(Typography))>
+          </div>
+          <WithStyles(ForwardRef(Typography))
+            gutterBottom={true}
+            variant="body1"
+          >
+            Your overall score is 
+            <strong>
+              suboptimal
+            </strong>
+             which means that your connection isn't good enough to run video properly. Try out these tips and rerun the test
           </WithStyles(ForwardRef(Typography))>
           <WithStyles(ForwardRef(Button))
             onClick={[Function]}

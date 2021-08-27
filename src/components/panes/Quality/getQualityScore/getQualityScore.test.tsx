@@ -6,15 +6,15 @@ describe('the getSingleQualityScore function', () => {
     expect(getSingleQualityScore(undefined, 100, 250, 400)).toBe(QualityScore.Excellent);
   });
 
-  it('should return QualityScore.Bad when the provided stat is equal to or over the Bad threshold', () => {
-    expect(getSingleQualityScore(500, 100, 250, 400)).toBe(QualityScore.Bad);
+  it('should return QualityScore.Poor when the provided stat is equal to or over the Poor threshold', () => {
+    expect(getSingleQualityScore(500, 100, 250, 400)).toBe(QualityScore.Poor);
   });
 
-  it('should return QualityScore.Average when the provided stat is below the Bad threshold and above the Average threshold', () => {
-    expect(getSingleQualityScore(300, 100, 250, 400)).toBe(QualityScore.Average);
+  it('should return QualityScore.Suboptimal when the provided stat is below the Poor threshold and above the Suboptimal threshold', () => {
+    expect(getSingleQualityScore(300, 100, 250, 400)).toBe(QualityScore.Suboptimal);
   });
 
-  it('should return QualityScore.Good when the provided stat is below the Average threshold and above the Good threshold', () => {
+  it('should return QualityScore.Good when the provided stat is below the Suboptimal threshold and above the Good threshold', () => {
     expect(getSingleQualityScore(120, 100, 250, 400)).toBe(QualityScore.Good);
   });
 
@@ -27,16 +27,16 @@ describe('the getSingleQualityScore function', () => {
       expect(getSingleQualityScore(1300, 1000, 500, 150, true)).toBe(QualityScore.Excellent);
     });
 
-    it('should return QualityScore.Good when the provided stat is below the Good threshold and above the Average threshold', () => {
+    it('should return QualityScore.Good when the provided stat is below the Good threshold and above the Suboptimal threshold', () => {
       expect(getSingleQualityScore(800, 1000, 500, 150, true)).toBe(QualityScore.Good);
     });
 
-    it('should return QualityScore.Average when the provided stat is below the Average threshold and above the Bad threshold', () => {
-      expect(getSingleQualityScore(300, 1000, 500, 150, true)).toBe(QualityScore.Average);
+    it('should return QualityScore.Suboptimal when the provided stat is below the Suboptimal threshold and above the Poor threshold', () => {
+      expect(getSingleQualityScore(300, 1000, 500, 150, true)).toBe(QualityScore.Suboptimal);
     });
 
-    it('should return QualityScore.Bad when the provided stat is below the Bad threshold', () => {
-      expect(getSingleQualityScore(80, 1000, 500, 150, true)).toBe(QualityScore.Bad);
+    it('should return QualityScore.Poor when the provided stat is below the Poor threshold', () => {
+      expect(getSingleQualityScore(80, 1000, 500, 150, true)).toBe(QualityScore.Poor);
     });
   });
 });
@@ -67,7 +67,6 @@ describe('the getQualityScore function', () => {
         "bitrate": Object {
           "average": "1,122",
           "max": "10,149.88",
-          "min": "667.23",
           "qualityScore": 3,
         },
         "jitter": Object {
@@ -105,7 +104,7 @@ describe('the getQualityScore function', () => {
         QualityScore.Excellent
       );
     });
-    it('should be QualityScore.Bad if one quality score is Bad', () => {
+    it('should be QualityScore.Poor if one quality score is Poor', () => {
       const mockPreflightTestReport = {
         stats: {
           jitter: { max: 10, average: 80 },
@@ -116,7 +115,7 @@ describe('the getQualityScore function', () => {
       const mockBitrateTest = { averageBitrate: 1122 };
 
       expect(getQualityScore(mockPreflightTestReport as any, mockBitrateTest as any).totalQualityScore).toBe(
-        QualityScore.Bad
+        QualityScore.Poor
       );
     });
     it('should be QualityScore.Good if the lowest score is Good', () => {
@@ -133,7 +132,7 @@ describe('the getQualityScore function', () => {
         QualityScore.Good
       );
     });
-    it('should be QualityScore.Average if the lowest score is Average', () => {
+    it('should be QualityScore.Suboptimal if the lowest score is Suboptimal', () => {
       const mockPreflightTestReport = {
         stats: {
           jitter: { max: 0.111, average: 0.112 },
@@ -144,7 +143,7 @@ describe('the getQualityScore function', () => {
       const mockBitrateTest = { averageBitrate: 250 };
 
       expect(getQualityScore(mockPreflightTestReport as any, mockBitrateTest as any).totalQualityScore).toBe(
-        QualityScore.Average
+        QualityScore.Suboptimal
       );
     });
   });

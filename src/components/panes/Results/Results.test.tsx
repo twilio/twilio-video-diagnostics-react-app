@@ -46,17 +46,17 @@ describe('the GetResults component', () => {
     const wrapper = shallow(<Results />);
     expect(wrapper).toMatchSnapshot();
   });
-  it('should render correctly when score is "average"', () => {
+  it('should render correctly when score is "suboptimal"', () => {
     mockGetQualityScore.mockImplementationOnce(() => ({
-      totalQualityScore: QualityScore.Average,
+      totalQualityScore: QualityScore.Suboptimal,
     }));
     const wrapper = shallow(<Results />);
     expect(wrapper).toMatchSnapshot();
   });
 
-  it('should render correctly when score is "bad"', () => {
+  it('should render correctly when score is "poor"', () => {
     mockGetQualityScore.mockImplementationOnce(() => ({
-      totalQualityScore: QualityScore.Bad,
+      totalQualityScore: QualityScore.Poor,
     }));
     const wrapper = shallow(<Results />);
     expect(wrapper).toMatchSnapshot();

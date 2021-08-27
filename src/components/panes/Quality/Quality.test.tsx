@@ -25,25 +25,25 @@ mockUseAppStateContext.mockImplementation(() => ({
 }));
 
 describe('the Quality component', () => {
-  it('should render the PoorQuality if the quality score is bad', () => {
+  it('should render the PoorQuality component if the quality score is poor', () => {
     mockGetQualityScore.mockImplementation(() => ({
-      totalQualityScore: QualityScore.Bad,
+      totalQualityScore: QualityScore.Poor,
     }));
 
     const wrapper = shallow(<Quality />);
     expect(wrapper.find(PoorQuality).exists()).toBe(true);
   });
 
-  it('should render the PoorQuality if the quality score is average', () => {
+  it('should render the PoorQuality component if the quality score is suboptimal', () => {
     mockGetQualityScore.mockImplementation(() => ({
-      totalQualityScore: QualityScore.Average,
+      totalQualityScore: QualityScore.Suboptimal,
     }));
 
     const wrapper = shallow(<Quality />);
     expect(wrapper.find(PoorQuality).exists()).toBe(true);
   });
 
-  it('should render ExcellentQuality if the quality score is excellent', () => {
+  it('should render ExcellentQuality component if the quality score is excellent', () => {
     mockGetQualityScore.mockImplementation(() => ({
       totalQualityScore: QualityScore.Excellent,
     }));
@@ -52,7 +52,7 @@ describe('the Quality component', () => {
     expect(wrapper.find(ExcellentQuality).exists()).toBe(true);
   });
 
-  it('should render ExcellentQuality if the quality score is good', () => {
+  it('should render ExcellentQuality component if the quality score is good', () => {
     mockGetQualityScore.mockImplementation(() => ({
       totalQualityScore: QualityScore.Good,
     }));
@@ -79,9 +79,9 @@ describe('the Quality component', () => {
     expect(wrapper.find(QualityModal).prop('isModalOpen')).toBe(true);
   });
 
-  it('should open the modal when quality is bad and "View detailed quality information" button is clicked on', () => {
+  it('should open the modal when quality is poor and "View detailed quality information" button is clicked on', () => {
     mockGetQualityScore.mockImplementation(() => ({
-      totalQualityScore: QualityScore.Bad,
+      totalQualityScore: QualityScore.Poor,
       jitter: {},
       latency: {},
       packetLoss: {},

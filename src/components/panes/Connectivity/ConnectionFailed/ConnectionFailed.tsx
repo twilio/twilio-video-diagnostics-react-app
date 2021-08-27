@@ -27,7 +27,6 @@ const useStyles = makeStyles((theme) =>
       },
     },
     viewButton: {
-      background: 'white',
       marginTop: '2em',
       '& svg': {
         position: 'relative',
