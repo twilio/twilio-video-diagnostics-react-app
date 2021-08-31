@@ -3,6 +3,7 @@ import { ErrorIcon } from '../../../../icons/ErrorIcon';
 import { QualityScore } from '../Quality';
 import { useAppStateContext } from '../../../AppStateProvider/AppStateProvider';
 import { ViewIcon } from '../../../../icons/ViewIcon';
+import { WarningIcon } from '../../../../icons/WarningIcon';
 
 const useStyles = makeStyles({
   modal: {
@@ -50,7 +51,7 @@ export function PoorQuality({ quality, openModal }: PoorQualityProps) {
         <Grid item md={5}>
           <Typography variant="h1" gutterBottom style={{ position: 'relative' }}>
             <div className={classes.errorIcon}>
-              <ErrorIcon />
+              {quality === QualityScore.Suboptimal ? <WarningIcon /> : <ErrorIcon />}
             </div>
             Quality {quality === QualityScore.Suboptimal ? 'is okay' : 'issues'}
           </Typography>

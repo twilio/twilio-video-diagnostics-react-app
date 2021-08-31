@@ -151,7 +151,7 @@ exports[`the PoorQuality component should render correctly when quality is "subo
         <div
           className="makeStyles-errorIcon-4"
         >
-          <ErrorIcon />
+          <WarningIcon />
         </div>
         Quality 
         is okay
