@@ -173,7 +173,7 @@ export function QualityModal({ isModalOpen, setIsModalOpen, latency, jitter, pac
                 <TableCell>
                   <div className={classes.iconContainer}>
                     {statusIcons[bitrate.qualityScore]}
-                    <Typography variant="body1">{`${bitrate.max} / ${bitrate.average} (${
+                    <Typography variant="body1">{`${bitrate.average} / ${bitrate.max} (${
                       QualityScore[bitrate.qualityScore]
                     })`}</Typography>
                   </div>

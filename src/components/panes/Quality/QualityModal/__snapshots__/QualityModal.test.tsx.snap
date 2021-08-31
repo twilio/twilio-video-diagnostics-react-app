@@ -194,7 +194,7 @@ exports[`the QualityModal component should render correctly 1`] = `
                 <WithStyles(ForwardRef(Typography))
                   variant="body1"
                 >
-                  8,333.98 / 11,608.06 (Excellent)
+                  11,608.06 / 8,333.98 (Excellent)
                 </WithStyles(ForwardRef(Typography))>
               </div>
             </WithStyles(ForwardRef(TableCell))>
