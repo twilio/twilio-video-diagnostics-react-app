@@ -63,7 +63,7 @@ exports[`the QualityModal component should render correctly 1`] = `
                 <WithStyles(ForwardRef(Tooltip))
                   interactive={true}
                   leaveDelay={250}
-                  title="Latency is the time data takes from sender to receiver. High latency can cause the video to lag, freeze, or slow down. This is due to slow or overloaded networks."
+                  title="Round-trip time (RTT) is the time a packet of data takes from sender to receiver and back again. High RTT can cause the video to lag, freeze, or slow down. This is usually attributed to slow or overloaded networks."
                 >
                   <div>
                     <InfoIcon />
@@ -73,7 +73,7 @@ exports[`the QualityModal component should render correctly 1`] = `
                   variant="body1"
                 >
                   <strong>
-                    Latency (ms) avg/max
+                    RTT (ms) avg/max
                   </strong>
                 </WithStyles(ForwardRef(Typography))>
               </div>
@@ -194,7 +194,7 @@ exports[`the QualityModal component should render correctly 1`] = `
                 <WithStyles(ForwardRef(Typography))
                   variant="body1"
                 >
-                  11,608.06 / 8,333.98 (Excellent)
+                  8,333.98 / 11,608.06 (Excellent)
                 </WithStyles(ForwardRef(Typography))>
               </div>
             </WithStyles(ForwardRef(TableCell))>
