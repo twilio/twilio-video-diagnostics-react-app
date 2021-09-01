@@ -94,13 +94,13 @@ export function QualityModal({ isModalOpen, setIsModalOpen, latency, jitter, pac
               <TableRow>
                 <TableCell>
                   <div className={classes.iconContainer}>
-                    <Tooltip title={toolTipContent.latency} interactive leaveDelay={250}>
+                    <Tooltip title={toolTipContent.roundTripTime} interactive leaveDelay={250}>
                       <div>
                         <InfoIcon />
                       </div>
                     </Tooltip>
                     <Typography variant="body1">
-                      <strong>Latency (ms) avg/max</strong>
+                      <strong>RTT (ms) avg/max</strong>
                     </Typography>
                   </div>
                 </TableCell>
@@ -173,7 +173,7 @@ export function QualityModal({ isModalOpen, setIsModalOpen, latency, jitter, pac
                 <TableCell>
                   <div className={classes.iconContainer}>
                     {statusIcons[bitrate.qualityScore]}
-                    <Typography variant="body1">{`${bitrate.max} / ${bitrate.average} (${
+                    <Typography variant="body1">{`${bitrate.average} / ${bitrate.max} (${
                       QualityScore[bitrate.qualityScore]
                     })`}</Typography>
                   </div>
