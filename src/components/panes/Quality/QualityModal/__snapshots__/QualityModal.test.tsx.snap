@@ -63,7 +63,7 @@ exports[`the QualityModal component should render correctly 1`] = `
                 <WithStyles(ForwardRef(Tooltip))
                   interactive={true}
                   leaveDelay={250}
-                  title="Round-trip time (RTT) is the time a packet of data takes from sender to receiver and back again. High RTT can cause the video to lag, freeze, or slow down. This is usually attributed to slow or overloaded networks."
+                  title="Round-trip time (RTT) is the time a packet of data takes to go from sender to receiver and back again. High RTT can cause the video to lag, freeze, or slow down. This is usually attributed to slow or overloaded networks."
                 >
                   <div>
                     <InfoIcon />
