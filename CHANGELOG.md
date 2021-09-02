@@ -1,6 +1,6 @@
-# 1.0.0-beta.1 (September 1, 2021)
+# 1.0.0 (September 1, 2021)
 
-This is the beta release of the Twilio Video Diagnostics App. This application demonstrates a diagnostics tool for testing a participant's ability to have a quality video call with the Twilio platform. It can be used as part of onboarding to ensure a successful first video call or for diagnosing issues that relate to the device, software, or network conditions of the end-user. It is built with Twilio's Programmable Video JS SDK and Twilio's RTC Diagnostics SDK. 
+This is the beta release of the Twilio Video Diagnostics App. This application demonstrates a diagnostics tool for testing a participant's ability to have a quality video call with the Twilio platform. It can be used as part of onboarding to ensure a successful first video call or for diagnosing issues that relate to the device, software, or network conditions of the end-user. It is built with [Twilio's Programmable Video JS SDK](https://sdk.twilio.com/js/video/releases/2.16.0/docs/) and [Twilio's RTC Diagnostics SDK](https://twilio.github.io/rtc-diagnostics/globals.html).
 
 This release includes the following features:
 
