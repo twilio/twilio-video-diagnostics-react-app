@@ -8,4 +8,4 @@ This release includes the following features:
 - Provides a recommended course of action when tests fail.
 - Easy to download JSON formatted test report for simplified sharing and integration into support workflows.
 
-We welcome contributions and feedback from the community so that we can continue to iterate on this initial set of features in order to provide the best experience for our customers, and their customers.
+We welcome contributions and feedback from the community so that we can continue to iterate on this initial set of features in order to provide the best experience.
