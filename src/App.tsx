@@ -9,23 +9,13 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     appContainer: {
       position: 'relative',
-      width: `calc(100% - ${theme.brandSidebarWidth}px)`,
+      width: '100%',
+      [theme.breakpoints.down('md')]: {
+        width: 'auto',
+      },
       height: '100%',
       background: theme.backgroundColor,
       overflow: 'hidden',
-    },
-    brandSidebar: {
-      background: '#06033A',
-      position: 'fixed',
-      top: 0,
-      bottom: 0,
-      right: 0,
-      left: `calc(100% - ${theme.brandSidebarWidth}px)`,
-      '& svg': {
-        position: 'absolute',
-        right: 0,
-        bottom: 40,
-      },
     },
   })
 );
@@ -38,9 +28,6 @@ function App() {
       <div className={classes.appContainer}>
         <Header />
         <MainContent />
-        <div className={classes.brandSidebar}>
-          <Logo />
-        </div>
       </div>
     </AppStateProvider>
   );
