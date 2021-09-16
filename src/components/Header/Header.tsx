@@ -20,16 +20,10 @@ const useStyles = makeStyles((theme: Theme) =>
     breadcrumb: {
       '& p': {
         fontWeight: 600,
-        color: '#AEB2C1',
-        paddingRight: '2em',
+        color: 'theme.typography.body1.color',
       },
       '&:last-child svg': {
         display: 'none',
-      },
-    },
-    active: {
-      '& p': {
-        color: theme.typography.body1.color,
       },
     },
     progressBar: {
@@ -49,15 +43,14 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-function HeaderItem({ label, pane }: { label: string; pane: ActivePane }) {
+function HeaderItem({ pane }: { pane: ActivePane }) {
   const classes = useStyles();
   const { state } = useAppStateContext();
 
   return (
-    <div className={clsx(classes.breadcrumb, { [classes.active]: state.activePane >= pane })}>
+    <div className={classes.breadcrumb}>
       <Grid container alignItems="center">
-        <Typography variant="body1">{label}</Typography>
-        <ChevronRight />
+        <Typography variant="body1">{getPaneName(state.activePane)}</Typography>
       </Grid>
     </div>
   );
@@ -73,10 +66,7 @@ export default function Header() {
     <div className={classes.header}>
       <Container>
         <Grid container alignItems="center" justifyContent="space-between" style={{ height: '100%' }}>
-          <HeaderItem pane={ActivePane.DeviceCheck} label="Device & Software Setup" />
-          <HeaderItem pane={ActivePane.Connectivity} label="Connectivity" />
-          <HeaderItem pane={ActivePane.Quality} label="Quality & Performance" />
-          <HeaderItem pane={ActivePane.Results} label="Get Results" />
+          <HeaderItem pane={ActivePane.DeviceCheck} />
         </Grid>
       </Container>
 
@@ -89,3 +79,18 @@ export default function Header() {
     </div>
   );
 }
+
+let getPaneName = function (index: number): string {
+  switch (true) {
+    case index <= 5:
+      return 'Device & Software Setup';
+    case index == 6:
+      return 'Connectivity';
+    case index == 7:
+      return 'Quality & Performance';
+    case index > 7:
+      return 'Get Results';
+    default:
+      return 'Therapify video diagnostics';
+  }
+};

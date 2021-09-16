@@ -28,10 +28,7 @@ export default createTheme({
     },
     MuiContainer: {
       root: {
-        width: '950px',
-        [defaultTheme.breakpoints.down('md')]: {
-          width: 'auto',
-        },
+        width: 'auto',
       },
     },
     MuiButton: {
