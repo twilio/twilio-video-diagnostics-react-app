@@ -44,6 +44,9 @@ export function ConnectionSuccess({ openModal }: ConnectionSuccessProps) {
             <Button variant="contained" color="primary" onClick={nextPane}>
               Ok
             </Button>
+            <Typography variant="body2">
+              <br />
+            </Typography>
           </Grid>
 
           <Grid item md={5} className={classes.illustrationContainer}>
