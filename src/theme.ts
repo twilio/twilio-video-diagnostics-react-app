@@ -100,7 +100,7 @@ export default createTheme({
     },
     MuiTypography: {
       gutterBottom: {
-        marginBottom: '36px',
+        marginBottom: '0px',
       },
     },
     MuiTableCell: {
@@ -131,11 +131,12 @@ export default createTheme({
       color: '#121C2D',
       fontSize: '0.9rem',
       lineHeight: '1.5rem',
+      marginBottom: '0px',
     },
   },
   palette: {
     primary: {
-      main: '#0263E0',
+      main: '#50aee3',
     },
     text: {
       secondary: '#606B85',
