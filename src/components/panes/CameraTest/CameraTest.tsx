@@ -130,6 +130,9 @@ export function CameraTest() {
           <Button color="primary" onClick={() => dispatch({ type: 'next-pane' })} disabled={!!videoTestError}>
             Skip for now
           </Button>
+          <Typography variant="body2">
+            <br />
+          </Typography>
         </Grid>
 
         <Grid item md={5}>

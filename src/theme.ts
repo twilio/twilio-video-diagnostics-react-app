@@ -100,7 +100,10 @@ export default createTheme({
     },
     MuiTypography: {
       gutterBottom: {
-        marginBottom: '0px',
+        marginBottom: '30px',
+        [defaultTheme.breakpoints.down('sm')]: {
+          marginBottom: '10px',
+        },
       },
     },
     MuiTableCell: {
@@ -131,6 +134,10 @@ export default createTheme({
       color: '#121C2D',
       fontSize: '0.9rem',
       lineHeight: '1.5rem',
+      marginBottom: '0px',
+    },
+    body2: {
+      lineHeight: '1rem',
       marginBottom: '0px',
     },
   },

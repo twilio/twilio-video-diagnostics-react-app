@@ -73,6 +73,9 @@ export function ConnectionFailed({ openModal }: ConnectionFailedProps) {
               <DownloadIcon />
               Download report results
             </Button>
+            <Typography variant="body2">
+              <br />
+            </Typography>
           </Grid>
 
           <Grid item md={5} className={classes.paperContainer}>

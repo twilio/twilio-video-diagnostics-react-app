@@ -127,6 +127,9 @@ export function AudioTest() {
           >
             Skip for now
           </Button>
+          <Typography variant="body2">
+            <br />
+          </Typography>
         </Grid>
         ​
         <Grid item md={5}>
