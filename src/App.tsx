@@ -1,4 +1,4 @@
-import { createStyles, makeStyles, Theme } from '@material-ui/core';
+import { createStyles, makeStyles, Theme, Hidden } from '@material-ui/core';
 import React from 'react';
 import { AppStateProvider } from './components/AppStateProvider/AppStateProvider';
 import Header from './components/Header/Header';
@@ -13,6 +13,9 @@ const useStyles = makeStyles((theme: Theme) =>
       height: '100%',
       background: theme.backgroundColor,
       overflow: 'hidden',
+      [theme.breakpoints.down('sm')]: {
+        width: '100%',
+      },
     },
     brandSidebar: {
       background: '#06033A',
@@ -38,9 +41,11 @@ function App() {
       <div className={classes.appContainer}>
         <Header />
         <MainContent />
-        <div className={classes.brandSidebar}>
-          <Logo />
-        </div>
+        <Hidden smDown>
+          <div className={classes.brandSidebar}>
+            <Logo />
+          </div>
+        </Hidden>
       </div>
     </AppStateProvider>
   );

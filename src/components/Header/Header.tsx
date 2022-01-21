@@ -1,8 +1,9 @@
 import { ChevronRight } from '../../icons/ChevronRight';
 import clsx from 'clsx';
-import { Container, Grid, Typography } from '@material-ui/core';
+import { Container, Grid, Typography, Hidden } from '@material-ui/core';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import { useAppStateContext, ActivePane } from '../AppStateProvider/AppStateProvider';
+import { TwilioLogo } from '../../icons/TwilioLogo';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -46,6 +47,9 @@ const useStyles = makeStyles((theme: Theme) =>
       height: '100%',
       transition: 'width 1s ease',
     },
+    mobileLogo: {
+      margin: '3em 0 0 1.5em',
+    },
   })
 );
 
@@ -70,22 +74,32 @@ export default function Header() {
   const numberOfPanes = Object.keys(ActivePane).length / 2;
 
   return (
-    <div className={classes.header}>
-      <Container>
-        <Grid container alignItems="center" justifyContent="space-between" style={{ height: '100%' }}>
-          <HeaderItem pane={ActivePane.DeviceCheck} label="Device & Software Setup" />
-          <HeaderItem pane={ActivePane.Connectivity} label="Connectivity" />
-          <HeaderItem pane={ActivePane.Quality} label="Quality & Performance" />
-          <HeaderItem pane={ActivePane.Results} label="Get Results" />
-        </Grid>
-      </Container>
+    <>
+      <Hidden smDown>
+        <div className={classes.header}>
+          <Container>
+            <Grid container alignItems="center" justifyContent="space-between" style={{ height: '100%' }}>
+              <HeaderItem pane={ActivePane.DeviceCheck} label="Device & Software Setup" />
+              <HeaderItem pane={ActivePane.Connectivity} label="Connectivity" />
+              <HeaderItem pane={ActivePane.Quality} label="Quality & Performance" />
+              <HeaderItem pane={ActivePane.Results} label="Get Results" />
+            </Grid>
+          </Container>
 
-      <div className={classes.progressBar}>
-        <div
-          className={classes.progressBarForeground}
-          style={{ width: `${(state.activePane / (numberOfPanes - 1)) * 100}%` }}
-        />
-      </div>
-    </div>
+          <div className={classes.progressBar}>
+            <div
+              className={classes.progressBarForeground}
+              style={{ width: `${(state.activePane / (numberOfPanes - 1)) * 100}%` }}
+            />
+          </div>
+        </div>
+      </Hidden>
+
+      <Hidden smUp>
+        <div className={classes.mobileLogo}>
+          <TwilioLogo />
+        </div>
+      </Hidden>
+    </>
   );
 }
