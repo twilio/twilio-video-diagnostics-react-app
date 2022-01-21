@@ -15,6 +15,7 @@ const useStyles = makeStyles((theme: Theme) =>
       overflow: 'hidden',
       [theme.breakpoints.down('sm')]: {
         width: '100%',
+        overflowY: 'auto',
       },
     },
     brandSidebar: {

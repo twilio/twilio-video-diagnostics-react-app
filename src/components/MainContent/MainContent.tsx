@@ -24,7 +24,10 @@ const useStyles = makeStyles((theme: Theme) => ({
     left: '50%',
     transform: 'translateX(-50%)',
     [theme.breakpoints.down('sm')]: {
-      width: '100%',
+      position: 'relative',
+      top: 'auto',
+      left: 'auto',
+      transform: 'initial',
     },
   },
   scrollContainer: {
@@ -38,20 +41,29 @@ const useStyles = makeStyles((theme: Theme) => ({
           pointerEvents: 'none',
         },
       },
+      transform: 'translateY(50vh)',
+    },
+    '& .inactive': {
+      display: 'none',
     },
     position: 'relative',
-    transform: 'translateY(50vh)',
   },
   hideAll: {
     '& .inactive': {
       opacity: 0,
       visibility: 'hidden',
+      [theme.breakpoints.down('sm')]: {
+        display: 'none',
+      },
     },
   },
   hideAfter: {
     '& .active ~ $item': {
       opacity: 0,
       visibility: 'hidden',
+      [theme.breakpoints.down('sm')]: {
+        display: 'none',
+      },
     },
   },
   item: {
@@ -81,6 +93,9 @@ const useStyles = makeStyles((theme: Theme) => ({
         visibility: 'hidden',
       },
     },
+    [theme.breakpoints.down('sm')]: {
+      position: 'fixed',
+    },
   },
 }));
 
@@ -105,9 +120,7 @@ export function Item({
       console.log(isMobile);
       const el = ref.current;
       const offset = el.offsetTop + el.offsetHeight * 0.5;
-      el.parentElement!.style.transform = isMobile
-        ? `translateY(calc(50vh - ${offset}px - 40px))`
-        : `translateY(calc(50vh - ${offset}px + ${theme.navHeight / 2}px))`;
+      el.parentElement!.style.transform = isMobile ? 'none' : `translateY(calc(50vh - ${offset}px - 40px))`;
     }
   });
 
