@@ -1,14 +1,15 @@
 import { useAppStateContext } from '../../AppStateProvider/AppStateProvider';
-import { Button, Container, Grid, Typography, Hidden } from '@material-ui/core';
+import { Button, Container, Grid, Typography, useMediaQuery, useTheme } from '@material-ui/core';
 import Hello from './Hello.png';
-import HelloMobile from './HelloMobile.png';
 
 export function GetStarted() {
   const { nextPane } = useAppStateContext();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.between('md', 'lg'));
 
   return (
     <Container>
-      <Grid container alignItems="center" justifyContent="space-between">
+      <Grid container alignItems="center" justifyContent={isMobile ? 'center' : 'space-between'}>
         <Grid item md={5}>
           <Typography variant="h1" gutterBottom>
             Let's get started.
@@ -28,12 +29,7 @@ export function GetStarted() {
           The size of the image is explicitly stated here so that this content can properly be centered vertically
           before the image is loaded.
           */}
-          <Hidden smDown>
-            <img src={Hello} alt="Hello" style={{ width: '284px', height: '284px' }} />
-          </Hidden>
-          <Hidden mdUp>
-            <img src={HelloMobile} alt="HelloMobile" style={{ width: '180px', height: '180px' }} />
-          </Hidden>
+          <img src={Hello} alt="Hello" style={{ width: '200px', height: '200px' }} />
           <Typography variant="body1" color="textSecondary">
             <strong>Not sure about something?</strong> Skip that section for now, and your support administrator can
             help later.

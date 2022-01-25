@@ -95,7 +95,7 @@ export default function Header() {
         </div>
       </Hidden>
 
-      <Hidden smUp>
+      <Hidden mdUp>
         <div className={classes.mobileLogo}>
           <TwilioLogo />
         </div>

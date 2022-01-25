@@ -24,28 +24,37 @@ const useStyles = makeStyles((theme: Theme) => ({
     left: '50%',
     transform: 'translateX(-50%)',
     [theme.breakpoints.down('sm')]: {
-      width: '100%',
+      position: 'relative',
+      top: 'auto',
+      left: 'auto',
+      transform: 'initial',
     },
   },
   scrollContainer: {
-    [theme.breakpoints.up('md')]: {
-      transition: 'all 1s ease',
-      '& .inactive': {
-        opacity: 0.2,
-        userSelect: 'none',
-        cursor: 'pointer',
-        '& > *': {
-          pointerEvents: 'none',
-        },
-      },
-    },
+    transition: 'all 1s ease',
     position: 'relative',
     transform: 'translateY(50vh)',
+    '& .inactive': {
+      opacity: 0.2,
+      userSelect: 'none',
+      cursor: 'pointer',
+      '& > *': {
+        pointerEvents: 'none',
+      },
+    },
+    [theme.breakpoints.down('sm')]: {
+      transition: 'all 0s ease',
+      transform: 'initial',
+      '& .inactive': { display: 'none' },
+    },
   },
   hideAll: {
     '& .inactive': {
       opacity: 0,
       visibility: 'hidden',
+      [theme.breakpoints.down('sm')]: {
+        display: 'none',
+      },
     },
   },
   hideAfter: {
@@ -53,12 +62,16 @@ const useStyles = makeStyles((theme: Theme) => ({
       opacity: 0,
       visibility: 'hidden',
     },
+    [theme.breakpoints.down('sm')]: {
+      display: 'none',
+    },
   },
   item: {
-    [theme.breakpoints.up('md')]: {
-      transition: 'all 0.75s ease',
-    },
+    transition: 'all 0.75s ease',
     padding: '3em 0',
+    [theme.breakpoints.down('sm')]: {
+      transition: 'initial',
+    },
   },
   hideItem: {
     visibility: 'hidden',
@@ -81,6 +94,9 @@ const useStyles = makeStyles((theme: Theme) => ({
         visibility: 'hidden',
       },
     },
+    [theme.breakpoints.down('sm')]: {
+      position: 'fixed',
+    },
   },
 }));
 
@@ -102,11 +118,10 @@ export function Item({
 
   useEffect(() => {
     if (isActive) {
-      console.log(isMobile);
       const el = ref.current;
       const offset = el.offsetTop + el.offsetHeight * 0.5;
       el.parentElement!.style.transform = isMobile
-        ? `translateY(calc(50vh - ${offset}px - 40px))`
+        ? `none`
         : `translateY(calc(50vh - ${offset}px + ${theme.navHeight / 2}px))`;
     }
   });

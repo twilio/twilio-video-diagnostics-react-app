@@ -15,6 +15,10 @@ const useStyles = makeStyles((theme: Theme) =>
       overflow: 'hidden',
       [theme.breakpoints.down('sm')]: {
         width: '100%',
+        overflowY: 'auto',
+      },
+      [theme.breakpoints.between('md', 'lg')]: {
+        width: `calc(100% - 160px)`,
       },
     },
     brandSidebar: {
@@ -28,6 +32,9 @@ const useStyles = makeStyles((theme: Theme) =>
         position: 'absolute',
         right: 0,
         bottom: 40,
+      },
+      [theme.breakpoints.between('md', 'lg')]: {
+        left: `calc(100% - 160px)`,
       },
     },
   })
