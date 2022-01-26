@@ -53,7 +53,9 @@ const useStyles = makeStyles((theme: Theme) => ({
       opacity: 0,
       visibility: 'hidden',
       [theme.breakpoints.down('sm')]: {
-        display: 'none',
+        '& .inactive': {
+          display: 'none',
+        },
       },
     },
   },
@@ -63,7 +65,9 @@ const useStyles = makeStyles((theme: Theme) => ({
       visibility: 'hidden',
     },
     [theme.breakpoints.down('sm')]: {
-      display: 'none',
+      '& .active ~ $item': {
+        display: 'none',
+      },
     },
   },
   item: {
@@ -71,6 +75,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     padding: '3em 0',
     [theme.breakpoints.down('sm')]: {
       transition: 'initial',
+      padding: '0px',
     },
   },
   hideItem: {
@@ -94,7 +99,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         visibility: 'hidden',
       },
     },
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down(767)]: {
       position: 'fixed',
     },
   },
@@ -114,7 +119,7 @@ export function Item({
   const theme = useTheme();
   const classes = useStyles();
   const ref = useRef<HTMLDivElement>(null!);
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const isMobile = useMediaQuery(theme.breakpoints.down(767));
 
   useEffect(() => {
     if (isActive) {
