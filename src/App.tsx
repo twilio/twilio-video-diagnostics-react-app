@@ -1,5 +1,4 @@
-import { createStyles, makeStyles, Theme, Hidden } from '@material-ui/core';
-import React from 'react';
+import { createStyles, makeStyles, Theme } from '@material-ui/core';
 import { AppStateProvider } from './components/AppStateProvider/AppStateProvider';
 import Header from './components/Header/Header';
 import { MainContent } from './components/MainContent/MainContent';
@@ -17,7 +16,7 @@ const useStyles = makeStyles((theme: Theme) =>
         width: '100%',
         overflowY: 'auto',
       },
-      [theme.breakpoints.between('md', 'lg')]: {
+      [theme.breakpoints.between(767, 'lg')]: {
         width: `calc(100% - 160px)`,
       },
     },
@@ -33,8 +32,11 @@ const useStyles = makeStyles((theme: Theme) =>
         right: 0,
         bottom: 40,
       },
-      [theme.breakpoints.between('md', 'lg')]: {
+      [theme.breakpoints.between(767, 'lg')]: {
         left: `calc(100% - 160px)`,
+      },
+      [theme.breakpoints.between('xs', 767)]: {
+        display: 'none',
       },
     },
   })
@@ -48,11 +50,9 @@ function App() {
       <div className={classes.appContainer}>
         <Header />
         <MainContent />
-        <Hidden smDown>
-          <div className={classes.brandSidebar}>
-            <Logo />
-          </div>
-        </Hidden>
+        <div className={classes.brandSidebar}>
+          <Logo />
+        </div>
       </div>
     </AppStateProvider>
   );
