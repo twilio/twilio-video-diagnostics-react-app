@@ -1,6 +1,6 @@
 import { ChevronRight } from '../../icons/ChevronRight';
 import clsx from 'clsx';
-import { Container, Grid, Typography, Hidden } from '@material-ui/core';
+import { Container, Grid, Typography, useTheme, useMediaQuery } from '@material-ui/core';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import { useAppStateContext, ActivePane } from '../AppStateProvider/AppStateProvider';
 import { TwilioLogo } from '../../icons/TwilioLogo';
@@ -17,6 +17,9 @@ const useStyles = makeStyles((theme: Theme) =>
       justifyContent: 'center',
       zIndex: 100,
       background: 'inherit',
+      [theme.breakpoints.down(767)]: {
+        display: 'none',
+      },
     },
     breadcrumb: {
       '& p': {
@@ -26,6 +29,13 @@ const useStyles = makeStyles((theme: Theme) =>
       },
       '&:last-child svg': {
         display: 'none',
+      },
+      [theme.breakpoints.between(767, 'md')]: {
+        '& p': {
+          paddingRight: '0.5em',
+          width: '80%',
+          textAlign: 'center',
+        },
       },
     },
     active: {
@@ -48,7 +58,10 @@ const useStyles = makeStyles((theme: Theme) =>
       transition: 'width 1s ease',
     },
     mobileLogo: {
-      margin: '3em 0 0 1.5em',
+      margin: '2em 0 1.5em 1.5em',
+      [theme.breakpoints.up(767)]: {
+        display: 'none',
+      },
     },
   })
 );
@@ -70,36 +83,40 @@ function HeaderItem({ label, pane }: { label: string; pane: ActivePane }) {
 export default function Header() {
   const classes = useStyles();
   const { state } = useAppStateContext();
+  const theme = useTheme();
+  const isTablet = useMediaQuery(theme.breakpoints.between(767, 'md'));
 
   const numberOfPanes = Object.keys(ActivePane).length / 2;
 
   return (
     <>
-      <Hidden smDown>
-        <div className={classes.header}>
-          <Container>
-            <Grid container alignItems="center" justifyContent="space-between" style={{ height: '100%' }}>
-              <HeaderItem pane={ActivePane.DeviceCheck} label="Device & Software Setup" />
-              <HeaderItem pane={ActivePane.Connectivity} label="Connectivity" />
-              <HeaderItem pane={ActivePane.Quality} label="Quality & Performance" />
-              <HeaderItem pane={ActivePane.Results} label="Get Results" />
-            </Grid>
-          </Container>
+      <div className={classes.header}>
+        <Container>
+          <Grid
+            container
+            alignItems="center"
+            justifyContent={isTablet ? 'space-around' : 'space-between'}
+            style={{ height: '100%' }}
+            wrap={isTablet ? 'nowrap' : 'wrap'}
+          >
+            <HeaderItem pane={ActivePane.DeviceCheck} label="Device & Software Setup" />
+            <HeaderItem pane={ActivePane.Connectivity} label="Connectivity" />
+            <HeaderItem pane={ActivePane.Quality} label="Quality & Performance" />
+            <HeaderItem pane={ActivePane.Results} label="Get Results" />
+          </Grid>
+        </Container>
 
-          <div className={classes.progressBar}>
-            <div
-              className={classes.progressBarForeground}
-              style={{ width: `${(state.activePane / (numberOfPanes - 1)) * 100}%` }}
-            />
-          </div>
+        <div className={classes.progressBar}>
+          <div
+            className={classes.progressBarForeground}
+            style={{ width: `${(state.activePane / (numberOfPanes - 1)) * 100}%` }}
+          />
         </div>
-      </Hidden>
+      </div>
 
-      <Hidden mdUp>
-        <div className={classes.mobileLogo}>
-          <TwilioLogo />
-        </div>
-      </Hidden>
+      <div className={classes.mobileLogo}>
+        <TwilioLogo />
+      </div>
     </>
   );
 }
