@@ -15,6 +15,16 @@ declare module '@material-ui/core/styles/createTheme' {
   }
 }
 
+declare module '@material-ui/core/styles/createBreakpoints' {
+  interface BreakpointOverrides {
+    xs: true;
+    sm: true;
+    md: true;
+    lg: true;
+    xl: true;
+  }
+}
+
 const defaultTheme = createTheme();
 
 export default createTheme({
@@ -29,7 +39,7 @@ export default createTheme({
     MuiContainer: {
       root: {
         width: '950px',
-        [defaultTheme.breakpoints.down('sm')]: {
+        [defaultTheme.breakpoints.down(960)]: {
           width: '100vw',
         },
       },
@@ -147,4 +157,13 @@ export default createTheme({
   navHeight: 100,
   brandSidebarWidth: 250,
   backgroundColor: '#f4f4f6',
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 375,
+      md: 768,
+      lg: 1280,
+      xl: 1920,
+    },
+  },
 });
