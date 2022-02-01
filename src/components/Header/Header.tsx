@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme: Theme) =>
       justifyContent: 'center',
       zIndex: 100,
       background: 'inherit',
-      [theme.breakpoints.down(767)]: {
+      [theme.breakpoints.down('sm')]: {
         display: 'none',
       },
     },
@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme: Theme) =>
       '&:last-child svg': {
         display: 'none',
       },
-      [theme.breakpoints.between(767, 'md')]: {
+      [theme.breakpoints.only('md')]: {
         '& p': {
           paddingRight: '0.5em',
           width: '80%',
@@ -59,7 +59,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     mobileLogo: {
       margin: '2em 0 1.5em 1.5em',
-      [theme.breakpoints.up(767)]: {
+      [theme.breakpoints.up('md')]: {
         display: 'none',
       },
     },
@@ -84,7 +84,7 @@ export default function Header() {
   const classes = useStyles();
   const { state } = useAppStateContext();
   const theme = useTheme();
-  const isTablet = useMediaQuery(theme.breakpoints.between(767, 'md'));
+  const isTablet = useMediaQuery(theme.breakpoints.only('md'));
 
   const numberOfPanes = Object.keys(ActivePane).length / 2;
 

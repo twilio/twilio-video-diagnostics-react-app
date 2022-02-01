@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme: Theme) =>
         width: '100%',
         overflowY: 'auto',
       },
-      [theme.breakpoints.between(767, 'lg')]: {
+      [theme.breakpoints.only('md')]: {
         width: `calc(100% - 160px)`,
       },
     },
@@ -32,10 +32,10 @@ const useStyles = makeStyles((theme: Theme) =>
         right: 0,
         bottom: 40,
       },
-      [theme.breakpoints.between(767, 'lg')]: {
+      [theme.breakpoints.only('md')]: {
         left: `calc(100% - 160px)`,
       },
-      [theme.breakpoints.between('xs', 767)]: {
+      [theme.breakpoints.down('sm')]: {
         display: 'none',
       },
     },

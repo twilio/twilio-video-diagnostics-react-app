@@ -7,13 +7,9 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     gridContainer: {
       justifyContent: 'space-between',
-      [theme.breakpoints.between(767, 960)]: {
+      [theme.breakpoints.only('md')]: {
         marginLeft: '3em',
-        justifyContent: 'center',
         width: '70%',
-      },
-      [theme.breakpoints.between(960, 'lg')]: {
-        justifyContent: 'center',
       },
     },
   })
@@ -23,14 +19,14 @@ export function GetStarted() {
   const { nextPane } = useAppStateContext();
   const classes = useStyles();
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   const imageSize = isMobile ? { width: '200px', height: '200px' } : { width: '284px', height: '284px' };
 
   return (
     <Container>
       <Grid container alignItems="center" className={classes.gridContainer}>
-        <Grid item md={5}>
+        <Grid item lg={5}>
           <Typography variant="h1" gutterBottom>
             Let's get started.
           </Typography>
@@ -44,7 +40,7 @@ export function GetStarted() {
           </Button>
         </Grid>
 
-        <Grid item md={5}>
+        <Grid item lg={5}>
           {/* 
           The size of the image is explicitly stated here so that this content can properly be centered vertically
           before the image is loaded.
