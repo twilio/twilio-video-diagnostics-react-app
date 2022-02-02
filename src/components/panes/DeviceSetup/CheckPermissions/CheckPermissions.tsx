@@ -1,27 +1,44 @@
 import React from 'react';
-import { Button, Container, Grid, Typography, Paper, makeStyles } from '@material-ui/core';
+import { Button, Container, Grid, Typography, Paper, makeStyles, Hidden, Theme, createStyles } from '@material-ui/core';
 import SettingsIllustration from './SettingsIllustration.png';
 import { useAppStateContext } from '../../../AppStateProvider/AppStateProvider';
 
-const useStyles = makeStyles({
-  paper: {
-    display: 'inline-block',
-    padding: '23px',
-    borderRadius: '8px',
-  },
-  grantPermissions: {
-    fontSize: '16px',
-    paddingBottom: '16px',
-  },
-  /* 
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    paper: {
+      display: 'inline-block',
+      padding: '23px',
+      borderRadius: '8px',
+    },
+    grantPermissions: {
+      fontSize: '16px',
+      paddingBottom: '16px',
+    },
+    /* 
   The size of the image is explicitly stated here so that this content can properly be centered vertically
   before the image is loaded.
   */
-  illustration: {
-    height: '181px',
-    width: '337px',
-  },
-});
+    illustration: {
+      height: '181px',
+      width: '337px',
+      [theme.breakpoints.down('sm')]: {
+        height: '147px',
+        width: '278px',
+      },
+    },
+    gridContainer: {
+      [theme.breakpoints.only('md')]: {
+        marginLeft: '3em',
+        width: '70%',
+      },
+    },
+    requestButton: {
+      [theme.breakpoints.down('sm')]: {
+        marginBottom: '2em',
+      },
+    },
+  })
+);
 
 export function CheckPermissions() {
   const classes = useStyles();
@@ -47,8 +64,8 @@ export function CheckPermissions() {
 
   return (
     <Container>
-      <Grid container alignItems="center" justifyContent="space-between">
-        <Grid item md={6}>
+      <Grid container alignItems="center" justifyContent="space-between" className={classes.gridContainer}>
+        <Grid item lg={6}>
           <Typography variant="h1" gutterBottom>
             Check permissions
           </Typography>
@@ -57,23 +74,33 @@ export function CheckPermissions() {
             If you haven't already, you'll see a pop-up to grant Twilio permissions to access your camera and
             microphone.
           </Typography>
+          <Hidden lgUp>
+            <Paper className={classes.paper} style={{ marginBottom: '2.5em' }}>
+              <Typography variant="body1" className={classes.grantPermissions}>
+                <strong>Grant permissions</strong>
+              </Typography>
+              <img src={SettingsIllustration} alt="Settings Illustration" className={classes.illustration} />
+            </Paper>
+          </Hidden>
           <Typography variant="body1" gutterBottom>
-            <strong>Allow all permissions and re-fresh this page.</strong>
+            <strong>Allow all permissions and refresh this page.</strong>
           </Typography>
 
-          <Button variant="contained" color="primary" onClick={handleClick}>
+          <Button variant="contained" color="primary" onClick={handleClick} className={classes.requestButton}>
             Request permissions
           </Button>
         </Grid>
 
-        <Grid item md={5}>
-          <Paper className={classes.paper}>
-            <Typography variant="body1" className={classes.grantPermissions}>
-              <strong>Grant permissions</strong>
-            </Typography>
-            <img src={SettingsIllustration} alt="Settings Illustration" className={classes.illustration} />
-          </Paper>
-        </Grid>
+        <Hidden mdDown>
+          <Grid item lg={5}>
+            <Paper className={classes.paper}>
+              <Typography variant="body1" className={classes.grantPermissions}>
+                <strong>Grant permissions</strong>
+              </Typography>
+              <img src={SettingsIllustration} alt="Settings Illustration" className={classes.illustration} />
+            </Paper>
+          </Grid>
+        </Hidden>
       </Grid>
     </Container>
   );
