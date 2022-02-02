@@ -9,52 +9,76 @@ import {
   Paper,
   Select,
   Typography,
+  Hidden,
+  Theme,
+  createStyles,
 } from '@material-ui/core';
 import { ActivePane, useAppStateContext } from '../../AppStateProvider/AppStateProvider';
 import { SmallError } from '../../../icons/SmallError';
 import { useCameraTest } from './useCameraTest/useCameraTest';
 import useDevices from '../../../hooks/useDevices/useDevices';
 
-const useStyles = makeStyles({
-  paper: {
-    padding: '2em',
-    borderRadius: '8px',
-  },
-  videoContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  aspectRatioContainer: {
-    position: 'relative',
-    display: 'flex',
-    width: '80%',
-    padding: '1em',
-    margin: '1em 0',
-    '&::after': {
-      content: '""',
-      paddingTop: '56.25%',
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    paper: {
+      padding: '2em',
+      borderRadius: '8px',
+      [theme.breakpoints.down('md')]: {
+        width: '70%',
+        marginBottom: '2em',
+      },
+      [theme.breakpoints.down('sm')]: {
+        marginLeft: 'auto',
+        marginRight: 'auto',
+      },
     },
-    '& video': {
-      position: 'absolute',
-      height: '100%',
-      width: '100%',
-      objectFit: 'cover',
-      top: 0,
-      right: 0,
-      bottom: 0,
-      left: 0,
+    videoContainer: {
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
     },
-  },
-  error: {
-    display: 'flex',
-    alignItems: 'center',
-    margin: '0.5em 0',
-    '& svg': {
-      marginRight: '0.3em',
+    aspectRatioContainer: {
+      position: 'relative',
+      display: 'flex',
+      width: '80%',
+      padding: '1em',
+      margin: '1em 0',
+      '&::after': {
+        content: '""',
+        paddingTop: '56.25%',
+      },
+      '& video': {
+        position: 'absolute',
+        height: '100%',
+        width: '100%',
+        objectFit: 'cover',
+        top: 0,
+        right: 0,
+        bottom: 0,
+        left: 0,
+      },
     },
-  },
-});
+    error: {
+      display: 'flex',
+      alignItems: 'center',
+      margin: '0.5em 0',
+      '& svg': {
+        marginRight: '0.3em',
+      },
+    },
+    gridContainer: {
+      [theme.breakpoints.only('md')]: {
+        marginLeft: '3em',
+        width: '70%',
+      },
+    },
+    gridItem: {
+      [theme.breakpoints.down('sm')]: {
+        marginBottom: '2em',
+      },
+    },
+  })
+);
 
 export function CameraTest() {
   const classes = useStyles();
@@ -94,7 +118,7 @@ export function CameraTest() {
   }, [state.activePane, videoInputDeviceID, startVideoTest, stopVideoTest, videoTestError, dispatch]);
 
   useEffect(() => {
-    // If no device is select, set the first available device as the active device.
+    // If no device is selected, set the first available device as the active device.
     const hasSelectedDevice = videoInputDevices.some((device) => device.deviceId === videoInputDeviceID);
     if (videoInputDevices.length && !hasSelectedDevice) {
       setVideoInputDeviceID(videoInputDevices[0].deviceId);
@@ -103,8 +127,8 @@ export function CameraTest() {
 
   return (
     <Container>
-      <Grid container alignItems="center" justifyContent="space-between">
-        <Grid item md={5}>
+      <Grid container alignItems="center" justifyContent="space-between" className={classes.gridContainer}>
+        <Grid item lg={5} className={classes.gridItem}>
           <Typography variant="h1" gutterBottom>
             Check your video
           </Typography>
@@ -114,6 +138,43 @@ export function CameraTest() {
             selected camera. If the camera isn’t part of your computer, check your settings to make sure your system
             recognizes it.
           </Typography>
+          <Hidden lgUp>
+            <Paper className={classes.paper}>
+              <Grid container direction="column" alignItems="center">
+                <Typography variant="subtitle2">
+                  <strong>Video Preview</strong>
+                </Typography>
+                <div className={classes.aspectRatioContainer}>
+                  <video playsInline autoPlay ref={videoElementRef} />
+                </div>
+              </Grid>
+              <FormControl fullWidth>
+                <Typography variant="subtitle2">
+                  <strong>Camera</strong>
+                </Typography>
+                <Select
+                  onChange={(e) => setDevice(e.target.value as string)}
+                  value={videoInputDeviceID}
+                  variant="outlined"
+                  disabled={!!videoTestError}
+                >
+                  {videoInputDevices.map((device) => (
+                    <MenuItem value={device.deviceId} key={device.deviceId}>
+                      {device.label}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+              {videoTestError && (
+                <div className={classes.error}>
+                  <SmallError />
+                  <Typography variant="subtitle2" color="error">
+                    Unable to connect.
+                  </Typography>
+                </div>
+              )}
+            </Paper>
+          </Hidden>
           <Typography variant="body1" gutterBottom>
             <strong>Does your video look ok?</strong>
           </Typography>
@@ -132,43 +193,45 @@ export function CameraTest() {
           </Button>
         </Grid>
 
-        <Grid item md={5}>
-          <Paper className={classes.paper}>
-            <Grid container direction="column" alignItems="center">
-              <Typography variant="subtitle2">
-                <strong>Video Preview</strong>
-              </Typography>
-              <div className={classes.aspectRatioContainer}>
-                <video ref={videoElementRef} />
-              </div>
-            </Grid>
-            <FormControl fullWidth>
-              <Typography variant="subtitle2">
-                <strong>Camera</strong>
-              </Typography>
-              <Select
-                onChange={(e) => setDevice(e.target.value as string)}
-                value={videoInputDeviceID}
-                variant="outlined"
-                disabled={!!videoTestError}
-              >
-                {videoInputDevices.map((device) => (
-                  <MenuItem value={device.deviceId} key={device.deviceId}>
-                    {device.label}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-            {videoTestError && (
-              <div className={classes.error}>
-                <SmallError />
-                <Typography variant="subtitle2" color="error">
-                  Unable to connect.
+        <Hidden mdDown>
+          <Grid item lg={5}>
+            <Paper className={classes.paper}>
+              <Grid container direction="column" alignItems="center">
+                <Typography variant="subtitle2">
+                  <strong>Video Preview</strong>
                 </Typography>
-              </div>
-            )}
-          </Paper>
-        </Grid>
+                <div className={classes.aspectRatioContainer}>
+                  <video playsInline autoPlay ref={videoElementRef} />
+                </div>
+              </Grid>
+              <FormControl fullWidth>
+                <Typography variant="subtitle2">
+                  <strong>Camera</strong>
+                </Typography>
+                <Select
+                  onChange={(e) => setDevice(e.target.value as string)}
+                  value={videoInputDeviceID}
+                  variant="outlined"
+                  disabled={!!videoTestError}
+                >
+                  {videoInputDevices.map((device) => (
+                    <MenuItem value={device.deviceId} key={device.deviceId}>
+                      {device.label}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+              {videoTestError && (
+                <div className={classes.error}>
+                  <SmallError />
+                  <Typography variant="subtitle2" color="error">
+                    Unable to connect.
+                  </Typography>
+                </div>
+              )}
+            </Paper>
+          </Grid>
+        </Hidden>
       </Grid>
     </Container>
   );
