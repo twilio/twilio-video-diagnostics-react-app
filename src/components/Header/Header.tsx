@@ -3,6 +3,7 @@ import clsx from 'clsx';
 import { Container, Grid, Typography } from '@material-ui/core';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import { useAppStateContext, ActivePane } from '../AppStateProvider/AppStateProvider';
+import { TwilioLogo } from '../../icons/TwilioLogo';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -16,6 +17,9 @@ const useStyles = makeStyles((theme: Theme) =>
       justifyContent: 'center',
       zIndex: 100,
       background: 'inherit',
+      [theme.breakpoints.down('sm')]: {
+        display: 'none',
+      },
     },
     breadcrumb: {
       '& p': {
@@ -25,6 +29,13 @@ const useStyles = makeStyles((theme: Theme) =>
       },
       '&:last-child svg': {
         display: 'none',
+      },
+      [theme.breakpoints.only('md')]: {
+        '& p': {
+          paddingRight: '0.5em',
+          width: '80%',
+          textAlign: 'center',
+        },
       },
     },
     active: {
@@ -45,6 +56,21 @@ const useStyles = makeStyles((theme: Theme) =>
       width: '0',
       height: '100%',
       transition: 'width 1s ease',
+    },
+    mobileLogo: {
+      margin: '2em 0 1.5em 1.5em',
+      [theme.breakpoints.up('md')]: {
+        display: 'none',
+      },
+    },
+    gridContainer: {
+      justifyContent: 'space-between',
+      height: '100%',
+      flexWrap: 'wrap',
+      [theme.breakpoints.only('md')]: {
+        justifyContent: 'space-around',
+        flexWrap: 'nowrap',
+      },
     },
   })
 );
@@ -70,22 +96,28 @@ export default function Header() {
   const numberOfPanes = Object.keys(ActivePane).length / 2;
 
   return (
-    <div className={classes.header}>
-      <Container>
-        <Grid container alignItems="center" justifyContent="space-between" style={{ height: '100%' }}>
-          <HeaderItem pane={ActivePane.DeviceCheck} label="Device & Software Setup" />
-          <HeaderItem pane={ActivePane.Connectivity} label="Connectivity" />
-          <HeaderItem pane={ActivePane.Quality} label="Quality & Performance" />
-          <HeaderItem pane={ActivePane.Results} label="Get Results" />
-        </Grid>
-      </Container>
+    <>
+      <div className={classes.header}>
+        <Container>
+          <Grid container alignItems="center" className={classes.gridContainer}>
+            <HeaderItem pane={ActivePane.DeviceCheck} label="Device & Software Setup" />
+            <HeaderItem pane={ActivePane.Connectivity} label="Connectivity" />
+            <HeaderItem pane={ActivePane.Quality} label="Quality & Performance" />
+            <HeaderItem pane={ActivePane.Results} label="Get Results" />
+          </Grid>
+        </Container>
 
-      <div className={classes.progressBar}>
-        <div
-          className={classes.progressBarForeground}
-          style={{ width: `${(state.activePane / (numberOfPanes - 1)) * 100}%` }}
-        />
+        <div className={classes.progressBar}>
+          <div
+            className={classes.progressBarForeground}
+            style={{ width: `${(state.activePane / (numberOfPanes - 1)) * 100}%` }}
+          />
+        </div>
       </div>
-    </div>
+
+      <div className={classes.mobileLogo}>
+        <TwilioLogo />
+      </div>
+    </>
   );
 }

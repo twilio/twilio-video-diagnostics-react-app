@@ -1,5 +1,4 @@
 import { createStyles, makeStyles, Theme } from '@material-ui/core';
-import React from 'react';
 import { AppStateProvider } from './components/AppStateProvider/AppStateProvider';
 import Header from './components/Header/Header';
 import { MainContent } from './components/MainContent/MainContent';
@@ -13,6 +12,13 @@ const useStyles = makeStyles((theme: Theme) =>
       height: '100%',
       background: theme.backgroundColor,
       overflow: 'hidden',
+      [theme.breakpoints.down('sm')]: {
+        width: '100%',
+        overflowY: 'auto',
+      },
+      [theme.breakpoints.only('md')]: {
+        width: `calc(100% - ${theme.mobileBrandSidebarWidth}px)`,
+      },
     },
     brandSidebar: {
       background: '#06033A',
@@ -25,6 +31,12 @@ const useStyles = makeStyles((theme: Theme) =>
         position: 'absolute',
         right: 0,
         bottom: 40,
+      },
+      [theme.breakpoints.only('md')]: {
+        left: `calc(100% - ${theme.mobileBrandSidebarWidth}px)`,
+      },
+      [theme.breakpoints.down('sm')]: {
+        display: 'none',
       },
     },
   })

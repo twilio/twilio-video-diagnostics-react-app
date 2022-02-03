@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import clsx from 'clsx';
-import { Button, makeStyles, useTheme } from '@material-ui/core';
+import { Button, makeStyles, useTheme, Theme, useMediaQuery } from '@material-ui/core';
 import Video from 'twilio-video';
 
 import { ActivePane, useAppStateContext } from '../AppStateProvider/AppStateProvider';
@@ -17,12 +17,18 @@ import { Quality } from '../panes/Quality/Quality';
 import { Results } from '../panes/Results/Results';
 import { Snackbar } from '../Snackbar/Snackbar';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme: Theme) => ({
   contentContainer: {
     position: 'absolute',
     top: '0',
     left: '50%',
     transform: 'translateX(-50%)',
+    [theme.breakpoints.down('md')]: {
+      position: 'relative',
+      top: 'auto',
+      left: 'auto',
+      transform: 'initial',
+    },
   },
   scrollContainer: {
     transition: 'all 1s ease',
@@ -36,11 +42,21 @@ const useStyles = makeStyles({
         pointerEvents: 'none',
       },
     },
+    [theme.breakpoints.down('md')]: {
+      transition: 'all 0s ease',
+      transform: 'initial',
+      '& .inactive': { display: 'none' },
+    },
   },
   hideAll: {
     '& .inactive': {
       opacity: 0,
       visibility: 'hidden',
+      [theme.breakpoints.down('md')]: {
+        '& .inactive': {
+          display: 'none',
+        },
+      },
     },
   },
   hideAfter: {
@@ -48,10 +64,19 @@ const useStyles = makeStyles({
       opacity: 0,
       visibility: 'hidden',
     },
+    [theme.breakpoints.down('md')]: {
+      '& .active ~ $item': {
+        display: 'none',
+      },
+    },
   },
   item: {
     transition: 'all 0.75s ease',
     padding: '3em 0',
+    [theme.breakpoints.down('md')]: {
+      transition: 'initial',
+      padding: '0px',
+    },
   },
   hideItem: {
     visibility: 'hidden',
@@ -74,16 +99,11 @@ const useStyles = makeStyles({
         visibility: 'hidden',
       },
     },
+    [theme.breakpoints.down('sm')]: {
+      position: 'fixed',
+    },
   },
-  brandSidebar: {
-    background: '#06033A',
-    position: 'fixed',
-    top: 0,
-    bottom: 0,
-    right: 0,
-    left: 'calc(100% - 250px)',
-  },
-});
+}));
 
 export function Item({
   children,
@@ -99,12 +119,15 @@ export function Item({
   const theme = useTheme();
   const classes = useStyles();
   const ref = useRef<HTMLDivElement>(null!);
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   useEffect(() => {
     if (isActive) {
       const el = ref.current;
       const offset = el.offsetTop + el.offsetHeight * 0.5;
-      el.parentElement!.style.transform = `translateY(calc(50vh - ${offset}px + ${theme.navHeight / 2}px))`;
+      el.parentElement!.style.transform = isMobile
+        ? `none`
+        : `translateY(calc(50vh - ${offset}px + ${theme.navHeight / 2}px))`;
     }
   });
 
