@@ -25,6 +25,16 @@ declare module '@material-ui/core/styles/createBreakpoints' {
   }
 }
 
+const BREAKPOINTS = {
+  values: {
+    xs: 0,
+    sm: 375,
+    md: 768,
+    lg: 1280,
+    xl: 1920,
+  },
+};
+
 const defaultTheme = createTheme();
 
 export default createTheme({
@@ -157,13 +167,5 @@ export default createTheme({
   navHeight: 100,
   brandSidebarWidth: 250,
   backgroundColor: '#f4f4f6',
-  breakpoints: {
-    values: {
-      xs: 0,
-      sm: 375,
-      md: 768,
-      lg: 1280,
-      xl: 1920,
-    },
-  },
+  breakpoints: BREAKPOINTS,
 });
