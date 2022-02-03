@@ -1,6 +1,6 @@
 import { ChevronRight } from '../../icons/ChevronRight';
 import clsx from 'clsx';
-import { Container, Grid, Typography, useTheme, useMediaQuery } from '@material-ui/core';
+import { Container, Grid, Typography } from '@material-ui/core';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import { useAppStateContext, ActivePane } from '../AppStateProvider/AppStateProvider';
 import { TwilioLogo } from '../../icons/TwilioLogo';
@@ -63,6 +63,15 @@ const useStyles = makeStyles((theme: Theme) =>
         display: 'none',
       },
     },
+    gridContainer: {
+      justifyContent: 'space-between',
+      height: '100%',
+      flexWrap: 'wrap',
+      [theme.breakpoints.only('md')]: {
+        justifyContent: 'space-around',
+        flexWrap: 'nowrap',
+      },
+    },
   })
 );
 
@@ -83,8 +92,6 @@ function HeaderItem({ label, pane }: { label: string; pane: ActivePane }) {
 export default function Header() {
   const classes = useStyles();
   const { state } = useAppStateContext();
-  const theme = useTheme();
-  const isTablet = useMediaQuery(theme.breakpoints.only('md'));
 
   const numberOfPanes = Object.keys(ActivePane).length / 2;
 
@@ -92,13 +99,7 @@ export default function Header() {
     <>
       <div className={classes.header}>
         <Container>
-          <Grid
-            container
-            alignItems="center"
-            justifyContent={isTablet ? 'space-around' : 'space-between'}
-            style={{ height: '100%' }}
-            wrap={isTablet ? 'nowrap' : 'wrap'}
-          >
+          <Grid container alignItems="center" className={classes.gridContainer}>
             <HeaderItem pane={ActivePane.DeviceCheck} label="Device & Software Setup" />
             <HeaderItem pane={ActivePane.Connectivity} label="Connectivity" />
             <HeaderItem pane={ActivePane.Quality} label="Quality & Performance" />

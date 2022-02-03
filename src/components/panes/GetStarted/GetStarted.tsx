@@ -1,6 +1,6 @@
 import { useAppStateContext } from '../../AppStateProvider/AppStateProvider';
-import { Button, Container, Grid, Typography, useMediaQuery } from '@material-ui/core';
-import { makeStyles, createStyles, Theme, useTheme } from '@material-ui/core/styles';
+import { Button, Container, Grid, Typography } from '@material-ui/core';
+import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import Hello from './Hello.png';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -12,16 +12,24 @@ const useStyles = makeStyles((theme: Theme) =>
         width: '70%',
       },
     },
+    /* 
+    The size of the image is explicitly stated here so that this content can properly be centered vertically
+    before the image is loaded.
+    */
+    illustration: {
+      width: '284px',
+      height: '284px',
+      [theme.breakpoints.down('md')]: {
+        width: '200px',
+        height: '200px',
+      },
+    },
   })
 );
 
 export function GetStarted() {
   const { nextPane } = useAppStateContext();
   const classes = useStyles();
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-
-  const imageSize = isMobile ? { width: '200px', height: '200px' } : { width: '284px', height: '284px' };
 
   return (
     <Container>
@@ -41,11 +49,7 @@ export function GetStarted() {
         </Grid>
 
         <Grid item lg={5}>
-          {/* 
-          The size of the image is explicitly stated here so that this content can properly be centered vertically
-          before the image is loaded.
-          */}
-          <img src={Hello} alt="Hello" style={imageSize} />
+          <img src={Hello} alt="Hello" className={classes.illustration} />
           <Typography variant="body1" color="textSecondary">
             <strong>Not sure about something?</strong> Skip that section for now, and your support administrator can
             help later.
