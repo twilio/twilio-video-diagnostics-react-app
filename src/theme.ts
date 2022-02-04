@@ -27,6 +27,16 @@ declare module '@material-ui/core/styles/createBreakpoints' {
   }
 }
 
+const BREAKPOINTS = {
+  values: {
+    xs: 0,
+    sm: 375,
+    md: 768,
+    lg: 1280,
+    xl: 1920,
+  },
+};
+
 const mobileBrandSidebarWidth = 160;
 
 const defaultTheme = createTheme();
@@ -44,6 +54,9 @@ export default createTheme({
       root: {
         width: '950px',
         maxWidth: `calc(100vw - ${mobileBrandSidebarWidth}px)`,
+        [defaultTheme.breakpoints.down(BREAKPOINTS.values.md)]: {
+          maxWidth: '100vw',
+        },
       },
     },
     MuiButton: {
@@ -160,13 +173,5 @@ export default createTheme({
   brandSidebarWidth: 250,
   mobileBrandSidebarWidth,
   backgroundColor: '#f4f4f6',
-  breakpoints: {
-    values: {
-      xs: 0,
-      sm: 375,
-      md: 768,
-      lg: 1280,
-      xl: 1920,
-    },
-  },
+  breakpoints: BREAKPOINTS,
 });
