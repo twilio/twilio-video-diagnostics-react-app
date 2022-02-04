@@ -24,12 +24,8 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: '2em',
       borderRadius: '8px',
       [theme.breakpoints.down('md')]: {
-        width: '70%',
+        width: '23.5em',
         marginBottom: '2em',
-      },
-      [theme.breakpoints.down('sm')]: {
-        marginLeft: 'auto',
-        marginRight: 'auto',
       },
     },
     videoContainer: {
@@ -56,6 +52,9 @@ const useStyles = makeStyles((theme: Theme) =>
         right: 0,
         bottom: 0,
         left: 0,
+      },
+      [theme.breakpoints.down('md')]: {
+        width: '90%',
       },
     },
     error: {
