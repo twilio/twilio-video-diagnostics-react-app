@@ -4,7 +4,7 @@ declare module '@material-ui/core/styles/createTheme' {
   interface Theme {
     navHeight: number;
     brandSidebarWidth: number;
-    mobileBrandSidebarWidth: number;
+    tabletBrandSidebarWidth: number;
     backgroundColor: string;
   }
 
@@ -12,7 +12,7 @@ declare module '@material-ui/core/styles/createTheme' {
   interface ThemeOptions {
     navHeight: number;
     brandSidebarWidth: number;
-    mobileBrandSidebarWidth: number;
+    tabletBrandSidebarWidth: number;
     backgroundColor: string;
   }
 }
@@ -37,7 +37,7 @@ const BREAKPOINTS = {
   },
 };
 
-const mobileBrandSidebarWidth = 160;
+const tabletBrandSidebarWidth = 160;
 
 const defaultTheme = createTheme();
 
@@ -53,7 +53,7 @@ export default createTheme({
     MuiContainer: {
       root: {
         width: '950px',
-        maxWidth: `calc(100vw - ${mobileBrandSidebarWidth}px)`,
+        maxWidth: `calc(100vw - ${tabletBrandSidebarWidth}px)`,
         [defaultTheme.breakpoints.down(BREAKPOINTS.values.md)]: {
           maxWidth: '100vw',
         },
@@ -171,7 +171,7 @@ export default createTheme({
   },
   navHeight: 100,
   brandSidebarWidth: 250,
-  mobileBrandSidebarWidth,
+  tabletBrandSidebarWidth,
   backgroundColor: '#f4f4f6',
   breakpoints: BREAKPOINTS,
 });
