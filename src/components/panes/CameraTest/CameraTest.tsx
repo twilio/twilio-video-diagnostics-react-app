@@ -71,11 +71,6 @@ const useStyles = makeStyles((theme: Theme) =>
         width: '70%',
       },
     },
-    gridItem: {
-      [theme.breakpoints.down('sm')]: {
-        marginBottom: '2em',
-      },
-    },
   })
 );
 
@@ -127,7 +122,7 @@ export function CameraTest() {
   return (
     <Container>
       <Grid container alignItems="center" justifyContent="space-between" className={classes.gridContainer}>
-        <Grid item lg={5} className={classes.gridItem}>
+        <Grid item lg={5}>
           <Typography variant="h1" gutterBottom>
             Check your video
           </Typography>
