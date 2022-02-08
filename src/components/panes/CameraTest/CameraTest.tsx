@@ -9,7 +9,6 @@ import {
   Paper,
   Select,
   Typography,
-  Hidden,
   Theme,
   createStyles,
 } from '@material-ui/core';
@@ -23,9 +22,10 @@ const useStyles = makeStyles((theme: Theme) =>
     paper: {
       padding: '2em',
       borderRadius: '8px',
-      [theme.breakpoints.down('md')]: {
-        width: '23.5em',
-        marginBottom: '2em',
+      width: '388px',
+      [theme.breakpoints.down('sm')]: {
+        margin: '0 auto',
+        width: '95%',
       },
     },
     videoContainer: {
@@ -53,9 +53,6 @@ const useStyles = makeStyles((theme: Theme) =>
         bottom: 0,
         left: 0,
       },
-      [theme.breakpoints.down('md')]: {
-        width: '90%',
-      },
     },
     error: {
       display: 'flex',
@@ -65,10 +62,31 @@ const useStyles = makeStyles((theme: Theme) =>
         marginRight: '0.3em',
       },
     },
-    gridContainer: {
+    container: {
+      display: 'block',
       [theme.breakpoints.only('md')]: {
         marginLeft: '3em',
         width: '70%',
+      },
+    },
+    text: {
+      float: 'left',
+      [theme.breakpoints.down('md')]: {
+        float: 'initial',
+      },
+    },
+    buttons: {
+      clear: 'left',
+      [theme.breakpoints.down('md')]: {
+        clear: 'initial',
+        marginBottom: '2em',
+      },
+    },
+    test: {
+      float: 'right',
+      [theme.breakpoints.down('md')]: {
+        float: 'initial',
+        marginBottom: '2.5em',
       },
     },
   })
@@ -79,14 +97,11 @@ export function CameraTest() {
   const { videoInputDevices } = useDevices();
   const { state, dispatch } = useAppStateContext();
   const { videoElementRef, startVideoTest, stopVideoTest, videoTest, videoTestError } = useCameraTest();
-
   const prevVideoDeviceID = useRef('');
   const [videoInputDeviceID, setVideoInputDeviceID] = useState('');
-
   const setDevice = (deviceID: string) => {
     setVideoInputDeviceID(deviceID);
   };
-
   useEffect(() => {
     // Stop the test when we are not on the CameraTest pane and there is an active test
     if (state.activePane !== ActivePane.CameraTest && videoTest) {
@@ -94,85 +109,82 @@ export function CameraTest() {
       prevVideoDeviceID.current = '';
     }
   }, [state.activePane, stopVideoTest, videoTest]);
-
   useEffect(() => {
     // Start the test when we are on the CameraTest pane and when the videoInputDeviceID changes
     if (state.activePane === ActivePane.CameraTest) {
       const newDeviceSelected = prevVideoDeviceID.current !== videoInputDeviceID;
       prevVideoDeviceID.current = videoInputDeviceID;
-
       if (videoInputDeviceID && newDeviceSelected) {
         startVideoTest(videoInputDeviceID);
       }
-
       if (videoTestError) {
         stopVideoTest();
       }
     }
   }, [state.activePane, videoInputDeviceID, startVideoTest, stopVideoTest, videoTestError, dispatch]);
-
   useEffect(() => {
-    // If no device is selected, set the first available device as the active device.
+    // If no device is select, set the first available device as the active device.
     const hasSelectedDevice = videoInputDevices.some((device) => device.deviceId === videoInputDeviceID);
     if (videoInputDevices.length && !hasSelectedDevice) {
       setVideoInputDeviceID(videoInputDevices[0].deviceId);
     }
   }, [videoInputDevices, videoInputDeviceID]);
-
   return (
     <Container>
-      <Grid container alignItems="center" justifyContent="space-between" className={classes.gridContainer}>
-        <Grid item lg={5}>
+      <div className={classes.container}>
+        <Grid item lg={5} className={classes.text}>
           <Typography variant="h1" gutterBottom>
             Check your video
           </Typography>
-
           <Typography variant="body1" gutterBottom>
-            Move in front of your camera to make sure it’s working. If you don't see your video, try changing the
-            selected camera. If the camera isn’t part of your computer, check your settings to make sure your system
+            Move in front of your camera to make sure it's working. If you don't see your video, try changing the
+            selected camera. If the camera isn't part of your computer, check your settings to make sure your system
             recognizes it.
           </Typography>
-          <Hidden lgUp>
-            <Paper className={classes.paper}>
-              <Grid container direction="column" alignItems="center">
-                <Typography variant="subtitle2">
-                  <strong>Video Preview</strong>
+        </Grid>
+
+        <Grid item lg={5} className={classes.test}>
+          <Paper className={classes.paper}>
+            <Grid container direction="column" alignItems="center">
+              <Typography variant="subtitle2">
+                <strong>Video Preview</strong>
+              </Typography>
+              <div className={classes.aspectRatioContainer}>
+                <video autoPlay playsInline ref={videoElementRef} />
+              </div>
+            </Grid>
+            <FormControl fullWidth>
+              <Typography variant="subtitle2">
+                <strong>Camera</strong>
+              </Typography>
+              <Select
+                onChange={(e) => setDevice(e.target.value as string)}
+                value={videoInputDeviceID}
+                variant="outlined"
+                disabled={!!videoTestError}
+              >
+                {videoInputDevices.map((device) => (
+                  <MenuItem value={device.deviceId} key={device.deviceId}>
+                    {device.label}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+            {videoTestError && (
+              <div className={classes.error}>
+                <SmallError />
+                <Typography variant="subtitle2" color="error">
+                  Unable to connect.
                 </Typography>
-                <div className={classes.aspectRatioContainer}>
-                  <video playsInline autoPlay ref={videoElementRef} />
-                </div>
-              </Grid>
-              <FormControl fullWidth>
-                <Typography variant="subtitle2">
-                  <strong>Camera</strong>
-                </Typography>
-                <Select
-                  onChange={(e) => setDevice(e.target.value as string)}
-                  value={videoInputDeviceID}
-                  variant="outlined"
-                  disabled={!!videoTestError}
-                >
-                  {videoInputDevices.map((device) => (
-                    <MenuItem value={device.deviceId} key={device.deviceId}>
-                      {device.label}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-              {videoTestError && (
-                <div className={classes.error}>
-                  <SmallError />
-                  <Typography variant="subtitle2" color="error">
-                    Unable to connect.
-                  </Typography>
-                </div>
-              )}
-            </Paper>
-          </Hidden>
+              </div>
+            )}
+          </Paper>
+        </Grid>
+
+        <Grid item lg={5} className={classes.buttons}>
           <Typography variant="body1" gutterBottom>
             <strong>Does your video look ok?</strong>
           </Typography>
-
           <Button
             variant="contained"
             color="primary"
@@ -186,47 +198,7 @@ export function CameraTest() {
             Skip for now
           </Button>
         </Grid>
-
-        <Hidden mdDown>
-          <Grid item lg={5}>
-            <Paper className={classes.paper}>
-              <Grid container direction="column" alignItems="center">
-                <Typography variant="subtitle2">
-                  <strong>Video Preview</strong>
-                </Typography>
-                <div className={classes.aspectRatioContainer}>
-                  <video playsInline autoPlay ref={videoElementRef} />
-                </div>
-              </Grid>
-              <FormControl fullWidth>
-                <Typography variant="subtitle2">
-                  <strong>Camera</strong>
-                </Typography>
-                <Select
-                  onChange={(e) => setDevice(e.target.value as string)}
-                  value={videoInputDeviceID}
-                  variant="outlined"
-                  disabled={!!videoTestError}
-                >
-                  {videoInputDevices.map((device) => (
-                    <MenuItem value={device.deviceId} key={device.deviceId}>
-                      {device.label}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-              {videoTestError && (
-                <div className={classes.error}>
-                  <SmallError />
-                  <Typography variant="subtitle2" color="error">
-                    Unable to connect.
-                  </Typography>
-                </div>
-              )}
-            </Paper>
-          </Grid>
-        </Hidden>
-      </Grid>
+      </div>
     </Container>
   );
 }
