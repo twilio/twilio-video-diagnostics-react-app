@@ -19,13 +19,20 @@ import useDevices from '../../../hooks/useDevices/useDevices';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
+    mainContainer: {
+      display: 'block',
+      [theme.breakpoints.only('md')]: {
+        marginLeft: '3em',
+        width: '70%',
+      },
+    },
     paper: {
       padding: '2em',
       borderRadius: '8px',
       width: '388px',
       [theme.breakpoints.down('sm')]: {
         margin: '0 auto',
-        width: '95%',
+        width: '100%',
       },
     },
     videoContainer: {
@@ -54,39 +61,32 @@ const useStyles = makeStyles((theme: Theme) =>
         left: 0,
       },
     },
-    error: {
-      display: 'flex',
-      alignItems: 'center',
-      margin: '0.5em 0',
-      '& svg': {
-        marginRight: '0.3em',
-      },
-    },
-    container: {
-      display: 'block',
-      [theme.breakpoints.only('md')]: {
-        marginLeft: '3em',
-        width: '70%',
-      },
-    },
-    text: {
+    header: {
       float: 'left',
       [theme.breakpoints.down('md')]: {
         float: 'initial',
       },
     },
-    buttons: {
+    cameraTest: {
+      float: 'right',
+      [theme.breakpoints.down('md')]: {
+        float: 'initial',
+        marginBottom: '2.5em',
+      },
+    },
+    confirmationButtons: {
       clear: 'left',
       [theme.breakpoints.down('md')]: {
         clear: 'initial',
         marginBottom: '2em',
       },
     },
-    test: {
-      float: 'right',
-      [theme.breakpoints.down('md')]: {
-        float: 'initial',
-        marginBottom: '2.5em',
+    error: {
+      display: 'flex',
+      alignItems: 'center',
+      margin: '0.5em 0',
+      '& svg': {
+        marginRight: '0.3em',
       },
     },
   })
@@ -129,10 +129,11 @@ export function CameraTest() {
       setVideoInputDeviceID(videoInputDevices[0].deviceId);
     }
   }, [videoInputDevices, videoInputDeviceID]);
+
   return (
     <Container>
-      <div className={classes.container}>
-        <Grid item lg={5} className={classes.text}>
+      <div className={classes.mainContainer}>
+        <Grid item lg={5} className={classes.header}>
           <Typography variant="h1" gutterBottom>
             Check your video
           </Typography>
@@ -143,7 +144,7 @@ export function CameraTest() {
           </Typography>
         </Grid>
 
-        <Grid item lg={5} className={classes.test}>
+        <Grid item lg={5} className={classes.cameraTest}>
           <Paper className={classes.paper}>
             <Grid container direction="column" alignItems="center">
               <Typography variant="subtitle2">
@@ -181,7 +182,7 @@ export function CameraTest() {
           </Paper>
         </Grid>
 
-        <Grid item lg={5} className={classes.buttons}>
+        <Grid item lg={5} className={classes.confirmationButtons}>
           <Typography variant="body1" gutterBottom>
             <strong>Does your video look ok?</strong>
           </Typography>
