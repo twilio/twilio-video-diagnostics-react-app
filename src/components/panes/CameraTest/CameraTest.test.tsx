@@ -1,5 +1,5 @@
 import { mount } from 'enzyme';
-import { Button, Select, Typography, Hidden } from '@material-ui/core';
+import { Button, Select, Typography } from '@material-ui/core';
 import { ActivePane, useAppStateContext } from '../../AppStateProvider/AppStateProvider';
 import { CameraTest } from './CameraTest';
 import { SmallError } from '../../../icons/SmallError';
@@ -101,9 +101,7 @@ describe('the CameraTest component', () => {
 
     const wrapper = mount(<CameraTest />);
 
-    // Enzyme does not render Mui's "Hidden" element's children, so we must mount them separately:
-    const hiddenEl = mount(<>{wrapper.find(Hidden).at(0).prop('children')}</>);
-    const selectEl = hiddenEl.find(Select).find('input');
+    const selectEl = wrapper.find(Select).find('input');
 
     selectEl.simulate('change', { target: { value: 3 } });
 
@@ -151,10 +149,7 @@ describe('the CameraTest component', () => {
 
     const wrapper = mount(<CameraTest />);
 
-    // Enzyme does not render Mui's "Hidden" element's children, so we must mount them separately:
-    const hiddenEl = mount(<>{wrapper.find(Hidden).at(0).prop('children')}</>);
-
-    expect(hiddenEl.find(SmallError).exists()).toBe(true);
-    expect(hiddenEl.find(Typography).find({ children: 'Unable to connect.' }).exists()).toBe(true);
+    expect(wrapper.find(SmallError).exists()).toBe(true);
+    expect(wrapper.find(Typography).find({ children: 'Unable to connect.' }).exists()).toBe(true);
   });
 });
