@@ -1,41 +1,56 @@
-import React from 'react';
-import { Button, Container, Grid, Typography, Paper, makeStyles, Hidden, Theme, createStyles } from '@material-ui/core';
+import { Button, Container, Grid, Typography, Paper, makeStyles, Theme, createStyles } from '@material-ui/core';
 import SettingsIllustration from './SettingsIllustration.png';
 import { useAppStateContext } from '../../../AppStateProvider/AppStateProvider';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    paper: {
-      display: 'inline-block',
-      padding: '23px',
-      borderRadius: '8px',
-    },
     grantPermissions: {
       fontSize: '16px',
       paddingBottom: '16px',
     },
     /* 
-  The size of the image is explicitly stated here so that this content can properly be centered vertically
-  before the image is loaded.
-  */
+    The size of the image is explicitly stated here so that this content can properly be centered vertically
+    before the image is loaded.
+    */
     illustration: {
       height: '181px',
       width: '337px',
       [theme.breakpoints.down('sm')]: {
-        height: '147px',
-        width: '278px',
+        height: '100%',
+        width: '100%',
       },
     },
-    gridContainer: {
+    mainContainer: {
+      display: 'block',
       [theme.breakpoints.only('md')]: {
         marginLeft: '3em',
         width: '70%',
       },
     },
+    header: {
+      float: 'left',
+      [theme.breakpoints.down('md')]: {
+        float: 'initial',
+      },
+    },
     requestButton: {
-      [theme.breakpoints.down('sm')]: {
+      clear: 'left',
+      [theme.breakpoints.down('md')]: {
+        clear: 'initial',
         marginBottom: '2em',
       },
+    },
+    paperContainer: {
+      float: 'right',
+      [theme.breakpoints.down('md')]: {
+        float: 'initial',
+        marginBottom: '2.5em',
+      },
+    },
+    paper: {
+      display: 'inline-block',
+      padding: '23px',
+      borderRadius: '8px',
     },
   })
 );
@@ -64,44 +79,36 @@ export function CheckPermissions() {
 
   return (
     <Container>
-      <Grid container alignItems="center" justifyContent="space-between" className={classes.gridContainer}>
-        <Grid item lg={6}>
+      <div className={classes.mainContainer}>
+        <Grid item lg={5} className={classes.header}>
           <Typography variant="h1" gutterBottom>
             Check permissions
           </Typography>
-
           <Typography variant="body1" gutterBottom>
             If you haven't already, you'll see a pop-up to grant Twilio permissions to access your camera and
             microphone.
           </Typography>
-          <Hidden lgUp>
-            <Paper className={classes.paper} style={{ marginBottom: '2.5em' }}>
-              <Typography variant="body1" className={classes.grantPermissions}>
-                <strong>Grant permissions</strong>
-              </Typography>
-              <img src={SettingsIllustration} alt="Settings Illustration" className={classes.illustration} />
-            </Paper>
-          </Hidden>
+        </Grid>
+
+        <Grid item lg={5} className={classes.paperContainer}>
+          <Paper className={classes.paper}>
+            <Typography variant="body1" className={classes.grantPermissions}>
+              <strong>Grant permissions</strong>
+            </Typography>
+            <img src={SettingsIllustration} alt="Settings Illustration" className={classes.illustration} />
+          </Paper>
+        </Grid>
+
+        <Grid item lg={5} className={classes.requestButton}>
           <Typography variant="body1" gutterBottom>
             <strong>Allow all permissions and refresh this page.</strong>
           </Typography>
 
-          <Button variant="contained" color="primary" onClick={handleClick} className={classes.requestButton}>
+          <Button variant="contained" color="primary" onClick={handleClick}>
             Request permissions
           </Button>
         </Grid>
-
-        <Hidden mdDown>
-          <Grid item lg={5}>
-            <Paper className={classes.paper}>
-              <Typography variant="body1" className={classes.grantPermissions}>
-                <strong>Grant permissions</strong>
-              </Typography>
-              <img src={SettingsIllustration} alt="Settings Illustration" className={classes.illustration} />
-            </Paper>
-          </Grid>
-        </Hidden>
-      </Grid>
+      </div>
     </Container>
   );
 }
