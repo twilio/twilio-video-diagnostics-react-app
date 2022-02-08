@@ -97,11 +97,14 @@ export function CameraTest() {
   const { videoInputDevices } = useDevices();
   const { state, dispatch } = useAppStateContext();
   const { videoElementRef, startVideoTest, stopVideoTest, videoTest, videoTestError } = useCameraTest();
+
   const prevVideoDeviceID = useRef('');
   const [videoInputDeviceID, setVideoInputDeviceID] = useState('');
+
   const setDevice = (deviceID: string) => {
     setVideoInputDeviceID(deviceID);
   };
+
   useEffect(() => {
     // Stop the test when we are not on the CameraTest pane and there is an active test
     if (state.activePane !== ActivePane.CameraTest && videoTest) {
@@ -109,19 +112,23 @@ export function CameraTest() {
       prevVideoDeviceID.current = '';
     }
   }, [state.activePane, stopVideoTest, videoTest]);
+
   useEffect(() => {
     // Start the test when we are on the CameraTest pane and when the videoInputDeviceID changes
     if (state.activePane === ActivePane.CameraTest) {
       const newDeviceSelected = prevVideoDeviceID.current !== videoInputDeviceID;
       prevVideoDeviceID.current = videoInputDeviceID;
+
       if (videoInputDeviceID && newDeviceSelected) {
         startVideoTest(videoInputDeviceID);
       }
+
       if (videoTestError) {
         stopVideoTest();
       }
     }
   }, [state.activePane, videoInputDeviceID, startVideoTest, stopVideoTest, videoTestError, dispatch]);
+
   useEffect(() => {
     // If no device is select, set the first available device as the active device.
     const hasSelectedDevice = videoInputDevices.some((device) => device.deviceId === videoInputDeviceID);
