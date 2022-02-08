@@ -91,6 +91,11 @@ export default createTheme({
       outlined: {
         backgroundColor: 'white',
         border: '1px solid #8891AA',
+        [defaultTheme.breakpoints.down('md')]: {
+          '&:hover': {
+            backgroundColor: 'white',
+          },
+        },
       },
     },
     MuiInputBase: {
