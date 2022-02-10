@@ -21,10 +21,6 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     mainContainer: {
       display: 'block',
-      [theme.breakpoints.only('md')]: {
-        marginLeft: '3em',
-        width: '70%',
-      },
     },
     paper: {
       padding: '2em',

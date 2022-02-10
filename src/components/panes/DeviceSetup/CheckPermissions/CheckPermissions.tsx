@@ -4,6 +4,9 @@ import { useAppStateContext } from '../../../AppStateProvider/AppStateProvider';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
+    mainContainer: {
+      display: 'block',
+    },
     grantPermissions: {
       fontSize: '16px',
       paddingBottom: '16px',
@@ -18,13 +21,6 @@ const useStyles = makeStyles((theme: Theme) =>
       [theme.breakpoints.down('sm')]: {
         height: '100%',
         width: '100%',
-      },
-    },
-    mainContainer: {
-      display: 'block',
-      [theme.breakpoints.only('md')]: {
-        marginLeft: '3em',
-        width: '70%',
       },
     },
     header: {
