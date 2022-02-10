@@ -36,7 +36,7 @@ const BREAKPOINTS = {
   },
 };
 
-const tabletBrandSidebarWidth = 160;
+const tabletBrandSidebarWidth = 140;
 
 const defaultTheme = createTheme();
 
@@ -53,9 +53,9 @@ export default createTheme({
       root: {
         width: '950px',
         maxWidth: `calc(100vw - ${tabletBrandSidebarWidth}px)`,
-        [defaultTheme.breakpoints.down('md')]: {
+        [defaultTheme.breakpoints.down(BREAKPOINTS.values.md)]: {
           width: '100vw',
-          maxWidth: '550px',
+          maxWidth: '610px',
         },
       },
     },
@@ -91,7 +91,7 @@ export default createTheme({
       outlined: {
         backgroundColor: 'white',
         border: '1px solid #8891AA',
-        [defaultTheme.breakpoints.down('md')]: {
+        [defaultTheme.breakpoints.down(BREAKPOINTS.values.md)]: {
           '&:hover': {
             backgroundColor: 'white',
           },
