@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme: Theme) =>
     paper: {
       padding: '2em',
       borderRadius: '8px',
-      width: '388px',
+      width: '368px',
       [theme.breakpoints.down('sm')]: {
         margin: '0 auto',
         width: '100%',
@@ -65,9 +65,10 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     cameraTest: {
       float: 'right',
+      marginRight: '1em',
       [theme.breakpoints.down('md')]: {
         float: 'initial',
-        marginBottom: '2.5em',
+        margin: '0 0 2.5em 0',
       },
     },
     confirmationButtons: {
