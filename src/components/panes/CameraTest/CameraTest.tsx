@@ -25,9 +25,8 @@ const useStyles = makeStyles((theme: Theme) =>
     paper: {
       padding: '2em',
       borderRadius: '8px',
-      width: '368px',
+      maxWidth: '450px',
       [theme.breakpoints.down('sm')]: {
-        margin: '0 auto',
         width: '100%',
       },
     },
@@ -68,6 +67,8 @@ const useStyles = makeStyles((theme: Theme) =>
       marginRight: '1em',
       [theme.breakpoints.down('md')]: {
         float: 'initial',
+        display: 'flex',
+        justifyContent: 'center',
         margin: '0 0 2.5em 0',
       },
     },
@@ -135,7 +136,7 @@ export function CameraTest() {
   }, [videoInputDevices, videoInputDeviceID]);
 
   return (
-    <Container maxWidth={false}>
+    <Container>
       <div className={classes.mainContainer}>
         <Grid item lg={5} className={classes.header}>
           <Typography variant="h1" gutterBottom>

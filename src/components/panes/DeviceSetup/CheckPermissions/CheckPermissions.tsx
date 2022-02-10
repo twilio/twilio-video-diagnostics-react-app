@@ -16,8 +16,8 @@ const useStyles = makeStyles((theme: Theme) =>
     before the image is loaded.
     */
     illustration: {
-      height: '174px',
-      width: '326px',
+      maxHeight: '174px',
+      maxWidth: '337px',
       [theme.breakpoints.down('sm')]: {
         height: '100%',
         width: '100%',
@@ -41,8 +41,9 @@ const useStyles = makeStyles((theme: Theme) =>
       marginRight: '1em',
       [theme.breakpoints.down('md')]: {
         float: 'initial',
-        marginBottom: '2.5em',
-        marginRight: '0',
+        display: 'flex',
+        justifyContent: 'center',
+        margin: '0 0 2.5em 0',
       },
     },
     paper: {
@@ -76,7 +77,7 @@ export function CheckPermissions() {
   };
 
   return (
-    <Container maxWidth={false}>
+    <Container>
       <div className={classes.mainContainer}>
         <Grid item lg={5} className={classes.header}>
           <Typography variant="h1" gutterBottom>
