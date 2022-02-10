@@ -134,7 +134,7 @@ export function CameraTest() {
   }, [videoInputDevices, videoInputDeviceID]);
 
   return (
-    <Container>
+    <Container maxWidth={false}>
       <div className={classes.mainContainer}>
         <Grid item lg={5} className={classes.header}>
           <Typography variant="h1" gutterBottom>
