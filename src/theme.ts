@@ -54,7 +54,8 @@ export default createTheme({
       root: {
         width: '950px',
         maxWidth: `calc(100vw - ${tabletBrandSidebarWidth}px)`,
-        [defaultTheme.breakpoints.down(BREAKPOINTS.values.md)]: {
+        [defaultTheme.breakpoints.down(BREAKPOINTS.values.lg)]: {
+          width: '550px',
           maxWidth: '100vw',
         },
       },
