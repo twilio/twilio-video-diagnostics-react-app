@@ -23,7 +23,7 @@ declare module '@material-ui/core/styles/createBreakpoints' {
     sm: true;
     md: true;
     lg: true;
-    xl: true;
+    xl: false;
   }
 }
 
@@ -32,8 +32,7 @@ const BREAKPOINTS = {
     xs: 0,
     sm: 375,
     md: 768,
-    lg: 1280,
-    xl: 1920,
+    lg: 1024,
   },
 };
 
@@ -54,9 +53,9 @@ export default createTheme({
       root: {
         width: '950px',
         maxWidth: `calc(100vw - ${tabletBrandSidebarWidth}px)`,
-        [defaultTheme.breakpoints.down(BREAKPOINTS.values.lg)]: {
-          width: '550px',
-          maxWidth: '100vw',
+        [defaultTheme.breakpoints.down('md')]: {
+          width: '100vw',
+          maxWidth: '550px',
         },
       },
     },
