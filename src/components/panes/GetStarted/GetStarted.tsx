@@ -28,7 +28,7 @@ export function GetStarted() {
   const classes = useStyles();
 
   return (
-    <Container maxWidth={false}>
+    <Container>
       <Grid container alignItems="center" className={classes.gridContainer}>
         <Grid item lg={5}>
           <Typography variant="h1" gutterBottom>

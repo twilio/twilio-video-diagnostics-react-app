@@ -41,6 +41,11 @@ const tabletBrandSidebarWidth = 140;
 const defaultTheme = createTheme();
 
 export default createTheme({
+  props: {
+    MuiContainer: {
+      maxWidth: false,
+    },
+  },
   overrides: {
     MuiCssBaseline: {
       '@global': {
