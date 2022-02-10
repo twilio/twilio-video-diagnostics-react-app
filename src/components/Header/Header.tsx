@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme: Theme) =>
       },
       [theme.breakpoints.only('md')]: {
         '& p': {
-          paddingRight: '0.5em',
+          paddingRight: '2em',
           width: '80%',
           textAlign: 'center',
         },
@@ -68,7 +68,6 @@ const useStyles = makeStyles((theme: Theme) =>
       height: '100%',
       flexWrap: 'wrap',
       [theme.breakpoints.only('md')]: {
-        justifyContent: 'space-around',
         flexWrap: 'nowrap',
       },
     },
