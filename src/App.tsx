@@ -16,8 +16,8 @@ const useStyles = makeStyles((theme: Theme) =>
         width: '100%',
         overflowY: 'auto',
       },
-      [theme.breakpoints.only('md')]: {
-        width: `calc(100% - ${theme.mobileBrandSidebarWidth}px)`,
+      [theme.breakpoints.between('md', 1280)]: {
+        width: `calc(100% - ${theme.tabletBrandSidebarWidth}px)`,
       },
     },
     brandSidebar: {
@@ -32,8 +32,8 @@ const useStyles = makeStyles((theme: Theme) =>
         right: 0,
         bottom: 40,
       },
-      [theme.breakpoints.only('md')]: {
-        left: `calc(100% - ${theme.mobileBrandSidebarWidth}px)`,
+      [theme.breakpoints.between('md', 1280)]: {
+        left: `calc(100% - ${theme.tabletBrandSidebarWidth}px)`,
       },
       [theme.breakpoints.down('sm')]: {
         display: 'none',

@@ -7,10 +7,6 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     gridContainer: {
       justifyContent: 'space-between',
-      [theme.breakpoints.only('md')]: {
-        marginLeft: '3em',
-        width: '70%',
-      },
     },
     /* 
     The size of the image is explicitly stated here so that this content can properly be centered vertically

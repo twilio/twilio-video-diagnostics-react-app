@@ -4,7 +4,7 @@ declare module '@material-ui/core/styles/createTheme' {
   interface Theme {
     navHeight: number;
     brandSidebarWidth: number;
-    mobileBrandSidebarWidth: number;
+    tabletBrandSidebarWidth: number;
     backgroundColor: string;
   }
 
@@ -12,7 +12,7 @@ declare module '@material-ui/core/styles/createTheme' {
   interface ThemeOptions {
     navHeight: number;
     brandSidebarWidth: number;
-    mobileBrandSidebarWidth: number;
+    tabletBrandSidebarWidth: number;
     backgroundColor: string;
   }
 }
@@ -23,15 +23,29 @@ declare module '@material-ui/core/styles/createBreakpoints' {
     sm: true;
     md: true;
     lg: true;
-    xl: true;
+    xl: false;
   }
 }
 
-const mobileBrandSidebarWidth = 160;
+const BREAKPOINTS = {
+  values: {
+    xs: 0,
+    sm: 375,
+    md: 768,
+    lg: 1024,
+  },
+};
+
+const tabletBrandSidebarWidth = 140;
 
 const defaultTheme = createTheme();
 
 export default createTheme({
+  props: {
+    MuiContainer: {
+      maxWidth: false,
+    },
+  },
   overrides: {
     MuiCssBaseline: {
       '@global': {
@@ -43,7 +57,11 @@ export default createTheme({
     MuiContainer: {
       root: {
         width: '950px',
-        maxWidth: `calc(100vw - ${mobileBrandSidebarWidth}px)`,
+        maxWidth: `calc(100vw - ${tabletBrandSidebarWidth}px)`,
+        [defaultTheme.breakpoints.down(BREAKPOINTS.values.md)]: {
+          width: '100vw',
+          maxWidth: '610px',
+        },
       },
     },
     MuiButton: {
@@ -78,6 +96,11 @@ export default createTheme({
       outlined: {
         backgroundColor: 'white',
         border: '1px solid #8891AA',
+        [defaultTheme.breakpoints.down('md')]: {
+          '&:hover': {
+            backgroundColor: 'white',
+          },
+        },
       },
     },
     MuiInputBase: {
@@ -158,15 +181,7 @@ export default createTheme({
   },
   navHeight: 100,
   brandSidebarWidth: 250,
-  mobileBrandSidebarWidth,
+  tabletBrandSidebarWidth,
   backgroundColor: '#f4f4f6',
-  breakpoints: {
-    values: {
-      xs: 0,
-      sm: 375,
-      md: 768,
-      lg: 1280,
-      xl: 1920,
-    },
-  },
+  breakpoints: BREAKPOINTS,
 });

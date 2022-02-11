@@ -102,6 +102,7 @@ describe('the CameraTest component', () => {
     const wrapper = mount(<CameraTest />);
 
     const selectEl = wrapper.find(Select).find('input');
+
     selectEl.simulate('change', { target: { value: 3 } });
 
     expect(mockStartVideoTest).toHaveBeenCalled();
