@@ -32,7 +32,6 @@ const useStyles = makeStyles((theme: Theme) =>
       },
       [theme.breakpoints.only('md')]: {
         '& p': {
-          paddingRight: '2em',
           width: '80%',
           textAlign: 'center',
         },
