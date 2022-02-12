@@ -22,7 +22,7 @@
     "nanoid": "^3.1.23",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-scripts": "4.0.3",
+    "react-scripts": "5.0.0",
     "twilio": "^3.63.1",
     "ua-parser-js": "^0.7.28",
     "twilio-video": "^2.16.0",
