@@ -2,14 +2,13 @@
 
 exports[`the AudioTest component should render correctly 1`] = `
 <WithStyles(ForwardRef(Container))>
-  <WithStyles(ForwardRef(Grid))
-    alignItems="center"
-    container={true}
-    justifyContent="space-between"
+  <div
+    className="makeStyles-mainContainer-1"
   >
     <WithStyles(ForwardRef(Grid))
+      className="makeStyles-header-5"
       item={true}
-      md={5}
+      lg={5}
     >
       <WithStyles(ForwardRef(Typography))
         gutterBottom={true}
@@ -23,44 +22,17 @@ exports[`the AudioTest component should render correctly 1`] = `
       >
         Record an audio clip and play it back to check that your microphone and speaker are working. If they aren't, make sure your volume is turned up, try a different speaker or microphone, or check your bluetooth settings.
       </WithStyles(ForwardRef(Typography))>
-      <WithStyles(ForwardRef(Typography))
-        gutterBottom={true}
-        variant="body1"
-      >
-        <strong>
-           Does your audio sound good?
-        </strong>
-      </WithStyles(ForwardRef(Typography))>
-      <WithStyles(ForwardRef(Button))
-        color="primary"
-        disabled={false}
-        onClick={[Function]}
-        style={
-          Object {
-            "marginRight": "1.5em",
-          }
-        }
-        variant="contained"
-      >
-        Yes
-      </WithStyles(ForwardRef(Button))>
-      <WithStyles(ForwardRef(Button))
-        color="primary"
-        disabled={false}
-        onClick={[Function]}
-      >
-        Skip for now
-      </WithStyles(ForwardRef(Button))>
     </WithStyles(ForwardRef(Grid))>
     <WithStyles(ForwardRef(Grid))
+      className="makeStyles-audioTest-6"
       item={true}
-      md={5}
+      lg={5}
     >
       <WithStyles(ForwardRef(Paper))
-        className="makeStyles-paper-1"
+        className="makeStyles-paper-2"
       >
         <div
-          className="makeStyles-topLine-3"
+          className="makeStyles-topLine-4"
         >
           <WithStyles(ForwardRef(Typography))
             variant="subtitle2"
@@ -107,7 +79,7 @@ exports[`the AudioTest component should render correctly 1`] = `
           setDeviceError={[MockFunction]}
         />
         <div
-          className="makeStyles-audioLevelContainer-2"
+          className="makeStyles-audioLevelContainer-3"
         >
           <div
             style={
@@ -132,6 +104,40 @@ exports[`the AudioTest component should render correctly 1`] = `
         </div>
       </WithStyles(ForwardRef(Paper))>
     </WithStyles(ForwardRef(Grid))>
-  </WithStyles(ForwardRef(Grid))>
+    <WithStyles(ForwardRef(Grid))
+      className="makeStyles-confirmationButtons-7"
+      item={true}
+      lg={5}
+    >
+      <WithStyles(ForwardRef(Typography))
+        gutterBottom={true}
+        variant="body1"
+      >
+        <strong>
+           Does your audio sound good?
+        </strong>
+      </WithStyles(ForwardRef(Typography))>
+      <WithStyles(ForwardRef(Button))
+        color="primary"
+        disabled={false}
+        onClick={[Function]}
+        style={
+          Object {
+            "marginRight": "1.5em",
+          }
+        }
+        variant="contained"
+      >
+        Yes
+      </WithStyles(ForwardRef(Button))>
+      <WithStyles(ForwardRef(Button))
+        color="primary"
+        disabled={false}
+        onClick={[Function]}
+      >
+        Skip for now
+      </WithStyles(ForwardRef(Button))>
+    </WithStyles(ForwardRef(Grid))>
+  </div>
 </WithStyles(ForwardRef(Container))>
 `;
