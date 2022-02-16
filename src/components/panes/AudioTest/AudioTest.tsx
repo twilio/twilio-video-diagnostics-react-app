@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme: Theme) =>
       borderRadius: '8px',
       minHeight: '280px',
       maxWidth: '365px',
-      [theme.breakpoints.down('sm')]: {
+      [theme.breakpoints.down('md')]: {
         width: '100%',
       },
     },

@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: '2em',
       borderRadius: '8px',
       maxWidth: '450px',
-      [theme.breakpoints.down('sm')]: {
+      [theme.breakpoints.down('md')]: {
         width: '100%',
       },
     },
