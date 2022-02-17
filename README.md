@@ -6,6 +6,9 @@ _The Twilio Video Diagnostics App is currently in beta. If you have feedback on 
 
 This application demonstrates a diagnostics tool for testing a participant's ability to have a quality video call with the Twilio platform. It can be used as part of onboarding to ensure a successful first video call or for diagnosing issues that relate to the device, software, or network conditions of the end-user. It is built with [Twilio's Programmable Video JS SDK](https://github.com/twilio/rtc-diagnostics) and [Twilio's RTC Diagnostics SDK](https://github.com/twilio/rtc-diagnostics).
 
+<i>IOS & Android currently not supported. This is due to come in later releases.<i>
+
+
 ![](https://user-images.githubusercontent.com/11685703/131178895-a8995c2f-1fbd-451a-8949-2bfa4040b4f2.gif)
 
 <p align="center">
