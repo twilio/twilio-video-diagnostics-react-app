@@ -3,14 +3,13 @@
 exports[`the Supported Browser component should render correctly 1`] = `
 <Fragment>
   <WithStyles(ForwardRef(Container))>
-    <WithStyles(ForwardRef(Grid))
-      alignItems="center"
-      container={true}
-      justifyContent="space-between"
+    <div
+      className="makeStyles-mainContainer-1"
     >
       <WithStyles(ForwardRef(Grid))
+        className="makeStyles-header-3"
         item={true}
-        md={5}
+        lg={5}
       >
         <WithStyles(ForwardRef(Typography))
           gutterBottom={true}
@@ -24,26 +23,14 @@ exports[`the Supported Browser component should render correctly 1`] = `
         >
           Looks like your browser is good to go. We're almost done!
         </WithStyles(ForwardRef(Typography))>
-        <WithStyles(ForwardRef(Button))
-          color="primary"
-          onClick={[Function]}
-          style={
-            Object {
-              "marginRight": "1.5em",
-            }
-          }
-          variant="contained"
-        >
-          Ok
-        </WithStyles(ForwardRef(Button))>
       </WithStyles(ForwardRef(Grid))>
       <WithStyles(ForwardRef(Grid))
-        className="makeStyles-paperContainer-2"
+        className="makeStyles-paperContainer-5"
         item={true}
-        md={5}
+        lg={5}
       >
         <WithStyles(ForwardRef(Paper))
-          className="makeStyles-paper-1"
+          className="makeStyles-paper-2"
         >
           <WithStyles(ForwardRef(Typography))
             variant="body1"
@@ -67,7 +54,25 @@ exports[`the Supported Browser component should render correctly 1`] = `
           </WithStyles(ForwardRef(Typography))>
         </WithStyles(ForwardRef(Paper))>
       </WithStyles(ForwardRef(Grid))>
-    </WithStyles(ForwardRef(Grid))>
+      <WithStyles(ForwardRef(Grid))
+        className="makeStyles-requestButton-4"
+        item={true}
+        lg={5}
+      >
+        <WithStyles(ForwardRef(Button))
+          color="primary"
+          onClick={[Function]}
+          style={
+            Object {
+              "marginRight": "1.5em",
+            }
+          }
+          variant="contained"
+        >
+          Ok
+        </WithStyles(ForwardRef(Button))>
+      </WithStyles(ForwardRef(Grid))>
+    </div>
   </WithStyles(ForwardRef(Container))>
 </Fragment>
 `;
