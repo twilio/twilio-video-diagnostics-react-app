@@ -9,7 +9,7 @@ const useStyles = makeStyles((theme: Theme) =>
     paper: {
       padding: '1.5em',
       borderRadius: '8px',
-      width: '360px',
+      width: '337px',
       [theme.breakpoints.down('sm')]: {
         width: '100%',
       },

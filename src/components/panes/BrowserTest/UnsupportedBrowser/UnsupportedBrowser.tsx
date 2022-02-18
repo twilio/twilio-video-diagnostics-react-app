@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme: Theme) =>
     paper: {
       padding: '1.5em',
       borderRadius: '8px',
-      width: '388px',
+      width: '337px',
     },
     copyButton: {
       borderLeft: 'solid 1px #E1E3EA',
@@ -32,12 +32,22 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     errorIcon: {
       position: 'absolute',
-      right: 'calc(100% + 18px)',
+      right: 'calc(100% + 15px)',
+      [theme.breakpoints.down('md')]: {
+        position: 'relative',
+        right: '0',
+        marginBottom: '0.5em',
+      },
     },
     caption: {
       marginTop: '1.3em',
     },
-
+    heading: {
+      position: 'relative',
+      [theme.breakpoints.between(1024, 1160)]: {
+        marginLeft: '0.8em',
+      },
+    },
     header: {
       float: 'left',
       [theme.breakpoints.down('md')]: {
@@ -81,7 +91,7 @@ export function UnsupportedBrowser() {
       <Container>
         <div className={classes.mainContainer}>
           <Grid item lg={5} className={classes.header}>
-            <Typography variant="h1" gutterBottom style={{ position: 'relative' }}>
+            <Typography variant="h1" gutterBottom className={classes.heading}>
               <div className={classes.errorIcon}>
                 <ErrorIcon />
               </div>{' '}
