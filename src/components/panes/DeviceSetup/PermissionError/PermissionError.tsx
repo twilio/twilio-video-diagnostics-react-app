@@ -12,9 +12,6 @@ const useStyles = makeStyles((theme: Theme) =>
     heading: {
       position: 'relative',
       marginTop: '20px',
-      [theme.breakpoints.between(1025, 1160)]: {
-        marginLeft: '0.8em',
-      },
     },
     grantPermissions: {
       fontSize: '16px',
