@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     top: '0',
     left: '50%',
     transform: 'translateX(-50%)',
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('sm')]: {
       position: 'relative',
       top: 'auto',
       left: 'auto',
@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         pointerEvents: 'none',
       },
     },
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('sm')]: {
       transition: 'all 0s ease',
       transform: 'initial',
       '& .inactive': { display: 'none' },
@@ -52,7 +52,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     '& .inactive': {
       opacity: 0,
       visibility: 'hidden',
-      [theme.breakpoints.down('md')]: {
+      [theme.breakpoints.down('sm')]: {
         '& .inactive': {
           display: 'none',
         },
@@ -64,7 +64,7 @@ const useStyles = makeStyles((theme: Theme) => ({
       opacity: 0,
       visibility: 'hidden',
     },
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('sm')]: {
       '& .active ~ $item': {
         display: 'none',
       },
@@ -73,7 +73,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   item: {
     transition: 'all 0.75s ease',
     padding: '3em 0',
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('sm')]: {
       transition: 'initial',
       padding: '0px',
     },
