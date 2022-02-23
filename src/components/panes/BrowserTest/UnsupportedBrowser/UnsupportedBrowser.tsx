@@ -51,7 +51,7 @@ const useStyles = makeStyles((theme: Theme) =>
         float: 'initial',
       },
     },
-    requestButton: {
+    urlTextBox: {
       clear: 'left',
       [theme.breakpoints.down('md')]: {
         clear: 'initial',
@@ -118,7 +118,7 @@ export function UnsupportedBrowser() {
               for more details.
             </Typography>
           </Grid>
-          <Grid item lg={5} className={classes.requestButton}>
+          <Grid item lg={5} className={classes.urlTextBox}>
             <TextField
               fullWidth={true}
               id="read-only-app-link"

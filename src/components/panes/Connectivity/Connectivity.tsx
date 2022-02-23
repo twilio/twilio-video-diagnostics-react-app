@@ -66,7 +66,7 @@ export function Connectivity() {
               </div>
             </Grid>
           </Container>
-        ) : !connectionFailed ? (
+        ) : connectionFailed ? (
           <ConnectionFailed openModal={() => setIsModalOpen(true)} />
         ) : (
           <ConnectionSuccess openModal={() => setIsModalOpen(true)} />
