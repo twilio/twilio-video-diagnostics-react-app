@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme: Theme) =>
     errorIcon: {
       position: 'absolute',
       right: 'calc(100% + 15px)',
-      [theme.breakpoints.down('md')]: {
+      [theme.breakpoints.down('sm')]: {
         position: 'relative',
         right: '0',
         marginBottom: '0.5em',
