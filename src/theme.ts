@@ -62,6 +62,10 @@ export default createTheme({
           width: '100vw',
           maxWidth: '610px',
         },
+        [defaultTheme.breakpoints.up(BREAKPOINTS.values.md)]: {
+          paddingLeft: '50px',
+          paddingRight: '50px',
+        },
       },
     },
     MuiButton: {
