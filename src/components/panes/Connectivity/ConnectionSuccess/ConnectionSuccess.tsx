@@ -23,6 +23,14 @@ const useStyles = makeStyles((theme) =>
         margin: '0 0 2.5em 0',
       },
     },
+    /*
+    The size of the image is explicitly stated here so that this content can properly be centered vertically
+     before the image is loaded.
+     */
+    illustration: {
+      width: '245px',
+      height: '200px',
+    },
     viewButton: {
       marginTop: '2em',
       '& svg': {
@@ -63,11 +71,7 @@ export function ConnectionSuccess({ openModal }: ConnectionSuccessProps) {
           </Grid>
 
           <Grid item lg={5} className={classes.illustrationContainer}>
-            {/* 
-          The size of the image is explicitly stated here so that this content can properly be centered vertically
-          before the image is loaded.
-        */}
-            <img src={Success} alt="Success" style={{ width: '245px', height: '200px' }} />
+            <img src={Success} alt="Success" className={classes.illustration} />
             <Button variant="outlined" onClick={openModal} className={classes.viewButton}>
               <ViewIcon />
               View detailed connection information
