@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme: Theme) =>
         float: 'initial',
       },
     },
-    requestButton: {
+    okButton: {
       clear: 'left',
       [theme.breakpoints.down('md')]: {
         clear: 'initial',
@@ -74,7 +74,7 @@ export function SupportedBrowser() {
             </Paper>
           </Grid>
 
-          <Grid item lg={5} className={classes.requestButton}>
+          <Grid item lg={5} className={classes.okButton}>
             <Button
               variant="contained"
               color="primary"
