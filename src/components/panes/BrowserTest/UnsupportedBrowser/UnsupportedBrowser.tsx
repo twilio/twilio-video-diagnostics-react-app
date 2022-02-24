@@ -24,6 +24,9 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: '1.5em',
       borderRadius: '8px',
       width: '337px',
+      [theme.breakpoints.down('sm')]: {
+        width: '100%',
+      },
     },
     copyButton: {
       borderLeft: 'solid 1px #E1E3EA',
