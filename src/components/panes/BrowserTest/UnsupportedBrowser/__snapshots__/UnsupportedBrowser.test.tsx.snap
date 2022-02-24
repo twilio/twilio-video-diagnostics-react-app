@@ -62,7 +62,7 @@ exports[`the UnsupportedBrowser component should render correctly 1`] = `
         </WithStyles(ForwardRef(Typography))>
       </WithStyles(ForwardRef(Grid))>
       <WithStyles(ForwardRef(Grid))
-        className="makeStyles-requestButton-8"
+        className="makeStyles-urlTextBox-8"
         item={true}
         lg={5}
       >

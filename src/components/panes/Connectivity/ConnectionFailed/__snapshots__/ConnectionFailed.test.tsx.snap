@@ -3,22 +3,15 @@
 exports[`the ConnectionFailed component should render correctly 1`] = `
 <Fragment>
   <WithStyles(ForwardRef(Container))>
-    <WithStyles(ForwardRef(Grid))
-      alignItems="center"
-      container={true}
-      justifyContent="space-between"
-    >
+    <div>
       <WithStyles(ForwardRef(Grid))
+        className="makeStyles-header-1"
         item={true}
-        md={5}
+        lg={5}
       >
         <WithStyles(ForwardRef(Typography))
+          className="makeStyles-heading-2"
           gutterBottom={true}
-          style={
-            Object {
-              "position": "relative",
-            }
-          }
           variant="h1"
         >
           <div
@@ -34,28 +27,14 @@ exports[`the ConnectionFailed component should render correctly 1`] = `
         >
           It's possible that you're behind a firewall that will need to be updated by your network administrator.
         </WithStyles(ForwardRef(Typography))>
-        <WithStyles(ForwardRef(Typography))
-          variant="body1"
-        >
-          Download report results to send to your network admin, update your internet, and re-run this test.
-        </WithStyles(ForwardRef(Typography))>
-        <WithStyles(ForwardRef(Button))
-          className="makeStyles-downloadButton-4"
-          color="primary"
-          onClick={[MockFunction]}
-          variant="contained"
-        >
-          <DownloadIcon />
-          Download report results
-        </WithStyles(ForwardRef(Button))>
       </WithStyles(ForwardRef(Grid))>
       <WithStyles(ForwardRef(Grid))
-        className="makeStyles-paperContainer-2"
+        className="makeStyles-paperContainer-4"
         item={true}
-        md={5}
+        lg={5}
       >
         <WithStyles(ForwardRef(Paper))
-          className="makeStyles-paper-1"
+          className="makeStyles-paper-5"
         >
           <WithStyles(ForwardRef(Typography))
             gutterBottom={true}
@@ -79,7 +58,7 @@ exports[`the ConnectionFailed component should render correctly 1`] = `
           </WithStyles(ForwardRef(Typography))>
         </WithStyles(ForwardRef(Paper))>
         <WithStyles(ForwardRef(Button))
-          className="makeStyles-viewButton-5"
+          className="makeStyles-viewButton-7"
           onClick={[MockFunction]}
           variant="outlined"
         >
@@ -87,7 +66,26 @@ exports[`the ConnectionFailed component should render correctly 1`] = `
           View detailed connection information
         </WithStyles(ForwardRef(Button))>
       </WithStyles(ForwardRef(Grid))>
-    </WithStyles(ForwardRef(Grid))>
+      <WithStyles(ForwardRef(Grid))
+        item={true}
+        lg={5}
+      >
+        <WithStyles(ForwardRef(Typography))
+          variant="body1"
+        >
+          Download report results to send to your network admin, update your internet, and re-run this test.
+        </WithStyles(ForwardRef(Typography))>
+        <WithStyles(ForwardRef(Button))
+          className="makeStyles-downloadButton-6"
+          color="primary"
+          onClick={[MockFunction]}
+          variant="contained"
+        >
+          <DownloadIcon />
+          Download report results
+        </WithStyles(ForwardRef(Button))>
+      </WithStyles(ForwardRef(Grid))>
+    </div>
   </WithStyles(ForwardRef(Container))>
 </Fragment>
 `;

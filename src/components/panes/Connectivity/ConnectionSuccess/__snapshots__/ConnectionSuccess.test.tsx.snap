@@ -3,14 +3,11 @@
 exports[`the ConnectionSuccess component should render correctly 1`] = `
 <Fragment>
   <WithStyles(ForwardRef(Container))>
-    <WithStyles(ForwardRef(Grid))
-      alignItems="center"
-      container={true}
-      justifyContent="space-between"
-    >
+    <div>
       <WithStyles(ForwardRef(Grid))
+        className="makeStyles-header-1"
         item={true}
-        md={5}
+        lg={5}
       >
         <WithStyles(ForwardRef(Typography))
           gutterBottom={true}
@@ -24,18 +21,11 @@ exports[`the ConnectionSuccess component should render correctly 1`] = `
         >
           All connections to Twilio's servers are working correctly.
         </WithStyles(ForwardRef(Typography))>
-        <WithStyles(ForwardRef(Button))
-          color="primary"
-          onClick={[MockFunction]}
-          variant="contained"
-        >
-          Ok
-        </WithStyles(ForwardRef(Button))>
       </WithStyles(ForwardRef(Grid))>
       <WithStyles(ForwardRef(Grid))
-        className="makeStyles-illustrationContainer-1"
+        className="makeStyles-illustrationContainer-2"
         item={true}
-        md={5}
+        lg={5}
       >
         <img
           alt="Success"
@@ -48,7 +38,7 @@ exports[`the ConnectionSuccess component should render correctly 1`] = `
           }
         />
         <WithStyles(ForwardRef(Button))
-          className="makeStyles-viewButton-2"
+          className="makeStyles-viewButton-3"
           onClick={[MockFunction]}
           variant="outlined"
         >
@@ -56,7 +46,20 @@ exports[`the ConnectionSuccess component should render correctly 1`] = `
           View detailed connection information
         </WithStyles(ForwardRef(Button))>
       </WithStyles(ForwardRef(Grid))>
-    </WithStyles(ForwardRef(Grid))>
+      <WithStyles(ForwardRef(Grid))
+        className="makeStyles-okButton-4"
+        item={true}
+        lg={5}
+      >
+        <WithStyles(ForwardRef(Button))
+          color="primary"
+          onClick={[MockFunction]}
+          variant="contained"
+        >
+          Ok
+        </WithStyles(ForwardRef(Button))>
+      </WithStyles(ForwardRef(Grid))>
+    </div>
   </WithStyles(ForwardRef(Container))>
 </Fragment>
 `;

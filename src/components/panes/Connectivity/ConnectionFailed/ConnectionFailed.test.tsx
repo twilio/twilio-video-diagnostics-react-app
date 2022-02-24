@@ -25,7 +25,7 @@ describe('the ConnectionFailed component', () => {
   it('should download the test results file if "Download report results" is clicked on', () => {
     const wrapper = shallow(<ConnectionFailed openModal={mockSetIsModalOpen} />);
 
-    wrapper.find(Button).at(0).simulate('click');
+    wrapper.find(Button).at(1).simulate('click');
 
     expect(mockDownloadFinalTestResults).toHaveBeenCalled();
   });
