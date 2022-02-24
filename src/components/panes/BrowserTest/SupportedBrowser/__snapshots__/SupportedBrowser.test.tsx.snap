@@ -55,7 +55,7 @@ exports[`the Supported Browser component should render correctly 1`] = `
         </WithStyles(ForwardRef(Paper))>
       </WithStyles(ForwardRef(Grid))>
       <WithStyles(ForwardRef(Grid))
-        className="makeStyles-requestButton-4"
+        className="makeStyles-okButton-4"
         item={true}
         lg={5}
       >

@@ -29,16 +29,11 @@ exports[`the ConnectionSuccess component should render correctly 1`] = `
       >
         <img
           alt="Success"
+          className="makeStyles-illustration-3"
           src="test-file-stub"
-          style={
-            Object {
-              "height": "200px",
-              "width": "245px",
-            }
-          }
         />
         <WithStyles(ForwardRef(Button))
-          className="makeStyles-viewButton-3"
+          className="makeStyles-viewButton-4"
           onClick={[MockFunction]}
           variant="outlined"
         >
@@ -47,7 +42,7 @@ exports[`the ConnectionSuccess component should render correctly 1`] = `
         </WithStyles(ForwardRef(Button))>
       </WithStyles(ForwardRef(Grid))>
       <WithStyles(ForwardRef(Grid))
-        className="makeStyles-okButton-4"
+        className="makeStyles-okButton-5"
         item={true}
         lg={5}
       >
