@@ -56,6 +56,7 @@ export default createTheme({
     },
     MuiContainer: {
       root: {
+        display: 'flow-root',
         width: '950px',
         maxWidth: `calc(100vw - ${tabletBrandSidebarWidth}px)`,
         [defaultTheme.breakpoints.down(BREAKPOINTS.values.md)]: {
