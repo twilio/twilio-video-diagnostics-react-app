@@ -3,22 +3,17 @@
 exports[`the UnsupportedBrowser component should render correctly 1`] = `
 <Fragment>
   <WithStyles(ForwardRef(Container))>
-    <WithStyles(ForwardRef(Grid))
-      alignItems="center"
-      container={true}
-      justifyContent="space-between"
+    <div
+      className="makeStyles-mainContainer-1"
     >
       <WithStyles(ForwardRef(Grid))
+        className="makeStyles-header-7"
         item={true}
-        md={5}
+        lg={5}
       >
         <WithStyles(ForwardRef(Typography))
+          className="makeStyles-heading-6"
           gutterBottom={true}
-          style={
-            Object {
-              "position": "relative",
-            }
-          }
           variant="h1"
         >
           <div
@@ -33,8 +28,44 @@ exports[`the UnsupportedBrowser component should render correctly 1`] = `
           gutterBottom={true}
           variant="body1"
         >
-          Oh no, your browser isn't supported! Download and install a new one from the list, copy this url and paste it into your new browser to restart the test.
+          Oh no, your browser isn't supported! Download and install a new one from the list, copy the url below and paste it into your new browser to restart the test.
         </WithStyles(ForwardRef(Typography))>
+      </WithStyles(ForwardRef(Grid))>
+      <WithStyles(ForwardRef(Grid))
+        className="makeStyles-paperContainer-9"
+        item={true}
+        lg={5}
+      >
+        <WithStyles(ForwardRef(Paper))
+          className="makeStyles-paper-2"
+        >
+          <SupportedList />
+        </WithStyles(ForwardRef(Paper))>
+        <WithStyles(ForwardRef(Typography))
+          align="center"
+          className="makeStyles-caption-5"
+          variant="caption"
+        >
+          We support the most recent and the two previous versions. Please
+           
+          <WithStyles(ForwardRef(Link))
+            color="inherit"
+            href="https://www.twilio.com/docs/video/javascript#supported-browsers"
+            rel="noopener"
+            target="_blank"
+            underline="always"
+          >
+            visit our docs
+          </WithStyles(ForwardRef(Link))>
+           
+          for more details.
+        </WithStyles(ForwardRef(Typography))>
+      </WithStyles(ForwardRef(Grid))>
+      <WithStyles(ForwardRef(Grid))
+        className="makeStyles-urlTextBox-8"
+        item={true}
+        lg={5}
+      >
         <WithStyles(ForwardRef(TextField))
           InputProps={
             Object {
@@ -62,37 +93,7 @@ exports[`the UnsupportedBrowser component should render correctly 1`] = `
           variant="outlined"
         />
       </WithStyles(ForwardRef(Grid))>
-      <WithStyles(ForwardRef(Grid))
-        className="makeStyles-paperContainer-2"
-        item={true}
-        md={5}
-      >
-        <WithStyles(ForwardRef(Paper))
-          className="makeStyles-paper-1"
-        >
-          <SupportedList />
-        </WithStyles(ForwardRef(Paper))>
-        <WithStyles(ForwardRef(Typography))
-          align="center"
-          className="makeStyles-caption-5"
-          variant="caption"
-        >
-          We support the most recent and the two previous versions. Please
-           
-          <WithStyles(ForwardRef(Link))
-            color="inherit"
-            href="https://www.twilio.com/docs/video/javascript#supported-browsers"
-            rel="noopener"
-            target="_blank"
-            underline="always"
-          >
-            visit our docs
-          </WithStyles(ForwardRef(Link))>
-           
-          for more details.
-        </WithStyles(ForwardRef(Typography))>
-      </WithStyles(ForwardRef(Grid))>
-    </WithStyles(ForwardRef(Grid))>
+    </div>
   </WithStyles(ForwardRef(Container))>
 </Fragment>
 `;

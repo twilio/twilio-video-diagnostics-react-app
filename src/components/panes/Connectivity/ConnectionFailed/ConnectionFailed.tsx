@@ -6,24 +6,55 @@ import { ViewIcon } from '../../../../icons/ViewIcon';
 
 const useStyles = makeStyles((theme) =>
   createStyles({
-    paper: {
-      padding: '1.5em',
-      borderRadius: '8px',
+    header: {
+      float: 'left',
+      [theme.breakpoints.down('md')]: {
+        float: 'initial',
+      },
     },
-    paperContainer: {
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
+    heading: {
+      position: 'relative',
+      marginTop: '20px',
     },
     errorIcon: {
       position: 'absolute',
-      right: 'calc(100% + 18px)',
+      right: 'calc(100% + 15px)',
+      [theme.breakpoints.down('sm')]: {
+        position: 'relative',
+        right: '0',
+        marginBottom: '0.5em',
+      },
+    },
+    paperContainer: {
+      float: 'right',
+      marginRight: '1em',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      [theme.breakpoints.down('md')]: {
+        float: 'initial',
+        justifyContent: 'center',
+        margin: '0 0 2.5em 0',
+      },
+    },
+    paper: {
+      padding: '1.5em',
+      borderRadius: '8px',
+      maxWidth: '400px',
+      [theme.breakpoints.down('md')]: {
+        width: '100%',
+      },
     },
     downloadButton: {
+      clear: 'left',
       marginTop: '2em',
       '& svg': {
         position: 'relative',
         left: '-5px',
+      },
+      [theme.breakpoints.down('md')]: {
+        clear: 'initial',
+        marginBottom: '2em',
       },
     },
     viewButton: {
@@ -47,9 +78,9 @@ export function ConnectionFailed({ openModal }: ConnectionFailedProps) {
   return (
     <>
       <Container>
-        <Grid container alignItems="center" justifyContent="space-between">
-          <Grid item md={5}>
-            <Typography variant="h1" gutterBottom style={{ position: 'relative' }}>
+        <div>
+          <Grid item lg={5} className={classes.header}>
+            <Typography variant="h1" gutterBottom className={classes.heading}>
               <div className={classes.errorIcon}>
                 <ErrorIcon />
               </div>
@@ -59,23 +90,9 @@ export function ConnectionFailed({ openModal }: ConnectionFailedProps) {
             <Typography variant="body1" gutterBottom>
               It's possible that you're behind a firewall that will need to be updated by your network administrator.
             </Typography>
-
-            <Typography variant="body1">
-              Download report results to send to your network admin, update your internet, and re-run this test.
-            </Typography>
-
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={downloadFinalTestResults}
-              className={classes.downloadButton}
-            >
-              <DownloadIcon />
-              Download report results
-            </Button>
           </Grid>
 
-          <Grid item md={5} className={classes.paperContainer}>
+          <Grid item lg={5} className={classes.paperContainer}>
             <Paper className={classes.paper}>
               <Typography variant="body1" gutterBottom>
                 To conduct a video call, your internet needs to be able to communicate with Twilio's cloud.
@@ -94,7 +111,23 @@ export function ConnectionFailed({ openModal }: ConnectionFailedProps) {
               View detailed connection information
             </Button>
           </Grid>
-        </Grid>
+
+          <Grid item lg={5}>
+            <Typography variant="body1">
+              Download report results to send to your network admin, update your internet, and re-run this test.
+            </Typography>
+
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={downloadFinalTestResults}
+              className={classes.downloadButton}
+            >
+              <DownloadIcon />
+              Download report results
+            </Button>
+          </Grid>
+        </div>
       </Container>
     </>
   );

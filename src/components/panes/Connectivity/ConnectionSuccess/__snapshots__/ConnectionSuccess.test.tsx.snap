@@ -3,14 +3,11 @@
 exports[`the ConnectionSuccess component should render correctly 1`] = `
 <Fragment>
   <WithStyles(ForwardRef(Container))>
-    <WithStyles(ForwardRef(Grid))
-      alignItems="center"
-      container={true}
-      justifyContent="space-between"
-    >
+    <div>
       <WithStyles(ForwardRef(Grid))
+        className="makeStyles-header-1"
         item={true}
-        md={5}
+        lg={5}
       >
         <WithStyles(ForwardRef(Typography))
           gutterBottom={true}
@@ -24,6 +21,31 @@ exports[`the ConnectionSuccess component should render correctly 1`] = `
         >
           All connections to Twilio's servers are working correctly.
         </WithStyles(ForwardRef(Typography))>
+      </WithStyles(ForwardRef(Grid))>
+      <WithStyles(ForwardRef(Grid))
+        className="makeStyles-illustrationContainer-2"
+        item={true}
+        lg={5}
+      >
+        <img
+          alt="Success"
+          className="makeStyles-illustration-3"
+          src="test-file-stub"
+        />
+        <WithStyles(ForwardRef(Button))
+          className="makeStyles-viewButton-4"
+          onClick={[MockFunction]}
+          variant="outlined"
+        >
+          <ViewIcon />
+          View detailed connection information
+        </WithStyles(ForwardRef(Button))>
+      </WithStyles(ForwardRef(Grid))>
+      <WithStyles(ForwardRef(Grid))
+        className="makeStyles-okButton-5"
+        item={true}
+        lg={5}
+      >
         <WithStyles(ForwardRef(Button))
           color="primary"
           onClick={[MockFunction]}
@@ -32,31 +54,7 @@ exports[`the ConnectionSuccess component should render correctly 1`] = `
           Ok
         </WithStyles(ForwardRef(Button))>
       </WithStyles(ForwardRef(Grid))>
-      <WithStyles(ForwardRef(Grid))
-        className="makeStyles-illustrationContainer-1"
-        item={true}
-        md={5}
-      >
-        <img
-          alt="Success"
-          src="test-file-stub"
-          style={
-            Object {
-              "height": "200px",
-              "width": "245px",
-            }
-          }
-        />
-        <WithStyles(ForwardRef(Button))
-          className="makeStyles-viewButton-2"
-          onClick={[MockFunction]}
-          variant="outlined"
-        >
-          <ViewIcon />
-          View detailed connection information
-        </WithStyles(ForwardRef(Button))>
-      </WithStyles(ForwardRef(Grid))>
-    </WithStyles(ForwardRef(Grid))>
+    </div>
   </WithStyles(ForwardRef(Container))>
 </Fragment>
 `;
