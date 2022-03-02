@@ -2,14 +2,13 @@
 
 exports[`the Excellent Quality component should render correctly when quality is "excellent" 1`] = `
 <WithStyles(ForwardRef(Container))>
-  <WithStyles(ForwardRef(Grid))
-    alignItems="center"
-    container={true}
-    justifyContent="space-between"
+  <div
+    className="makeStyles-mainContainer-1"
   >
     <WithStyles(ForwardRef(Grid))
+      className="makeStyles-header-2"
       item={true}
-      md={5}
+      lg={5}
     >
       <WithStyles(ForwardRef(Typography))
         gutterBottom={true}
@@ -18,6 +17,31 @@ exports[`the Excellent Quality component should render correctly when quality is
         Expected quality is 
         excellent
       </WithStyles(ForwardRef(Typography))>
+    </WithStyles(ForwardRef(Grid))>
+    <WithStyles(ForwardRef(Grid))
+      className="makeStyles-illustrationContainer-4"
+      item={true}
+      lg={5}
+    >
+      <img
+        alt="Success"
+        className="makeStyles-illustration-5"
+        src="test-file-stub"
+      />
+      <WithStyles(ForwardRef(Button))
+        className="makeStyles-viewButton-6"
+        onClick={[MockFunction]}
+        variant="outlined"
+      >
+        <ViewIcon />
+        View detailed quality information
+      </WithStyles(ForwardRef(Button))>
+    </WithStyles(ForwardRef(Grid))>
+    <WithStyles(ForwardRef(Grid))
+      className="makeStyles-finishButton-7"
+      item={true}
+      lg={5}
+    >
       <WithStyles(ForwardRef(Typography))
         gutterBottom={true}
         variant="body1"
@@ -38,44 +62,19 @@ exports[`the Excellent Quality component should render correctly when quality is
         Finish up!
       </WithStyles(ForwardRef(Button))>
     </WithStyles(ForwardRef(Grid))>
-    <WithStyles(ForwardRef(Grid))
-      className="makeStyles-illustrationContainer-2"
-      item={true}
-      md={5}
-    >
-      <img
-        alt="Success"
-        src="test-file-stub"
-        style={
-          Object {
-            "height": "200px",
-            "width": "245px",
-          }
-        }
-      />
-      <WithStyles(ForwardRef(Button))
-        className="makeStyles-viewButton-3"
-        onClick={[MockFunction]}
-        variant="outlined"
-      >
-        <ViewIcon />
-        View detailed quality information
-      </WithStyles(ForwardRef(Button))>
-    </WithStyles(ForwardRef(Grid))>
-  </WithStyles(ForwardRef(Grid))>
+  </div>
 </WithStyles(ForwardRef(Container))>
 `;
 
 exports[`the Excellent Quality component should render correctly when quality is "good" 1`] = `
 <WithStyles(ForwardRef(Container))>
-  <WithStyles(ForwardRef(Grid))
-    alignItems="center"
-    container={true}
-    justifyContent="space-between"
+  <div
+    className="makeStyles-mainContainer-1"
   >
     <WithStyles(ForwardRef(Grid))
+      className="makeStyles-header-2"
       item={true}
-      md={5}
+      lg={5}
     >
       <WithStyles(ForwardRef(Typography))
         gutterBottom={true}
@@ -84,6 +83,31 @@ exports[`the Excellent Quality component should render correctly when quality is
         Expected quality is 
         good
       </WithStyles(ForwardRef(Typography))>
+    </WithStyles(ForwardRef(Grid))>
+    <WithStyles(ForwardRef(Grid))
+      className="makeStyles-illustrationContainer-4"
+      item={true}
+      lg={5}
+    >
+      <img
+        alt="Success"
+        className="makeStyles-illustration-5"
+        src="test-file-stub"
+      />
+      <WithStyles(ForwardRef(Button))
+        className="makeStyles-viewButton-6"
+        onClick={[MockFunction]}
+        variant="outlined"
+      >
+        <ViewIcon />
+        View detailed quality information
+      </WithStyles(ForwardRef(Button))>
+    </WithStyles(ForwardRef(Grid))>
+    <WithStyles(ForwardRef(Grid))
+      className="makeStyles-finishButton-7"
+      item={true}
+      lg={5}
+    >
       <WithStyles(ForwardRef(Typography))
         gutterBottom={true}
         variant="body1"
@@ -104,30 +128,6 @@ exports[`the Excellent Quality component should render correctly when quality is
         Finish up!
       </WithStyles(ForwardRef(Button))>
     </WithStyles(ForwardRef(Grid))>
-    <WithStyles(ForwardRef(Grid))
-      className="makeStyles-illustrationContainer-2"
-      item={true}
-      md={5}
-    >
-      <img
-        alt="Success"
-        src="test-file-stub"
-        style={
-          Object {
-            "height": "200px",
-            "width": "245px",
-          }
-        }
-      />
-      <WithStyles(ForwardRef(Button))
-        className="makeStyles-viewButton-3"
-        onClick={[MockFunction]}
-        variant="outlined"
-      >
-        <ViewIcon />
-        View detailed quality information
-      </WithStyles(ForwardRef(Button))>
-    </WithStyles(ForwardRef(Grid))>
-  </WithStyles(ForwardRef(Grid))>
+  </div>
 </WithStyles(ForwardRef(Container))>
 `;

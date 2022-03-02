@@ -31,9 +31,9 @@ export function Quality() {
         bitrate={bitrate}
       />
       {totalQualityScore === QualityScore.Good || totalQualityScore === QualityScore.Excellent ? (
-        <PoorQuality quality={totalQualityScore} openModal={() => setIsModalOpen(true)} />
-      ) : (
         <ExcellentQuality quality={totalQualityScore} openModal={() => setIsModalOpen(true)} />
+      ) : (
+        <PoorQuality quality={totalQualityScore} openModal={() => setIsModalOpen(true)} />
       )}
     </>
   );
