@@ -27,6 +27,9 @@ const useStyles = makeStyles((theme) =>
     },
     content: {
       padding: '3em',
+      [theme.breakpoints.down('sm')]: {
+        padding: '2em',
+      },
     },
     closeButton: {
       position: 'absolute',
@@ -99,8 +102,8 @@ export function QualityModal({ isModalOpen, setIsModalOpen, latency, jitter, pac
                       title={toolTipContent.roundTripTime}
                       interactive
                       leaveDelay={250}
-                      leaveTouchDelay={3500}
-                      enterTouchDelay={100}
+                      leaveTouchDelay={15000}
+                      enterTouchDelay={0}
                     >
                       <div>
                         <InfoIcon />
@@ -127,8 +130,8 @@ export function QualityModal({ isModalOpen, setIsModalOpen, latency, jitter, pac
                       title={toolTipContent.jitter}
                       interactive
                       leaveDelay={250}
-                      leaveTouchDelay={3500}
-                      enterTouchDelay={100}
+                      leaveTouchDelay={15000}
+                      enterTouchDelay={0}
                     >
                       <div>
                         <InfoIcon />
@@ -155,8 +158,8 @@ export function QualityModal({ isModalOpen, setIsModalOpen, latency, jitter, pac
                       title={toolTipContent.packetLoss}
                       interactive
                       leaveDelay={250}
-                      leaveTouchDelay={3500}
-                      enterTouchDelay={100}
+                      leaveTouchDelay={15000}
+                      enterTouchDelay={0}
                     >
                       <div>
                         <InfoIcon />
@@ -183,8 +186,8 @@ export function QualityModal({ isModalOpen, setIsModalOpen, latency, jitter, pac
                       title={toolTipContent.bitrate}
                       interactive
                       leaveDelay={250}
-                      leaveTouchDelay={3500}
-                      enterTouchDelay={100}
+                      leaveTouchDelay={15000}
+                      enterTouchDelay={0}
                     >
                       <div>
                         <InfoIcon />
