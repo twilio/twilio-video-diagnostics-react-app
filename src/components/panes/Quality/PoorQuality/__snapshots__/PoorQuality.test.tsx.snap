@@ -37,12 +37,12 @@ exports[`the PoorQuality component should render correctly when quality is "poor
       </WithStyles(ForwardRef(Typography))>
     </WithStyles(ForwardRef(Grid))>
     <WithStyles(ForwardRef(Grid))
-      className="makeStyles-paperContainer-6"
+      className="makeStyles-paperContainer-5"
       item={true}
       lg={5}
     >
       <WithStyles(ForwardRef(Paper))
-        className="makeStyles-paper-5"
+        className="makeStyles-paper-4"
       >
         <WithStyles(ForwardRef(Typography))
           variant="body1"
@@ -83,7 +83,7 @@ exports[`the PoorQuality component should render correctly when quality is "poor
         </ul>
       </WithStyles(ForwardRef(Paper))>
       <WithStyles(ForwardRef(Button))
-        className="makeStyles-viewButton-7"
+        className="makeStyles-viewButton-6"
         onClick={[MockFunction]}
         variant="outlined"
       >
@@ -92,7 +92,7 @@ exports[`the PoorQuality component should render correctly when quality is "poor
       </WithStyles(ForwardRef(Button))>
     </WithStyles(ForwardRef(Grid))>
     <WithStyles(ForwardRef(Grid))
-      className="makeStyles-confirmationButtons-8"
+      className="makeStyles-confirmationButtons-7"
       item={true}
       lg={5}
     >
@@ -164,12 +164,12 @@ exports[`the PoorQuality component should render correctly when quality is "subo
       </WithStyles(ForwardRef(Typography))>
     </WithStyles(ForwardRef(Grid))>
     <WithStyles(ForwardRef(Grid))
-      className="makeStyles-paperContainer-6"
+      className="makeStyles-paperContainer-5"
       item={true}
       lg={5}
     >
       <WithStyles(ForwardRef(Paper))
-        className="makeStyles-paper-5"
+        className="makeStyles-paper-4"
       >
         <WithStyles(ForwardRef(Typography))
           variant="body1"
@@ -210,7 +210,7 @@ exports[`the PoorQuality component should render correctly when quality is "subo
         </ul>
       </WithStyles(ForwardRef(Paper))>
       <WithStyles(ForwardRef(Button))
-        className="makeStyles-viewButton-7"
+        className="makeStyles-viewButton-6"
         onClick={[MockFunction]}
         variant="outlined"
       >
@@ -219,7 +219,7 @@ exports[`the PoorQuality component should render correctly when quality is "subo
       </WithStyles(ForwardRef(Button))>
     </WithStyles(ForwardRef(Grid))>
     <WithStyles(ForwardRef(Grid))
-      className="makeStyles-confirmationButtons-8"
+      className="makeStyles-confirmationButtons-7"
       item={true}
       lg={5}
     >

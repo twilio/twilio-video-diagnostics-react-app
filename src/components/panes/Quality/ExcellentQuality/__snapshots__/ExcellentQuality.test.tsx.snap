@@ -19,17 +19,17 @@ exports[`the Excellent Quality component should render correctly when quality is
       </WithStyles(ForwardRef(Typography))>
     </WithStyles(ForwardRef(Grid))>
     <WithStyles(ForwardRef(Grid))
-      className="makeStyles-illustrationContainer-4"
+      className="makeStyles-illustrationContainer-3"
       item={true}
       lg={5}
     >
       <img
         alt="Success"
-        className="makeStyles-illustration-5"
+        className="makeStyles-illustration-4"
         src="test-file-stub"
       />
       <WithStyles(ForwardRef(Button))
-        className="makeStyles-viewButton-6"
+        className="makeStyles-viewButton-5"
         onClick={[MockFunction]}
         variant="outlined"
       >
@@ -38,7 +38,7 @@ exports[`the Excellent Quality component should render correctly when quality is
       </WithStyles(ForwardRef(Button))>
     </WithStyles(ForwardRef(Grid))>
     <WithStyles(ForwardRef(Grid))
-      className="makeStyles-finishButton-7"
+      className="makeStyles-finishButton-6"
       item={true}
       lg={5}
     >
@@ -85,17 +85,17 @@ exports[`the Excellent Quality component should render correctly when quality is
       </WithStyles(ForwardRef(Typography))>
     </WithStyles(ForwardRef(Grid))>
     <WithStyles(ForwardRef(Grid))
-      className="makeStyles-illustrationContainer-4"
+      className="makeStyles-illustrationContainer-3"
       item={true}
       lg={5}
     >
       <img
         alt="Success"
-        className="makeStyles-illustration-5"
+        className="makeStyles-illustration-4"
         src="test-file-stub"
       />
       <WithStyles(ForwardRef(Button))
-        className="makeStyles-viewButton-6"
+        className="makeStyles-viewButton-5"
         onClick={[MockFunction]}
         variant="outlined"
       >
@@ -104,7 +104,7 @@ exports[`the Excellent Quality component should render correctly when quality is
       </WithStyles(ForwardRef(Button))>
     </WithStyles(ForwardRef(Grid))>
     <WithStyles(ForwardRef(Grid))
-      className="makeStyles-finishButton-7"
+      className="makeStyles-finishButton-6"
       item={true}
       lg={5}
     >
