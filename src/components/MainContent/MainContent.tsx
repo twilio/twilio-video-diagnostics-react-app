@@ -72,7 +72,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   item: {
     transition: 'all 0.75s ease',
-    padding: '4.2em 0',
+    padding: '3em 0',
     [theme.breakpoints.down('sm')]: {
       transition: 'initial',
       padding: '0px',
