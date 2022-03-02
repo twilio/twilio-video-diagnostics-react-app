@@ -15,9 +15,6 @@ const useStyles = makeStyles((theme: Theme) =>
         float: 'initial',
       },
     },
-    modal: {
-      width: '6000px',
-    },
     illustrationContainer: {
       float: 'right',
       marginRight: '1em',

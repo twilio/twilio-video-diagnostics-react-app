@@ -25,9 +25,6 @@ const useStyles = makeStyles((theme: Theme) =>
         marginBottom: '0.5em',
       },
     },
-    modal: {
-      width: '6000px',
-    },
     paper: {
       padding: '1.2em',
       maxWidth: '400px',
