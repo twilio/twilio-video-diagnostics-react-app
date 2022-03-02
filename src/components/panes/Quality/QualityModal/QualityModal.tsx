@@ -23,6 +23,7 @@ const useStyles = makeStyles((theme) =>
   createStyles({
     modal: {
       width: '100%',
+      maxWidth: '600px',
     },
     content: {
       padding: '3em',
@@ -94,7 +95,13 @@ export function QualityModal({ isModalOpen, setIsModalOpen, latency, jitter, pac
               <TableRow>
                 <TableCell>
                   <div className={classes.iconContainer}>
-                    <Tooltip title={toolTipContent.roundTripTime} interactive leaveDelay={250}>
+                    <Tooltip
+                      title={toolTipContent.roundTripTime}
+                      interactive
+                      leaveDelay={250}
+                      leaveTouchDelay={3500}
+                      enterTouchDelay={100}
+                    >
                       <div>
                         <InfoIcon />
                       </div>
@@ -116,7 +123,13 @@ export function QualityModal({ isModalOpen, setIsModalOpen, latency, jitter, pac
               <TableRow>
                 <TableCell>
                   <div className={classes.iconContainer}>
-                    <Tooltip title={toolTipContent.jitter} interactive leaveDelay={250}>
+                    <Tooltip
+                      title={toolTipContent.jitter}
+                      interactive
+                      leaveDelay={250}
+                      leaveTouchDelay={3500}
+                      enterTouchDelay={100}
+                    >
                       <div>
                         <InfoIcon />
                       </div>
@@ -138,7 +151,13 @@ export function QualityModal({ isModalOpen, setIsModalOpen, latency, jitter, pac
               <TableRow>
                 <TableCell>
                   <div className={classes.iconContainer}>
-                    <Tooltip title={toolTipContent.packetLoss} interactive leaveDelay={250}>
+                    <Tooltip
+                      title={toolTipContent.packetLoss}
+                      interactive
+                      leaveDelay={250}
+                      leaveTouchDelay={3500}
+                      enterTouchDelay={100}
+                    >
                       <div>
                         <InfoIcon />
                       </div>
@@ -160,7 +179,13 @@ export function QualityModal({ isModalOpen, setIsModalOpen, latency, jitter, pac
               <TableRow>
                 <TableCell>
                   <div className={classes.iconContainer}>
-                    <Tooltip title={toolTipContent.bitrate} interactive leaveDelay={250}>
+                    <Tooltip
+                      title={toolTipContent.bitrate}
+                      interactive
+                      leaveDelay={250}
+                      leaveTouchDelay={3500}
+                      enterTouchDelay={100}
+                    >
                       <div>
                         <InfoIcon />
                       </div>
