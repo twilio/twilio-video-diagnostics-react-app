@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import clsx from 'clsx';
-import { Button, makeStyles, useTheme, Theme, useMediaQuery, Hidden } from '@material-ui/core';
+import { Button, makeStyles, useTheme, Theme, useMediaQuery } from '@material-ui/core';
 import Video from 'twilio-video';
 
 import { ActivePane, useAppStateContext } from '../AppStateProvider/AppStateProvider';
@@ -100,7 +100,7 @@ const useStyles = makeStyles((theme: Theme) => ({
       },
     },
     [theme.breakpoints.down('sm')]: {
-      position: 'fixed',
+      display: 'none',
     },
   },
 }));
@@ -202,20 +202,18 @@ export function MainContent() {
           })}
         </div>
       </div>
-      <Hidden smDown>
-        <div className={classes.buttonContainer}>
-          <Button
-            variant="outlined"
-            onClick={() => dispatch({ type: 'previous-pane' })}
-            disabled={!ActivePane[state.activePane - 1] || isSnackbarOpen}
-          >
-            <ArrowUp />
-          </Button>
-          <Button variant="outlined" onClick={nextPane} disabled={state.downButtonDisabled}>
-            <ArrowDown />
-          </Button>
-        </div>
-      </Hidden>
+      <div className={classes.buttonContainer}>
+        <Button
+          variant="outlined"
+          onClick={() => dispatch({ type: 'previous-pane' })}
+          disabled={!ActivePane[state.activePane - 1] || isSnackbarOpen}
+        >
+          <ArrowUp />
+        </Button>
+        <Button variant="outlined" onClick={nextPane} disabled={state.downButtonDisabled}>
+          <ArrowDown />
+        </Button>
+      </div>
     </>
   );
 }
