@@ -64,6 +64,9 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     gutterBottom: {
       marginBottom: '1em',
+      [theme.breakpoints.down('md')]: {
+        marginBottom: '1.5em',
+      },
     },
   })
 );
