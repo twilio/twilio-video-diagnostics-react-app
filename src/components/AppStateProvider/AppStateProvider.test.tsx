@@ -59,6 +59,17 @@ describe('the isDownButtonDisabled function', () => {
     expect(isDownButtonDisabled(mockCurrentState)).toBe(true);
   });
 
+  it('should return true if there is a token error when starting the preflight test', () => {
+    const mockCurrentState = {
+      ...initialState,
+      activePane: ActivePane.Connectivity,
+      preflightTestInProgress: false,
+      preflightTest: { ...initialState.preflightTest, tokenError: Error() },
+      bitrateTestInProgress: false,
+    };
+    expect(isDownButtonDisabled(mockCurrentState)).toBe(true);
+  });
+
   it('should return true when preflight test and/or bitrate test is in progress', () => {
     const mockCurrentState = {
       ...initialState,
