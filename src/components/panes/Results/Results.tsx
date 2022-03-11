@@ -14,6 +14,7 @@ const useStyles = makeStyles((theme: Theme) =>
       float: 'left',
       [theme.breakpoints.down('md')]: {
         float: 'initial',
+        paddingBottom: '1em',
       },
     },
     buttonContainer: {
