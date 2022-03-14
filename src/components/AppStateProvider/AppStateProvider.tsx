@@ -145,7 +145,10 @@ export const isDownButtonDisabled = (currentState: stateType) => {
 
   const connectionFailedOrLoading =
     activePane === ActivePane.Connectivity &&
-    (preflightTestInProgress || bitrateTestInProgress || preflightTest.error !== null);
+    (preflightTestInProgress ||
+      bitrateTestInProgress ||
+      preflightTest.error !== null ||
+      preflightTest.tokenError !== null);
 
   const deviceTestErrors =
     !!audioInputTestReport?.errors.length ||

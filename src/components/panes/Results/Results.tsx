@@ -1,4 +1,4 @@
-import { makeStyles, Button, Container, Grid, Typography } from '@material-ui/core';
+import { makeStyles, Button, Container, Grid, Typography, Theme, createStyles, Hidden } from '@material-ui/core';
 import { ActivePane, useAppStateContext } from '../../AppStateProvider/AppStateProvider';
 import { CheckMark } from '../../../icons/CheckMark';
 import { DownloadIcon } from '../../../icons/DownloadIcon';
@@ -8,28 +8,69 @@ import { SmallError } from '../../../icons/SmallError';
 import SomeFailed from './SomeFailed.png';
 import TestsPassed from './TestsPassed.png';
 
-const useStyles = makeStyles({
-  resultContainer: {
-    marginTop: '2em',
-    '&:not(:last-child)': {
-      paddingBottom: '2em',
-      borderBottom: '0.1em solid #8891AA',
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    header: {
+      float: 'left',
+      [theme.breakpoints.down('md')]: {
+        float: 'initial',
+        paddingBottom: '1em',
+      },
     },
-  },
-  iconContainer: {
-    display: 'flex',
-    '& svg': {
-      margin: '0.2em 0.8em 0 0',
+    buttonContainer: {
+      display: 'inline-flex',
+      flexWrap: 'wrap',
+      gap: '1em',
+      width: '100%',
     },
-  },
-  downloadButton: {
-    marginRight: '1.5em',
-    '& svg': {
-      position: 'relative',
-      left: '-5px',
+    resultsList: {
+      float: 'right',
+      [theme.breakpoints.down('md')]: {
+        float: 'initial',
+      },
     },
-  },
-});
+    resultContainer: {
+      marginTop: '1.5em',
+      '&:not(:last-child)': {
+        paddingBottom: '1.5em',
+        borderBottom: '0.1em solid #8891AA',
+      },
+      [theme.breakpoints.down('md')]: {
+        '&:last-child': {
+          paddingBottom: '1.5em',
+        },
+      },
+    },
+    iconContainer: {
+      display: 'flex',
+      '& svg': {
+        margin: '0.2em 0.8em 0 0',
+      },
+    },
+    downloadButton: {
+      '& svg': {
+        position: 'relative',
+        left: '-5px',
+      },
+    },
+    restartButton: {
+      backgroundColor: '#FFFFFF',
+      borderColor: '#8891AA',
+    },
+    illustration: {
+      marginTop: '7em',
+    },
+    hardwareButton: {
+      marginRight: '1.5em',
+    },
+    gutterBottom: {
+      marginBottom: '1em',
+      [theme.breakpoints.down('md')]: {
+        marginBottom: '1.5em',
+      },
+    },
+  })
+);
 
 export function Results() {
   const { state, downloadFinalTestResults, dispatch } = useAppStateContext();
@@ -42,8 +83,8 @@ export function Results() {
   return (
     <>
       <Container>
-        <Grid container justifyContent="space-between">
-          <Grid item md={5}>
+        <div>
+          <Grid item lg={5} className={classes.header}>
             <Typography variant="h1" gutterBottom>
               {testsPassed ? 'All tests passed!' : 'Some tests failed'}
             </Typography>
@@ -61,63 +102,66 @@ export function Results() {
               </Typography>
             )}
 
-            <Button
-              variant="contained"
-              color="primary"
-              className={classes.downloadButton}
-              onClick={downloadFinalTestResults}
-            >
-              <DownloadIcon />
-              Download report results
-            </Button>
-            <Button
-              variant="outlined"
-              style={{ backgroundColor: '#FFFFFF', borderColor: '#8891AA' }}
-              onClick={() => window.location.reload()}
-            >
-              Restart test
-            </Button>
-            <img
-              src={testsPassed ? TestsPassed : SomeFailed}
-              alt={testsPassed ? 'Success' : 'Some Failed'}
-              style={{ marginTop: '7em' }}
-            />
+            <div className={classes.buttonContainer}>
+              <Button
+                variant="contained"
+                color="primary"
+                className={classes.downloadButton}
+                onClick={downloadFinalTestResults}
+              >
+                <DownloadIcon />
+                Download report results
+              </Button>
+              <Button variant="outlined" className={classes.restartButton} onClick={() => window.location.reload()}>
+                Restart test
+              </Button>
+            </div>
+
+            <Hidden mdDown>
+              <img
+                src={testsPassed ? TestsPassed : SomeFailed}
+                alt={testsPassed ? 'Success' : 'Some Failed'}
+                className={classes.illustration}
+              />
+            </Hidden>
           </Grid>
 
-          <Grid item md={5}>
+          <Grid item lg={5} className={classes.resultsList}>
             <div className={classes.resultContainer}>
               <div className={classes.iconContainer}>
                 <CheckMark />
-                <Typography variant="h3" gutterBottom>
+                <Typography variant="h3" className={classes.gutterBottom}>
                   Device &amp; Network Setup
                 </Typography>
               </div>
-              <Typography variant="body1" gutterBottom>
+              <Typography variant="body1" className={classes.gutterBottom}>
                 Audio and video successfully received from your hardware and browser.
               </Typography>
-              <Button
-                variant="outlined"
-                onClick={() => dispatch({ type: 'set-active-pane', newActivePane: ActivePane.CameraTest })}
-                style={{ marginRight: '1.5em' }}
-              >
-                Review hardware
-              </Button>
-              <Button
-                variant="outlined"
-                onClick={() => dispatch({ type: 'set-active-pane', newActivePane: ActivePane.BrowserTest })}
-              >
-                Review browser
-              </Button>
+
+              <div className={classes.buttonContainer}>
+                <Button
+                  variant="outlined"
+                  onClick={() => dispatch({ type: 'set-active-pane', newActivePane: ActivePane.CameraTest })}
+                >
+                  Review hardware
+                </Button>
+                <Button
+                  variant="outlined"
+                  onClick={() => dispatch({ type: 'set-active-pane', newActivePane: ActivePane.BrowserTest })}
+                >
+                  Review browser
+                </Button>
+              </div>
             </div>
 
             <div className={classes.resultContainer}>
               <div className={classes.iconContainer}>
                 <CheckMark />
-                <Typography variant="h3" gutterBottom>
+                <Typography variant="h3" className={classes.gutterBottom}>
                   Connectivity
                 </Typography>
               </div>
-              <Typography variant="body1" gutterBottom>
+              <Typography variant="body1" className={classes.gutterBottom}>
                 All connections are working successfully.
               </Typography>
               <Button
@@ -131,20 +175,20 @@ export function Results() {
             <div className={classes.resultContainer}>
               <div className={classes.iconContainer}>
                 {testsPassed ? <CheckMark /> : <SmallError />}
-                <Typography variant="h3" gutterBottom>
+                <Typography variant="h3" className={classes.gutterBottom}>
                   Quality &amp; Performance
                 </Typography>
               </div>
 
               {testsPassed ? (
-                <Typography variant="body1" gutterBottom>
+                <Typography variant="body1" className={classes.gutterBottom}>
                   Awesome! Your expected call quality is <strong>{qualityScore}</strong> and overall performance looks
                   {qualityScore === 'excellent' ? ' good' : ' ok'}.
                 </Typography>
               ) : (
-                <Typography variant="body1" gutterBottom>
+                <Typography variant="body1" className={classes.gutterBottom}>
                   Your overall score is <strong>{qualityScore}</strong> which means that your connection isn't good
-                  enough to run video properly. Try out these tips and rerun the test
+                  enough to run video properly. Try out these tips and rerun the test.
                 </Typography>
               )}
 
@@ -156,7 +200,7 @@ export function Results() {
               </Button>
             </div>
           </Grid>
-        </Grid>
+        </div>
       </Container>
     </>
   );

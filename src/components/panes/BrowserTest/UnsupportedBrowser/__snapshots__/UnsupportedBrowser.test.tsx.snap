@@ -21,7 +21,6 @@ exports[`the UnsupportedBrowser component should render correctly 1`] = `
           >
             <ErrorIcon />
           </div>
-           
           New browser needed
         </WithStyles(ForwardRef(Typography))>
         <WithStyles(ForwardRef(Typography))
