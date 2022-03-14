@@ -34,13 +34,8 @@ const useStyles = makeStyles((theme: Theme) =>
       display: 'flex',
     },
     errorIcon: {
-      position: 'absolute',
-      right: 'calc(100% + 15px)',
-      [theme.breakpoints.down('sm')]: {
-        position: 'relative',
-        right: '0',
-        marginBottom: '0.5em',
-      },
+      display: 'inline-block',
+      marginRight: '10px',
     },
     caption: {
       marginTop: '1.3em',
@@ -94,7 +89,7 @@ export function UnsupportedBrowser() {
             <Typography variant="h1" gutterBottom className={classes.heading}>
               <div className={classes.errorIcon}>
                 <ErrorIcon />
-              </div>{' '}
+              </div>
               New browser needed
             </Typography>
             <Typography variant="body1" gutterBottom>

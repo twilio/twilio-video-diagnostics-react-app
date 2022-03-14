@@ -17,13 +17,8 @@ const useStyles = makeStyles((theme: Theme) =>
       position: 'relative',
     },
     errorIcon: {
-      position: 'absolute',
-      right: 'calc(100% + 15px)',
-      [theme.breakpoints.down('sm')]: {
-        position: 'relative',
-        right: '0',
-        marginBottom: '0.5em',
-      },
+      display: 'inline-block',
+      marginRight: '10px',
     },
     paper: {
       padding: '1.2em',

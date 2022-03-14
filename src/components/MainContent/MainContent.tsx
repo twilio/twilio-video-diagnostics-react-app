@@ -100,7 +100,7 @@ const useStyles = makeStyles((theme: Theme) => ({
       },
     },
     [theme.breakpoints.down('sm')]: {
-      position: 'fixed',
+      display: 'none',
     },
   },
 }));
@@ -163,6 +163,7 @@ export function MainContent() {
   const devicesPermitted = state.audioGranted && state.videoGranted;
   const testsInProgress = state.preflightTestInProgress || state.bitrateTestInProgress;
   const onLoadingScreen = state.activePane === ActivePane.Connectivity && testsInProgress;
+  const preflightErrors = state.preflightTest.tokenError !== null || state.preflightTest.error !== null;
 
   const deviceTestErrors =
     !!state.audioInputTestReport?.errors.length ||
@@ -182,6 +183,7 @@ export function MainContent() {
               state.activePane === ActivePane.DeviceCheck ||
               state.activePane === ActivePane.DeviceError ||
               onLoadingScreen ||
+              (state.activePane === ActivePane.Connectivity && preflightErrors) ||
               (state.activePane === ActivePane.BrowserTest && (testsInProgress || !Video.isSupported)),
           })}
         >

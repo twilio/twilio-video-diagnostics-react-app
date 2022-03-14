@@ -129,6 +129,7 @@ describe('the MainContent component', () => {
         activePane: 0,
         preflightTest: {
           progress: null,
+          tokenError: null,
         },
         downButtonDisabled: false,
       },
@@ -142,6 +143,9 @@ describe('the MainContent component', () => {
     mockUseAppStateContext.mockImplementation(() => ({
       state: {
         activePane: ActivePane.CameraTest,
+        preflightTest: {
+          tokenError: null,
+        },
         videoInputTestReport: {
           errors: ['mockErrors'],
         },
@@ -243,6 +247,9 @@ describe('the MainContent component', () => {
       mockUseAppStateContext.mockImplementation(() => ({
         state: {
           activePane: ActivePane.CameraTest,
+          preflightTest: {
+            tokenError: null,
+          },
           videoInputTestReport: {
             errors: ['mockErrors'],
           },
@@ -258,6 +265,9 @@ describe('the MainContent component', () => {
       mockUseAppStateContext.mockImplementation(() => ({
         state: {
           activePane: ActivePane.AudioTest,
+          preflightTest: {
+            tokenError: null,
+          },
           audioInputTestReport: {
             errors: ['mockErrors'],
           },
@@ -338,6 +348,9 @@ describe('the MainContent component', () => {
       mockUseAppStateContext.mockImplementation(() => ({
         state: {
           activePane: ActivePane.BrowserTest,
+          preflightTest: {
+            tokenError: null,
+          },
           preflightTestInProgress: false,
         },
       }));
@@ -351,6 +364,9 @@ describe('the MainContent component', () => {
     mockUseAppStateContext.mockImplementation(() => ({
       state: {
         activePane: ActivePane.CameraTest,
+        preflightTest: {
+          tokenError: null,
+        },
         videoInputTestReport: {
           errors: ['mockErrors'],
         },
@@ -366,6 +382,9 @@ describe('the MainContent component', () => {
     mockUseAppStateContext.mockImplementation(() => ({
       state: {
         activePane: ActivePane.AudioTest,
+        preflightTest: {
+          tokenError: null,
+        },
         audioInputTestReport: {
           errors: ['mockErrors'],
         },
@@ -381,6 +400,9 @@ describe('the MainContent component', () => {
     mockUseAppStateContext.mockImplementation(() => ({
       state: {
         activePane: ActivePane.AudioTest,
+        preflightTest: {
+          tokenError: null,
+        },
         audioOutputTestReport: {
           errors: ['mockErrors'],
         },
@@ -396,6 +418,9 @@ describe('the MainContent component', () => {
     mockUseAppStateContext.mockImplementation(() => ({
       state: {
         activePane: ActivePane.AudioTest,
+        preflightTest: {
+          tokenError: null,
+        },
         audioOutputTestReport: {
           errors: ['No audio detected'],
         },
