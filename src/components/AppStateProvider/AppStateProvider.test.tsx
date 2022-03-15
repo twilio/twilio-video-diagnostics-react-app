@@ -70,6 +70,15 @@ describe('the isDownButtonDisabled function', () => {
     expect(isDownButtonDisabled(mockCurrentState)).toBe(true);
   });
 
+  it('should return true if the application is expired', () => {
+    const mockCurrentState = {
+      ...initialState,
+      activePane: ActivePane.GetStarted,
+      appIsExpired: true,
+    };
+    expect(isDownButtonDisabled(mockCurrentState)).toBe(true);
+  });
+
   it('should return true when preflight test and/or bitrate test is in progress', () => {
     const mockCurrentState = {
       ...initialState,
@@ -433,6 +442,13 @@ describe('the appState reducer', () => {
       const newState = appStateReducer(initialState, { type: 'bitrate-test-finished' });
       expect(newState.bitrateTestFinished).toBe(true);
       expect(newState.bitrateTestInProgress).toBe(false);
+    });
+  });
+
+  describe('the "set-app-is-expired" action type', () => {
+    it('should set appIsExpired to true', () => {
+      const newState = appStateReducer(initialState, { type: 'set-app-is-expired' });
+      expect(newState.appIsExpired).toBe(true);
     });
   });
 });

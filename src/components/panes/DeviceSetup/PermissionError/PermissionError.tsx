@@ -26,10 +26,6 @@ const useStyles = makeStyles((theme: Theme) =>
         width: '100%',
       },
     },
-    errorIcon: {
-      display: 'inline-block',
-      marginRight: '10px',
-    },
     header: {
       float: 'left',
       [theme.breakpoints.down('md')]: {
@@ -110,9 +106,7 @@ export function PermissionError() {
       <div className={classes.mainContainer}>
         <Grid item lg={5} className={classes.header}>
           <Typography variant="h1" gutterBottom className={classes.heading}>
-            <div className={classes.errorIcon}>
-              <ErrorIcon />
-            </div>
+            <ErrorIcon />
             {headline}
           </Typography>
 
