@@ -13,11 +13,7 @@ exports[`the PoorQuality component should render correctly when quality is "poor
         gutterBottom={true}
         variant="h1"
       >
-        <div
-          className="makeStyles-errorIcon-3"
-        >
-          <ErrorIcon />
-        </div>
+        <ErrorIcon />
         Quality 
         issues
       </WithStyles(ForwardRef(Typography))>
@@ -37,12 +33,12 @@ exports[`the PoorQuality component should render correctly when quality is "poor
       </WithStyles(ForwardRef(Typography))>
     </WithStyles(ForwardRef(Grid))>
     <WithStyles(ForwardRef(Grid))
-      className="makeStyles-paperContainer-5"
+      className="makeStyles-paperContainer-4"
       item={true}
       lg={5}
     >
       <WithStyles(ForwardRef(Paper))
-        className="makeStyles-paper-4"
+        className="makeStyles-paper-3"
       >
         <WithStyles(ForwardRef(Typography))
           variant="body1"
@@ -83,7 +79,7 @@ exports[`the PoorQuality component should render correctly when quality is "poor
         </ul>
       </WithStyles(ForwardRef(Paper))>
       <WithStyles(ForwardRef(Button))
-        className="makeStyles-viewButton-6"
+        className="makeStyles-viewButton-5"
         onClick={[MockFunction]}
         variant="outlined"
       >
@@ -92,7 +88,7 @@ exports[`the PoorQuality component should render correctly when quality is "poor
       </WithStyles(ForwardRef(Button))>
     </WithStyles(ForwardRef(Grid))>
     <WithStyles(ForwardRef(Grid))
-      className="makeStyles-confirmationButtons-7"
+      className="makeStyles-confirmationButtons-6"
       item={true}
       lg={5}
     >
@@ -140,11 +136,7 @@ exports[`the PoorQuality component should render correctly when quality is "subo
         gutterBottom={true}
         variant="h1"
       >
-        <div
-          className="makeStyles-errorIcon-3"
-        >
-          <WarningIcon />
-        </div>
+        <WarningIcon />
         Quality 
         is okay
       </WithStyles(ForwardRef(Typography))>
@@ -164,12 +156,12 @@ exports[`the PoorQuality component should render correctly when quality is "subo
       </WithStyles(ForwardRef(Typography))>
     </WithStyles(ForwardRef(Grid))>
     <WithStyles(ForwardRef(Grid))
-      className="makeStyles-paperContainer-5"
+      className="makeStyles-paperContainer-4"
       item={true}
       lg={5}
     >
       <WithStyles(ForwardRef(Paper))
-        className="makeStyles-paper-4"
+        className="makeStyles-paper-3"
       >
         <WithStyles(ForwardRef(Typography))
           variant="body1"
@@ -210,7 +202,7 @@ exports[`the PoorQuality component should render correctly when quality is "subo
         </ul>
       </WithStyles(ForwardRef(Paper))>
       <WithStyles(ForwardRef(Button))
-        className="makeStyles-viewButton-6"
+        className="makeStyles-viewButton-5"
         onClick={[MockFunction]}
         variant="outlined"
       >
@@ -219,7 +211,7 @@ exports[`the PoorQuality component should render correctly when quality is "subo
       </WithStyles(ForwardRef(Button))>
     </WithStyles(ForwardRef(Grid))>
     <WithStyles(ForwardRef(Grid))
-      className="makeStyles-confirmationButtons-7"
+      className="makeStyles-confirmationButtons-6"
       item={true}
       lg={5}
     >

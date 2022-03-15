@@ -16,10 +16,6 @@ const useStyles = makeStyles((theme) =>
       position: 'relative',
       marginTop: '20px',
     },
-    errorIcon: {
-      display: 'inline-block',
-      marginRight: '10px',
-    },
     paperContainer: {
       float: 'right',
       marginRight: '1em',
@@ -76,9 +72,7 @@ export function ConnectionFailed({ openModal }: ConnectionFailedProps) {
         <div>
           <Grid item lg={5} className={classes.header}>
             <Typography variant="h1" gutterBottom className={classes.heading}>
-              <div className={classes.errorIcon}>
-                <ErrorIcon />
-              </div>
+              <ErrorIcon />
               Connection failed
             </Typography>
 
