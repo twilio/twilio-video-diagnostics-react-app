@@ -14,11 +14,7 @@ exports[`the ConnectionFailed component should render correctly 1`] = `
           gutterBottom={true}
           variant="h1"
         >
-          <div
-            className="makeStyles-errorIcon-3"
-          >
-            <ErrorIcon />
-          </div>
+          <ErrorIcon />
           Connection failed
         </WithStyles(ForwardRef(Typography))>
         <WithStyles(ForwardRef(Typography))
@@ -29,12 +25,12 @@ exports[`the ConnectionFailed component should render correctly 1`] = `
         </WithStyles(ForwardRef(Typography))>
       </WithStyles(ForwardRef(Grid))>
       <WithStyles(ForwardRef(Grid))
-        className="makeStyles-paperContainer-4"
+        className="makeStyles-paperContainer-3"
         item={true}
         lg={5}
       >
         <WithStyles(ForwardRef(Paper))
-          className="makeStyles-paper-5"
+          className="makeStyles-paper-4"
         >
           <WithStyles(ForwardRef(Typography))
             gutterBottom={true}
@@ -58,7 +54,7 @@ exports[`the ConnectionFailed component should render correctly 1`] = `
           </WithStyles(ForwardRef(Typography))>
         </WithStyles(ForwardRef(Paper))>
         <WithStyles(ForwardRef(Button))
-          className="makeStyles-viewButton-7"
+          className="makeStyles-viewButton-6"
           onClick={[MockFunction]}
           variant="outlined"
         >
@@ -76,7 +72,7 @@ exports[`the ConnectionFailed component should render correctly 1`] = `
           Download report results to send to your network admin, update your internet, and re-run this test.
         </WithStyles(ForwardRef(Typography))>
         <WithStyles(ForwardRef(Button))
-          className="makeStyles-downloadButton-6"
+          className="makeStyles-downloadButton-5"
           color="primary"
           onClick={[MockFunction]}
           variant="contained"

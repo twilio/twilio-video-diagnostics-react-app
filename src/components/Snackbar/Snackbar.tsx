@@ -38,6 +38,13 @@ interface SnackbarProps {
   open: boolean;
 }
 
+/**
+ * This Snackbar component is used to handle an edge case where a user grants their browser
+ * permission to access their camera and/or microphone, and then later revokes this permission.
+ * When this occurs, this Snackbar will display an error asking the user to reset their device permissions,
+ * and refresh the app.
+ */
+
 export function Snackbar({ open }: SnackbarProps) {
   const classes = useStyles();
 

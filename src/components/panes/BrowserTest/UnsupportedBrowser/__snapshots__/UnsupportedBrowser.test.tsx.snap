@@ -7,20 +7,16 @@ exports[`the UnsupportedBrowser component should render correctly 1`] = `
       className="makeStyles-mainContainer-1"
     >
       <WithStyles(ForwardRef(Grid))
-        className="makeStyles-header-7"
+        className="makeStyles-header-6"
         item={true}
         lg={5}
       >
         <WithStyles(ForwardRef(Typography))
-          className="makeStyles-heading-6"
+          className="makeStyles-heading-5"
           gutterBottom={true}
           variant="h1"
         >
-          <div
-            className="makeStyles-errorIcon-4"
-          >
-            <ErrorIcon />
-          </div>
+          <ErrorIcon />
           New browser needed
         </WithStyles(ForwardRef(Typography))>
         <WithStyles(ForwardRef(Typography))
@@ -31,7 +27,7 @@ exports[`the UnsupportedBrowser component should render correctly 1`] = `
         </WithStyles(ForwardRef(Typography))>
       </WithStyles(ForwardRef(Grid))>
       <WithStyles(ForwardRef(Grid))
-        className="makeStyles-paperContainer-9"
+        className="makeStyles-paperContainer-8"
         item={true}
         lg={5}
       >
@@ -42,7 +38,7 @@ exports[`the UnsupportedBrowser component should render correctly 1`] = `
         </WithStyles(ForwardRef(Paper))>
         <WithStyles(ForwardRef(Typography))
           align="center"
-          className="makeStyles-caption-5"
+          className="makeStyles-caption-4"
           variant="caption"
         >
           We support the most recent and the two previous versions. Please
@@ -61,7 +57,7 @@ exports[`the UnsupportedBrowser component should render correctly 1`] = `
         </WithStyles(ForwardRef(Typography))>
       </WithStyles(ForwardRef(Grid))>
       <WithStyles(ForwardRef(Grid))
-        className="makeStyles-urlTextBox-8"
+        className="makeStyles-urlTextBox-7"
         item={true}
         lg={5}
       >

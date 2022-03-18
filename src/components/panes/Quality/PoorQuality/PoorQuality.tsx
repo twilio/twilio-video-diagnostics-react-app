@@ -16,10 +16,6 @@ const useStyles = makeStyles((theme: Theme) =>
     heading: {
       position: 'relative',
     },
-    errorIcon: {
-      display: 'inline-block',
-      marginRight: '10px',
-    },
     paper: {
       padding: '1.2em',
       maxWidth: '400px',
@@ -73,9 +69,7 @@ export function PoorQuality({ quality, openModal }: PoorQualityProps) {
       <div>
         <Grid item lg={5} className={classes.header}>
           <Typography variant="h1" gutterBottom className={classes.heading}>
-            <div className={classes.errorIcon}>
-              {quality === QualityScore.Suboptimal ? <WarningIcon /> : <ErrorIcon />}
-            </div>
+            {quality === QualityScore.Suboptimal ? <WarningIcon /> : <ErrorIcon />}
             Quality {quality === QualityScore.Suboptimal ? 'is okay' : 'issues'}
           </Typography>
 

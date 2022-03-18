@@ -33,10 +33,6 @@ const useStyles = makeStyles((theme: Theme) =>
       maxHeight: '2.5em',
       display: 'flex',
     },
-    errorIcon: {
-      display: 'inline-block',
-      marginRight: '10px',
-    },
     caption: {
       marginTop: '1.3em',
     },
@@ -87,9 +83,7 @@ export function UnsupportedBrowser() {
         <div className={classes.mainContainer}>
           <Grid item lg={5} className={classes.header}>
             <Typography variant="h1" gutterBottom className={classes.heading}>
-              <div className={classes.errorIcon}>
-                <ErrorIcon />
-              </div>
+              <ErrorIcon />
               New browser needed
             </Typography>
             <Typography variant="body1" gutterBottom>
