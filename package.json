@@ -25,7 +25,7 @@
     "react-scripts": "4.0.3",
     "twilio": "^3.63.1",
     "ua-parser-js": "^0.7.28",
-    "twilio-video": "^2.16.0",
+    "twilio-video": "^2.21.0",
     "web-vitals": "^1.0.1"
   },
   "scripts": {
