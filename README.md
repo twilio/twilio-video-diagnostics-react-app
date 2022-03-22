@@ -66,11 +66,33 @@ To remove the Serverless app from Twilio, run the following command:
 
 ## Local Development
 
-In order to develop this app on your local machine, you will first need to deploy all needed endpoints to Twilio Serverless. To do this, complete the steps in the "Deploy the App" section above.
+### Running a local token server
 
-Once the endpoints are deployed, add the app's URL as the `PROXY_URL` in the `.env` file. Then you can start a local development server by running the following command:
+This application requires an access token to run the [Preflight](src/components/AppStateProvider/usePreflightTest/usePreflightTest.ts) and [Bitrate](src/components/AppStateProvider/useBitreateTest/useBitreateTest.ts) tests. The included local token [server](server/index.ts) provides the application with access tokens and TURN credentials. This token server can be used to run the app locally, and it is the server that is used when this app is run in development mode with `npm start`. Perform the following steps to setup the local token server:
 
-    $ npm run start
+- If you haven't done so already, create an account in the [Twilio Console](https://www.twilio.com/console).
+- Click on 'Settings' and take note of your Account SID.
+- Create a new API Key in the [API Keys Section](https://www.twilio.com/console/video/project/api-keys) under Programmable Video Tools in the Twilio Console. Take note of the SID and Secret of the new API key.
+- Store your Account SID, API Key SID, and API Key Secret, in a new file called `.env` (see [.env.example](.env.example) for an example).
+
+Now the local token server (see [server/index.ts](server/index.ts)) can dispense Access Tokens and TURN credentials to run the Preflight and Bitrate tests.
+
+### Running the App locally
+
+Run the app locally with
+
+    npm start
+
+This will start the local token server and run the app in the development mode. Open [http://localhost:3000](http://localhost:3000) to see the application in the browser.
+
+The page will reload if you make changes to the source code in `src/`.
+You will also see any linting errors in the console. Start the token server locally with
+
+    npm run server
+
+The token server runs on port 8081.
+
+The response will be a token that can be used to run the Preflight and Bitrate tests. The server provided with this application uses the same endpoints as the [serverless](serverless/functions) endpoints that are used to deploy the app.
 
 ## Building
 
