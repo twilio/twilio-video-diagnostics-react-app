@@ -92,7 +92,7 @@ You will also see any linting errors in the console. Start the token server loca
 
 The token server runs on port 8081.
 
-The response will be a token that can be used to run the Preflight and Bitrate tests. The server provided with this application uses the same endpoints as the [serverless](serverless/functions) endpoints that are used to deploy the app.
+The response will be a token that can be used to run the Preflight and Bitrate tests. The server provided with this application uses the same endpoints as the [serverless](serverless/functions/app) endpoints that are used to deploy the app.
 
 ## Building
 
