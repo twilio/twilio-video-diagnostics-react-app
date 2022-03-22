@@ -38,7 +38,7 @@
     "server": "ts-node -T -P server/tsconfig.json server/index.ts",
     "test": "jest",
     "eject": "react-scripts eject",
-    "lint": "eslint src/**/*.{ts,tsx}",
+    "lint": "eslint src/**/*.{ts,tsx} server",
     "test:serverless": "jest -c jest.serverless.config.js",
     "test:ci": "npm run test:ci:app && npm run test:ci:serverless",
     "test:ci:app": "jest --ci --runInBand --reporters=default --reporters=jest-junit --coverage",
