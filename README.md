@@ -68,7 +68,7 @@ To remove the Serverless app from Twilio, run the following command:
 
 ### Running a local token server
 
-This application requires an access token to run the [Preflight](src/components/AppStateProvider/usePreflightTest/usePreflightTest.ts) and [Bitrate](src/components/AppStateProvider/useBitreateTest/useBitreateTest.ts) tests. The included local token [server](server/index.ts) provides the application with access tokens and TURN credentials. This token server can be used to run the app locally, and it is the server that is used when this app is run in development mode with `npm start`. Perform the following steps to setup the local token server:
+This application requires an access token to run the [Preflight](src/components/AppStateProvider/usePreflightTest/usePreflightTest.ts) and [Bitrate](src/components/AppStateProvider/useBitrateTest/useBitrateTest.ts) tests. The included local token [server](server/index.ts) provides the application with access tokens and TURN credentials. This token server can be used to run the app locally, and it is the server that is used when this app is run in development mode with `npm start`. Perform the following steps to setup the local token server:
 
 - If you haven't done so already, create an account in the [Twilio Console](https://www.twilio.com/console).
 - Click on 'Settings' and take note of your Account SID.
