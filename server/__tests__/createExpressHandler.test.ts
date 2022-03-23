@@ -1,8 +1,8 @@
 /* eslint-disable import/first */
-process.env.TWILIO_ACCOUNT_SID = 'mockAccountSid';
+process.env.ACCOUNT_SID = 'mockAccountSid';
 process.env.TWILIO_API_KEY_SID = 'mockApiKeySid';
 process.env.TWILIO_API_KEY_SECRET = 'mockApiKeySecret';
-process.env.TWILIO_CONVERSATIONS_SERVICE_SID = 'mockConversationsServiceSid';
+process.env.VIDEO_IDENTITY = 'mockVideoIdentity';
 
 import { createExpressHandler } from '../createExpressHandler';
 import { ServerlessFunction } from '../types';
@@ -17,8 +17,6 @@ const mockRequest: any = {
 };
 
 const mockResponse: any = {
-  status: jest.fn(() => mockResponse),
-  set: jest.fn(() => mockResponse),
   json: jest.fn(),
 };
 
@@ -33,10 +31,9 @@ describe('the createExpressHandler function', () => {
     const mockServerlessFunction: ServerlessFunction = (context, event, callback) => {
       expect(context).toEqual({
         ACCOUNT_SID: 'mockAccountSid',
-        CONVERSATIONS_SERVICE_SID: 'mockConversationsServiceSid',
-        ROOM_TYPE: 'group',
-        TWILIO_API_KEY_SECRET: 'mockApiKeySecret',
-        TWILIO_API_KEY_SID: 'mockApiKeySid',
+        API_KEY: 'mockApiKeySid',
+        API_SECRET: 'mockApiKeySecret',
+        VIDEO_IDENTITY: 'mockVideoIdentity',
         getTwilioClient: expect.any(Function),
       });
 
@@ -63,8 +60,10 @@ describe('the createExpressHandler function', () => {
     const expressHandler = createExpressHandler(mockServerlessFunction);
     expressHandler(mockRequest, mockResponse);
 
-    expect(mockResponse.status).toHaveBeenCalledWith(401);
-    expect(mockResponse.set).toHaveBeenCalledWith({ mockHeader: '123' });
-    expect(mockResponse.json).toHaveBeenCalledWith({ foo: 'bar' });
+    expect(mockResponse.json).toHaveBeenCalledWith({
+      body: { foo: 'bar' },
+      statusCode: 401,
+      headers: { mockHeader: '123' },
+    });
   });
 });

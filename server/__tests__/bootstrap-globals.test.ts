@@ -34,9 +34,9 @@ describe('the "Twilio.Response" global variable', () => {
 });
 
 describe('the Twilio.Runtime.getAssets function', () => {
-  it('should return a no-op function for the auth-handler.js file', () => {
+  it('should return a no-op function for the verify_expiry.js file', () => {
     const runtime = global.Runtime.getAssets();
-    const authHandler = require(runtime['/auth-handler.js'].path);
-    authHandler();
+    const authHandler = require(runtime['/verify_expiry.js'].path);
+    authHandler.handler();
   });
 });
