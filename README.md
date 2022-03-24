@@ -62,7 +62,7 @@ A few things to note:
 
 To remove the Serverless app from Twilio, run the following command:
 
-	$ npm run serverless:remove
+    $ npm run serverless:remove
 
 ## Local Development
 
@@ -70,8 +70,7 @@ To remove the Serverless app from Twilio, run the following command:
 
 This application requires an access token to run the [Preflight](src/components/AppStateProvider/usePreflightTest/usePreflightTest.ts) and [Bitrate](src/components/AppStateProvider/useBitrateTest/useBitrateTest.ts) tests. The included local token [server](server/index.ts) provides the application with access tokens and TURN credentials. This token server can be used to run the app locally, and it is the server that is used when this app is run in development mode with `npm start`. Perform the following steps to setup the local token server:
 
-- If you haven't done so already, create an account in the [Twilio Console](https://www.twilio.com/console).
-- Click on 'Settings' and take note of your Account SID.
+- If you haven't done so already, create an account in the [Twilio Console](https://www.twilio.com/console) and take note of your Account SID.
 - Create a new API Key in the [API Keys Section](https://www.twilio.com/console/video/project/api-keys) under Programmable Video Tools in the Twilio Console. Take note of the SID and Secret of the new API key.
 - Store your Account SID, API Key SID, and API Key Secret, in a new file called `.env` (see [.env.example](.env.example) for an example).
 
@@ -86,19 +85,20 @@ Run the app locally with
 This will start the local token server and run the app in the development mode. Open [http://localhost:3000](http://localhost:3000) to see the application in the browser.
 
 The page will reload if you make changes to the source code in `src/`.
-You will also see any linting errors in the console. Start the token server locally with
+You will also see any linting errors in the console. If you need to run only the server on its own, you can start the token server locally with
 
     npm run server
 
 The token server runs on port 8081.
 
-The response will be a token that can be used to run the Preflight and Bitrate tests. The server provided with this application uses the same endpoints as the [serverless](serverless/functions/app) endpoints that are used to deploy the app.
+The server provided with this application uses the same endpoints as the [serverless](serverless/functions/app) endpoints that are used when the app is deployed to Twilio Serverless.
 
 ## Building
 
 Build the app by running:
 
-	$ npm run build
+    $ npm run build
+
 This will build the static assets for the application in the `build/` directory.
 
 ## Tests
