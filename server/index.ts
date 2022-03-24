@@ -39,4 +39,4 @@ app.get('*', (_, res) => {
   res.sendFile(path.join(__dirname, '../build/index.html'), { etag: false, lastModified: false });
 });
 
-app.listen(PORT, () => console.log(`twilio-video-app-react server running on ${PORT}`));
+app.listen(PORT, () => console.log(`twilio-video-diagnostics-react-app server running on ${PORT}`));
