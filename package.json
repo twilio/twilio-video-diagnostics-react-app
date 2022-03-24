@@ -32,7 +32,7 @@
     "web-vitals": "^1.0.1"
   },
   "scripts": {
-    "start": "concurrently npm:server npm:dev",
+    "start": "concurrently -k npm:server npm:dev",
     "dev": "react-scripts start",
     "build": "react-scripts build",
     "server": "ts-node -T -P server/tsconfig.json server/index.ts",
