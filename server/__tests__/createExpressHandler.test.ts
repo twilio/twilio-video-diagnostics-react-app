@@ -4,7 +4,6 @@ process.env.TWILIO_API_KEY_SID = 'mockApiKeySid';
 process.env.TWILIO_API_KEY_SECRET = 'mockApiKeySecret';
 process.env.VIDEO_IDENTITY = 'mockVideoIdentity';
 
-import { createExpressHandler } from '../createExpressHandler';
 import { ServerlessFunction } from '../types';
 import Twilio from 'twilio';
 
@@ -21,10 +20,12 @@ const mockResponse: any = {
 };
 
 describe('the createExpressHandler function', () => {
-  afterEach(jest.clearAllMocks);
+  let createExpressHandler: any;
 
-  it('should correctly initialize a Twilio client', () => {
-    expect(Twilio).toHaveBeenCalledWith('mockApiKeySid', 'mockApiKeySecret', { accountSid: 'mockAccountSid' });
+  beforeEach(() => {
+    jest.isolateModules(() => {
+      createExpressHandler = require('../createExpressHandler').createExpressHandler;
+    });
   });
 
   it('should pass the correct context object, event object, and callback function to the serverless funtion', () => {
@@ -65,5 +66,9 @@ describe('the createExpressHandler function', () => {
       statusCode: 401,
       headers: { mockHeader: '123' },
     });
+  });
+
+  it('should correctly initialize a Twilio client', () => {
+    expect(Twilio).toHaveBeenCalledWith('mockApiKeySid', 'mockApiKeySecret', { accountSid: 'mockAccountSid' });
   });
 });
