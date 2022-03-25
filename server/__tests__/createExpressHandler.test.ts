@@ -7,7 +7,13 @@ process.env.VIDEO_IDENTITY = 'mockVideoIdentity';
 import { ServerlessFunction } from '../types';
 import Twilio from 'twilio';
 
-jest.mock('twilio', () => jest.fn(() => 'mockTwilioClient'));
+jest.mock('twilio', () => jest.fn(() => mockTwilioClient));
+
+const mockTwilioClient = {
+  tokens: {
+    create: jest.fn(() => Promise.resolve('mock token')),
+  },
+};
 
 const mockRequest: any = {
   body: {
@@ -38,7 +44,7 @@ describe('the createExpressHandler function', () => {
         getTwilioClient: expect.any(Function),
       });
 
-      expect(context.getTwilioClient()).toEqual('mockTwilioClient');
+      expect(context.getTwilioClient()).toEqual(mockTwilioClient);
       expect(event).toEqual({ foo: 'bar' });
       expect(callback).toEqual(expect.any(Function));
     };
@@ -71,4 +77,25 @@ describe('the createExpressHandler function', () => {
   it('should correctly initialize a Twilio client', () => {
     expect(Twilio).toHaveBeenCalledWith('mockApiKeySid', 'mockApiKeySecret', { accountSid: 'mockAccountSid' });
   });
+
+  it('should throw an Authentication error if error status is 401', async (done) => {
+    const mockProcessExit = jest.spyOn(process, 'exit').mockImplementation(() => {
+      throw new Error('mock');
+    });
+    mockTwilioClient.tokens.create.mockImplementationOnce(() => Promise.reject('error'));
+    
+    // expect.assertions(2)
+    
+    try {
+      jest.isolateModules(() => {
+        createExpressHandler = require('../createExpressHandler').createExpressHandler;
+      });
+    } catch (error) {
+      expect(error.message).toBe(undefined);
+      expect(mockProcessExit).toHaveBeenCalled();
+      done();
+    }
+  });
+
+  it('should call process.exit() if Twilio api key is invalid', () => {});
 });
