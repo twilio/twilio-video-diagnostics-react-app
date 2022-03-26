@@ -12,12 +12,12 @@ const useStyles = makeStyles((theme: Theme) =>
       height: '100%',
       background: theme.backgroundColor,
       overflow: 'hidden',
-      [theme.breakpoints.down('sm')]: {
-        width: '100%',
-        overflowY: 'auto',
-      },
       [theme.breakpoints.between('md', 1280)]: {
         width: `calc(100% - ${theme.tabletBrandSidebarWidth}px)`,
+      },
+      [theme.largeMobileLandscapeBreakpoint.down('sm')]: {
+        width: '100%',
+        overflowY: 'auto',
       },
     },
     brandSidebar: {
@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme: Theme) =>
       [theme.breakpoints.between('md', 1280)]: {
         left: `calc(100% - ${theme.tabletBrandSidebarWidth}px)`,
       },
-      [theme.breakpoints.down('sm')]: {
+      [theme.largeMobileLandscapeBreakpoint.down('sm')]: {
         display: 'none',
       },
     },
