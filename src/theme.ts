@@ -1,4 +1,5 @@
 import { createTheme } from '@material-ui/core';
+import { Breakpoints } from '@material-ui/core/styles/createBreakpoints';
 
 declare module '@material-ui/core/styles/createTheme' {
   interface Theme {
@@ -6,6 +7,7 @@ declare module '@material-ui/core/styles/createTheme' {
     brandSidebarWidth: number;
     tabletBrandSidebarWidth: number;
     backgroundColor: string;
+    largeMobileLandscapeBreakpoint: Breakpoints;
   }
 
   // allow configuration using `createTheme`
@@ -14,6 +16,7 @@ declare module '@material-ui/core/styles/createTheme' {
     brandSidebarWidth: number;
     tabletBrandSidebarWidth: number;
     backgroundColor: string;
+    largeMobileLandscapeBreakpoint: Breakpoints;
   }
 }
 
@@ -39,6 +42,20 @@ const BREAKPOINTS = {
 const tabletBrandSidebarWidth = 140;
 
 const defaultTheme = createTheme();
+
+// Here we use a JS Proxy object to create a custom MUI styles helper
+// function. This proxy returns a media query string that contains two
+// separate media queries: whatever theme.breakpoints property value is being
+// accessed (i.e. ".down('sm')"), and '(orientation: landscape) and (max-width:899.95px)'.
+// We are using this so that the same CSS properties can be used on both small
+// mobile screens and larger mobile screens that are in landscape mode.
+
+const largeMobileLandscapeBreakpoint = new Proxy(defaultTheme.breakpoints, {
+  get(target, sKey: any) {
+    return (breakpoint: any) =>
+      (defaultTheme.breakpoints as any)[sKey](breakpoint) + ', (orientation: landscape) and (max-width:899.95px)';
+  },
+});
 
 export default createTheme({
   props: {
@@ -189,4 +206,5 @@ export default createTheme({
   tabletBrandSidebarWidth,
   backgroundColor: '#f4f4f6',
   breakpoints: BREAKPOINTS,
+  largeMobileLandscapeBreakpoint,
 });
