@@ -1,5 +1,4 @@
 import { createTheme } from '@material-ui/core';
-import { Breakpoint, Breakpoints } from '@material-ui/core/styles/createBreakpoints';
 
 declare module '@material-ui/core/styles/createTheme' {
   interface Theme {
@@ -7,7 +6,7 @@ declare module '@material-ui/core/styles/createTheme' {
     brandSidebarWidth: number;
     tabletBrandSidebarWidth: number;
     backgroundColor: string;
-    largeMobileLandscapeBreakpoint: Breakpoints;
+    largeMobileLandscapeMediaQuery: string;
   }
 
   // allow configuration using `createTheme`
@@ -16,7 +15,7 @@ declare module '@material-ui/core/styles/createTheme' {
     brandSidebarWidth: number;
     tabletBrandSidebarWidth: number;
     backgroundColor: string;
-    largeMobileLandscapeBreakpoint: Breakpoints;
+    largeMobileLandscapeMediaQuery: string;
   }
 }
 
@@ -30,11 +29,6 @@ declare module '@material-ui/core/styles/createBreakpoints' {
   }
 }
 
-type BreakpointMethods = {
-  up: Breakpoints['up'];
-  down: Breakpoints['down'];
-};
-
 const BREAKPOINTS = {
   values: {
     xs: 0,
@@ -45,23 +39,9 @@ const BREAKPOINTS = {
 };
 
 const tabletBrandSidebarWidth = 140;
+const largeMobileLandscapeMediaQuery = ', screen and (orientation: landscape) and (max-width:899.95px)';
 
 const defaultTheme = createTheme();
-
-// Here we use a JS Proxy object to create a custom MUI styles helper
-// function. This proxy returns a media query string that contains two
-// separate media queries: whatever theme.breakpoints property value is being
-// accessed (i.e. ".down('sm')"), and '(orientation: landscape) and (max-width:899.95px)'.
-// We are using this so that the same CSS properties can be used on both small
-// mobile screens and larger mobile screens that are in landscape mode.
-
-const largeMobileLandscapeBreakpoint = new Proxy(defaultTheme.breakpoints, {
-  get(target, property: keyof BreakpointMethods) {
-    return (breakpoint: Breakpoint) =>
-      defaultTheme.breakpoints[property](BREAKPOINTS.values[breakpoint]) +
-      ', screen and (orientation: landscape) and (max-width:899.95px)';
-  },
-});
 
 export default createTheme({
   props: {
@@ -212,5 +192,5 @@ export default createTheme({
   tabletBrandSidebarWidth,
   backgroundColor: '#f4f4f6',
   breakpoints: BREAKPOINTS,
-  largeMobileLandscapeBreakpoint,
+  largeMobileLandscapeMediaQuery,
 });
