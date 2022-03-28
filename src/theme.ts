@@ -1,5 +1,5 @@
 import { createTheme } from '@material-ui/core';
-import { Breakpoints } from '@material-ui/core/styles/createBreakpoints';
+import { Breakpoint, Breakpoints } from '@material-ui/core/styles/createBreakpoints';
 
 declare module '@material-ui/core/styles/createTheme' {
   interface Theme {
@@ -30,6 +30,11 @@ declare module '@material-ui/core/styles/createBreakpoints' {
   }
 }
 
+type BreakpointMethods = {
+  up: Breakpoints['up'];
+  down: Breakpoints['down'];
+};
+
 const BREAKPOINTS = {
   values: {
     xs: 0,
@@ -51,10 +56,9 @@ const defaultTheme = createTheme();
 // mobile screens and larger mobile screens that are in landscape mode.
 
 const largeMobileLandscapeBreakpoint = new Proxy(defaultTheme.breakpoints, {
-  get(target, sKey: any) {
-    return (breakpoint: any) =>
-      //@ts-ignore
-      (defaultTheme.breakpoints as any)[sKey](BREAKPOINTS.values[breakpoint]) +
+  get(target, property: keyof BreakpointMethods) {
+    return (breakpoint: Breakpoint) =>
+      defaultTheme.breakpoints[property](BREAKPOINTS.values[breakpoint]) +
       ', screen and (orientation: landscape) and (max-width:899.95px)';
   },
 });
