@@ -78,19 +78,21 @@ describe('the createExpressHandler function', () => {
     expect(Twilio).toHaveBeenCalledWith('mockApiKeySid', 'mockApiKeySecret', { accountSid: 'mockAccountSid' });
   });
 
-  it('should throw an Authentication error if error status is 401', async (done) => {
+  it.only('should throw an Authentication error if error status is 401', (done) => {
     const mockProcessExit = jest.spyOn(process, 'exit').mockImplementation((number) => {
       console.log(number);
-      throw new Error(`process ${number}`);
+      return undefined as never;
     });
 
-    // expect.assertions(2)
     mockTwilioClient.tokens.create.mockImplementationOnce(() => Promise.reject('error'));
-    require('../createExpressHandler').createExpressHandler()
+    jest.isolateModules(() => {
+      createExpressHandler = require('../createExpressHandler').createExpressHandler;
+    });
+    setImmediate(() => {
       expect(mockProcessExit).toHaveBeenCalledWith(1);
-    mockProcessExit.mockRestore();
-    done();
-    //https://gist.github.com/tsmx/8985c4f96f0a75fe986bf066226d2ce2
+      mockProcessExit.mockRestore();
+      done();
+    });
   });
 
   it('should call process.exit() if Twilio api key is invalid', () => {});
