@@ -53,7 +53,9 @@ const defaultTheme = createTheme();
 const largeMobileLandscapeBreakpoint = new Proxy(defaultTheme.breakpoints, {
   get(target, sKey: any) {
     return (breakpoint: any) =>
-      (defaultTheme.breakpoints as any)[sKey](breakpoint) + ', (orientation: landscape) and (max-width:899.95px)';
+      //@ts-ignore
+      (defaultTheme.breakpoints as any)[sKey](BREAKPOINTS.values[breakpoint]) +
+      ', screen and (orientation: landscape) and (max-width:899.95px)';
   },
 });
 
