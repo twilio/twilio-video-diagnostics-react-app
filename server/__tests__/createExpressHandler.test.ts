@@ -11,7 +11,7 @@ jest.mock('twilio', () => jest.fn(() => mockTwilioClient));
 
 const mockTwilioClient = {
   tokens: {
-    create: jest.fn(() => Promise.resolve('mock token')),
+    create: jest.fn(() => Promise.resolve('mockToken')),
   },
 };
 
@@ -78,22 +78,62 @@ describe('the createExpressHandler function', () => {
     expect(Twilio).toHaveBeenCalledWith('mockApiKeySid', 'mockApiKeySecret', { accountSid: 'mockAccountSid' });
   });
 
-  it.only('should throw an Authentication error if error status is 401', (done) => {
-    const mockProcessExit = jest.spyOn(process, 'exit').mockImplementation((number) => {
-      console.log(number);
-      return undefined as never;
+  describe('the twilioClient.tokens.create() function call', () => {
+    let mockProcessExit: any;
+    let mockConsoleError: any;
+
+    beforeEach(() => {
+      mockConsoleError = jest.spyOn(console, 'error').mockImplementation();
+
+      mockProcessExit = jest.spyOn(process, 'exit').mockImplementation(() => {
+        return undefined as never;
+      });
     });
 
-    mockTwilioClient.tokens.create.mockImplementationOnce(() => Promise.reject('error'));
-    jest.isolateModules(() => {
-      createExpressHandler = require('../createExpressHandler').createExpressHandler;
+    it('should log an error about authentication if the error status is 401', (done) => {
+      mockTwilioClient.tokens.create.mockImplementationOnce(() => Promise.reject({ status: 401 }));
+
+      jest.isolateModules(() => {
+        createExpressHandler = require('../createExpressHandler').createExpressHandler;
+      });
+
+      setImmediate(() => {
+        expect(mockConsoleError).toHaveBeenCalledWith(
+          'ERROR: Unable to authenticate user. Please verify that your environment variables contain the correct Twilio account credentials.'
+        );
+        mockProcessExit.mockRestore();
+        done();
+      });
     });
-    setImmediate(() => {
-      expect(mockProcessExit).toHaveBeenCalledWith(1);
-      mockProcessExit.mockRestore();
-      done();
+
+    it('should log the error message for error statuses that are not 401', (done) => {
+      mockTwilioClient.tokens.create.mockImplementationOnce(() =>
+        Promise.reject({ status: 400, message: 'mockError' })
+      );
+
+      jest.isolateModules(() => {
+        createExpressHandler = require('../createExpressHandler').createExpressHandler;
+      });
+
+      setImmediate(() => {
+        expect(mockConsoleError).toHaveBeenCalledWith('ERROR:', 'mockError');
+        mockProcessExit.mockRestore();
+        done();
+      });
+    });
+
+    it('should call process.exit() when there is an error', (done) => {
+      mockTwilioClient.tokens.create.mockImplementationOnce(() => Promise.reject('mockError'));
+
+      jest.isolateModules(() => {
+        createExpressHandler = require('../createExpressHandler').createExpressHandler;
+      });
+
+      setImmediate(() => {
+        expect(mockProcessExit).toHaveBeenCalledWith(1);
+        mockProcessExit.mockRestore();
+        done();
+      });
     });
   });
-
-  it('should call process.exit() if Twilio api key is invalid', () => {});
 });
