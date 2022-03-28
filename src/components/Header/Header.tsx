@@ -108,7 +108,6 @@ export default function Header() {
 
         <div className={classes.progressBar}>
           <div
-            data-testid="headerProgressBar"
             className={classes.progressBarForeground}
             style={{ width: `${(state.activePane / (numberOfPanes - 1)) * 100}%` }}
           />
