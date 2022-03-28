@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     top: '0',
     left: '50%',
     transform: 'translateX(-50%)',
-    [theme.largeMobileLandscapeBreakpoint.down('sm')]: {
+    [theme.largeMobileLandscapeBreakpoint.down('md')]: {
       position: 'relative',
       top: 'auto',
       left: 'auto',
@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         pointerEvents: 'none',
       },
     },
-    [theme.largeMobileLandscapeBreakpoint.down('sm')]: {
+    [theme.largeMobileLandscapeBreakpoint.down('md')]: {
       transition: 'all 0s ease',
       transform: 'initial',
       '& .inactive': { display: 'none' },
@@ -52,7 +52,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     '& .inactive': {
       opacity: 0,
       visibility: 'hidden',
-      [theme.largeMobileLandscapeBreakpoint.down('sm')]: {
+      [theme.largeMobileLandscapeBreakpoint.down('md')]: {
         '& .inactive': {
           display: 'none',
         },
@@ -64,7 +64,7 @@ const useStyles = makeStyles((theme: Theme) => ({
       opacity: 0,
       visibility: 'hidden',
     },
-    [theme.largeMobileLandscapeBreakpoint.down('sm')]: {
+    [theme.largeMobileLandscapeBreakpoint.down('md')]: {
       '& .active ~ $item': {
         display: 'none',
       },
@@ -73,7 +73,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   item: {
     transition: 'all 0.75s ease',
     padding: '3em 0',
-    [theme.largeMobileLandscapeBreakpoint.down('sm')]: {
+    [theme.largeMobileLandscapeBreakpoint.down('md')]: {
       transition: 'initial',
       padding: '0px',
     },
@@ -99,7 +99,7 @@ const useStyles = makeStyles((theme: Theme) => ({
         visibility: 'hidden',
       },
     },
-    [theme.largeMobileLandscapeBreakpoint.down('sm')]: {
+    [theme.largeMobileLandscapeBreakpoint.down('md')]: {
       display: 'none',
     },
   },
@@ -119,7 +119,7 @@ export function Item({
   const theme = useTheme();
   const classes = useStyles();
   const ref = useRef<HTMLDivElement>(null!);
-  const isMobile = useMediaQuery(theme.largeMobileLandscapeBreakpoint.down('sm'));
+  const isMobile = useMediaQuery(theme.largeMobileLandscapeBreakpoint.down('md'));
 
   useEffect(() => {
     if (isActive) {

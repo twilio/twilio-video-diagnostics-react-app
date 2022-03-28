@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme: Theme) =>
       [theme.breakpoints.between('md', 1280)]: {
         width: `calc(100% - ${theme.tabletBrandSidebarWidth}px)`,
       },
-      [theme.largeMobileLandscapeBreakpoint.down('sm')]: {
+      [theme.largeMobileLandscapeBreakpoint.down('md')]: {
         width: '100%',
         overflowY: 'auto',
       },
@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme: Theme) =>
       [theme.breakpoints.between('md', 1280)]: {
         left: `calc(100% - ${theme.tabletBrandSidebarWidth}px)`,
       },
-      [theme.largeMobileLandscapeBreakpoint.down('sm')]: {
+      [theme.largeMobileLandscapeBreakpoint.down('md')]: {
         display: 'none',
       },
     },
@@ -44,6 +44,8 @@ const useStyles = makeStyles((theme: Theme) =>
 
 function App() {
   const classes = useStyles();
+
+  console.log(classes.appContainer);
 
   return (
     <AppStateProvider>
