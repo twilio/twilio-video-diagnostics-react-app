@@ -45,8 +45,6 @@ const useStyles = makeStyles((theme: Theme) =>
 function App() {
   const classes = useStyles();
 
-  console.log(classes.appContainer);
-
   return (
     <AppStateProvider>
       <div className={classes.appContainer}>
