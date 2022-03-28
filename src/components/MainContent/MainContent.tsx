@@ -186,6 +186,7 @@ export function MainContent() {
               (state.activePane === ActivePane.Connectivity && preflightErrors) ||
               (state.activePane === ActivePane.BrowserTest && (testsInProgress || !Video.isSupported)),
           })}
+          data-testid="scrollContainer"
         >
           {content.map((pane, i) => {
             return (

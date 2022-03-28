@@ -1,5 +1,5 @@
 import { act } from 'react-dom/test-utils';
-import { shallow, mount } from 'enzyme';
+import { mount } from 'enzyme';
 import { render } from '@testing-library/react';
 import { MuiThemeProvider } from '@material-ui/core';
 import Video from 'twilio-video';
@@ -28,25 +28,45 @@ mockUseDevices.mockImplementation(() => mockDevices);
 
 describe('the MainContent component', () => {
   it('should set the isActive prop on the active pane', () => {
-    mockUseAppStateContext.mockImplementation(() => ({ state: { activePane: 1, preflightTest: { progress: null } } }));
-    const wrapper = shallow(<MainContent />);
+    mockUseAppStateContext.mockImplementation(() => ({
+      state: { activePane: 1, preflightTest: { progress: null }, bitrateTest: { report: null } },
+    }));
+    const wrapper = mount(
+      <MuiThemeProvider theme={theme}>
+        <MainContent />
+      </MuiThemeProvider>
+    );
+
     expect(wrapper.find(Item).at(1).prop('isActive')).toBe(true);
     expect(wrapper.find(Item).find({ isActive: true }).length).toBe(1);
   });
 
   it('should set the correct props on inactive items', () => {
-    mockUseAppStateContext.mockImplementation(() => ({ state: { activePane: 1, preflightTest: { progress: null } } }));
-    const wrapper = shallow(<MainContent />);
-    const item = wrapper.find(Item).at(0).dive();
+    mockUseAppStateContext.mockImplementation(() => ({
+      state: { activePane: 1, preflightTest: { progress: null }, bitrateTest: { report: null } },
+    }));
+    const wrapper = mount(
+      <MuiThemeProvider theme={theme}>
+        <MainContent />
+      </MuiThemeProvider>
+    );
+
+    const item = wrapper.find(Item).at(0).find('div').at(0);
     expect(item.prop('className')).toContain('inactive');
     expect(item.prop('aria-hidden')).toBe(true);
     expect(item.prop('onClick')).toEqual(expect.any(Function));
   });
 
   it('should set the correct props on active items', () => {
-    mockUseAppStateContext.mockImplementation(() => ({ state: { activePane: 1, preflightTest: { progress: null } } }));
-    const wrapper = shallow(<MainContent />);
-    const item = wrapper.find(Item).at(1).dive();
+    mockUseAppStateContext.mockImplementation(() => ({
+      state: { activePane: 1, preflightTest: { progress: null }, bitrateTest: { report: null } },
+    }));
+    const wrapper = mount(
+      <MuiThemeProvider theme={theme}>
+        <MainContent />
+      </MuiThemeProvider>
+    );
+    const item = wrapper.find(Item).at(1).find('div').at(0);
     expect(item.prop('className')).not.toContain('inactive');
     expect(item.prop('aria-hidden')).toBe(false);
     expect(item.prop('onClick')).toBe(undefined);
@@ -66,7 +86,11 @@ describe('the MainContent component', () => {
       dispatch: mockDispatch,
     }));
 
-    const wrapper = mount(<MainContent />);
+    const wrapper = mount(
+      <MuiThemeProvider theme={theme}>
+        <MainContent />
+      </MuiThemeProvider>
+    );
     wrapper.find(Item).at(2).simulate('click');
 
     expect(mockDispatch).toHaveBeenCalledWith({ type: 'set-active-pane', newActivePane: 2 });
@@ -131,12 +155,19 @@ describe('the MainContent component', () => {
           progress: null,
           tokenError: null,
         },
+        bitrateTest: { report: null },
         downButtonDisabled: false,
       },
     }));
-    const wrapper = shallow(<MainContent />);
-    expect(wrapper.find(ArrowUp).parent().prop('disabled')).toBe(true);
-    expect(wrapper.find(ArrowDown).parent().prop('disabled')).toBe(false);
+
+    const wrapper = mount(
+      <MuiThemeProvider theme={theme}>
+        <MainContent />
+      </MuiThemeProvider>
+    );
+
+    expect(wrapper.find(ArrowUp).closest('button').prop('disabled')).toBe(true);
+    expect(wrapper.find(ArrowDown).closest('button').prop('disabled')).toBe(false);
   });
 
   it('should disable the Up button when isSnackbarOpen is true', () => {
@@ -146,14 +177,19 @@ describe('the MainContent component', () => {
         preflightTest: {
           tokenError: null,
         },
+        bitrateTest: { report: null },
         videoInputTestReport: {
           errors: ['mockErrors'],
         },
       },
     }));
 
-    const wrapper = shallow(<MainContent />);
-    expect(wrapper.find(ArrowUp).parent().prop('disabled')).toBe(true);
+    const wrapper = mount(
+      <MuiThemeProvider theme={theme}>
+        <MainContent />
+      </MuiThemeProvider>
+    );
+    expect(wrapper.find(ArrowUp).closest('button').prop('disabled')).toBe(true);
   });
 
   it('should disable the Down button when downButtonDisabled is true', () => {
@@ -164,12 +200,17 @@ describe('the MainContent component', () => {
         preflightTest: {
           progress: null,
         },
+        bitrateTest: { report: null },
         downButtonDisabled: true,
       },
     }));
-    const wrapper = shallow(<MainContent />);
-    expect(wrapper.find(ArrowUp).parent().at(0).prop('disabled')).toBe(false);
-    expect(wrapper.find(ArrowDown).parent().prop('disabled')).toBe(true);
+    const wrapper = mount(
+      <MuiThemeProvider theme={theme}>
+        <MainContent />
+      </MuiThemeProvider>
+    );
+    expect(wrapper.find(ArrowUp).closest('button').prop('disabled')).toBe(false);
+    expect(wrapper.find(ArrowDown).closest('button').prop('disabled')).toBe(true);
   });
 
   it('should not disable any buttons when the active pane is not the first and when downButtonDisabled is false', () => {
@@ -179,12 +220,18 @@ describe('the MainContent component', () => {
         preflightTest: {
           progress: null,
         },
+        bitrateTest: { report: null },
         downButtonDisabled: false,
       },
     }));
-    const wrapper = shallow(<MainContent />);
-    expect(wrapper.find(ArrowUp).parent().prop('disabled')).toBe(false);
-    expect(wrapper.find(ArrowDown).parent().prop('disabled')).toBe(false);
+    const wrapper = mount(
+      <MuiThemeProvider theme={theme}>
+        <MainContent />
+      </MuiThemeProvider>
+    );
+
+    expect(wrapper.find(ArrowUp).closest('button').prop('disabled')).toBe(false);
+    expect(wrapper.find(ArrowDown).closest('button').prop('disabled')).toBe(false);
   });
 
   it('should make the previous pane the active pane when the Up button is clicked', () => {
@@ -200,7 +247,11 @@ describe('the MainContent component', () => {
       },
       dispatch: mockDispatch,
     }));
-    const wrapper = mount(<MainContent />);
+    const wrapper = mount(
+      <MuiThemeProvider theme={theme}>
+        <MainContent />
+      </MuiThemeProvider>
+    );
     wrapper.find(ArrowUp).simulate('click');
     expect(mockDispatch).toHaveBeenCalledWith({ type: 'previous-pane' });
   });
@@ -221,10 +272,110 @@ describe('the MainContent component', () => {
       nextPane: mockNextPane,
       dispatch: mockDispatch,
     }));
-    const wrapper = mount(<MainContent />);
+    const wrapper = mount(
+      <MuiThemeProvider theme={theme}>
+        <MainContent />
+      </MuiThemeProvider>
+    );
 
     wrapper.find(ArrowDown).simulate('click');
     expect(mockNextPane).toHaveBeenCalled();
+  });
+
+  it('should open the snackbar when there is a video test error', () => {
+    mockUseAppStateContext.mockImplementation(() => ({
+      state: {
+        activePane: ActivePane.CameraTest,
+        preflightTest: {
+          tokenError: null,
+        },
+        bitrateTest: { report: null },
+        videoInputTestReport: {
+          errors: ['mockErrors'],
+        },
+      },
+      dispatch: mockDispatch,
+    }));
+
+    const wrapper = mount(
+      <MuiThemeProvider theme={theme}>
+        <MainContent />
+      </MuiThemeProvider>
+    );
+
+    expect(wrapper.find(Snackbar).exists()).toBe(true);
+  });
+
+  it('should open the snackbar when there is an audio input test error', () => {
+    mockUseAppStateContext.mockImplementation(() => ({
+      state: {
+        activePane: ActivePane.AudioTest,
+        preflightTest: {
+          tokenError: null,
+        },
+        bitrateTest: { report: null },
+        audioInputTestReport: {
+          errors: ['mockErrors'],
+        },
+      },
+      dispatch: mockDispatch,
+    }));
+
+    const wrapper = mount(
+      <MuiThemeProvider theme={theme}>
+        <MainContent />
+      </MuiThemeProvider>
+    );
+
+    expect(wrapper.find(Snackbar).exists()).toBe(true);
+  });
+
+  it('should open the snackbar when there is an audio output test error that is not "No audio detected"', () => {
+    mockUseAppStateContext.mockImplementation(() => ({
+      state: {
+        activePane: ActivePane.AudioTest,
+        preflightTest: {
+          tokenError: null,
+        },
+        bitrateTest: { report: null },
+        audioOutputTestReport: {
+          errors: ['mockErrors'],
+        },
+      },
+      dispatch: mockDispatch,
+    }));
+
+    const wrapper = mount(
+      <MuiThemeProvider theme={theme}>
+        <MainContent />
+      </MuiThemeProvider>
+    );
+
+    expect(wrapper.find(Snackbar).exists()).toBe(true);
+  });
+
+  it('should not open the snackbar when audio output test error is "No audio detected"', () => {
+    mockUseAppStateContext.mockImplementation(() => ({
+      state: {
+        activePane: ActivePane.AudioTest,
+        preflightTest: {
+          tokenError: null,
+        },
+        bitrateTest: { report: null },
+        audioOutputTestReport: {
+          errors: ['No audio detected'],
+        },
+      },
+      dispatch: mockDispatch,
+    }));
+
+    const wrapper = mount(
+      <MuiThemeProvider theme={theme}>
+        <MainContent />
+      </MuiThemeProvider>
+    );
+
+    expect(wrapper.find(Snackbar).exists()).toBe(true);
   });
 
   describe('the hideAll and hideAfter css classes', () => {
@@ -235,10 +386,15 @@ describe('the MainContent component', () => {
           preflightTest: {
             progress: null,
           },
+          bitrateTest: { report: null },
         },
       }));
 
-      const wrapper = shallow(<MainContent />);
+      const wrapper = mount(
+        <MuiThemeProvider theme={theme}>
+          <MainContent />
+        </MuiThemeProvider>
+      );
 
       expect(wrapper.find('div').at(1).prop('className')).toContain('hideAll');
     });
@@ -250,15 +406,22 @@ describe('the MainContent component', () => {
           preflightTest: {
             tokenError: null,
           },
+          bitrateTest: { report: null },
           videoInputTestReport: {
             errors: ['mockErrors'],
           },
         },
       }));
 
-      const wrapper = shallow(<MainContent />);
+      const { getByTestId } = render(
+        <MuiThemeProvider theme={theme}>
+          <MainContent />
+        </MuiThemeProvider>
+      );
 
-      expect(wrapper.find('div').at(1).prop('className')).toContain('hideAll');
+      const scrollContainer = getByTestId('scrollContainer');
+
+      expect(scrollContainer.classList[1]).toContain('hideAll');
     });
 
     it('should hide all other items when active pane is AudioTest and there is an audio test error', () => {
@@ -268,15 +431,23 @@ describe('the MainContent component', () => {
           preflightTest: {
             tokenError: null,
           },
+          bitrateTest: { report: null },
           audioInputTestReport: {
             errors: ['mockErrors'],
           },
         },
+        dispatch: mockDispatch,
       }));
 
-      const wrapper = shallow(<MainContent />);
+      const { getByTestId } = render(
+        <MuiThemeProvider theme={theme}>
+          <MainContent />
+        </MuiThemeProvider>
+      );
 
-      expect(wrapper.find('div').at(1).prop('className')).toContain('hideAll');
+      const scrollContainer = getByTestId('scrollContainer');
+
+      expect(scrollContainer.classList[1]).toContain('hideAll');
     });
 
     it('should hide the following item when active pane is DeviceCheck', () => {
@@ -286,10 +457,15 @@ describe('the MainContent component', () => {
           preflightTest: {
             progress: null,
           },
+          bitrateTest: { report: null },
         },
       }));
 
-      const wrapper = shallow(<MainContent />);
+      const wrapper = mount(
+        <MuiThemeProvider theme={theme}>
+          <MainContent />
+        </MuiThemeProvider>
+      );
 
       expect(wrapper.find('div').at(1).prop('className')).toContain('hideAfter');
     });
@@ -301,10 +477,15 @@ describe('the MainContent component', () => {
           preflightTest: {
             progress: null,
           },
+          bitrateTest: { report: null },
         },
       }));
 
-      const wrapper = shallow(<MainContent />);
+      const wrapper = mount(
+        <MuiThemeProvider theme={theme}>
+          <MainContent />
+        </MuiThemeProvider>
+      );
 
       expect(wrapper.find('div').at(1).prop('className')).toContain('hideAfter');
     });
@@ -317,10 +498,15 @@ describe('the MainContent component', () => {
             progress: 'mediaAcquired',
           },
           preflightTestInProgress: true,
+          bitrateTest: { report: null },
         },
       }));
 
-      const wrapper = shallow(<MainContent />);
+      const wrapper = mount(
+        <MuiThemeProvider theme={theme}>
+          <MainContent />
+        </MuiThemeProvider>
+      );
 
       expect(wrapper.find('div').at(1).prop('className')).toContain('hideAfter');
     });
@@ -332,11 +518,16 @@ describe('the MainContent component', () => {
           preflightTest: {
             progress: 'mediaAcquired',
           },
+          bitrateTest: { report: null },
           preflightTestInProgress: true,
         },
       }));
 
-      const wrapper = shallow(<MainContent />);
+      const wrapper = mount(
+        <MuiThemeProvider theme={theme}>
+          <MainContent />
+        </MuiThemeProvider>
+      );
 
       expect(wrapper.find('div').at(1).prop('className')).toContain('hideAfter');
     });
@@ -351,84 +542,18 @@ describe('the MainContent component', () => {
           preflightTest: {
             tokenError: null,
           },
+          bitrateTest: { report: null },
           preflightTestInProgress: false,
         },
       }));
 
-      const wrapper = shallow(<MainContent />);
+      const wrapper = mount(
+        <MuiThemeProvider theme={theme}>
+          <MainContent />
+        </MuiThemeProvider>
+      );
 
       expect(wrapper.find('div').at(1).prop('className')).toContain('hideAfter');
     });
-  });
-  it('should open the snackbar when there is a video test error', () => {
-    mockUseAppStateContext.mockImplementation(() => ({
-      state: {
-        activePane: ActivePane.CameraTest,
-        preflightTest: {
-          tokenError: null,
-        },
-        videoInputTestReport: {
-          errors: ['mockErrors'],
-        },
-      },
-    }));
-
-    const wrapper = shallow(<MainContent />);
-
-    expect(wrapper.find(Snackbar).exists()).toBe(true);
-  });
-
-  it('should open the snackbar when there is an audio input test error', () => {
-    mockUseAppStateContext.mockImplementation(() => ({
-      state: {
-        activePane: ActivePane.AudioTest,
-        preflightTest: {
-          tokenError: null,
-        },
-        audioInputTestReport: {
-          errors: ['mockErrors'],
-        },
-      },
-    }));
-
-    const wrapper = shallow(<MainContent />);
-
-    expect(wrapper.find(Snackbar).exists()).toBe(true);
-  });
-
-  it('should open the snackbar when there is an audio output test error that is not "No audio detected"', () => {
-    mockUseAppStateContext.mockImplementation(() => ({
-      state: {
-        activePane: ActivePane.AudioTest,
-        preflightTest: {
-          tokenError: null,
-        },
-        audioOutputTestReport: {
-          errors: ['mockErrors'],
-        },
-      },
-    }));
-
-    const wrapper = shallow(<MainContent />);
-
-    expect(wrapper.find(Snackbar).exists()).toBe(true);
-  });
-
-  it('should not open the snackbar when audio output test error is "No audio detected"', () => {
-    mockUseAppStateContext.mockImplementation(() => ({
-      state: {
-        activePane: ActivePane.AudioTest,
-        preflightTest: {
-          tokenError: null,
-        },
-        audioOutputTestReport: {
-          errors: ['No audio detected'],
-        },
-      },
-    }));
-
-    const wrapper = shallow(<MainContent />);
-
-    expect(wrapper.find(Snackbar).exists()).toBe(true);
   });
 });
