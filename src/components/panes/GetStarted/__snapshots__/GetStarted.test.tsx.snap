@@ -48,6 +48,7 @@ exports[`the GetStarted component should render correctly when the app has expir
       />
       <WithStyles(ForwardRef(Typography))
         color="textSecondary"
+        gutterBottom={true}
         variant="body1"
       >
         <strong>
@@ -107,6 +108,7 @@ exports[`the GetStarted component should render correctly when the app is not ex
       />
       <WithStyles(ForwardRef(Typography))
         color="textSecondary"
+        gutterBottom={true}
         variant="body1"
       >
         <strong>
