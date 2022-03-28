@@ -349,7 +349,7 @@ export const AppStateProvider: React.FC = ({ children }) => {
     link.download = 'test_results.json';
     link.href = URL.createObjectURL(
       new Blob([JSON.stringify(finalTestResults, null, 2)], {
-        type: 'text/plain',
+        type: 'application/json',
       })
     );
     link.click();
