@@ -6,7 +6,7 @@ declare module '@material-ui/core/styles/createTheme' {
     brandSidebarWidth: number;
     tabletBrandSidebarWidth: number;
     backgroundColor: string;
-    largeMobileLandscapeMediaQuery: string;
+    includeLandscapeMd: string;
   }
 
   // allow configuration using `createTheme`
@@ -15,7 +15,7 @@ declare module '@material-ui/core/styles/createTheme' {
     brandSidebarWidth: number;
     tabletBrandSidebarWidth: number;
     backgroundColor: string;
-    largeMobileLandscapeMediaQuery: string;
+    includeLandscapeMd: string;
   }
 }
 
@@ -39,7 +39,7 @@ const BREAKPOINTS = {
 };
 
 const tabletBrandSidebarWidth = 140;
-const largeMobileLandscapeMediaQuery = ', screen and (orientation: landscape) and (max-width:899.95px)';
+const includeLandscapeMd = `, screen and (orientation: landscape) and (max-width:${BREAKPOINTS.values.lg - 0.05}px)`;
 
 const defaultTheme = createTheme();
 
@@ -192,5 +192,5 @@ export default createTheme({
   tabletBrandSidebarWidth,
   backgroundColor: '#f4f4f6',
   breakpoints: BREAKPOINTS,
-  largeMobileLandscapeMediaQuery,
+  includeLandscapeMd,
 });

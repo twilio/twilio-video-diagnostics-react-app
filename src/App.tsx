@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme: Theme) =>
       [theme.breakpoints.between('md', 1280)]: {
         width: `calc(100% - ${theme.tabletBrandSidebarWidth}px)`,
       },
-      [theme.breakpoints.down('sm') + theme.largeMobileLandscapeMediaQuery]: {
+      [theme.breakpoints.down('sm') + theme.includeLandscapeMd]: {
         width: '100%',
         overflowY: 'auto',
       },
@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme: Theme) =>
       [theme.breakpoints.between('md', 1280)]: {
         left: `calc(100% - ${theme.tabletBrandSidebarWidth}px)`,
       },
-      [theme.breakpoints.down('sm') + theme.largeMobileLandscapeMediaQuery]: {
+      [theme.breakpoints.down('sm') + theme.includeLandscapeMd]: {
         display: 'none',
       },
     },

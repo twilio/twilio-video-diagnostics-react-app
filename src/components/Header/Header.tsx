@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme: Theme) =>
       justifyContent: 'center',
       zIndex: 100,
       background: 'inherit',
-      [theme.breakpoints.down('sm') + theme.largeMobileLandscapeMediaQuery]: {
+      [theme.breakpoints.down('sm') + theme.includeLandscapeMd]: {
         display: 'none',
       },
     },
@@ -58,7 +58,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     mobileLogo: {
       display: 'none',
-      [theme.breakpoints.down('sm') + theme.largeMobileLandscapeMediaQuery]: {
+      [theme.breakpoints.down('sm') + theme.includeLandscapeMd]: {
         display: 'block',
         margin: '2em 0 1.5em 1.5em',
       },
