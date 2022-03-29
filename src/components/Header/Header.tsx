@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme: Theme) =>
       justifyContent: 'center',
       zIndex: 100,
       background: 'inherit',
-      [theme.breakpoints.down('sm')]: {
+      [theme.breakpoints.down('sm') + theme.includeLandscapeMd]: {
         display: 'none',
       },
     },
@@ -57,9 +57,10 @@ const useStyles = makeStyles((theme: Theme) =>
       transition: 'width 1s ease',
     },
     mobileLogo: {
-      margin: '2em 0 1.5em 1.5em',
-      [theme.breakpoints.up('md')]: {
-        display: 'none',
+      display: 'none',
+      [theme.breakpoints.down('sm') + theme.includeLandscapeMd]: {
+        display: 'block',
+        margin: '2em 0 1.5em 1.5em',
       },
     },
     gridContainer: {

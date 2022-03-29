@@ -68,7 +68,7 @@ export function GetStarted() {
 
         <Grid item lg={5}>
           <img src={Hello} alt="Hello" className={classes.illustration} />
-          <Typography variant="body1" color="textSecondary">
+          <Typography variant="body1" color="textSecondary" gutterBottom>
             <strong>Not sure about something?</strong> Skip that section for now, and your support administrator can
             help later.
           </Typography>
