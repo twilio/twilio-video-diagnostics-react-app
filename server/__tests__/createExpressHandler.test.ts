@@ -101,7 +101,6 @@ describe('the createExpressHandler function', () => {
         expect(mockConsoleError).toHaveBeenCalledWith(
           'ERROR: Unable to authenticate user. Please verify that your environment variables contain the correct Twilio account credentials.'
         );
-        mockProcessExit.mockRestore();
         done();
       });
     });
@@ -117,7 +116,6 @@ describe('the createExpressHandler function', () => {
 
       setImmediate(() => {
         expect(mockConsoleError).toHaveBeenCalledWith('ERROR:', 'mockError');
-        mockProcessExit.mockRestore();
         done();
       });
     });
@@ -131,7 +129,6 @@ describe('the createExpressHandler function', () => {
 
       setImmediate(() => {
         expect(mockProcessExit).toHaveBeenCalledWith(1);
-        mockProcessExit.mockRestore();
         done();
       });
     });
