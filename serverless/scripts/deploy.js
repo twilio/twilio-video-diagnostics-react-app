@@ -43,7 +43,7 @@ async function deployFunctions() {
     });
   }
 
-  return serverlessClient.deployProject({
+  const { serviceSid } = await serverlessClient.deployProject({
     env: {
       API_KEY: api_key.sid,
       API_SECRET: api_key.secret,
@@ -56,6 +56,9 @@ async function deployFunctions() {
     functions,
     serviceName: `${constants.SERVICE_NAME}-${getRandomString()}`,
   });
+
+  // Make functions editable in console
+  await client.serverless.services(serviceSid).update({ uiEditable: true });
 }
 
 async function deploy() {

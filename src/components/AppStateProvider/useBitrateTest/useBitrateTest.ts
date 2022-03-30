@@ -38,6 +38,7 @@ export default function useBitrateTest(dispatch: React.Dispatch<ACTIONTYPE>) {
         }, 15000);
       })
       .catch((error) => {
+        console.error('Error running the bitrate test', error);
         dispatch({ type: 'set-bitrate-test-error', error });
         dispatch({ type: 'bitrate-test-finished' });
       });

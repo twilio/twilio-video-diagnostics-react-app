@@ -143,28 +143,28 @@ describe('the AudioTest component', () => {
 
     it('should start recording when "Record" button is clicked', () => {
       const wrapper = mount(<AudioTest />);
-      const recordBtn = wrapper.find(Button).at(2);
+      const recordBtn = wrapper.find(Button).at(0);
       recordBtn.simulate('click');
       expect(hookProps.readAudioInput).toHaveBeenCalledWith({ deviceId: 1, enableRecording: true });
     });
 
     it('should play recorded message when "Play" button is clicked', () => {
       const wrapper = mount(<AudioTest />);
-      const playBtn = wrapper.find(Button).at(3);
+      const playBtn = wrapper.find(Button).at(1);
       playBtn.simulate('click');
       expect(hookProps.playAudio).toHaveBeenCalledWith({ deviceId: 3, testURI: 'foo' });
     });
 
     it('should go the next pane when "Yes" button is clicked', () => {
       const wrapper = mount(<AudioTest />);
-      const yesBtn = wrapper.find(Button).at(0);
+      const yesBtn = wrapper.find(Button).at(2);
       yesBtn.simulate('click');
       expect(mockDispatch).toHaveBeenCalledWith({ type: 'next-pane' });
     });
 
     it('should go the next pane when "Skip for now" button is clicked', () => {
       const wrapper = mount(<AudioTest />);
-      const skipBtn = wrapper.find(Button).at(1);
+      const skipBtn = wrapper.find(Button).at(3);
       skipBtn.simulate('click');
       expect(mockDispatch).toHaveBeenCalledWith({ type: 'next-pane' });
     });
@@ -173,8 +173,8 @@ describe('the AudioTest component', () => {
       mockUseAudioTest.mockImplementation(() => ({ ...hookProps, isAudioInputTestRunning: true, error: 'mockError' }));
 
       const wrapper = mount(<AudioTest />);
-      const yesBtn = wrapper.find(Button).at(0);
-      const skipBtn = wrapper.find(Button).at(1);
+      const yesBtn = wrapper.find(Button).at(2);
+      const skipBtn = wrapper.find(Button).at(3);
 
       expect(yesBtn.prop('disabled')).toBe(true);
       expect(skipBtn.prop('disabled')).toBe(true);
@@ -199,12 +199,12 @@ describe('the AudioTest component', () => {
   describe('button labels', () => {
     it('should set record button label to "Record"', () => {
       const wrapper = shallow(<AudioTest />);
-      expect(wrapper.find(Button).at(2).text()).toEqual('Record');
+      expect(wrapper.find(Button).at(0).text()).toEqual('Record');
     });
 
     it('should set play button label to "Play back"', () => {
       const wrapper = shallow(<AudioTest />);
-      expect(wrapper.find(Button).at(3).text()).toEqual('Play back');
+      expect(wrapper.find(Button).at(1).text()).toEqual('Play back');
     });
   });
 

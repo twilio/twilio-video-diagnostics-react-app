@@ -4,20 +4,51 @@ declare module '@material-ui/core/styles/createTheme' {
   interface Theme {
     navHeight: number;
     brandSidebarWidth: number;
+    tabletBrandSidebarWidth: number;
     backgroundColor: string;
+    includeLandscapeMd: string;
   }
 
   // allow configuration using `createTheme`
   interface ThemeOptions {
     navHeight: number;
     brandSidebarWidth: number;
+    tabletBrandSidebarWidth: number;
     backgroundColor: string;
+    includeLandscapeMd: string;
   }
 }
+
+declare module '@material-ui/core/styles/createBreakpoints' {
+  interface BreakpointOverrides {
+    xs: true;
+    sm: true;
+    md: true;
+    lg: true;
+    xl: false;
+  }
+}
+
+const BREAKPOINTS = {
+  values: {
+    xs: 0,
+    sm: 375,
+    md: 768,
+    lg: 1024,
+  },
+};
+
+const tabletBrandSidebarWidth = 140;
+const includeLandscapeMd = `, screen and (orientation: landscape) and (max-width:${BREAKPOINTS.values.lg - 0.05}px)`;
 
 const defaultTheme = createTheme();
 
 export default createTheme({
+  props: {
+    MuiContainer: {
+      maxWidth: false,
+    },
+  },
   overrides: {
     MuiCssBaseline: {
       '@global': {
@@ -28,7 +59,17 @@ export default createTheme({
     },
     MuiContainer: {
       root: {
+        display: 'flow-root',
         width: '950px',
+        maxWidth: `calc(100vw - ${tabletBrandSidebarWidth}px)`,
+        [defaultTheme.breakpoints.down(BREAKPOINTS.values.md)]: {
+          width: '100vw',
+          maxWidth: '610px',
+        },
+        [defaultTheme.breakpoints.up(BREAKPOINTS.values.md)]: {
+          paddingLeft: '50px',
+          paddingRight: '50px',
+        },
       },
     },
     MuiButton: {
@@ -63,6 +104,11 @@ export default createTheme({
       outlined: {
         backgroundColor: 'white',
         border: '1px solid #8891AA',
+        [defaultTheme.breakpoints.down('md')]: {
+          '&:hover': {
+            backgroundColor: 'white',
+          },
+        },
       },
     },
     MuiInputBase: {
@@ -143,5 +189,8 @@ export default createTheme({
   },
   navHeight: 100,
   brandSidebarWidth: 250,
+  tabletBrandSidebarWidth,
   backgroundColor: '#f4f4f6',
+  breakpoints: BREAKPOINTS,
+  includeLandscapeMd,
 });

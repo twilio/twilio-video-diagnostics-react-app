@@ -2,29 +2,18 @@
 
 exports[`the PoorQuality component should render correctly when quality is "poor" 1`] = `
 <WithStyles(ForwardRef(Container))>
-  <WithStyles(ForwardRef(Grid))
-    alignItems="center"
-    container={true}
-    justifyContent="space-between"
-  >
+  <div>
     <WithStyles(ForwardRef(Grid))
+      className="makeStyles-header-1"
       item={true}
-      md={5}
+      lg={5}
     >
       <WithStyles(ForwardRef(Typography))
+        className="makeStyles-heading-2"
         gutterBottom={true}
-        style={
-          Object {
-            "position": "relative",
-          }
-        }
         variant="h1"
       >
-        <div
-          className="makeStyles-errorIcon-4"
-        >
-          <ErrorIcon />
-        </div>
+        <ErrorIcon />
         Quality 
         issues
       </WithStyles(ForwardRef(Typography))>
@@ -42,40 +31,14 @@ exports[`the PoorQuality component should render correctly when quality is "poor
         will be poor
         .
       </WithStyles(ForwardRef(Typography))>
-      <WithStyles(ForwardRef(Typography))
-        gutterBottom={true}
-        variant="body1"
-      >
-        <strong>
-          Did you try all of the tips to improve quality?
-        </strong>
-      </WithStyles(ForwardRef(Typography))>
-      <WithStyles(ForwardRef(Button))
-        color="primary"
-        onClick={[MockFunction]}
-        style={
-          Object {
-            "marginRight": "1.5em",
-          }
-        }
-        variant="contained"
-      >
-        Yes
-      </WithStyles(ForwardRef(Button))>
-      <WithStyles(ForwardRef(Button))
-        color="primary"
-        onClick={[MockFunction]}
-      >
-        Skip for now
-      </WithStyles(ForwardRef(Button))>
     </WithStyles(ForwardRef(Grid))>
     <WithStyles(ForwardRef(Grid))
-      className="makeStyles-paperContainer-3"
+      className="makeStyles-paperContainer-4"
       item={true}
-      md={5}
+      lg={5}
     >
       <WithStyles(ForwardRef(Paper))
-        className="makeStyles-paper-2"
+        className="makeStyles-paper-3"
       >
         <WithStyles(ForwardRef(Typography))
           variant="body1"
@@ -124,35 +87,56 @@ exports[`the PoorQuality component should render correctly when quality is "poor
         View detailed quality information
       </WithStyles(ForwardRef(Button))>
     </WithStyles(ForwardRef(Grid))>
-  </WithStyles(ForwardRef(Grid))>
+    <WithStyles(ForwardRef(Grid))
+      className="makeStyles-confirmationButtons-6"
+      item={true}
+      lg={5}
+    >
+      <WithStyles(ForwardRef(Typography))
+        gutterBottom={true}
+        variant="body1"
+      >
+        <strong>
+          Did you try all of the tips to improve quality?
+        </strong>
+      </WithStyles(ForwardRef(Typography))>
+      <WithStyles(ForwardRef(Button))
+        color="primary"
+        onClick={[MockFunction]}
+        style={
+          Object {
+            "marginRight": "1.5em",
+          }
+        }
+        variant="contained"
+      >
+        Yes
+      </WithStyles(ForwardRef(Button))>
+      <WithStyles(ForwardRef(Button))
+        color="primary"
+        onClick={[MockFunction]}
+      >
+        Skip for now
+      </WithStyles(ForwardRef(Button))>
+    </WithStyles(ForwardRef(Grid))>
+  </div>
 </WithStyles(ForwardRef(Container))>
 `;
 
 exports[`the PoorQuality component should render correctly when quality is "suboptimal" 1`] = `
 <WithStyles(ForwardRef(Container))>
-  <WithStyles(ForwardRef(Grid))
-    alignItems="center"
-    container={true}
-    justifyContent="space-between"
-  >
+  <div>
     <WithStyles(ForwardRef(Grid))
+      className="makeStyles-header-1"
       item={true}
-      md={5}
+      lg={5}
     >
       <WithStyles(ForwardRef(Typography))
+        className="makeStyles-heading-2"
         gutterBottom={true}
-        style={
-          Object {
-            "position": "relative",
-          }
-        }
         variant="h1"
       >
-        <div
-          className="makeStyles-errorIcon-4"
-        >
-          <WarningIcon />
-        </div>
+        <WarningIcon />
         Quality 
         is okay
       </WithStyles(ForwardRef(Typography))>
@@ -170,40 +154,14 @@ exports[`the PoorQuality component should render correctly when quality is "subo
         could be better
         .
       </WithStyles(ForwardRef(Typography))>
-      <WithStyles(ForwardRef(Typography))
-        gutterBottom={true}
-        variant="body1"
-      >
-        <strong>
-          Did you try all of the tips to improve quality?
-        </strong>
-      </WithStyles(ForwardRef(Typography))>
-      <WithStyles(ForwardRef(Button))
-        color="primary"
-        onClick={[MockFunction]}
-        style={
-          Object {
-            "marginRight": "1.5em",
-          }
-        }
-        variant="contained"
-      >
-        Yes
-      </WithStyles(ForwardRef(Button))>
-      <WithStyles(ForwardRef(Button))
-        color="primary"
-        onClick={[MockFunction]}
-      >
-        Skip for now
-      </WithStyles(ForwardRef(Button))>
     </WithStyles(ForwardRef(Grid))>
     <WithStyles(ForwardRef(Grid))
-      className="makeStyles-paperContainer-3"
+      className="makeStyles-paperContainer-4"
       item={true}
-      md={5}
+      lg={5}
     >
       <WithStyles(ForwardRef(Paper))
-        className="makeStyles-paper-2"
+        className="makeStyles-paper-3"
       >
         <WithStyles(ForwardRef(Typography))
           variant="body1"
@@ -252,6 +210,38 @@ exports[`the PoorQuality component should render correctly when quality is "subo
         View detailed quality information
       </WithStyles(ForwardRef(Button))>
     </WithStyles(ForwardRef(Grid))>
-  </WithStyles(ForwardRef(Grid))>
+    <WithStyles(ForwardRef(Grid))
+      className="makeStyles-confirmationButtons-6"
+      item={true}
+      lg={5}
+    >
+      <WithStyles(ForwardRef(Typography))
+        gutterBottom={true}
+        variant="body1"
+      >
+        <strong>
+          Did you try all of the tips to improve quality?
+        </strong>
+      </WithStyles(ForwardRef(Typography))>
+      <WithStyles(ForwardRef(Button))
+        color="primary"
+        onClick={[MockFunction]}
+        style={
+          Object {
+            "marginRight": "1.5em",
+          }
+        }
+        variant="contained"
+      >
+        Yes
+      </WithStyles(ForwardRef(Button))>
+      <WithStyles(ForwardRef(Button))
+        color="primary"
+        onClick={[MockFunction]}
+      >
+        Skip for now
+      </WithStyles(ForwardRef(Button))>
+    </WithStyles(ForwardRef(Grid))>
+  </div>
 </WithStyles(ForwardRef(Container))>
 `;
