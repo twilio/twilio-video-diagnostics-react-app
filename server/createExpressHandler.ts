@@ -3,7 +3,12 @@ import { Request, Response } from 'express';
 import { ServerlessContext, ServerlessFunction } from './types';
 import Twilio from 'twilio';
 
-const { ACCOUNT_SID, TWILIO_API_KEY_SID, TWILIO_API_KEY_SECRET, VIDEO_IDENTITY } = process.env;
+const {
+  ACCOUNT_SID,
+  TWILIO_API_KEY_SID,
+  TWILIO_API_KEY_SECRET,
+  VIDEO_IDENTITY = 'RTC_Video_Diagnostics_Test_Identity',
+} = process.env;
 
 const twilioClient = Twilio(TWILIO_API_KEY_SID, TWILIO_API_KEY_SECRET, {
   accountSid: ACCOUNT_SID,
