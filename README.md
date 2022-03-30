@@ -43,7 +43,7 @@ Run `npm install` to install all the dependencies from NPM.
 
 Before deploying the app, add your Twilio Account SID and Auth Token to a `.env` file (see [.env.example](.env.example) for an example). The app is deployed to Twilio with a single command:
 
-    $ npm run serverless:deploy
+    npm run serverless:deploy
 
 When deployment has finished, the Twilio Serverless URL for the application will be printed to the console. This URL can be used to access the application:
 
@@ -51,7 +51,7 @@ When deployment has finished, the Twilio Serverless URL for the application will
 
 To view the app URL at any time, you can run the following command:
 
-    $ npm run serverless:list
+    npm run serverless:list
 
 A few things to note:
 
@@ -62,7 +62,7 @@ A few things to note:
 
 To remove the Serverless app from Twilio, run the following command:
 
-    $ npm run serverless:remove
+    npm run serverless:remove
 
 ## Local Development
 
@@ -80,14 +80,14 @@ Now the local token server (see [server/index.ts](server/index.ts)) can dispense
 
 Run the app locally with
 
-    $ npm start
+    npm start
 
 This will start the local token server and run the app in the development mode. Open [http://localhost:3000](http://localhost:3000) to see the application in the browser.
 
 The page will reload if you make changes to the source code in `src/`.
 You will also see any linting errors in the console. If you need to run only the server on its own, you can start the token server locally with
 
-    $ npm run server
+    npm run server
 
 The token server runs on port 8081.
 
@@ -97,7 +97,7 @@ The server provided with this application uses the same endpoints as the [server
 
 Build the app by running:
 
-    $ npm run build
+    npm run build
 
 This will build the static assets for the application in the `build/` directory.
 
