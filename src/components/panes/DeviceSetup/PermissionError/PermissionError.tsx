@@ -1,34 +1,61 @@
 import React from 'react';
 import { useAppStateContext } from '../../../AppStateProvider/AppStateProvider';
-import { Button, Container, Grid, Typography, Paper, makeStyles } from '@material-ui/core';
+import { Button, Container, Grid, Typography, Paper, makeStyles, Theme, createStyles } from '@material-ui/core';
 import ErrorIllustration from './ErrorIllustration.png';
 import { ErrorIcon } from '../../../../icons/ErrorIcon';
 
-const useStyles = makeStyles({
-  heading: {
-    position: 'relative',
-    marginTop: '20px',
-  },
-  paper: {
-    display: 'inline-block',
-    padding: '23px',
-    borderRadius: '8px',
-  },
-  grantPermissions: {
-    fontSize: '16px',
-    paddingBottom: '16px',
-  },
-  /* The size of the image is explicitly stated here so that this content can properly be centered vertically
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    mainContainer: {
+      display: 'block',
+    },
+    heading: {
+      position: 'relative',
+      marginTop: '20px',
+    },
+    grantPermissions: {
+      fontSize: '16px',
+      paddingBottom: '16px',
+    },
+    /* The size of the image is explicitly stated here so that this content can properly be centered vertically
   before the image is loaded.*/
-  illustration: {
-    height: '181px',
-    width: '342px',
-  },
-  errorIcon: {
-    position: 'absolute',
-    right: 'calc(100% + 18px)',
-  },
-});
+    illustration: {
+      maxHeight: '174px',
+      maxWidth: '337px',
+      [theme.breakpoints.down('sm')]: {
+        width: '100%',
+      },
+    },
+    header: {
+      float: 'left',
+      [theme.breakpoints.down('md')]: {
+        float: 'initial',
+      },
+    },
+    refreshButton: {
+      clear: 'left',
+      [theme.breakpoints.down('md')]: {
+        clear: 'initial',
+        marginBottom: '2em',
+      },
+    },
+    paperContainer: {
+      float: 'right',
+      marginRight: '1em',
+      [theme.breakpoints.down('md')]: {
+        float: 'initial',
+        display: 'flex',
+        justifyContent: 'center',
+        margin: '0 0 2.5em 0',
+      },
+    },
+    paper: {
+      display: 'inline-block',
+      padding: '20px',
+      borderRadius: '8px',
+    },
+  })
+);
 
 export function getDeviceErrorPaneContent(error?: Error) {
   let headline = '';
@@ -76,18 +103,28 @@ export function PermissionError() {
 
   return (
     <Container>
-      <Grid container alignItems="center" justifyContent="space-between">
-        <Grid item md={6}>
+      <div className={classes.mainContainer}>
+        <Grid item lg={5} className={classes.header}>
           <Typography variant="h1" gutterBottom className={classes.heading}>
-            <div className={classes.errorIcon}>
-              <ErrorIcon />
-            </div>{' '}
+            <ErrorIcon />
             {headline}
           </Typography>
 
           <Typography variant="body1" gutterBottom>
             {message}
           </Typography>
+        </Grid>
+
+        <Grid item lg={5} className={classes.paperContainer}>
+          <Paper className={classes.paper}>
+            <Typography variant="body1" className={classes.grantPermissions}>
+              <strong>Permissions</strong>
+            </Typography>
+            <img src={ErrorIllustration} alt="Settings Illustration" className={classes.illustration} />
+          </Paper>
+        </Grid>
+
+        <Grid item lg={5} className={classes.refreshButton}>
           <Typography variant="body1" gutterBottom>
             <strong>Update your settings to allow your browser permissions and refresh this page.</strong>
           </Typography>
@@ -96,16 +133,7 @@ export function PermissionError() {
             Refresh page
           </Button>
         </Grid>
-
-        <Grid item md={5}>
-          <Paper className={classes.paper}>
-            <Typography variant="body1" className={classes.grantPermissions}>
-              <strong>Permissions</strong>
-            </Typography>
-            <img src={ErrorIllustration} alt="Settings Illustration" className={classes.illustration} />
-          </Paper>
-        </Grid>
-      </Grid>
+      </div>
     </Container>
   );
 }

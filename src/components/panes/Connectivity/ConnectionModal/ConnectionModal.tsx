@@ -20,9 +20,13 @@ const useStyles = makeStyles((theme) =>
   createStyles({
     modal: {
       width: '100%',
+      maxWidth: '600px',
     },
     content: {
       padding: '3em',
+      [theme.breakpoints.down('sm')]: {
+        padding: '2em',
+      },
     },
     closeButton: {
       position: 'absolute',

@@ -34,6 +34,7 @@ export default function usePreflightTest(dispatch: React.Dispatch<ACTIONTYPE>) {
         });
       })
       .catch((error) => {
+        console.error('Error running the preflight test', error);
         dispatch({ type: 'preflight-token-failed', error });
         dispatch({ type: 'preflight-finished' });
       });

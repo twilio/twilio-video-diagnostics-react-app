@@ -1,0 +1,122 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`the GetStarted component should render correctly when the app has expired 1`] = `
+<WithStyles(ForwardRef(Container))>
+  <WithStyles(ForwardRef(Grid))
+    alignItems="center"
+    className="makeStyles-gridContainer-1"
+    container={true}
+  >
+    <WithStyles(ForwardRef(Grid))
+      item={true}
+      lg={5}
+    >
+      <WithStyles(ForwardRef(Typography))
+        gutterBottom={true}
+        variant="h1"
+      >
+        <ErrorIcon />
+        App has expired.
+      </WithStyles(ForwardRef(Typography))>
+      <WithStyles(ForwardRef(Typography))
+        gutterBottom={true}
+        variant="body1"
+      >
+        Please re-deploy the application and try again.
+      </WithStyles(ForwardRef(Typography))>
+      <WithStyles(ForwardRef(Button))
+        color="primary"
+        disabled={true}
+        style={
+          Object {
+            "marginBottom": "1em",
+          }
+        }
+        variant="contained"
+      >
+        Get started
+      </WithStyles(ForwardRef(Button))>
+    </WithStyles(ForwardRef(Grid))>
+    <WithStyles(ForwardRef(Grid))
+      item={true}
+      lg={5}
+    >
+      <img
+        alt="Hello"
+        className="makeStyles-illustration-2"
+        src="test-file-stub"
+      />
+      <WithStyles(ForwardRef(Typography))
+        color="textSecondary"
+        gutterBottom={true}
+        variant="body1"
+      >
+        <strong>
+          Not sure about something?
+        </strong>
+         Skip that section for now, and your support administrator can help later.
+      </WithStyles(ForwardRef(Typography))>
+    </WithStyles(ForwardRef(Grid))>
+  </WithStyles(ForwardRef(Grid))>
+</WithStyles(ForwardRef(Container))>
+`;
+
+exports[`the GetStarted component should render correctly when the app is not expired 1`] = `
+<WithStyles(ForwardRef(Container))>
+  <WithStyles(ForwardRef(Grid))
+    alignItems="center"
+    className="makeStyles-gridContainer-1"
+    container={true}
+  >
+    <WithStyles(ForwardRef(Grid))
+      item={true}
+      lg={5}
+    >
+      <WithStyles(ForwardRef(Typography))
+        gutterBottom={true}
+        variant="h1"
+      >
+        Let's get started.
+      </WithStyles(ForwardRef(Typography))>
+      <WithStyles(ForwardRef(Typography))
+        gutterBottom={true}
+        variant="body1"
+      >
+        We'll help you solve any video troubles you're experiencing but first, let's check your setup.
+      </WithStyles(ForwardRef(Typography))>
+      <WithStyles(ForwardRef(Button))
+        color="primary"
+        disabled={false}
+        style={
+          Object {
+            "marginBottom": "1em",
+          }
+        }
+        variant="contained"
+      >
+        Get started
+      </WithStyles(ForwardRef(Button))>
+    </WithStyles(ForwardRef(Grid))>
+    <WithStyles(ForwardRef(Grid))
+      item={true}
+      lg={5}
+    >
+      <img
+        alt="Hello"
+        className="makeStyles-illustration-2"
+        src="test-file-stub"
+      />
+      <WithStyles(ForwardRef(Typography))
+        color="textSecondary"
+        gutterBottom={true}
+        variant="body1"
+      >
+        <strong>
+          Not sure about something?
+        </strong>
+         Skip that section for now, and your support administrator can help later.
+      </WithStyles(ForwardRef(Typography))>
+    </WithStyles(ForwardRef(Grid))>
+  </WithStyles(ForwardRef(Grid))>
+</WithStyles(ForwardRef(Container))>
+`;

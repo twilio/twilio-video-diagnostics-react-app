@@ -1,40 +1,59 @@
-import { Container, Grid, Typography, Button, Paper, makeStyles } from '@material-ui/core';
+import { Container, Grid, Typography, Button, Paper, makeStyles, Theme, createStyles } from '@material-ui/core';
 import { ErrorIcon } from '../../../../icons/ErrorIcon';
 import { QualityScore } from '../Quality';
 import { useAppStateContext } from '../../../AppStateProvider/AppStateProvider';
 import { ViewIcon } from '../../../../icons/ViewIcon';
 import { WarningIcon } from '../../../../icons/WarningIcon';
 
-const useStyles = makeStyles({
-  modal: {
-    width: '6000px',
-  },
-  paper: {
-    padding: '1.5em',
-    borderRadius: '8px',
-    '& li': {
-      '&:not(:last-child)': {
-        marginBottom: '1.5em',
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    header: {
+      float: 'left',
+      [theme.breakpoints.down('md')]: {
+        float: 'initial',
       },
     },
-  },
-  paperContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  errorIcon: {
-    position: 'absolute',
-    right: 'calc(100% + 18px)',
-  },
-  viewButton: {
-    marginTop: '2em',
-    '& svg': {
+    heading: {
       position: 'relative',
-      left: '-5px',
     },
-  },
-});
+    paper: {
+      padding: '1.2em',
+      maxWidth: '400px',
+      borderRadius: '8px',
+      '& li': {
+        '&:not(:last-child)': {
+          marginBottom: '1.5em',
+        },
+      },
+    },
+    paperContainer: {
+      float: 'right',
+      marginRight: '1em',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      [theme.breakpoints.down('md')]: {
+        float: 'initial',
+        justifyContent: 'center',
+        margin: '0 0 2.5em 0',
+      },
+    },
+    viewButton: {
+      marginTop: '2em',
+      '& svg': {
+        position: 'relative',
+        left: '-5px',
+      },
+    },
+    confirmationButtons: {
+      clear: 'left',
+      [theme.breakpoints.down('md')]: {
+        clear: 'initial',
+        marginBottom: '2em',
+      },
+    },
+  })
+);
 
 interface PoorQualityProps {
   quality: QualityScore | undefined;
@@ -47,12 +66,10 @@ export function PoorQuality({ quality, openModal }: PoorQualityProps) {
 
   return (
     <Container>
-      <Grid container alignItems="center" justifyContent="space-between">
-        <Grid item md={5}>
-          <Typography variant="h1" gutterBottom style={{ position: 'relative' }}>
-            <div className={classes.errorIcon}>
-              {quality === QualityScore.Suboptimal ? <WarningIcon /> : <ErrorIcon />}
-            </div>
+      <div>
+        <Grid item lg={5} className={classes.header}>
+          <Typography variant="h1" gutterBottom className={classes.heading}>
+            {quality === QualityScore.Suboptimal ? <WarningIcon /> : <ErrorIcon />}
             Quality {quality === QualityScore.Suboptimal ? 'is okay' : 'issues'}
           </Typography>
 
@@ -61,20 +78,9 @@ export function PoorQuality({ quality, openModal }: PoorQualityProps) {
             <strong>{quality === QualityScore.Suboptimal ? 'suboptimal' : 'degraded'} </strong>
             and overall performance {quality === QualityScore.Suboptimal ? 'could be better' : 'will be poor'}.
           </Typography>
-
-          <Typography variant="body1" gutterBottom>
-            <strong>Did you try all of the tips to improve quality?</strong>
-          </Typography>
-
-          <Button variant="contained" color="primary" onClick={nextPane} style={{ marginRight: '1.5em' }}>
-            Yes
-          </Button>
-          <Button color="primary" onClick={nextPane}>
-            Skip for now
-          </Button>
         </Grid>
 
-        <Grid item md={5} className={classes.paperContainer}>
+        <Grid item lg={5} className={classes.paperContainer}>
           <Paper className={classes.paper}>
             <Typography variant="body1">
               <strong>Tips to improve quality and performance:</strong>
@@ -103,7 +109,20 @@ export function PoorQuality({ quality, openModal }: PoorQualityProps) {
             View detailed quality information
           </Button>
         </Grid>
-      </Grid>
+
+        <Grid item lg={5} className={classes.confirmationButtons}>
+          <Typography variant="body1" gutterBottom>
+            <strong>Did you try all of the tips to improve quality?</strong>
+          </Typography>
+
+          <Button variant="contained" color="primary" onClick={nextPane} style={{ marginRight: '1.5em' }}>
+            Yes
+          </Button>
+          <Button color="primary" onClick={nextPane}>
+            Skip for now
+          </Button>
+        </Grid>
+      </div>
     </Container>
   );
 }

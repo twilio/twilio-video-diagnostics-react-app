@@ -31,13 +31,13 @@ describe('the Header component', () => {
     expect(wrapper.find({ label: 'Get Results' }).find('div').at(0).prop('className')).toContain('active');
   });
 
-  it('should display the progress bar at 20% when the activePane is 1', () => {
+  it('should display the progress bar at 12.5% when the activePane is 1', () => {
     mockUseAppStateContext.mockImplementation(() => ({ state: { activePane: 1 } }));
     const wrapper = shallow(<Header />);
     expect(wrapper.find('div').at(2).prop('style')).toEqual({ width: '12.5%' });
   });
 
-  it('should display the progress bar at 60% when the activePane is 3', () => {
+  it('should display the progress bar at 37.5% when the activePane is 3', () => {
     mockUseAppStateContext.mockImplementation(() => ({ state: { activePane: 3 } }));
     const wrapper = shallow(<Header />);
     expect(wrapper.find('div').at(2).prop('style')).toEqual({ width: '37.5%' });

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Button, Paper, Typography, Container, Grid } from '@material-ui/core';
+import { Button, Paper, Typography, Container, Grid, Theme, createStyles } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import AudioDevice from './AudioDevice/AudioDevice';
 import ProgressBar from './ProgressBar/ProgressBar';
@@ -8,25 +8,56 @@ import { ActivePane, useAppStateContext } from '../../AppStateProvider/AppStateP
 import Microphone from '../../../icons/Microphone';
 import Speaker from '../../../icons/SpeakerIcon';
 
-const useStyles = makeStyles({
-  paper: {
-    display: 'inline-block',
-    padding: '23px',
-    borderRadius: '8px',
-    minHeight: '280px',
-    width: '388px',
-  },
-  audioLevelContainer: {
-    display: 'flex',
-    alignItems: 'center',
-    height: '2.5em',
-  },
-  topLine: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'baseline',
-  },
-});
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    mainContainer: {
+      display: 'block',
+    },
+    paper: {
+      display: 'inline-block',
+      padding: '23px',
+      borderRadius: '8px',
+      minHeight: '280px',
+      maxWidth: '365px',
+      [theme.breakpoints.down('md')]: {
+        width: '100%',
+      },
+    },
+    audioLevelContainer: {
+      display: 'flex',
+      alignItems: 'center',
+      height: '2.5em',
+    },
+    topLine: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'baseline',
+    },
+    header: {
+      float: 'left',
+      [theme.breakpoints.down('md')]: {
+        float: 'initial',
+      },
+    },
+    audioTest: {
+      float: 'right',
+      marginRight: '1em',
+      [theme.breakpoints.down('md')]: {
+        float: 'initial',
+        display: 'flex',
+        justifyContent: 'center',
+        margin: '0 0 2em 0',
+      },
+    },
+    confirmationButtons: {
+      clear: 'left',
+      [theme.breakpoints.down('md')]: {
+        clear: 'initial',
+        marginBottom: '2em',
+      },
+    },
+  })
+);
 
 export function AudioTest() {
   const classes = useStyles();
@@ -95,8 +126,8 @@ export function AudioTest() {
 
   return (
     <Container>
-      <Grid container alignItems="center" justifyContent="space-between">
-        <Grid item md={5}>
+      <div className={classes.mainContainer}>
+        <Grid item lg={5} className={classes.header}>
           <Typography variant="h1" gutterBottom>
             Test your audio
           </Typography>
@@ -105,31 +136,9 @@ export function AudioTest() {
             Record an audio clip and play it back to check that your microphone and speaker are working. If they aren't,
             make sure your volume is turned up, try a different speaker or microphone, or check your bluetooth settings.
           </Typography>
-
-          <Typography variant="body1" gutterBottom>
-            <strong> Does your audio sound good?</strong>
-          </Typography>
-
-          <Button
-            variant="contained"
-            style={{ marginRight: '1.5em' }}
-            color="primary"
-            onClick={() => dispatch({ type: 'next-pane' })}
-            disabled={!!error && error !== 'No audio detected'}
-          >
-            Yes
-          </Button>
-
-          <Button
-            color="primary"
-            onClick={() => dispatch({ type: 'next-pane' })}
-            disabled={!!error && error !== 'No audio detected'}
-          >
-            Skip for now
-          </Button>
         </Grid>
-        ​
-        <Grid item md={5}>
+
+        <Grid item lg={5} className={classes.audioTest}>
           <Paper className={classes.paper}>
             <div className={classes.topLine}>
               <Typography variant="subtitle2">
@@ -172,7 +181,31 @@ export function AudioTest() {
             </div>
           </Paper>
         </Grid>
-      </Grid>
+
+        <Grid item lg={5} className={classes.confirmationButtons}>
+          <Typography variant="body1" gutterBottom>
+            <strong> Does your audio sound good?</strong>
+          </Typography>
+
+          <Button
+            variant="contained"
+            style={{ marginRight: '1.5em' }}
+            color="primary"
+            onClick={() => dispatch({ type: 'next-pane' })}
+            disabled={!!error && error !== 'No audio detected'}
+          >
+            Yes
+          </Button>
+
+          <Button
+            color="primary"
+            onClick={() => dispatch({ type: 'next-pane' })}
+            disabled={!!error && error !== 'No audio detected'}
+          >
+            Skip for now
+          </Button>
+        </Grid>
+      </div>
     </Container>
   );
 }

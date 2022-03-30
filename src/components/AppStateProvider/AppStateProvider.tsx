@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useReducer, useEffect, useCallback } from 'react';
+import axios, { AxiosError } from 'axios';
 import produce, { current } from 'immer';
 import Video, { PreflightTestReport } from 'twilio-video';
 import UAParser from 'ua-parser-js';
@@ -58,6 +59,7 @@ interface stateType {
   };
   bitrateTestInProgress: boolean;
   bitrateTestFinished: boolean;
+  appIsExpired: boolean;
 }
 
 export type ACTIONTYPE =
@@ -81,7 +83,8 @@ export type ACTIONTYPE =
   | { type: 'set-bitrate-test-error'; error: Error }
   | { type: 'set-bitrate-test-report'; report: MediaConnectionBitrateTest.Report }
   | { type: 'bitrate-test-started' }
-  | { type: 'bitrate-test-finished' };
+  | { type: 'bitrate-test-finished' }
+  | { type: 'set-app-is-expired' };
 
 type AppStateContextType = {
   state: stateType;
@@ -119,6 +122,7 @@ export const initialState = {
   },
   bitrateTestInProgress: false,
   bitrateTestFinished: false,
+  appIsExpired: false,
 };
 
 export const AppStateContext = createContext<AppStateContextType>(null!);
@@ -141,11 +145,15 @@ export const isDownButtonDisabled = (currentState: stateType) => {
     audioInputTestReport,
     audioOutputTestReport,
     videoInputTestReport,
+    appIsExpired,
   } = currentState;
 
   const connectionFailedOrLoading =
     activePane === ActivePane.Connectivity &&
-    (preflightTestInProgress || bitrateTestInProgress || preflightTest.error !== null);
+    (preflightTestInProgress ||
+      bitrateTestInProgress ||
+      preflightTest.error !== null ||
+      preflightTest.tokenError !== null);
 
   const deviceTestErrors =
     !!audioInputTestReport?.errors.length ||
@@ -156,7 +164,12 @@ export const isDownButtonDisabled = (currentState: stateType) => {
   const unsupportedBrowser = activePane === ActivePane.BrowserTest && !Video.isSupported;
 
   return (
-    connectionFailedOrLoading || !ActivePane[activePane + 1] || deviceTestErrors || onDeviceCheck || unsupportedBrowser
+    appIsExpired ||
+    connectionFailedOrLoading ||
+    !ActivePane[activePane + 1] ||
+    deviceTestErrors ||
+    onDeviceCheck ||
+    unsupportedBrowser
   );
 };
 
@@ -295,6 +308,9 @@ export const appStateReducer = produce((draft: stateType, action: ACTIONTYPE) =>
       draft.bitrateTestFinished = true;
       draft.bitrateTestInProgress = false;
       break;
+
+    case 'set-app-is-expired':
+      draft.appIsExpired = true;
   }
 
   const currentState = current(draft);
@@ -333,7 +349,7 @@ export const AppStateProvider: React.FC = ({ children }) => {
     link.download = 'test_results.json';
     link.href = URL.createObjectURL(
       new Blob([JSON.stringify(finalTestResults, null, 2)], {
-        type: 'text/plain',
+        type: 'application/json',
       })
     );
     link.click();
@@ -354,6 +370,12 @@ export const AppStateProvider: React.FC = ({ children }) => {
 
   useEffect(() => {
     navigator.mediaDevices.enumerateDevices().then((devices) => dispatch({ type: 'set-devices', devices }));
+
+    axios('app/token').catch((error: AxiosError) => {
+      if (error.response?.data?.error?.message === 'token server expired') {
+        dispatch({ type: 'set-app-is-expired' });
+      }
+    });
   }, []);
 
   return (
