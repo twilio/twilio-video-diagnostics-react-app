@@ -80,14 +80,14 @@ Now the local token server (see [server/index.ts](server/index.ts)) can dispense
 
 Run the app locally with
 
-    npm start
+    $ npm start
 
 This will start the local token server and run the app in the development mode. Open [http://localhost:3000](http://localhost:3000) to see the application in the browser.
 
 The page will reload if you make changes to the source code in `src/`.
 You will also see any linting errors in the console. If you need to run only the server on its own, you can start the token server locally with
 
-    npm run server
+    $ npm run server
 
 The token server runs on port 8081.
 
