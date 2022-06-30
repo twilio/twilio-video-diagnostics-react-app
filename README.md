@@ -30,7 +30,7 @@ This application demonstrates a diagnostics tool for testing a participant's abi
 - Approachable UX for non-technical users with access to network statistics for those who need it
 - Downloadable JSON report of the exhaustive test results
 - Customizable and ready for self hosting or embedding into other web applications
-- No costs associated with deploying the app 
+- No costs associated with deploying the app to [Twilio Serverless](https://www.twilio.com/docs/labs/serverless-toolkit)
 
 ## Prerequisites
 
