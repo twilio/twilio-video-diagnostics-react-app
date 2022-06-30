@@ -1,6 +1,7 @@
 # Twilio Video Diagnostics App
 
-_The Twilio Video Diagnostics App is currently in beta. If you have feedback on how we can improve this application, we would love to hear from you. Feel free to provide this feedback by opening an Issue._
+_If you have feedback on how we can improve this application, we would love to hear from you. Feel free to provide this feedback by opening an Issue._ 
+
 
 ## What is it
 
@@ -9,8 +10,10 @@ This application demonstrates a diagnostics tool for testing a participant's abi
 ![](https://user-images.githubusercontent.com/11685703/131178895-a8995c2f-1fbd-451a-8949-2bfa4040b4f2.gif)
 
 <p align="center">
-    <i>The happy path</i>
+    <i>A Twilio hosted version of this app can be found at <a href="https://video-diagnostics.twilio.com">https://video-diagnostics.twilio.com</a>.</i>
 </p>
+
+
 
 ## What it tests
 
@@ -27,7 +30,7 @@ This application demonstrates a diagnostics tool for testing a participant's abi
 - Approachable UX for non-technical users with access to network statistics for those who need it
 - Downloadable JSON report of the exhaustive test results
 - Customizable and ready for self hosting or embedding into other web applications
-- Free to deploy to [Twilio Serverless](https://www.twilio.com/docs/labs/serverless-toolkit) and no costs associated with usage
+- No costs associated with deploying the app 
 
 ## Prerequisites
 
