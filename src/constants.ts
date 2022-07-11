@@ -1,6 +1,6 @@
-import { name } from '../package.json';
+import { default as appInfo } from '../package.json';
 
-export const APP_NAME = name;
+export const APP_NAME = appInfo.name;
 
 export const AUDIO_LEVEL_THRESHOLD = 200;
 
