@@ -36,7 +36,7 @@
     "dev": "react-scripts start",
     "build": "react-scripts build",
     "server": "ts-node -T -P server/tsconfig.json server/index.ts",
-    "test": "jest",
+    "test": "jest --config jest.config.js",
     "eject": "react-scripts eject",
     "lint": "eslint src/**/*.{ts,tsx} server",
     "test:serverless": "jest -c jest.serverless.config.js",
@@ -75,7 +75,7 @@
     "@testing-library/react-hooks": "^7.0.1",
     "@types/enzyme": "^3.10.8",
     "@types/express": "^4.17.13",
-    "@types/jest": "^26.0.23",
+    "@types/jest": "27.5.2",
     "@types/jsonwebtoken": "^8.5.1",
     "@types/ua-parser-js": "0.7.36",
     "@wojtekmaj/enzyme-adapter-react-17": "^0.6.1",
@@ -88,7 +88,7 @@
     "prettier": "^2.3.0",
     "stdout-stderr": "^0.1.13",
     "superagent": "^6.1.0",
-    "ts-jest": "^26.5.4",
+    "ts-jest": "^27.0.1",
     "typescript": "^4.3.2"
   },
   "jest": {
