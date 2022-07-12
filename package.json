@@ -41,7 +41,7 @@
     "lint": "eslint src/**/*.{ts,tsx} server",
     "test:serverless": "jest -c jest.serverless.config.js",
     "test:ci": "npm run test:ci:app && npm run test:ci:serverless",
-    "test:ci:app": "jest --ci --runInBand --reporters=default --reporters=jest-junit --coverage",
+    "test:ci:app": "jest --config jest.config.js --ci --runInBand --reporters=default --reporters=jest-junit --coverage",
     "test:ci:serverless": "jest -c jest.serverless.config.js --ci --runInBand",
     "serverless:deploy": "npm run build && node serverless/scripts/deploy.js",
     "serverless:remove": "node serverless/scripts/remove.js",
