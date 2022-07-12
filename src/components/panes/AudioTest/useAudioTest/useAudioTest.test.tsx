@@ -110,10 +110,13 @@ describe('the useAudioTest hook', () => {
     });
 
     describe('when test ends', () => {
+      const setUpHook = () => {
+        return renderHook(useAudioTest).result;
+      };
       let result: RenderResult<any>;
 
       beforeEach(() => {
-        result = renderHook(useAudioTest).result;
+        result = setUpHook();
         act(() => result.current.playAudio({}));
       });
 
@@ -238,10 +241,13 @@ describe('the useAudioTest hook', () => {
     });
 
     describe('when test ends', () => {
+      const setUpHook = () => {
+        return renderHook(useAudioTest).result;
+      };
       let result: RenderResult<any>;
 
       beforeEach(() => {
-        result = renderHook(useAudioTest).result;
+        result = setUpHook();
         act(() => result.current.readAudioInput({ enableRecording: true }));
       });
 
