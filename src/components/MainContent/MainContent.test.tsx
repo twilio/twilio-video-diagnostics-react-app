@@ -117,6 +117,7 @@ describe('the MainContent component', () => {
       </MuiThemeProvider>
     );
 
+    // React testing-library does not provide an easy way to access the parentElement:
     expect(div.parentElement!.style.transform).toEqual(`translateY(calc(50vh - 159.5px + 50px))`); // eslint-disable-line
   });
 
