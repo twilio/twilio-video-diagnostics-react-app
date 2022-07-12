@@ -6,6 +6,7 @@ process.env.VIDEO_IDENTITY = 'mockVideoIdentity';
 
 import { ServerlessFunction } from '../types';
 import Twilio from 'twilio';
+import { setImmediate } from 'timers'
 
 jest.mock('twilio', () => jest.fn(() => mockTwilioClient));
 

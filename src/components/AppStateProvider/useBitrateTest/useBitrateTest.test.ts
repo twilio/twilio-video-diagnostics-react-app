@@ -2,6 +2,7 @@ import { act, renderHook } from '@testing-library/react-hooks';
 import axios from 'axios';
 import EventEmitter from 'events';
 import useBitrateTest from './useBitrateTest';
+import { setImmediate } from 'timers';
 
 class MockBitrateTest extends EventEmitter {
   stop = jest.fn();
@@ -85,7 +86,7 @@ describe('the useBitrateTest hook', () => {
 
     await act(async () => await result.current.startBitrateTest());
 
-    jest.runTimersToTime(15000);
+    jest.advanceTimersByTime(15000);
 
     expect(mockBitrateTest.stop).toHaveBeenCalled();
   });

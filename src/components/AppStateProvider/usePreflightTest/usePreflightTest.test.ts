@@ -2,6 +2,7 @@ import usePreflightTest from './usePreflightTest';
 import axios from 'axios';
 import EventEmitter from 'events';
 import { renderHook } from '@testing-library/react-hooks';
+import { setImmediate } from 'timers';
 
 const mockPreflightTest = new EventEmitter();
 
