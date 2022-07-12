@@ -47,7 +47,7 @@ export default function ProgressBar({ duration, position, style }: ProgressBarPr
   }, [duration, position]);
 
   return (
-    <div className={classes.container} style={{ ...style }}>
+    <div className={classes.container} style={{ ...style }} data-testid="progressBarContainer">
       <div className={classes.progress} ref={progressBarRef} data-testid="progressBar"></div>
       <div className={classes.background}></div>
     </div>
