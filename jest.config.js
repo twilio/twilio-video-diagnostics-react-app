@@ -8,6 +8,7 @@ module.exports = {
   transform: {
     '^.+\\.tsx?$': 'ts-jest',
   },
+  testEnvironment: 'jsdom',
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
   reporters: ['default', 'jest-junit'],
   coveragePathIgnorePatterns: ['node_modules'],

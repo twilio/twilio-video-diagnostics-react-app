@@ -1,6 +1,5 @@
-import { act } from 'react-dom/test-utils';
 import { shallow, mount } from 'enzyme';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { MuiThemeProvider } from '@material-ui/core';
 import Video from 'twilio-video';
 import { ActivePane, useAppStateContext } from '../AppStateProvider/AppStateProvider';
@@ -85,13 +84,13 @@ describe('the MainContent component', () => {
       },
       dispatch: mockDispatch,
     }));
-    const { getAllByTestId, rerender } = render(
+    const { rerender } = render(
       <MuiThemeProvider theme={theme}>
         <MainContent />
       </MuiThemeProvider>
     );
 
-    const div = getAllByTestId('item-container')[1];
+    const div = screen.getAllByTestId('item-container')[1];
 
     // js-dom doesn't compute heights, so here we must set the properties ourselves
     Object.defineProperties(div, {
@@ -103,24 +102,23 @@ describe('the MainContent component', () => {
       },
     });
 
-    act(() => {
-      // Sets a new active pane and rerenders
-      mockUseAppStateContext.mockImplementation(() => ({
-        state: {
-          activePane: 1,
-          preflightTest: {
-            progress: null,
-          },
+    // Sets a new active pane and rerenders
+    mockUseAppStateContext.mockImplementation(() => ({
+      state: {
+        activePane: 1,
+        preflightTest: {
+          progress: null,
         },
-      }));
-      rerender(
-        <MuiThemeProvider theme={theme}>
-          <MainContent />
-        </MuiThemeProvider>
-      );
-    });
+      },
+    }));
+    rerender(
+      <MuiThemeProvider theme={theme}>
+        <MainContent />
+      </MuiThemeProvider>
+    );
 
-    expect(div.parentElement!.style.transform).toEqual(`translateY(calc(50vh - 159.5px + 50px))`);
+    // React testing-library does not provide an easy way to access the parentElement:
+    expect(div.parentElement!.style.transform).toEqual(`translateY(calc(50vh - 159.5px + 50px))`); // eslint-disable-line
   });
 
   it('should disable the Up button when the first pane is active', () => {

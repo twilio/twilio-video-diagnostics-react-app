@@ -1,5 +1,5 @@
 import { Select, Typography } from '@material-ui/core';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { mount, shallow } from 'enzyme';
 import { AudioDevice } from './AudioDevice';
 import { SmallError } from '../../../../icons/SmallError';
@@ -86,18 +86,17 @@ describe('the AudioDevice component', () => {
 
   describe('props.disabled', () => {
     it('should disable dropdown if disabled=true', () => {
-      const { container } = render(
-        <AudioDevice disabled={true} kind="audioinput" onDeviceChange={noop} setDeviceError={noop} />
-      );
-      const el = container.querySelector('.MuiInputBase-root') as HTMLDivElement;
-      expect(el.className.includes('Mui-disabled')).toBe(true);
+      render(<AudioDevice disabled={true} kind="audioinput" onDeviceChange={noop} setDeviceError={noop} />);
+
+      const dropDown = screen.getByRole('button');
+      expect(dropDown.className.includes('Mui-disabled')).toBe(true);
     });
+
     it('should not disable dropdown if disabled=false', () => {
-      const { container } = render(
-        <AudioDevice disabled={false} kind="audioinput" onDeviceChange={noop} setDeviceError={noop} />
-      );
-      const el = container.querySelector('.MuiInputBase-root') as HTMLDivElement;
-      expect(el.className.includes('Mui-disabled')).toBe(false);
+      render(<AudioDevice disabled={false} kind="audioinput" onDeviceChange={noop} setDeviceError={noop} />);
+
+      const dropDown = screen.getByRole('button');
+      expect(dropDown.className.includes('Mui-disabled')).toBe(false);
     });
   });
 

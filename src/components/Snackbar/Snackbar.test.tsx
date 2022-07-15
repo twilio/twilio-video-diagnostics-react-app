@@ -1,4 +1,4 @@
-import { render, fireEvent } from '@testing-library/react';
+import { render, fireEvent, screen } from '@testing-library/react';
 import { Snackbar } from './Snackbar';
 
 //@ts-ignore
@@ -14,8 +14,8 @@ describe('the Snackbar component', () => {
   });
 
   it('should refresh the page when "Refresh page" is clicked on', () => {
-    const { getByText } = render(<Snackbar open={true} />);
-    const refreshBtn = getByText('Refresh page');
+    render(<Snackbar open={true} />);
+    const refreshBtn = screen.getByText('Refresh page');
 
     fireEvent.click(refreshBtn);
 

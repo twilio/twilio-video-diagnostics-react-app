@@ -71,7 +71,7 @@ export function CheckPermissions() {
       setTimeout(() => navigator.mediaDevices.dispatchEvent(new Event('devicechange')), 500);
       dispatch({ type: 'next-pane' });
     } catch (error) {
-      dispatch({ type: 'set-device-error', error });
+      if (error instanceof Error) dispatch({ type: 'set-device-error', error });
     }
   };
 
