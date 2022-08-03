@@ -19,9 +19,7 @@ const useStyles = makeStyles((theme: Theme) =>
       borderRadius: '8px',
       minHeight: '280px',
       maxWidth: '365px',
-      [theme.breakpoints.down('md')]: {
-        width: '100%',
-      },
+      width: '100%',
     },
     audioLevelContainer: {
       display: 'flex',
@@ -40,6 +38,7 @@ const useStyles = makeStyles((theme: Theme) =>
       },
     },
     audioTest: {
+      width: '100%',
       float: 'right',
       marginRight: '1em',
       [theme.breakpoints.down('md')]: {
