@@ -63,6 +63,7 @@ const useStyles = makeStyles((theme: Theme) =>
       },
     },
     cameraTest: {
+      width: '100%',
       float: 'right',
       marginRight: '1em',
       [theme.breakpoints.down('md')]: {
