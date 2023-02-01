@@ -1,3 +1,7 @@
+# 1.1.1 (January 31, 2023)
+
+This release fixes a bug on iOS 16 Safari where the user cannot play back the audio recorded during an audio output test.
+
 # 1.1.0 (March 30, 2022)
 
 This release contains a new token server, and support for mobile web!
