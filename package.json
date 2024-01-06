@@ -13,7 +13,7 @@
     "@types/node": "^12.0.0",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
-    "axios": "^0.21.1",
+    "axios": "^1.6.4",
     "cli-ux": "^5.5.1",
     "concurrently": "^7.0.0",
     "dotenv": "^10.0.0",
@@ -26,7 +26,7 @@
     "react-dom": "^17.0.2",
     "react-scripts": "5.0.0",
     "ts-node": "^10.7.0",
-    "twilio": "^3.63.1",
+    "twilio": "^4.19.3",
     "twilio-video": "^2.20.1",
     "ua-parser-js": "^0.7.28",
     "web-vitals": "^1.0.1"
