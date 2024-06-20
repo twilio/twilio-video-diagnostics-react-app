@@ -8,7 +8,7 @@ export default function usePreflightTest(dispatch: React.Dispatch<ACTIONTYPE>) {
   const startPreflightTest = useCallback(() => {
     // Don't start a new preflight test if one is already running
     if (preflightTestRef.current) {
-      return;
+      return Promise.resolve();
     }
 
     dispatch({ type: 'preflight-started' });
