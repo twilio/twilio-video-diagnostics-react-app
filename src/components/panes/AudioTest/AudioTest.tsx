@@ -88,7 +88,11 @@ export function AudioTest() {
   };
 
   const handlePlayClick = () => {
-    playAudio({ deviceId: outputDeviceId, testURI: playbackURI });
+    const options: { deviceId?: string; testURI: string } = { testURI: playbackURI };
+    if (typeof window.Audio.prototype.setSinkId === 'function') {
+      options.deviceId = outputDeviceId;
+    }
+    playAudio(options);
   };
 
   // stop test when not on AudioTest and there's an active test
