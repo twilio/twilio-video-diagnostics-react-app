@@ -8,6 +8,7 @@ import SpeakerIcon from '../../../icons/SpeakerIcon';
 import ProgressBar from './ProgressBar/ProgressBar';
 import useAudioTest from './useAudioTest/useAudioTest';
 import useDevices from '../../../hooks/useDevices/useDevices';
+import * as setSinkIdUtil from '../../../utils/setSinkId';
 
 jest.mock('../../AppStateProvider/AppStateProvider');
 jest.mock('./useAudioTest/useAudioTest');
@@ -149,10 +150,19 @@ describe('the AudioTest component', () => {
     });
 
     it('should play recorded message when "Play" button is clicked', () => {
+      jest.spyOn(setSinkIdUtil, 'isSetSinkIdSupported').mockReturnValueOnce(true);
       const wrapper = mount(<AudioTest />);
       const playBtn = wrapper.find(Button).at(1);
       playBtn.simulate('click');
       expect(hookProps.playAudio).toHaveBeenCalledWith({ deviceId: 3, testURI: 'foo' });
+    });
+
+    it('does not pass a deviceId if setSinkId is not available', () => {
+      jest.spyOn(setSinkIdUtil, 'isSetSinkIdSupported').mockReturnValueOnce(false);
+      const wrapper = mount(<AudioTest />);
+      const playBtn = wrapper.find(Button).at(1);
+      playBtn.simulate('click');
+      expect(hookProps.playAudio).toHaveBeenCalledWith({ testURI: 'foo' });
     });
 
     it('should go the next pane when "Yes" button is clicked', () => {

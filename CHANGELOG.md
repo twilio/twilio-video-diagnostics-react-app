@@ -1,3 +1,7 @@
+# 1.2.0 (In Progress)
+
+This release fixes a bug on Chrome for Android where the user cannot play back the audio recorded during an audio output test.
+
 # 1.1.1 (January 31, 2023)
 
 This release fixes a bug on iOS 16 Safari where the user cannot play back the audio recorded during an audio output test.

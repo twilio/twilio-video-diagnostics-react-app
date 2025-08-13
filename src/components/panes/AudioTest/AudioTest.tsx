@@ -7,6 +7,7 @@ import useAudioTest from './useAudioTest/useAudioTest';
 import { ActivePane, useAppStateContext } from '../../AppStateProvider/AppStateProvider';
 import Microphone from '../../../icons/Microphone';
 import Speaker from '../../../icons/SpeakerIcon';
+import { isSetSinkIdSupported } from '../../../utils/setSinkId';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -88,7 +89,11 @@ export function AudioTest() {
   };
 
   const handlePlayClick = () => {
-    playAudio({ deviceId: outputDeviceId, testURI: playbackURI });
+    const options: { deviceId?: string; testURI: string } = { testURI: playbackURI };
+    if (isSetSinkIdSupported()) {
+      options.deviceId = outputDeviceId;
+    }
+    playAudio(options);
   };
 
   // stop test when not on AudioTest and there's an active test
