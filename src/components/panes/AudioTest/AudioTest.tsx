@@ -7,6 +7,7 @@ import useAudioTest from './useAudioTest/useAudioTest';
 import { ActivePane, useAppStateContext } from '../../AppStateProvider/AppStateProvider';
 import Microphone from '../../../icons/Microphone';
 import Speaker from '../../../icons/SpeakerIcon';
+import { isSetSinkIdSupported } from '../../../utils/setSinkId';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -89,7 +90,7 @@ export function AudioTest() {
 
   const handlePlayClick = () => {
     const options: { deviceId?: string; testURI: string } = { testURI: playbackURI };
-    if (typeof window.Audio.prototype.setSinkId === 'function') {
+    if (isSetSinkIdSupported()) {
       options.deviceId = outputDeviceId;
     }
     playAudio(options);
