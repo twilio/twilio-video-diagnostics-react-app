@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken';
 import constants from '../../constants';
 import Twilio from 'twilio';
 
-const client = Twilio(process.env.API_KEY_SID, process.env.API_KEY_SECRET, {
+const client = Twilio(process.env.API_KEY, process.env.API_SECRET, {
   accountSid: process.env.ACCOUNT_SID,
 });
 
