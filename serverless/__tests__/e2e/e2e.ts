@@ -4,7 +4,9 @@ import jwt from 'jsonwebtoken';
 import constants from '../../constants';
 import Twilio from 'twilio';
 
-const client = Twilio(process.env.ACCOUNT_SID, process.env.AUTH_TOKEN);
+const client = Twilio(process.env.API_KEY_SID, process.env.API_KEY_SECRET, {
+  accountSid: process.env.ACCOUNT_SID,
+});
 
 constants.SERVICE_NAME = 'rtc-diagnostics-e2e-test';
 
