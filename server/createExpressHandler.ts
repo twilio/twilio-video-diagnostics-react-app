@@ -3,35 +3,41 @@ import { Request, Response } from 'express';
 import { ServerlessContext, ServerlessFunction } from './types';
 import Twilio from 'twilio';
 
-const {
-  ACCOUNT_SID,
-  TWILIO_API_KEY_SID,
-  TWILIO_API_KEY_SECRET,
-  VIDEO_IDENTITY = 'RTC_Video_Diagnostics_Test_Identity',
-} = process.env;
+export const isServiceUnavailable = process.env.SERVICE_UNAVAILABLE === 'true';
 
-const twilioClient = Twilio(TWILIO_API_KEY_SID, TWILIO_API_KEY_SECRET, {
-  accountSid: ACCOUNT_SID,
-});
+let context: ServerlessContext;
 
-twilioClient.tokens.create().catch((error) => {
-  if (error.status === 401) {
-    console.error(
-      'ERROR: Unable to authenticate user. Please verify that your environment variables contain the correct Twilio account credentials.'
-    );
-  } else {
-    console.error('ERROR:', error.message);
-  }
-  process.exit(1);
-});
+if (!isServiceUnavailable) {
+  const {
+    ACCOUNT_SID,
+    TWILIO_API_KEY_SID,
+    TWILIO_API_KEY_SECRET,
+    VIDEO_IDENTITY = 'RTC_Video_Diagnostics_Test_Identity',
+  } = process.env;
 
-const context: ServerlessContext = {
-  ACCOUNT_SID: ACCOUNT_SID,
-  API_KEY: TWILIO_API_KEY_SID,
-  API_SECRET: TWILIO_API_KEY_SECRET,
-  getTwilioClient: () => twilioClient,
-  VIDEO_IDENTITY,
-};
+  const twilioClient = Twilio(TWILIO_API_KEY_SID, TWILIO_API_KEY_SECRET, {
+    accountSid: ACCOUNT_SID,
+  });
+
+  twilioClient.tokens.create().catch((error) => {
+    if (error.status === 401) {
+      console.error(
+        'ERROR: Unable to authenticate user. Please verify that your environment variables contain the correct Twilio account credentials.'
+      );
+    } else {
+      console.error('ERROR:', error.message);
+    }
+    process.exit(1);
+  });
+
+  context = {
+    ACCOUNT_SID: ACCOUNT_SID,
+    API_KEY: TWILIO_API_KEY_SID,
+    API_SECRET: TWILIO_API_KEY_SECRET,
+    getTwilioClient: () => twilioClient,
+    VIDEO_IDENTITY,
+  };
+}
 
 export function createExpressHandler(serverlessFunction: ServerlessFunction) {
   return (req: Request, res: Response) => {
