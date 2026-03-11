@@ -46,7 +46,11 @@ exports.verifyRecaptcha = function (context, event, callback, next) {
     return next();
   }
 
-  const token = event.recaptchaToken;
+  let token = event.recaptchaToken;
+  if (!token && event && event.request && event.request.headers) {
+    const headers = event.request.headers;
+    token = headers['x-recaptcha-token'] || headers['X-Recaptcha-Token'];
+  }
 
   if (!token) {
     const response = new Twilio.Response();

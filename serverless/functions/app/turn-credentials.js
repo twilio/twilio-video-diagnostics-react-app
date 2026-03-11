@@ -1,6 +1,13 @@
 exports.handler = function (context, event, callback) {
   const verifyExpiry = require(Runtime.getAssets()['/verify_expiry.js'].path);
-  verifyExpiry.handler(context, event, callback);
+  let expiryHandled = false;
+  verifyExpiry.handler(context, event, function (err, result) {
+    expiryHandled = true;
+    return callback(err, result);
+  });
+  if (expiryHandled) {
+    return;
+  }
 
   const { verifyRecaptcha } = require(Runtime.getAssets()['/verify_recaptcha.js'].path);
   verifyRecaptcha(context, event, callback, function () {

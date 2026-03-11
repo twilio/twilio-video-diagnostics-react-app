@@ -22,6 +22,7 @@ const mockRequest: any = {
     foo: 'bar',
   },
   headers: {},
+  get: (name: string) => (mockRequest.headers as Record<string, string>)[name.toLowerCase()],
 };
 
 const mockResponse: any = {

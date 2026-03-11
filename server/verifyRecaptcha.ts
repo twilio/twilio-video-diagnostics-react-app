@@ -49,7 +49,7 @@ export function verifyRecaptcha(req: Request, res: Response, next: NextFunction)
     return next();
   }
 
-  const token = req.headers['x-recaptcha-token'] as string | undefined;
+  const token = req.get('x-recaptcha-token');
 
   if (!token) {
     return res.status(403).json({ error: { message: 'reCAPTCHA token is missing' } });

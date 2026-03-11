@@ -37,6 +37,18 @@ describe('the useBitrateTest hook', () => {
     expect(mockDispatch).toHaveBeenCalledWith({ type: 'bitrate-test-started' });
   });
 
+  it('should call getRecaptchaToken with "bitrate_test" and pass the token as a header to axios', async () => {
+    const mockDispatch = jest.fn();
+    const { result } = renderHook(() => useBitrateTest(mockDispatch, mockGetRecaptchaToken));
+
+    await result.current.startBitrateTest();
+
+    expect(mockGetRecaptchaToken).toHaveBeenCalledWith('bitrate_test');
+    expect(mockAxios).toHaveBeenCalledWith('app/turn-credentials', {
+      headers: { 'X-Recaptcha-Token': 'mockRecaptchaToken' },
+    });
+  });
+
   it('should dispatch "set-bitrate" when "bitrate" event is emitted', () => {
     const mockDispatch = jest.fn();
     const { result } = renderHook(() => useBitrateTest(mockDispatch, mockGetRecaptchaToken));

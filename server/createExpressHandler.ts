@@ -44,7 +44,7 @@ export function createExpressHandler(serverlessFunction: ServerlessFunction) {
   return (req: Request, res: Response) => {
     const event = {
       ...req.body,
-      recaptchaToken: req.headers['x-recaptcha-token'],
+      recaptchaToken: req.get('x-recaptcha-token'),
     };
     serverlessFunction(context, event, (_, serverlessResponse) => {
       res.json(serverlessResponse);

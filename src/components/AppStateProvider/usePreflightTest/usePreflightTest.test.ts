@@ -22,6 +22,18 @@ describe('the usePreflightTest hook', () => {
     expect(mockDispatch).toHaveBeenCalledWith({ type: 'preflight-started' });
   });
 
+  it('should call getRecaptchaToken with "preflight" and pass the token as a header to axios', async () => {
+    const mockDispatch = jest.fn();
+    const { result } = renderHook(() => usePreflightTest(mockDispatch, mockGetRecaptchaToken));
+
+    await result.current.startPreflightTest();
+
+    expect(mockGetRecaptchaToken).toHaveBeenCalledWith('preflight');
+    expect(mockAxios).toHaveBeenCalledWith('app/token', {
+      headers: { 'X-Recaptcha-Token': 'mockRecaptchaToken' },
+    });
+  });
+
   it('should dispatch "preflight-progress" when the "progress" event is emitted', () => {
     const mockDispatch = jest.fn();
     const { result } = renderHook(() => usePreflightTest(mockDispatch, mockGetRecaptchaToken));

@@ -7,8 +7,10 @@ jest.mock('https', () => ({
 }));
 
 function createMockReqResNext(token?: string) {
+  const headers: Record<string, string> = token !== undefined ? { 'x-recaptcha-token': token } : {};
   const req: any = {
-    headers: token !== undefined ? { 'x-recaptcha-token': token } : {},
+    headers,
+    get: (name: string) => headers[name.toLowerCase()],
   };
   const res: any = {
     status: jest.fn().mockReturnThis(),
