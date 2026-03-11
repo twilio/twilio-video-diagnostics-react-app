@@ -31,6 +31,9 @@ const Runtime = {
     '/verify_expiry.js': {
       path: __dirname + '/verify_expiry',
     },
+    '/verify_recaptcha.js': {
+      path: __dirname + '/verify_recaptcha',
+    },
   }),
 };
 

@@ -26,10 +26,12 @@ jest.mock('axios', () =>
   jest.fn(() => Promise.resolve({ data: { iceServers: ['mockIceServers', 'mockIceServers'] } }))
 );
 
+const mockGetRecaptchaToken = jest.fn(() => Promise.resolve('mockRecaptchaToken'));
+
 describe('the useBitrateTest hook', () => {
   it('should dispatch "bitrate-test-started" when "startBitrateTest" function is called', () => {
     const mockDispatch = jest.fn();
-    const { result } = renderHook(() => useBitrateTest(mockDispatch));
+    const { result } = renderHook(() => useBitrateTest(mockDispatch, mockGetRecaptchaToken));
 
     result.current.startBitrateTest();
     expect(mockDispatch).toHaveBeenCalledWith({ type: 'bitrate-test-started' });
@@ -37,7 +39,7 @@ describe('the useBitrateTest hook', () => {
 
   it('should dispatch "set-bitrate" when "bitrate" event is emitted', () => {
     const mockDispatch = jest.fn();
-    const { result } = renderHook(() => useBitrateTest(mockDispatch));
+    const { result } = renderHook(() => useBitrateTest(mockDispatch, mockGetRecaptchaToken));
 
     return result.current.startBitrateTest()!.then(() => {
       mockBitrateTest.emit('Bitrate', 'mockBitrate');
@@ -47,7 +49,7 @@ describe('the useBitrateTest hook', () => {
 
   it('should dispatch "set-bitrate-test-error" and "bitrate-test-finished" when "error" event is emitted', () => {
     const mockDispatch = jest.fn();
-    const { result } = renderHook(() => useBitrateTest(mockDispatch));
+    const { result } = renderHook(() => useBitrateTest(mockDispatch, mockGetRecaptchaToken));
 
     return result.current.startBitrateTest()!.then(() => {
       mockBitrateTest.emit('Error', 'mockError');
@@ -58,7 +60,7 @@ describe('the useBitrateTest hook', () => {
 
   it('should dispatch "set-bitrate-test-report" and "bitrate-test-finished" when "end" event is emitted', () => {
     const mockDispatch = jest.fn();
-    const { result } = renderHook(() => useBitrateTest(mockDispatch));
+    const { result } = renderHook(() => useBitrateTest(mockDispatch, mockGetRecaptchaToken));
 
     return result.current.startBitrateTest()!.then(() => {
       mockBitrateTest.emit('End', 'mockReport');
@@ -70,7 +72,7 @@ describe('the useBitrateTest hook', () => {
   it('should dispatch "set-bitrate-test-error" and "bitrate-test-finished" when there is an error obtaining TURN credentials', () => {
     const mockDispatch = jest.fn();
     mockAxios.mockImplementationOnce(() => Promise.reject('mockError'));
-    const { result } = renderHook(() => useBitrateTest(mockDispatch));
+    const { result } = renderHook(() => useBitrateTest(mockDispatch, mockGetRecaptchaToken));
 
     return result.current.startBitrateTest()!.then(() => {
       expect(mockDispatch).toHaveBeenCalledWith({ type: 'set-bitrate-test-error', error: 'mockError' });
@@ -82,7 +84,7 @@ describe('the useBitrateTest hook', () => {
     jest.useFakeTimers();
     const mockDispatch = jest.fn();
 
-    const { result } = renderHook(() => useBitrateTest(mockDispatch));
+    const { result } = renderHook(() => useBitrateTest(mockDispatch, mockGetRecaptchaToken));
 
     await act(async () => await result.current.startBitrateTest());
 
@@ -92,7 +94,7 @@ describe('the useBitrateTest hook', () => {
   });
 
   it('should not start the bitrate test if there is already one running', (done) => {
-    const { result } = renderHook(() => useBitrateTest(() => {}));
+    const { result } = renderHook(() => useBitrateTest(() => {}, mockGetRecaptchaToken));
 
     result.current.startBitrateTest();
 

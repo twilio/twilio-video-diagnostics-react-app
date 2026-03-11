@@ -18,11 +18,16 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import theme from './theme';
 import { CssBaseline, MuiThemeProvider } from '@material-ui/core';
+import { RecaptchaProvider } from './RecaptchaProvider';
+
+const recaptchaSiteKey = process.env.REACT_APP_RECAPTCHA_SITE_KEY;
 
 ReactDOM.render(
   <MuiThemeProvider theme={theme}>
     <CssBaseline />
-    <App />
+    <RecaptchaProvider siteKey={recaptchaSiteKey}>
+      <App />
+    </RecaptchaProvider>
   </MuiThemeProvider>,
   document.getElementById('root')
 );

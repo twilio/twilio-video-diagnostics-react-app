@@ -3,6 +3,7 @@ import axios, { AxiosError } from 'axios';
 import produce, { current } from 'immer';
 import Video, { PreflightTestReport } from 'twilio-video';
 import UAParser from 'ua-parser-js';
+import { useRecaptchaToken } from '../../RecaptchaProvider';
 import usePreflightTest from './usePreflightTest/usePreflightTest';
 import useTwilioStatus from './useTwilioStatus/useTwilioStatus';
 import useBitrateTest from './useBitrateTest/useBitrateTest';
@@ -320,8 +321,10 @@ export const appStateReducer = produce((draft: stateType, action: ACTIONTYPE) =>
 
 export const AppStateProvider: React.FC = ({ children }) => {
   const [state, dispatch] = useReducer(appStateReducer, initialState);
-  const { startPreflightTest } = usePreflightTest(dispatch);
-  const { startBitrateTest } = useBitrateTest(dispatch);
+  const getRecaptchaToken = useRecaptchaToken();
+
+  const { startPreflightTest } = usePreflightTest(dispatch, getRecaptchaToken);
+  const { startBitrateTest } = useBitrateTest(dispatch, getRecaptchaToken);
   const { getTwilioStatus } = useTwilioStatus(dispatch);
 
   const userAgentParser = new UAParser();
@@ -371,12 +374,20 @@ export const AppStateProvider: React.FC = ({ children }) => {
   useEffect(() => {
     navigator.mediaDevices.enumerateDevices().then((devices) => dispatch({ type: 'set-devices', devices }));
 
-    axios('app/token').catch((error: AxiosError) => {
+    const tokenCheck = getRecaptchaToken
+      ? getRecaptchaToken('token_check').then((recaptchaToken) =>
+          axios('app/token', {
+            headers: recaptchaToken ? { 'X-Recaptcha-Token': recaptchaToken } : {},
+          })
+        )
+      : axios('app/token');
+
+    tokenCheck.catch((error: AxiosError) => {
       if (error.response?.data?.error?.message === 'token server expired') {
         dispatch({ type: 'set-app-is-expired' });
       }
     });
-  }, []);
+  }, [getRecaptchaToken]);
 
   return (
     <AppStateContext.Provider value={{ state, dispatch, nextPane, userAgentInfo, downloadFinalTestResults }}>

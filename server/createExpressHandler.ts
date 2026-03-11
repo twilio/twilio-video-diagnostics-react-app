@@ -36,12 +36,17 @@ if (!isServiceUnavailable) {
     API_SECRET: TWILIO_API_KEY_SECRET,
     getTwilioClient: () => twilioClient,
     VIDEO_IDENTITY,
+    RECAPTCHA_SECRET_KEY: process.env.RECAPTCHA_SECRET_KEY,
   };
 }
 
 export function createExpressHandler(serverlessFunction: ServerlessFunction) {
   return (req: Request, res: Response) => {
-    serverlessFunction(context, req.body, (_, serverlessResponse) => {
+    const event = {
+      ...req.body,
+      recaptchaToken: req.headers['x-recaptcha-token'],
+    };
+    serverlessFunction(context, event, (_, serverlessResponse) => {
       res.json(serverlessResponse);
     });
   };

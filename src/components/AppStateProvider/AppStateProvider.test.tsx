@@ -40,6 +40,10 @@ jest.mock('./useTwilioStatus/useTwilioStatus', () =>
   }))
 );
 
+jest.mock('../../RecaptchaProvider', () => ({
+  useRecaptchaToken: () => jest.fn((action: string) => Promise.resolve('mockRecaptchaToken')),
+}));
+
 describe('the useAppStateContext hook', () => {
   it('should throw an error if used out of the AppStateProvider', () => {
     const { result } = renderHook(useAppStateContext);
