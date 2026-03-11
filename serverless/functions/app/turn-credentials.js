@@ -13,5 +13,5 @@ exports.handler = function (context, event, callback) {
   verifyRecaptcha(context, event, callback, function () {
     const client = context.getTwilioClient();
     client.tokens.create({ ttl: 30 }).then((token) => callback(null, token));
-  });
+  }, 'bitrate_test');
 };

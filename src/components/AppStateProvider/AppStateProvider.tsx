@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useReducer, useEffect, useCallback } from 'react';
+import React, { createContext, useContext, useReducer, useEffect, useCallback, useRef } from 'react';
 import axios, { AxiosError } from 'axios';
 import produce, { current } from 'immer';
 import Video, { PreflightTestReport } from 'twilio-video';
@@ -371,22 +371,32 @@ export const AppStateProvider: React.FC = ({ children }) => {
     }
   }, [startBitrateTest, startPreflightTest, getTwilioStatus, state, dispatch]);
 
+  const tokenCheckDone = useRef(false);
+
   useEffect(() => {
     navigator.mediaDevices.enumerateDevices().then((devices) => dispatch({ type: 'set-devices', devices }));
+  }, []);
+
+  useEffect(() => {
+    if (tokenCheckDone.current) return;
 
     const tokenCheck = getRecaptchaToken
-      ? getRecaptchaToken('token_check').then((recaptchaToken) =>
-          axios('app/token', {
-            headers: recaptchaToken ? { 'X-Recaptcha-Token': recaptchaToken } : {},
-          })
-        )
-      : axios('app/token');
+      ? getRecaptchaToken('token_check').then((recaptchaToken) => {
+          if (!recaptchaToken) return;
+          tokenCheckDone.current = true;
+          return axios('app/token', {
+            headers: { 'X-Recaptcha-Token': recaptchaToken },
+          });
+        })
+      : (() => { tokenCheckDone.current = true; return axios('app/token'); })();
 
-    tokenCheck.catch((error: AxiosError) => {
-      if (error.response?.data?.error?.message === 'token server expired') {
-        dispatch({ type: 'set-app-is-expired' });
-      }
-    });
+    if (tokenCheck) {
+      tokenCheck.catch((error: AxiosError) => {
+        if (error.response?.data?.error?.message === 'token server expired') {
+          dispatch({ type: 'set-app-is-expired' });
+        }
+      });
+    }
   }, [getRecaptchaToken]);
 
   return (

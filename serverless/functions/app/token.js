@@ -23,5 +23,5 @@ exports.handler = function (context, event, callback) {
     token.addGrant(videoGrant);
 
     callback(null, { token: token.toJwt() });
-  });
+  }, ['token_check', 'preflight']);
 };

@@ -66,6 +66,66 @@ describe('the verify_recaptcha middleware', () => {
     expect(mockCallback).not.toHaveBeenCalled();
   });
 
+  it('should call next() when verification succeeds and action matches expectedAction', async () => {
+    mockRecaptchaApiResponse({ success: true, score: 0.9, action: 'token_check' });
+    const mockCallback = jest.fn();
+    const mockNext = jest.fn();
+
+    await verifyRecaptcha(
+      { RECAPTCHA_SECRET_KEY: 'test-secret' },
+      { recaptchaToken: 'valid-token' },
+      mockCallback,
+      mockNext,
+      'token_check'
+    );
+
+    await new Promise((r) => setImmediate(r));
+
+    expect(mockNext).toHaveBeenCalled();
+    expect(mockCallback).not.toHaveBeenCalled();
+  });
+
+  it('should call next() when verification succeeds and action matches one of the allowed actions', async () => {
+    mockRecaptchaApiResponse({ success: true, score: 0.9, action: 'preflight' });
+    const mockCallback = jest.fn();
+    const mockNext = jest.fn();
+
+    await verifyRecaptcha(
+      { RECAPTCHA_SECRET_KEY: 'test-secret' },
+      { recaptchaToken: 'valid-token' },
+      mockCallback,
+      mockNext,
+      ['token_check', 'preflight']
+    );
+
+    await new Promise((r) => setImmediate(r));
+
+    expect(mockNext).toHaveBeenCalled();
+    expect(mockCallback).not.toHaveBeenCalled();
+  });
+
+  it('should return 403 when action does not match expectedAction', async () => {
+    mockRecaptchaApiResponse({ success: true, score: 0.9, action: 'wrong_action' });
+    const mockCallback = jest.fn();
+    const mockNext = jest.fn();
+
+    await verifyRecaptcha(
+      { RECAPTCHA_SECRET_KEY: 'test-secret' },
+      { recaptchaToken: 'valid-token' },
+      mockCallback,
+      mockNext,
+      'token_check'
+    );
+
+    await new Promise((r) => setImmediate(r));
+
+    expect(mockCallback).toHaveBeenCalledWith(null, expect.objectContaining({
+      statusCode: 403,
+      body: { error: { message: 'reCAPTCHA action mismatch' } },
+    }));
+    expect(mockNext).not.toHaveBeenCalled();
+  });
+
   it('should return 403 when score is below threshold', async () => {
     mockRecaptchaApiResponse({ success: true, score: 0.2 });
     const mockCallback = jest.fn();

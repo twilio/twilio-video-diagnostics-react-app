@@ -2,7 +2,7 @@
  * Verifies the reCAPTCHA token from the event and calls `next` on success.
  * If RECAPTCHA_SECRET_KEY is not configured, skips verification and calls `next` immediately.
  */
-exports.verifyRecaptcha = function (context, event, callback, next) {
+exports.verifyRecaptcha = function (context, event, callback, next, expectedAction) {
   const secretKey = context.RECAPTCHA_SECRET_KEY;
 
   if (!secretKey) {
@@ -34,6 +34,17 @@ exports.verifyRecaptcha = function (context, event, callback, next) {
         response.appendHeader('Content-Type', 'application/json');
         response.setStatusCode(403);
         response.setBody({ error: { message: 'reCAPTCHA verification failed' } });
+        return callback(null, response);
+      }
+      const allowedActions = expectedAction
+        ? Array.isArray(expectedAction) ? expectedAction : [expectedAction]
+        : null;
+      if (allowedActions && !allowedActions.includes(result.action)) {
+        console.warn('reCAPTCHA action mismatch: expected', expectedAction, 'got', result.action);
+        const response = new Twilio.Response();
+        response.appendHeader('Content-Type', 'application/json');
+        response.setStatusCode(403);
+        response.setBody({ error: { message: 'reCAPTCHA action mismatch' } });
         return callback(null, response);
       }
       next();
