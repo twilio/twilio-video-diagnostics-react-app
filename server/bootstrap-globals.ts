@@ -34,6 +34,9 @@ const Runtime = {
     '/verify_recaptcha.js': {
       path: __dirname + '/verify_recaptcha',
     },
+    '/recaptcha_core.js': {
+      path: __dirname + '/recaptcha_core',
+    },
   }),
 };
 

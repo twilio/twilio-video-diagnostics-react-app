@@ -23,6 +23,7 @@ class Response {
   
   const verifyExpiryPath = `${__dirname}/../middleware/verify_expiry.private.js`;
   const verifyRecaptchaPath = `${__dirname}/../middleware/verify_recaptcha.private.js`;
+  const recaptchaCorePath = `${__dirname}/../middleware/recaptcha_core.private.js`;
 
   global.Runtime = {
     getAssets: () => ({
@@ -31,6 +32,9 @@ class Response {
       },
       '/verify_recaptcha.js': {
         path: verifyRecaptchaPath,
+      },
+      '/recaptcha_core.js': {
+        path: recaptchaCorePath,
       },
     }),
   };
