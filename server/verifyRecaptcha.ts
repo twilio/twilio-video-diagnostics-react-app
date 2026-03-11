@@ -1,8 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
+import { verifyRecaptchaToken } from './recaptcha_core';
 
 const RECAPTCHA_SECRET_KEY = process.env.RECAPTCHA_SECRET_KEY;
-
-import { verifyRecaptchaToken } from './recaptcha_core';
 
 export function verifyRecaptcha(req: Request, res: Response, next: NextFunction) {
   if (!RECAPTCHA_SECRET_KEY) {
