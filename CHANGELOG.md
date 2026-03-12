@@ -1,6 +1,12 @@
-# 1.2.0 (In Progress)
+# 1.2.0 (March 12, 2026)
 
-This release fixes a bug on Chrome for Android where the user cannot play back the audio recorded during an audio output test.
+### Bug Fixes
+
+- Fixed a bug on Chrome for Android where the user cannot play back the audio recorded during an audio output test.
+
+### reCAPTCHA v3 Support
+
+- Added optional [Google reCAPTCHA v3](https://developers.google.com/recaptcha/docs/v3) integration to protect token and TURN credential endpoints from abuse. When a `RECAPTCHA_SITE_KEY` and `RECAPTCHA_SECRET_KEY` are configured, the app will verify requests server-side before issuing tokens.
 
 # 1.1.1 (January 31, 2023)
 
