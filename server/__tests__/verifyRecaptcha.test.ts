@@ -33,12 +33,12 @@ function mockRecaptchaApiResponse(responseBody: object) {
   });
 }
 
-function loadModule() {
+function loadModule(expectedAction?: string | string[]) {
   let mod: any;
   jest.isolateModules(() => {
     mod = require('../verifyRecaptcha');
   });
-  return mod.verifyRecaptcha;
+  return mod.createVerifyRecaptcha(expectedAction);
 }
 
 describe('the verifyRecaptcha middleware', () => {
@@ -120,6 +120,49 @@ describe('the verifyRecaptcha middleware', () => {
     expect(res.status).toHaveBeenCalledWith(403);
     expect(res.json).toHaveBeenCalledWith({ error: { message: 'reCAPTCHA verification failed' } });
     expect(next).not.toHaveBeenCalled();
+  });
+
+  it('should return 403 when action does not match expectedAction', async () => {
+    process.env.RECAPTCHA_SECRET_KEY = 'test-secret';
+    mockRecaptchaApiResponse({ success: true, score: 0.9, action: 'wrong_action' });
+
+    const verifyRecaptcha = loadModule(['token_check', 'preflight']);
+    const { req, res, next } = createMockReqResNext('valid-token');
+    verifyRecaptcha(req, res, next);
+
+    await new Promise((r) => setTimeout(r, 0));
+
+    expect(res.status).toHaveBeenCalledWith(403);
+    expect(res.json).toHaveBeenCalledWith({ error: { message: 'reCAPTCHA action mismatch' } });
+    expect(next).not.toHaveBeenCalled();
+  });
+
+  it('should call next() when action matches one of the expectedActions', async () => {
+    process.env.RECAPTCHA_SECRET_KEY = 'test-secret';
+    mockRecaptchaApiResponse({ success: true, score: 0.9, action: 'preflight' });
+
+    const verifyRecaptcha = loadModule(['token_check', 'preflight']);
+    const { req, res, next } = createMockReqResNext('valid-token');
+    verifyRecaptcha(req, res, next);
+
+    await new Promise((r) => setTimeout(r, 0));
+
+    expect(next).toHaveBeenCalled();
+    expect(res.status).not.toHaveBeenCalled();
+  });
+
+  it('should skip action check when no expectedAction is provided', async () => {
+    process.env.RECAPTCHA_SECRET_KEY = 'test-secret';
+    mockRecaptchaApiResponse({ success: true, score: 0.9, action: 'any_action' });
+
+    const verifyRecaptcha = loadModule();
+    const { req, res, next } = createMockReqResNext('valid-token');
+    verifyRecaptcha(req, res, next);
+
+    await new Promise((r) => setTimeout(r, 0));
+
+    expect(next).toHaveBeenCalled();
+    expect(res.status).not.toHaveBeenCalled();
   });
 
   it('should return 500 when the Google API request fails', async () => {

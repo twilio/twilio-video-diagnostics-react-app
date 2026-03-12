@@ -3,7 +3,7 @@ import { createExpressHandler, isServiceUnavailable } from './createExpressHandl
 import express from 'express';
 import path from 'path';
 import { ServerlessFunction } from './types';
-import { verifyRecaptcha } from './verifyRecaptcha';
+import { createVerifyRecaptcha } from './verifyRecaptcha';
 
 const PORT = process.env.PORT ?? 8081;
 
@@ -41,8 +41,8 @@ if (isServiceUnavailable) {
   const turnCredentialsFunction: ServerlessFunction = require('../serverless/functions/app/turn-credentials').handler;
   const turnCredentialsEndpoint = createExpressHandler(turnCredentialsFunction);
 
-  app.all('/app/token', verifyRecaptcha, tokenEndpoint);
-  app.all('/app/turn-credentials', verifyRecaptcha, turnCredentialsEndpoint);
+  app.all('/app/token', createVerifyRecaptcha(['token_check', 'preflight']), tokenEndpoint);
+  app.all('/app/turn-credentials', createVerifyRecaptcha('bitrate_test'), turnCredentialsEndpoint);
 
   app.use((req, res, next) => {
     // Here we add Cache-Control headers in accordance with the create-react-app best practices.
