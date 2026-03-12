@@ -2,8 +2,9 @@ import React, { useCallback, useRef } from 'react';
 import { ACTIONTYPE } from '../AppStateProvider';
 import axios from 'axios';
 import { PreflightTest, runPreflight } from 'twilio-video';
+import { GetRecaptchaToken } from '../../../RecaptchaProvider';
 
-export default function usePreflightTest(dispatch: React.Dispatch<ACTIONTYPE>) {
+export default function usePreflightTest(dispatch: React.Dispatch<ACTIONTYPE>, getRecaptchaToken?: GetRecaptchaToken) {
   const preflightTestRef = useRef<PreflightTest>();
   const startPreflightTest = useCallback(() => {
     // Don't start a new preflight test if one is already running
@@ -13,7 +14,15 @@ export default function usePreflightTest(dispatch: React.Dispatch<ACTIONTYPE>) {
 
     dispatch({ type: 'preflight-started' });
 
-    return axios('app/token')
+    const tokenPromise = getRecaptchaToken
+      ? getRecaptchaToken('preflight').then((recaptchaToken) =>
+          axios('app/token', {
+            headers: recaptchaToken ? { 'X-Recaptcha-Token': recaptchaToken } : {},
+          })
+        )
+      : axios('app/token');
+
+    return tokenPromise
       .then((response) => {
         const preflightTest = runPreflight(response.data.token);
 
@@ -38,7 +47,7 @@ export default function usePreflightTest(dispatch: React.Dispatch<ACTIONTYPE>) {
         dispatch({ type: 'preflight-token-failed', error });
         dispatch({ type: 'preflight-finished' });
       });
-  }, [dispatch]);
+  }, [dispatch, getRecaptchaToken]);
 
   return { startPreflightTest } as const;
 }

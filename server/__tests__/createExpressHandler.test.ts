@@ -3,6 +3,7 @@ process.env.ACCOUNT_SID = 'mockAccountSid';
 process.env.TWILIO_API_KEY_SID = 'mockApiKeySid';
 process.env.TWILIO_API_KEY_SECRET = 'mockApiKeySecret';
 process.env.VIDEO_IDENTITY = 'mockVideoIdentity';
+process.env.RECAPTCHA_SECRET_KEY = 'mockRecaptchaSecret';
 
 import { ServerlessFunction } from '../types';
 import Twilio from 'twilio';
@@ -20,6 +21,8 @@ const mockRequest: any = {
   body: {
     foo: 'bar',
   },
+  headers: {},
+  get: (name: string) => (mockRequest.headers as Record<string, string>)[name.toLowerCase()],
 };
 
 const mockResponse: any = {
@@ -42,11 +45,12 @@ describe('the createExpressHandler function', () => {
         API_KEY: 'mockApiKeySid',
         API_SECRET: 'mockApiKeySecret',
         VIDEO_IDENTITY: 'mockVideoIdentity',
+        RECAPTCHA_SECRET_KEY: 'mockRecaptchaSecret',
         getTwilioClient: expect.any(Function),
       });
 
       expect(context.getTwilioClient()).toEqual(mockTwilioClient);
-      expect(event).toEqual({ foo: 'bar' });
+      expect(event).toEqual({ foo: 'bar', recaptchaToken: undefined });
       expect(callback).toEqual(expect.any(Function));
     };
 

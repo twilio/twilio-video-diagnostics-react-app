@@ -49,6 +49,7 @@ async function deployFunctions() {
       API_SECRET: api_key.secret,
       VIDEO_IDENTITY: constants.VIDEO_IDENTITY,
       APP_EXPIRY: Date.now() + 1000 * 60 * 60 * 24 * 7, // One week
+      ...(process.env.RECAPTCHA_SECRET_KEY ? { RECAPTCHA_SECRET_KEY: process.env.RECAPTCHA_SECRET_KEY } : {}),
     },
     pkgJson: {},
     functionsEnv: 'dev',
